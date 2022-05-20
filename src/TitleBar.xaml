@@ -1,0 +1,29 @@
+<UserControl x:Class="Sticky.TitleBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Sticky"
+             mc:Ignorable="d"
+             d:DesignHeight="40"
+             d:DesignWidth="400">
+  <Border BorderBrush="Red" BorderThickness="1">
+    <Grid>
+      <DockPanel
+        Background="#00000000"
+        Height="40"
+        LastChildFill="False"
+        MouseDown="OnMouseDown"
+        MouseMove="OnMouseMove"
+        Name="TitleBarPanel"
+        VerticalAlignment="Top"
+        >
+          <Button Style="{StaticResource TitleBarButtonStyle}" Width="40" Content="&#xE710;" DockPanel.Dock="Left" x:Name="ButtonAdd" Click="OnAdd"/>
+          <Button Style="{StaticResource TitleBarButtonStyle}" Width="40" Content="&#xE8BB;" DockPanel.Dock="Right" x:Name="ButtonClose" Click="OnClose"/>
+          <Button Style="{StaticResource TitleBarButtonStyle}" Width="40" Content="&#xE922;" DockPanel.Dock="Right" x:Name="ButtonMaximizeOrRestore" Click="OnMaximizeOrRestore"/>
+          <Button Style="{StaticResource TitleBarButtonStyle}" Width="40" Content="&#xE921;" DockPanel.Dock="Right" x:Name="ButtonMinimize" Click="OnMinimize"/>
+          <Button Style="{StaticResource TitleBarButtonStyle}" Width="40" Content="&#xE713;" DockPanel.Dock="Right" x:Name="ButtonSettings" Click="OnSettings"/>
+      </DockPanel>
+    </Grid>
+  </Border>
+</UserControl>

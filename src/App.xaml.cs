@@ -1,6 +1,6 @@
 using System.Windows;
 
-namespace ProjectName {
+namespace Sticky {
   /// <summary>
   /// Interaction logic for App.xaml
   /// </summary>
