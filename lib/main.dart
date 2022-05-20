@@ -52,38 +52,41 @@ class NoteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: const Color.fromARGB(255, 255, 228, 241),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ListTile(
-              leading: const Icon(Icons.info_outline),
-              title: Text(
-                note.title,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text(note.body)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+    return InkWell(
+        onTap: () {
+          debugPrint('Card ${note.title} tapped.');
+        },
+        child: Card(
+          color: const Color.fromARGB(255, 255, 228, 241),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              TextButton(
-                child: const Text(
-                  'Delete Note',
-                  style: TextStyle(color: Colors.red),
-                ),
-                onPressed: () {/* ... */},
+              ListTile(
+                  title: Text(
+                    note.title,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(note.body)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  TextButton(
+                    child: const Text(
+                      'Delete Note',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    onPressed: () {/* ... */},
+                  ),
+                  const SizedBox(width: 8),
+                  TextButton(
+                    child: const Text('Open Note'),
+                    onPressed: () {/* ... */},
+                  ),
+                  const SizedBox(width: 8),
+                ],
               ),
-              const SizedBox(width: 8),
-              TextButton(
-                child: const Text('Open Note'),
-                onPressed: () {/* ... */},
-              ),
-              const SizedBox(width: 8),
             ],
           ),
-        ],
-      ),
-    );
+        ));
   }
 }
