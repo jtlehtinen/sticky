@@ -20,8 +20,6 @@
         >
           <Button Style="{StaticResource TitleBarButtonStyle}" Width="40" Content="&#xE710;" DockPanel.Dock="Left" x:Name="ButtonAdd" Click="OnAdd"/>
           <Button Style="{StaticResource TitleBarButtonStyle}" Width="40" Content="&#xE8BB;" DockPanel.Dock="Right" x:Name="ButtonClose" Click="OnClose"/>
-          <Button Style="{StaticResource TitleBarButtonStyle}" Width="40" Content="&#xE922;" DockPanel.Dock="Right" x:Name="ButtonMaximizeOrRestore" Click="OnMaximizeOrRestore"/>
-          <Button Style="{StaticResource TitleBarButtonStyle}" Width="40" Content="&#xE921;" DockPanel.Dock="Right" x:Name="ButtonMinimize" Click="OnMinimize"/>
           <Button Style="{StaticResource TitleBarButtonStyle}" Width="40" Content="&#xE713;" DockPanel.Dock="Right" x:Name="ButtonSettings" Click="OnSettings"/>
       </DockPanel>
     </Grid>

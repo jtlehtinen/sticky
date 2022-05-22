@@ -12,32 +12,19 @@ namespace Sticky {
       InitializeComponent();
     }
 
-    private void OnAdd(object sender, RoutedEventArgs args) { }
+    private void OnAdd(object sender, RoutedEventArgs args) {
+      System.Console.WriteLine("OnAdd()");
+    }
 
-    private void OnSettings(object sender, RoutedEventArgs args) { }
+    private void OnSettings(object sender, RoutedEventArgs args) {
+      System.Console.WriteLine("OnSettings()");
+    }
 
     private void OnClose(object sender, RoutedEventArgs args) {
       Window.GetWindow(this).Close();
     }
 
-    private void OnMaximizeOrRestore(object sender, RoutedEventArgs args) {
-      var state = Window.GetWindow(this).WindowState;
-      var newState = state == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
-      Window.GetWindow(this).WindowState = newState;
-
-      OnWindowStateChanged();
-    }
-
-    private void OnMinimize(object sender, RoutedEventArgs args) {
-      Window.GetWindow(this).WindowState = WindowState.Minimized;
-    }
-
-    private void OnMouseDown(object sender, MouseButtonEventArgs args) {
-      var doubleClick = args.ClickCount >= 2;
-      if (!doubleClick) return;
-
-      OnMaximizeOrRestore(sender, args);
-    }
+    private void OnMouseDown(object sender, MouseButtonEventArgs args) { }
 
     private void OnMouseMove(object sender, MouseEventArgs args) {
       if (args.LeftButton != MouseButtonState.Pressed) return;
@@ -52,20 +39,9 @@ namespace Sticky {
 
         window.Left = pointScreenSpace.X - halfWidthAfter;
         window.Top = 0;
-
-        OnWindowStateChanged();
       }
 
       window.DragMove();
-    }
-
-    private void OnWindowStateChanged() {
-      const string ChromeMaximize = "\uE922";
-      const string ChromeRestore = "\uE923";
-
-      var state = Window.GetWindow(this).WindowState;
-      if (state == WindowState.Maximized) ButtonMaximizeOrRestore.Content = ChromeRestore;
-      if (state == WindowState.Normal) ButtonMaximizeOrRestore.Content = ChromeMaximize;
     }
   }
 }
