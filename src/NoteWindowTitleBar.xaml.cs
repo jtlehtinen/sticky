@@ -7,10 +7,13 @@ namespace Sticky {
   /// <summary>
   /// Interaction logic for TitleBar.xaml
   /// </summary>
-  public partial class TitleBar : UserControl {
-    public TitleBar() {
+  public partial class NoteWindowTitleBar : UserControl {
+    public NoteWindowTitleBar() {
       InitializeComponent();
     }
+
+    // @TODO: Pass the events to the main window...
+    // @TODO: Reuse title bar?
 
     private void OnAdd(object sender, RoutedEventArgs args) {
       // @NOTE: Would routed events be better here?
@@ -19,8 +22,6 @@ namespace Sticky {
 
       window.OnAddNote();
     }
-
-    // @TODO: Pass the events to the main window...
 
     private void OnSettings(object sender, RoutedEventArgs args) {
       System.Console.WriteLine("OnSettings()");

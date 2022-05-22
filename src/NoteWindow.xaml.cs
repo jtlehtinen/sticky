@@ -1,23 +1,14 @@
-using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Sticky {
   /// <summary>
-  /// Interaction logic for MainWindow.xaml
+  /// Interaction logic for NoteWindow.xaml
   /// </summary>
-  public partial class MainWindow : Window {
-    private List<Window> noteWindows = new List<Window>();
-
-    public MainWindow() {
+  public partial class NoteWindow : Window {
+    public NoteWindow() {
       InitializeComponent();
-    }
-
-    public void OnAddNote() {
-      noteWindows.Add(new NoteWindow());
-    }
-
-    public void OnRemoveNote(NoteWindow window) {
-      noteWindows.Remove(window);
+      this.Show();
     }
 
     private void OnSizeChanged(object sender, SizeChangedEventArgs args) {
@@ -31,12 +22,8 @@ namespace Sticky {
     }
 
     protected override void OnClosing(System.ComponentModel.CancelEventArgs args) {
-      noteWindows.ForEach(window => window.Close());
-      noteWindows.Clear();
+      // @TODO: Remove from main window...
       base.OnClosing(args);
     }
   }
-
-
 }
-
