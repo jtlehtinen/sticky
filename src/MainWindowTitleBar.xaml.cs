@@ -7,8 +7,8 @@ namespace Sticky {
   /// <summary>
   /// Interaction logic for TitleBar.xaml
   /// </summary>
-  public partial class TitleBar : UserControl {
-    public TitleBar() {
+  public partial class MainWindowTitleBar : UserControl {
+    public MainWindowTitleBar() {
       InitializeComponent();
     }
 
