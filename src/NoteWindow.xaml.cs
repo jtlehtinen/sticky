@@ -19,21 +19,11 @@ namespace Sticky {
     }
 
     private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs args) {
-      System.Console.WriteLine("got focus");
-      var transform = new TranslateTransform(0, 0);
-      var duration = new Duration(new TimeSpan(0, 0, 0, 0, 150));
-      var animation = new DoubleAnimation(-42, 0, duration);
-      transform.BeginAnimation(TranslateTransform.YProperty, animation);
-      this.TitleBar.RenderTransform = transform;
+      this.TitleBar.RenderTransform = Animation.MakeTranslateYTransform(-42, 0, 150);
     }
 
     private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs args) {
-      System.Console.WriteLine("lost focus");
-      var transform = new TranslateTransform(0, 0);
-      var duration = new Duration(new TimeSpan(0, 0, 0, 0, 150));
-      var animation = new DoubleAnimation(0, -42, duration);
-      transform.BeginAnimation(TranslateTransform.YProperty, animation);
-      this.TitleBar.RenderTransform = transform;
+      this.TitleBar.RenderTransform = Animation.MakeTranslateYTransform(0, -42, 150);
     }
 
     private void OnSizeChanged(object sender, SizeChangedEventArgs args) {
