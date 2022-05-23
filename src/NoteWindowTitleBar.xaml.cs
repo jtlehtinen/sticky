@@ -31,7 +31,7 @@ namespace Sticky {
     }
 
     private void OnMenu(object sender, RoutedEventArgs args) {
-      System.Console.WriteLine("OnSettings()");
+      System.Console.WriteLine("OnMenu()");
     }
 
     private void OnClose(object sender, RoutedEventArgs args) {
