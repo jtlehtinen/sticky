@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -23,7 +22,7 @@ namespace Sticky {
       window.OnAddNote();
     }
 
-    private void OnSettings(object sender, RoutedEventArgs args) {
+    private void OnMenu(object sender, RoutedEventArgs args) {
       System.Console.WriteLine("OnSettings()");
     }
 
@@ -43,7 +42,6 @@ namespace Sticky {
       var newState = state == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
       Window.GetWindow(this).WindowState = newState;
     }
-
 
     private void OnMouseMove(object sender, MouseEventArgs args) {
       if (args.LeftButton != MouseButtonState.Pressed) return;

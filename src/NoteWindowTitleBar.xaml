@@ -5,22 +5,49 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Sticky"
              mc:Ignorable="d"
-             d:DesignHeight="40"
-             d:DesignWidth="400">
+             d:DesignHeight="32"
+             d:DesignWidth="306">
+
+  <UserControl.Resources>
+    <Style x:Key="TitleBarButton" TargetType="{x:Type Button}">
+      <Setter Property="Background" Value="#00000000"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Focusable" Value="False"/>
+      <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+      <Setter Property="FontSize" Value="16"/>
+      <Setter Property="Foreground" Value="Black"/>
+      <Setter Property="Margin" Value="0,0,0,0"/>
+      <Setter Property="Opacity" Value="0.6"/>
+      <Setter Property="TextBlock.FontFamily" Value="Segoe MDL2 Assets"/>
+      <Setter Property="TextBlock.Foreground" Value="Black"/>
+      <!-- https://wpf.2000things.com/tag/pixel-snapping/ -->
+      <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/> <!-- [Fixed, Animated] -->
+      <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/> <!-- [Aliased, ClearType, Grayscale] -->
+      <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/> <!-- [Ideal, Display] -->
+      <Setter Property="UseLayoutRounding" Value="True"/>
+      <Setter Property="Width" Value="32"/>
+      <Style.Triggers>
+        <Trigger Property="IsMouseOver" Value="True">
+          <Setter Property="Background" Value="#FFF2F2F2"/>
+        </Trigger>
+      </Style.Triggers>
+    </Style>
+  </UserControl.Resources>
+
   <Border BorderBrush="Red" BorderThickness="1">
     <Grid>
       <DockPanel
         Background="#00000000"
-        Height="40"
+        Height="32"
         LastChildFill="False"
         MouseDown="OnMouseDown"
         MouseMove="OnMouseMove"
         Name="TitleBarPanel"
         VerticalAlignment="Top"
         >
-          <Button Style="{StaticResource TitleBarButtonStyle}" Width="40" Content="&#xE710;" DockPanel.Dock="Left" x:Name="ButtonAdd" Click="OnAdd"/>
-          <Button Style="{StaticResource TitleBarButtonStyle}" Width="40" Content="&#xE8BB;" DockPanel.Dock="Right" x:Name="ButtonClose" Click="OnClose"/>
-          <Button Style="{StaticResource TitleBarButtonStyle}" Width="40" Content="&#xE712;" DockPanel.Dock="Right" x:Name="ButtonMore" Click="OnSettings"/>
+          <Button Style="{StaticResource TitleBarButton}" Content="&#xE710;" DockPanel.Dock="Left" x:Name="ButtonAdd" ToolTip="New note" Click="OnAdd"/>
+          <Button Style="{StaticResource TitleBarButton}" Content="&#xE711;" DockPanel.Dock="Right" x:Name="ButtonClose" ToolTip="Close note" Click="OnClose"/>
+          <Button Style="{StaticResource TitleBarButton}" Content="&#xE712;" DockPanel.Dock="Right" x:Name="ButtonMore" ToolTip="Menu" Click="OnMenu"/>
       </DockPanel>
     </Grid>
   </Border>

@@ -4,11 +4,11 @@
 
   <!-- Header text style -->
   <Style x:Key="HeaderTextStyle">
-    <Setter Property="Label.VerticalAlignment" Value="Center"></Setter>
     <Setter Property="Label.FontFamily" Value="Arial"></Setter>
-    <Setter Property="Label.FontWeight" Value="Bold"></Setter>
     <Setter Property="Label.FontSize" Value="20"></Setter>
+    <Setter Property="Label.FontWeight" Value="Bold"></Setter>
     <Setter Property="Label.Foreground" Value="Black"></Setter>
+    <Setter Property="Label.VerticalAlignment" Value="Center"></Setter>
     <Style.Triggers>
       <!-- When in high contrast modes, follow system colors to present proper contrast between adjacent colors. -->
       <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true">
@@ -17,7 +17,6 @@
       </DataTrigger>
     </Style.Triggers>
   </Style>
-
 
   <Storyboard x:Key="FadeOutAnimation" FillBehavior="HoldEnd" Storyboard.TargetProperty="Opacity">
     <DoubleAnimation To="0.6" Duration="0:0:0.2"/>

@@ -7,17 +7,29 @@
         mc:Ignorable="d"
         Title="sticky"
         Height="200"
-        Width="300"
+        Width="306"
         WindowStyle="None"
         AllowsTransparency="True"
         SizeChanged="OnSizeChanged"
-        ResizeMode="CanResizeWithGrip">
+        ResizeMode="CanResizeWithGrip"
+        ShowInTaskbar="False"
+        Topmost="True">
 
   <Window.Resources>
-
   </Window.Resources>
 
-  <StackPanel Orientation="Vertical">
-    <local:NoteWindowTitleBar Margin="0,0,0,0" VerticalAlignment="Top"/>
-  </StackPanel>
+  <DockPanel Background="#FFE2F1FF">
+    <local:NoteWindowTitleBar x:Name="TitleBar" Margin="0,0,0,0" VerticalAlignment="Top" DockPanel.Dock="Top">
+      <local:NoteWindowTitleBar.RenderTransform>
+        <TranslateTransform Y="-42"/>
+      </local:NoteWindowTitleBar.RenderTransform>
+    </local:NoteWindowTitleBar>
+    <RichTextBox Name="NoteInput" Background="#00FFFFFF" BorderBrush="Transparent" BorderThickness="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+      <RichTextBox.Resources>
+        <Style TargetType="{x:Type Paragraph}">
+          <Setter Property="Margin" Value="0"/>
+        </Style>
+      </RichTextBox.Resources>
+    </RichTextBox>
+  </DockPanel>
 </Window>

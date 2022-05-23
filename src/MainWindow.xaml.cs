@@ -10,6 +10,7 @@ namespace Sticky {
 
     public MainWindow() {
       InitializeComponent();
+      Native.ApplyRoundedWindowCorners(this);
     }
 
     public void OnAddNote() {
@@ -36,7 +37,4 @@ namespace Sticky {
       base.OnClosing(args);
     }
   }
-
-
 }
-

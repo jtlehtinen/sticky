@@ -18,9 +18,9 @@
         Name="TitleBarPanel"
         VerticalAlignment="Top"
         >
-          <Button Style="{StaticResource TitleBarButtonStyle}" Width="40" Content="&#xE710;" DockPanel.Dock="Left" x:Name="ButtonAdd" Click="OnAdd"/>
-          <Button Style="{StaticResource TitleBarButtonStyle}" Width="40" Content="&#xE8BB;" DockPanel.Dock="Right" x:Name="ButtonClose" Click="OnClose"/>
-          <Button Style="{StaticResource TitleBarButtonStyle}" Width="40" Content="&#xE713;" DockPanel.Dock="Right" x:Name="ButtonSettings" Click="OnSettings"/>
+          <Button ToolTip="New note" Style="{StaticResource TitleBarButtonStyle}" Width="40" Content="&#xE710;" DockPanel.Dock="Left" x:Name="ButtonAdd" Click="OnAdd"/>
+          <Button ToolTip="Close window" Style="{StaticResource TitleBarButtonStyle}" Width="40" Content="&#xE8BB;" DockPanel.Dock="Right" x:Name="ButtonClose" Click="OnClose"/>
+          <Button ToolTip="Settings" Style="{StaticResource TitleBarButtonStyle}" Width="40" Content="&#xE713;" DockPanel.Dock="Right" x:Name="ButtonSettings" Click="OnSettings"/>
       </DockPanel>
     </Grid>
   </Border>
