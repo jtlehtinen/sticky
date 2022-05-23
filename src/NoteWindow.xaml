@@ -24,6 +24,46 @@
         <TranslateTransform Y="-42"/>
       </local:NoteWindowTitleBar.RenderTransform>
     </local:NoteWindowTitleBar>
+
+    <Border DockPanel.Dock="Bottom" BorderThickness="0 1 0 0" BorderBrush="#10000000">
+    <StackPanel  Orientation="Horizontal" Margin="0,0,0,0">
+      <!-- @TODO: Reusable button styles -->
+      <StackPanel.Resources>
+        <Style x:Key="FooterButton" TargetType="{x:Type Button}">
+          <Setter Property="Background" Value="#00000000"/>
+          <Setter Property="BorderThickness" Value="0"/>
+          <Setter Property="Focusable" Value="False"/>
+          <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+          <Setter Property="FontSize" Value="18"/>
+          <Setter Property="Foreground" Value="Black"/>
+          <Setter Property="Margin" Value="5,5,5,5"/>
+          <Setter Property="Opacity" Value="0.6"/>
+          <Setter Property="TextBlock.FontFamily" Value="Segoe MDL2 Assets"/>
+          <Setter Property="TextBlock.Foreground" Value="Black"/>
+          <!-- https://wpf.2000things.com/tag/pixel-snapping/ -->
+          <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/> <!-- [Fixed, Animated] -->
+          <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/> <!-- [Aliased, ClearType, Grayscale] -->
+          <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/> <!-- [Ideal, Display] -->
+          <Setter Property="UseLayoutRounding" Value="True"/>
+          <Setter Property="Width" Value="32"/>
+          <Setter Property="Height" Value="32"/>
+          <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter Property="Background" Value="#FFF2F2F2"/>
+            </Trigger>
+          </Style.Triggers>
+        </Style>
+      </StackPanel.Resources>
+
+      <Button Style="{StaticResource FooterButton}" Content="&#xE8DD;" ToolTip="Bold" FontSize="16"/>
+      <Button Style="{StaticResource FooterButton}" Content="&#xE8DB;" ToolTip="Italic" FontSize="16"/>
+      <Button Style="{StaticResource FooterButton}" Content="&#xE8DC;" ToolTip="Underline" FontSize="16"/>
+      <Button Style="{StaticResource FooterButton}" Content="&#xEDE0;" ToolTip="Strikethrough"/>
+      <Button Style="{StaticResource FooterButton}" Content="&#xE8FD;" ToolTip="Toggle Bullets"/>
+      <Button Style="{StaticResource FooterButton}" Content="&#xEB9F;" ToolTip="Add Image"/>
+    </StackPanel>
+    </Border>
+
     <RichTextBox Name="NoteInput" Background="#00FFFFFF" BorderBrush="Transparent" BorderThickness="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontSize="14">
       <RichTextBox.Resources>
         <Style TargetType="{x:Type Paragraph}">
