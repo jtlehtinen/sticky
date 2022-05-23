@@ -19,11 +19,11 @@ namespace Sticky {
     }
 
     private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs args) {
-      this.TitleBar.RenderTransform = Animation.MakeTranslateYTransform(-42, 0, 150);
+      this.TitleBar.SlideIn();
     }
 
     private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs args) {
-      this.TitleBar.RenderTransform = Animation.MakeTranslateYTransform(0, -42, 150);
+      this.TitleBar.SlideOut();
     }
 
     private void OnSizeChanged(object sender, SizeChangedEventArgs args) {

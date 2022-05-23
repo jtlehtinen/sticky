@@ -11,6 +11,14 @@ namespace Sticky {
       InitializeComponent();
     }
 
+    public void SlideIn() {
+      this.RenderTransform = Animation.MakeTranslateYTransform(-42, 0, 150);
+    }
+
+    public void SlideOut() {
+      this.RenderTransform = Animation.MakeTranslateYTransform(0, -42, 150);
+    }
+
     // @TODO: Pass the events to the main window...
     // @TODO: Reuse title bar?
 
