@@ -24,7 +24,7 @@
         <TranslateTransform Y="-42"/>
       </local:NoteWindowTitleBar.RenderTransform>
     </local:NoteWindowTitleBar>
-    <RichTextBox Name="NoteInput" Background="#00FFFFFF" BorderBrush="Transparent" BorderThickness="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+    <RichTextBox Name="NoteInput" Background="#00FFFFFF" BorderBrush="Transparent" BorderThickness="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontSize="14">
       <RichTextBox.Resources>
         <Style TargetType="{x:Type Paragraph}">
           <Setter Property="Margin" Value="0"/>
