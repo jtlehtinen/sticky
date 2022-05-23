@@ -19,7 +19,7 @@
   </Window.Resources>
 
   <DockPanel Background="#FFE2F1FF">
-    <local:NoteWindowTitleBar x:Name="TitleBar" Margin="0,0,0,0" VerticalAlignment="Top" DockPanel.Dock="Top">
+    <local:NoteWindowTitleBar x:Name="TitleBar" Margin="0,0,0,10" VerticalAlignment="Top" DockPanel.Dock="Top">
       <local:NoteWindowTitleBar.RenderTransform>
         <TranslateTransform Y="-42"/>
       </local:NoteWindowTitleBar.RenderTransform>

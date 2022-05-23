@@ -34,8 +34,9 @@
     </Style>
   </UserControl.Resources>
 
-  <Grid Background="#FFCDE9FF">
+  <Grid>
     <DockPanel
+      Background="#FFCDE9FF"
       Height="32"
       LastChildFill="False"
       MouseDown="OnMouseDown"
