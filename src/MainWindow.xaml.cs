@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Sticky {
   /// <summary>
@@ -8,9 +9,24 @@ namespace Sticky {
   public partial class MainWindow : Window {
     private List<Window> noteWindows = new List<Window>();
 
+    public static RoutedCommand ChangeThemeCommand = new RoutedCommand();
+
     public MainWindow() {
       InitializeComponent();
       Native.ApplyRoundedWindowCorners(this);
+      ((App)Application.Current).SetTheme("Themes.Blue");
+
+      var binding = new CommandBinding(ChangeThemeCommand, ExecutedChangeThemeCommand, CanExecuteChangeThemeCommand);
+      CommandBindings.Add(binding);
+    }
+
+    private void ExecutedChangeThemeCommand(object sender, ExecutedRoutedEventArgs e) {
+      var parameter = (string)e.Parameter;
+      ((App)Application.Current).SetTheme(parameter);
+    }
+
+    private void CanExecuteChangeThemeCommand(object sender, CanExecuteRoutedEventArgs e) {
+      e.CanExecute = true;
     }
 
     public void OnAddNote() {

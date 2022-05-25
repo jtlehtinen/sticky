@@ -22,18 +22,29 @@
       Sticky Notes
     </Label>
     <StackPanel Orientation="Vertical" Margin="10">
-      <Border x:Name="FooBorder" BorderThickness="1" BorderBrush="Transparent" CornerRadius="5">
+      <!-- @TODO: Absolutely disgusting... -->
+      <StackPanel Orientation="Horizontal" Margin="10">
+        <Button Content="Blue" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Blue"/>
+        <Button Content="Charcoal" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Charcoal"/>
+        <Button Content="Gray" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Gray"/>
+        <Button Content="Green" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Green"/>
+        <Button Content="Pink" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Pink"/>
+        <Button Content="Purple" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Purple"/>
+        <Button Content="Yellow" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Yellow"/>
+      </StackPanel>
+
+      <Border x:Name="PlaceholderName" BorderThickness="1" BorderBrush="Transparent" CornerRadius="5">
         <Border.Style>
           <Style TargetType="{x:Type Border}">
-            <Setter Property="Background" Value="#FFE2F1FF"/>
+            <Setter Property="Background" Value="{DynamicResource NoteBackground}"/>
             <Style.Triggers>
-              <DataTrigger Binding="{Binding ElementName=FooBorder, Path=IsMouseOver}" Value="True">
-                <Setter Property="Background" Value="#FFD3E1EE"/>
+              <DataTrigger Binding="{Binding ElementName=PlaceholderName, Path=IsMouseOver}" Value="True">
+                <Setter Property="Background" Value="{DynamicResource NoteHoverBackground}"/>
               </DataTrigger>
             </Style.Triggers>
           </Style>
         </Border.Style>
-        
+
         <StackPanel Orientation="Vertical">
           <Grid HorizontalAlignment="Right" Height="23">
             <Button
@@ -88,10 +99,10 @@
                       </ControlTemplate>
                     </Setter.Value>
                   </Setter>
-                  
+
                   <Setter Property="Visibility" Value="Hidden"/>
                   <Style.Triggers>
-                    <DataTrigger Binding="{Binding ElementName=FooBorder, Path=IsMouseOver}" Value="True">
+                    <DataTrigger Binding="{Binding ElementName=PlaceholderName, Path=IsMouseOver}" Value="True">
                       <Setter Property="Visibility" Value="Visible"/>
                     </DataTrigger>
                   </Style.Triggers>
@@ -109,7 +120,7 @@
                 <Style TargetType="{x:Type TextBlock}">
                   <Setter Property="Visibility" Value="Visible"/>
                   <Style.Triggers>
-                    <DataTrigger Binding="{Binding ElementName=FooBorder, Path=IsMouseOver}" Value="True">
+                    <DataTrigger Binding="{Binding ElementName=PlaceholderName, Path=IsMouseOver}" Value="True">
                       <Setter Property="Visibility" Value="Hidden"/>
                     </DataTrigger>
                   </Style.Triggers>
@@ -120,7 +131,7 @@
           <StackPanel Margin="10,0,10,15">
             <RichTextBox
               Margin="0,0,0,0"
-              Background="#00FFFFFF"
+              Background="Transparent"
               BorderBrush="Transparent"
               BorderThickness="0"
               IsReadOnly="True"

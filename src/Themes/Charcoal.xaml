@@ -1,0 +1,7 @@
+<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <SolidColorBrush x:Key="NoteBackground" Color="#FF696969"/>
+  <SolidColorBrush x:Key="NoteHoverBackground" Color="#FF737373"/>
+  <SolidColorBrush x:Key="NoteTitleBarBackground" Color="#FF494745"/>
+</ResourceDictionary>
