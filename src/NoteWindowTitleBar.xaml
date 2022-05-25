@@ -44,7 +44,7 @@
       Name="TitleBarPanel"
       VerticalAlignment="Top"
       >
-        <Button Style="{StaticResource TitleBarButton}" Content="&#xE710;" DockPanel.Dock="Left" x:Name="ButtonAdd" ToolTip="New note" Click="OnAdd"/>
+        <Button Style="{StaticResource TitleBarButton}" Content="&#xE710;" DockPanel.Dock="Left" x:Name="ButtonAdd" ToolTip="New note" Click="OnAdd" FontSize="15"/>
         <Button Style="{StaticResource TitleBarButton}" Content="&#xE711;" DockPanel.Dock="Right" x:Name="ButtonClose" ToolTip="Close note" Click="OnClose"/>
         <Button Style="{StaticResource TitleBarButton}" Content="&#xE712;" DockPanel.Dock="Right" x:Name="ButtonMore" ToolTip="Menu" Click="OnMenu"/>
     </DockPanel>
