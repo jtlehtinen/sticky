@@ -1,7 +1,9 @@
 <ResourceDictionary
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <SolidColorBrush x:Key="NoteBackground" Color="#FFFFE4F1"/>
-  <SolidColorBrush x:Key="NoteHoverBackground" Color="#FFEED5E1"/>
-  <SolidColorBrush x:Key="NoteTitleBarBackground" Color="#FFFFCCE5"/>
+  <SolidColorBrush x:Key="Background" Color="#FFFFE4F1"/>
+  <SolidColorBrush x:Key="BackgroundSecondary" Color="#FFFFCCE5"/>
+  <SolidColorBrush x:Key="BackgroundHover" Color="#FFEED5E1"/>
+  <SolidColorBrush x:Key="Foreground" Color="#FF000000"/>
+  <SolidColorBrush x:Key="ForegroundSecondary" Color="#FF616161"/>
 </ResourceDictionary>

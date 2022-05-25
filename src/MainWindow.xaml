@@ -36,10 +36,10 @@
       <Border x:Name="PlaceholderName" BorderThickness="1" BorderBrush="Transparent" CornerRadius="5">
         <Border.Style>
           <Style TargetType="{x:Type Border}">
-            <Setter Property="Background" Value="{DynamicResource NoteBackground}"/>
+            <Setter Property="Background" Value="{DynamicResource Background}"/>
             <Style.Triggers>
               <DataTrigger Binding="{Binding ElementName=PlaceholderName, Path=IsMouseOver}" Value="True">
-                <Setter Property="Background" Value="{DynamicResource NoteHoverBackground}"/>
+                <Setter Property="Background" Value="{DynamicResource BackgroundHover}"/>
               </DataTrigger>
             </Style.Triggers>
           </Style>
@@ -54,16 +54,16 @@
               VerticalAlignment="Bottom"
               Width="32"
               Height="23"
-              Background="#00000000"
+              Background="Transparent"
               BorderThickness="0"
               Focusable="False"
               FontFamily="Segoe MDL2 Assets"
               FontSize="16"
-              Foreground="Gray"
+              Foreground="{DynamicResource ForegroundSecondary}"
               Margin="0,0,0,0"
               Opacity="1.0"
               TextBlock.FontFamily="Segoe MDL2 Assets"
-              TextBlock.Foreground="Black"
+              TextBlock.Foreground="{DynamicResource ForegroundSecondary}"
               TextOptions.TextHintingMode="Fixed"
               TextOptions.TextRenderingMode="ClearType"
               TextOptions.TextFormattingMode="Display"
@@ -113,7 +113,7 @@
               FontSize="10"
               VerticalAlignment="Bottom"
               HorizontalAlignment="Center"
-              Foreground="Gray"
+              Foreground="{DynamicResource ForegroundSecondary}"
               Margin="0,0,10,0"
               Text="12:31 PM">
               <TextBlock.Style>
@@ -137,6 +137,7 @@
               IsReadOnly="True"
               VerticalScrollBarVisibility="Auto"
               HorizontalScrollBarVisibility="Auto"
+              Foreground="{DynamicResource Foreground}"
               FontSize="14">
               <FlowDocument>
                 <Paragraph>

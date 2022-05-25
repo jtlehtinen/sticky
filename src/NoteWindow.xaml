@@ -18,7 +18,7 @@
   <Window.Resources>
   </Window.Resources>
 
-  <DockPanel Background="#FFE2F1FF">
+  <DockPanel Background="{DynamicResource Background}">
     <local:NoteWindowTitleBar x:Name="TitleBar" Margin="0,0,0,10" VerticalAlignment="Top" DockPanel.Dock="Top">
       <local:NoteWindowTitleBar.RenderTransform>
         <TranslateTransform Y="-42"/>
@@ -30,16 +30,16 @@
         <!-- @TODO: Reusable button styles -->
         <StackPanel.Resources>
           <Style x:Key="FooterButton" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="#00000000"/>
+            <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Focusable" Value="False"/>
             <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
             <Setter Property="FontSize" Value="18"/>
-            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Foreground" Value="{DynamicResource Foreground}"/>
             <Setter Property="Margin" Value="5,5,5,5"/>
             <Setter Property="Opacity" Value="0.6"/>
             <Setter Property="TextBlock.FontFamily" Value="Segoe MDL2 Assets"/>
-            <Setter Property="TextBlock.Foreground" Value="Black"/>
+            <Setter Property="TextBlock.Foreground" Value="{DynamicResource Foreground}"/>
             <!-- https://wpf.2000things.com/tag/pixel-snapping/ -->
             <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/> <!-- [Fixed, Animated] -->
             <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/> <!-- [Aliased, ClearType, Grayscale] -->
@@ -74,18 +74,19 @@
       Margin="5,0"
       MinWidth="50"
       Text="Take a note..."
-      Foreground="Gray"
+      Foreground="{DynamicResource ForegroundSecondary}"
       IsHitTestVisible="False"
       FontSize="14"/>
 
       <RichTextBox
         Name="NoteInput"
-        Background="#00FFFFFF"
+        Background="Transparent"
         BorderBrush="Transparent"
         BorderThickness="0"
         VerticalScrollBarVisibility="Auto"
         HorizontalScrollBarVisibility="Auto"
         TextChanged="OnTextChanged"
+        Foreground="{DynamicResource Foreground}"
         FontSize="14">
 
         <RichTextBox.Resources>
