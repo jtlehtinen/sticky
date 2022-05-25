@@ -8,13 +8,14 @@
     <UseWPF>true</UseWPF>
 
     <!--
-    OutputPath should be in Directory.Build.props. Can't do it since
-    some of the variables (Configuration, Platform) needed are not
-    defined when Directory.Build.props is evaluated.
+      @TODO:
+      OutputPath should be in Directory.Build.props. Can't do it since
+      some of the variables (Configuration, Platform) needed are not
+      defined when Directory.Build.props is evaluated.
 
-    For some reason ../build/AnyCPU-Debug directory is created too,
-    even if platforms are specifically set to only x64... Don't know atm
-    who creates it and when or how to get rid of it.
+      For some reason ../build/AnyCPU-Debug directory is created too,
+      even if platforms are specifically set to only x64... Don't know atm
+      who creates it and when or how to get rid of it.
     -->
     <OutputPath>../build/$(Platform)-$(Configuration)</OutputPath>
   </PropertyGroup>

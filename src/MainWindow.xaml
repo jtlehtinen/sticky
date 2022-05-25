@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Sticky"
         mc:Ignorable="d"
         Title="sticky"
-        Height="600"
+        Height="500"
         Width="320"
         WindowStyle="None"
         AllowsTransparency="True"
@@ -18,8 +18,125 @@
 
   <StackPanel Orientation="Vertical">
     <local:MainWindowTitleBar Margin="0,0,0,0"/>
-    <Label Style="{StaticResource HeaderTextStyle}">
+    <Label Style="{StaticResource HeaderTextStyle}" Margin="5,0">
       Sticky Notes
     </Label>
+    <StackPanel Orientation="Vertical" Margin="10">
+      <Border x:Name="FooBorder" BorderThickness="1" BorderBrush="Transparent" CornerRadius="5">
+        <Border.Style>
+          <Style TargetType="{x:Type Border}">
+            <Setter Property="Background" Value="#FFE2F1FF"/>
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding ElementName=FooBorder, Path=IsMouseOver}" Value="True">
+                <Setter Property="Background" Value="#FFD3E1EE"/>
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </Border.Style>
+        
+        <StackPanel Orientation="Vertical">
+          <Grid HorizontalAlignment="Right" Height="23">
+            <Button
+              ToolTip="Menu"
+              HorizontalAlignment="Right"
+              VerticalContentAlignment="Bottom"
+              VerticalAlignment="Bottom"
+              Width="32"
+              Height="23"
+              Background="#00000000"
+              BorderThickness="0"
+              Focusable="False"
+              FontFamily="Segoe MDL2 Assets"
+              FontSize="16"
+              Foreground="Gray"
+              Margin="0,0,0,0"
+              Opacity="1.0"
+              TextBlock.FontFamily="Segoe MDL2 Assets"
+              TextBlock.Foreground="Black"
+              TextOptions.TextHintingMode="Fixed"
+              TextOptions.TextRenderingMode="ClearType"
+              TextOptions.TextFormattingMode="Display"
+              UseLayoutRounding="True"
+              >
+              <!-- @TODO: The Border is a complete hack to make the text bottom aligned -->
+              <Border BorderBrush="{x:Null}" Height="23" Margin="0,0,10,0">
+                <TextBlock Text="&#xE712;" VerticalAlignment="Bottom"/>
+              </Border>
+              <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                  <Setter Property="Template">
+                    <Setter.Value>
+                      <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" SnapsToDevicePixels="true">
+                          <ContentPresenter
+                            Focusable="False"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Margin="{TemplateBinding Margin}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                          <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="Transparent"/>
+                          </Trigger>
+                          <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="Transparent"/>
+                          </Trigger>
+                        </ControlTemplate.Triggers>
+                      </ControlTemplate>
+                    </Setter.Value>
+                  </Setter>
+                  
+                  <Setter Property="Visibility" Value="Hidden"/>
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=FooBorder, Path=IsMouseOver}" Value="True">
+                      <Setter Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </Button.Style>
+            </Button>
+            <TextBlock
+              FontSize="10"
+              VerticalAlignment="Bottom"
+              HorizontalAlignment="Center"
+              Foreground="Gray"
+              Margin="0,0,10,0"
+              Text="12:31 PM">
+              <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                  <Setter Property="Visibility" Value="Visible"/>
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=FooBorder, Path=IsMouseOver}" Value="True">
+                      <Setter Property="Visibility" Value="Hidden"/>
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </TextBlock.Style>
+            </TextBlock>
+          </Grid>
+          <StackPanel Margin="10,0,10,15">
+            <RichTextBox
+              Margin="0,0,0,0"
+              Background="#00FFFFFF"
+              BorderBrush="Transparent"
+              BorderThickness="0"
+              IsReadOnly="True"
+              VerticalScrollBarVisibility="Auto"
+              HorizontalScrollBarVisibility="Auto"
+              FontSize="14">
+              <FlowDocument>
+                <Paragraph>
+                  <Bold>httpie-go</Bold>
+                </Paragraph>
+                <Paragraph>Add header "Accept: */*", nginx seems to block requests if no content negotiation headers specified</Paragraph>
+              </FlowDocument>
+            </RichTextBox>
+          </StackPanel>
+        </StackPanel>
+      </Border>
+    </StackPanel>
   </StackPanel>
 </Window>
