@@ -23,7 +23,7 @@
       <!-- https://wpf.2000things.com/tag/pixel-snapping/ -->
       <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/> <!-- [Fixed, Animated] -->
       <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/> <!-- [Aliased, ClearType, Grayscale] -->
-      <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/> <!-- [Ideal, Display] -->
+      <Setter Property="TextOptions.TextFormattingMode" Value="Display"/> <!-- [Ideal, Display] -->
       <Setter Property="UseLayoutRounding" Value="True"/>
       <Setter Property="Width" Value="32"/>
       <Style.Triggers>

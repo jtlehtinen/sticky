@@ -15,14 +15,14 @@
       <Setter Property="Focusable" Value="False"/>
       <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
       <Setter Property="FontSize" Value="12"/>
-      <Setter Property="FontWeight" Value="Bold"/>
+      <Setter Property="FontWeight" Value="Thin"/>
       <Setter Property="Foreground" Value="Black"/>
       <Setter Property="Margin" Value="0,0,0,0"/>
       <Setter Property="TextBlock.FontFamily" Value="Segoe MDL2 Assets"/>
       <Setter Property="TextBlock.Foreground" Value="Gray"/>
-      <Setter Property="TextBlock.FontWeight" Value="Bold"/>
+      <Setter Property="TextBlock.FontWeight" Value="Thin"/>
       <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/> <!-- [Fixed, Animated] -->
-      <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/> <!-- [Ideal, Display] -->
+      <Setter Property="TextOptions.TextFormattingMode" Value="Display"/> <!-- [Ideal, Display] -->
       <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/> <!-- [Aliased, ClearType, Grayscale] -->
       <Setter Property="UseLayoutRounding" Value="True"/>
       <Setter Property="Height" Value="40"/>
@@ -52,7 +52,7 @@
       MouseDown="OnMouseDown"
       MouseMove="OnMouseMove"
       Name="TitleBarPanel">
-        <Button Content="&#xE710;" DockPanel.Dock="Left" ToolTip="New note" Style="{StaticResource TitleBarButton}" FontSize="16" x:Name="ButtonAdd" Click="OnAdd"/>
+        <Button Content="&#xE710;" DockPanel.Dock="Left" ToolTip="New note" Style="{StaticResource TitleBarButton}" FontSize="15" x:Name="ButtonAdd" Click="OnAdd"/>
         <Button Content="&#xE8BB;" DockPanel.Dock="Right" ToolTip="Close window" Style="{StaticResource TitleBarButton}" x:Name="ButtonClose" Click="OnClose"/>
         <Button Content="&#xE713;" DockPanel.Dock="Right" ToolTip="Settings" Style="{StaticResource TitleBarButton}" FontSize="16" x:Name="ButtonSettings" Click="OnSettings"/>
     </DockPanel>

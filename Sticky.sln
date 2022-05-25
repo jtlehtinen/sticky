@@ -6,14 +6,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sticky", "src\Sticky.csproj
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+    Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D3522809-FAAC-4A9D-9EE0-185A816E210E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3522809-FAAC-4A9D-9EE0-185A816E210E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3522809-FAAC-4A9D-9EE0-185A816E210E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3522809-FAAC-4A9D-9EE0-185A816E210E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3522809-FAAC-4A9D-9EE0-185A816E210E}.Debug|x64 CPU.ActiveCfg = Debug|x64
+		{D3522809-FAAC-4A9D-9EE0-185A816E210E}.Debug|x64 CPU.Build.0 = Debug|x64
+		{D3522809-FAAC-4A9D-9EE0-185A816E210E}.Release|x64 CPU.ActiveCfg = Release|x64
+		{D3522809-FAAC-4A9D-9EE0-185A816E210E}.Release|x64 CPU.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
