@@ -6,12 +6,14 @@
 
   <UserControl.Resources>
     <!-- @NOTE: Just a hack to use value converter with dynamic resources. -->
-    <local:BindingProxy x:Key="BackgroundProxy" Data="{DynamicResource Background}"/>
+    <local:BindingProxy x:Key="BackgroundProxy" Data="{DynamicResource BackgroundSecondary}"/>
 
     <Style
       BasedOn="{StaticResource TitleBarButton}"
       TargetType="{x:Type Button}"
       x:Key="NoteWindowTitleBarButton">
+
+      <Setter Property="Foreground" Value="{DynamicResource ForegroundSecondary}"/>
 
       <Setter Property="Template">
         <Setter.Value>

@@ -26,6 +26,8 @@ namespace Sticky {
 
   public class BackgroundToHoverConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+      if (value == null) return null;
+
       var brush = (SolidColorBrush)value;
       return new SolidColorBrush(brush.Color.ToHoverColor());
     }
@@ -38,6 +40,8 @@ namespace Sticky {
 
   public class BackgroundToPressedConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+      if (value == null) return null;
+
       var brush = (SolidColorBrush)value;
       return new SolidColorBrush(brush.Color.ToPressedColor());
     }
