@@ -1,40 +1,27 @@
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Sticky {
-  /// <summary>
-  /// Interaction logic for TitleBar.xaml
-  /// </summary>
+
   public partial class MainWindowTitleBar : UserControl {
     public MainWindowTitleBar() {
       InitializeComponent();
-    }
-
-    private void OnAdd(object sender, RoutedEventArgs args) {
-      // @NOTE: Would routed events be better here?
-      var window = Application.Current.MainWindow as MainWindow;
-      if (window == null) return;
-
-      window.OnAddNote();
-    }
-
-    // @TODO: Pass the events to the main window...
-
-    private void OnSettings(object sender, RoutedEventArgs args) {
-      System.Console.WriteLine("OnSettings()");
     }
 
     private void OnClose(object sender, RoutedEventArgs args) {
       Window.GetWindow(this).Close();
     }
 
-    private void OnMouseDown(object sender, MouseButtonEventArgs args) {
-      var doubleClick = args.ClickCount >= 2;
-      if (!doubleClick) return;
+    private void OnNewNote(object sender, RoutedEventArgs args) {
+      var window = Application.Current.MainWindow as MainWindow;
+      if (window == null) return;
 
-      OnMaximizeOrRestore(sender, args);
+      window.OnAddNote();
+    }
+
+    private void OnSettings(object sender, RoutedEventArgs args) {
+      System.Console.WriteLine("OnSettings()");
     }
 
     private void OnMaximizeOrRestore(object sender, RoutedEventArgs args) {
@@ -43,6 +30,12 @@ namespace Sticky {
       Window.GetWindow(this).WindowState = newState;
     }
 
+    private void OnMouseDown(object sender, MouseButtonEventArgs args) {
+      var doubleClick = args.ClickCount >= 2;
+      if (!doubleClick) return;
+
+      OnMaximizeOrRestore(sender, args);
+    }
 
     private void OnMouseMove(object sender, MouseEventArgs args) {
       if (args.LeftButton != MouseButtonState.Pressed) return;
@@ -62,4 +55,5 @@ namespace Sticky {
       window.DragMove();
     }
   }
+
 }

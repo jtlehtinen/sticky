@@ -1,9 +1,16 @@
 <ResourceDictionary
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- NoteWindow Styles -->
   <SolidColorBrush x:Key="Background" Color="#FFE2F1FF"/>
   <SolidColorBrush x:Key="BackgroundSecondary" Color="#FFCDE9FF"/>
   <SolidColorBrush x:Key="BackgroundHover" Color="#FFD3E1EE"/>
   <SolidColorBrush x:Key="Foreground" Color="#FF000000"/>
   <SolidColorBrush x:Key="ForegroundSecondary" Color="#FF616161"/>
+
+  <!-- MainWindow Styles -->
+  <SolidColorBrush x:Key="TitleBar.Background.MouseOver" Color="#FFF3F3F3"/>
+  <SolidColorBrush x:Key="TitleBar.Background.Pressed" Color="#FFDCDCDC"/>
+  <SolidColorBrush x:Key="TitleBar.Foreground" Color="#FF616161"/>
 </ResourceDictionary>

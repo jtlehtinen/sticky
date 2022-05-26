@@ -12,10 +12,10 @@ namespace Sticky {
     }
 
     public enum DWM_WINDOW_CORNER_PREFERENCE {
-      DWMWCP_DEFAULT      = 0,
-      DWMWCP_DONOTROUND   = 1,
-      DWMWCP_ROUND        = 2,
-      DWMWCP_ROUNDSMALL   = 3
+      DWMWCP_DEFAULT    = 0,
+      DWMWCP_DONOTROUND = 1,
+      DWMWCP_ROUND      = 2,
+      DWMWCP_ROUNDSMALL = 3
     }
 
     [DllImport("dwmapi.dll", CharSet = CharSet.Unicode, PreserveSig = false)]

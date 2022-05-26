@@ -3,39 +3,31 @@ using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Sticky {
-  /// <summary>
-  /// Interaction logic for TitleBar.xaml
-  /// </summary>
+
   public partial class NoteWindowTitleBar : UserControl {
     public NoteWindowTitleBar() {
       InitializeComponent();
     }
 
-    public void SlideIn() {
-      this.RenderTransform = Animation.MakeTranslateYTransform(-42, 0, 150);
-    }
-
-    public void SlideOut() {
-      this.RenderTransform = Animation.MakeTranslateYTransform(0, -42, 150);
-    }
-
-    // @TODO: Pass the events to the main window...
-    // @TODO: Reuse title bar?
-
-    private void OnAdd(object sender, RoutedEventArgs args) {
-      // @NOTE: Would routed events be better here?
-      var window = Application.Current.MainWindow as MainWindow;
-      if (window == null) return;
-
-      window.OnAddNote();
+    private void OnClose(object sender, RoutedEventArgs args) {
+      Window.GetWindow(this).Close();
     }
 
     private void OnMenu(object sender, RoutedEventArgs args) {
       System.Console.WriteLine("OnMenu()");
     }
 
-    private void OnClose(object sender, RoutedEventArgs args) {
-      Window.GetWindow(this).Close();
+    private void OnNewNote(object sender, RoutedEventArgs args) {
+      var window = Application.Current.MainWindow as MainWindow;
+      if (window == null) return;
+
+      window.OnAddNote();
+    }
+
+    private void OnMaximizeOrRestore(object sender, RoutedEventArgs args) {
+      var state = Window.GetWindow(this).WindowState;
+      var newState = state == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
+      Window.GetWindow(this).WindowState = newState;
     }
 
     private void OnMouseDown(object sender, MouseButtonEventArgs args) {
@@ -43,12 +35,6 @@ namespace Sticky {
       if (!doubleClick) return;
 
       OnMaximizeOrRestore(sender, args);
-    }
-
-    private void OnMaximizeOrRestore(object sender, RoutedEventArgs args) {
-      var state = Window.GetWindow(this).WindowState;
-      var newState = state == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
-      Window.GetWindow(this).WindowState = newState;
     }
 
     private void OnMouseMove(object sender, MouseEventArgs args) {
@@ -68,5 +54,14 @@ namespace Sticky {
 
       window.DragMove();
     }
+
+    public void SlideIn() {
+      this.RenderTransform = Animation.MakeTranslateYTransform(-42, 0, 150);
+    }
+
+    public void SlideOut() {
+      this.RenderTransform = Animation.MakeTranslateYTransform(0, -42, 150);
+    }
   }
+
 }

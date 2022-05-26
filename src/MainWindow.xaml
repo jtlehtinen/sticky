@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:Sticky"
         mc:Ignorable="d"
         Title="sticky"
+        MinHeight="500"
+        MinWidth="320"
         Height="500"
         Width="320"
         WindowStyle="None"
@@ -23,7 +25,7 @@
     </Label>
     <StackPanel Orientation="Vertical" Margin="10">
       <!-- @TODO: Absolutely disgusting... -->
-      <StackPanel Orientation="Horizontal" Margin="10">
+      <UniformGrid Rows="1" Columns="7">
         <Button Content="Blue" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Blue"/>
         <Button Content="Charcoal" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Charcoal"/>
         <Button Content="Gray" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Gray"/>
@@ -31,7 +33,7 @@
         <Button Content="Pink" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Pink"/>
         <Button Content="Purple" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Purple"/>
         <Button Content="Yellow" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Yellow"/>
-      </StackPanel>
+      </UniformGrid>
 
       <Border x:Name="PlaceholderName" BorderThickness="1" BorderBrush="Transparent" CornerRadius="5">
         <Border.Style>
