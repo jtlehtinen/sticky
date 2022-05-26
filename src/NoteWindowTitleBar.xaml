@@ -1,9 +1,12 @@
 <UserControl
   x:Class="Sticky.NoteWindowTitleBar"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="clr-namespace:Sticky">
 
   <UserControl.Resources>
+    <!-- @NOTE: Just a hack to use value converter with dynamic resources. -->
+    <local:BindingProxy x:Key="BackgroundProxy" Data="{DynamicResource Background}"/>
 
     <Style
       BasedOn="{StaticResource TitleBarButton}"
@@ -32,10 +35,10 @@
             -->
             <ControlTemplate.Triggers>
               <Trigger Property="IsMouseOver" Value="true">
-                <Setter Property="Background" Value="Red"/>
+                <Setter Property="Background" Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"/>
               </Trigger>
               <Trigger Property="IsPressed" Value="true">
-                <Setter Property="Background" Value="Blue"/>
+                <Setter Property="Background" Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToPressedConverter}}"/>
               </Trigger>
             </ControlTemplate.Triggers>
           </ControlTemplate>
