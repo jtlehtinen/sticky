@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sticky"
         mc:Ignorable="d"
-        Title="sticky"
-        Height="200"
-        Width="306"
-        WindowStyle="None"
         AllowsTransparency="True"
-        SizeChanged="OnSizeChanged"
+        Height="200"
         ResizeMode="CanResizeWithGrip"
         ShowInTaskbar="False"
-        Topmost="True">
+        SizeChanged="OnSizeChanged"
+        Title="sticky"
+        Topmost="True"
+        Width="306"
+        WindowStyle="None">
 
   <Window.Resources>
   </Window.Resources>
@@ -27,67 +27,80 @@
 
     <Border DockPanel.Dock="Bottom" BorderThickness="0 1 0 0" BorderBrush="#10000000">
       <StackPanel  Orientation="Horizontal" Margin="0,0,0,0">
-        <!-- @TODO: Reusable button styles -->
         <StackPanel.Resources>
-          <Style x:Key="FooterButton" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Focusable" Value="False"/>
-            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
-            <Setter Property="FontSize" Value="18"/>
-            <Setter Property="Foreground" Value="{DynamicResource Foreground}"/>
-            <Setter Property="Margin" Value="5,5,5,5"/>
-            <Setter Property="Opacity" Value="0.6"/>
-            <Setter Property="TextBlock.FontFamily" Value="Segoe MDL2 Assets"/>
-            <Setter Property="TextBlock.Foreground" Value="{DynamicResource Foreground}"/>
-            <!-- https://wpf.2000things.com/tag/pixel-snapping/ -->
-            <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/> <!-- [Fixed, Animated] -->
-            <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/> <!-- [Aliased, ClearType, Grayscale] -->
-            <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/> <!-- [Ideal, Display] -->
-            <Setter Property="UseLayoutRounding" Value="True"/>
-            <Setter Property="Width" Value="32"/>
+          <local:BindingProxy x:Key="BackgroundProxy" Data="{DynamicResource Background}"/>
+
+          <!-- Footer Button -->
+          <Style
+            BasedOn="{StaticResource TitleBarButton}"
+            TargetType="{x:Type Button}"
+            x:Key="FooterButton">
+
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundSecondary}"/>
             <Setter Property="Height" Value="32"/>
-            <Style.Triggers>
-              <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#FFF2F2F2"/>
-              </Trigger>
-            </Style.Triggers>
+            <Setter Property="Margin" Value="5,5,5,5"/>
+            <Setter Property="Width" Value="32"/>
+            <Setter Property="Template">
+              <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                  <Border
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="Transparent"
+                    BorderThickness="0"
+                    SnapsToDevicePixels="True">
+                    <ContentPresenter
+                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                    />
+                  </Border>
+                  <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="true">
+                      <Setter
+                        Property="Background"
+                        Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"/>
+                    </Trigger>
+                    <Trigger Property="IsPressed" Value="true">
+                      <Setter
+                        Property="Background"
+                        Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToPressedConverter}}"/>
+                    </Trigger>
+                  </ControlTemplate.Triggers>
+                </ControlTemplate>
+              </Setter.Value>
+            </Setter>
           </Style>
         </StackPanel.Resources>
 
-        <Button Style="{StaticResource FooterButton}" Content="&#xE8DD;" ToolTip="Bold" FontSize="16"/>
-        <Button Style="{StaticResource FooterButton}" Content="&#xE8DB;" ToolTip="Italic" FontSize="16"/>
-        <Button Style="{StaticResource FooterButton}" Content="&#xE8DC;" ToolTip="Underline" FontSize="16"/>
-        <Button Style="{StaticResource FooterButton}" Content="&#xEDE0;" ToolTip="Strikethrough"/>
-        <Button Style="{StaticResource FooterButton}" Content="&#xE8FD;" ToolTip="Toggle Bullets"/>
-        <Button Style="{StaticResource FooterButton}" Content="&#xEB9F;" ToolTip="Add Image"/>
+        <Button Style="{StaticResource FooterButton}" Content="&#xE8DD;" FontSize="16" ToolTip="Bold"/>
+        <Button Style="{StaticResource FooterButton}" Content="&#xE8DB;" FontSize="16" ToolTip="Italic"/>
+        <Button Style="{StaticResource FooterButton}" Content="&#xE8DC;" FontSize="16" ToolTip="Underline"/>
+        <Button Style="{StaticResource FooterButton}" Content="&#xEDE0;" FontSize="18" ToolTip="Strikethrough"/>
+        <Button Style="{StaticResource FooterButton}" Content="&#xE8FD;" FontSize="18" ToolTip="Toggle Bullets"/>
+        <Button Style="{StaticResource FooterButton}" Content="&#xEB9F;" FontSize="18" ToolTip="Add Image"/>
       </StackPanel>
     </Border>
 
-    <!--
-      I have no words to describe how much WPF sucks...
-      -->
-
     <Grid>
      <TextBlock
-      Name="Placeholder"
-      Margin="5,0"
-      MinWidth="50"
-      Text="Take a note..."
+      FontSize="14"
       Foreground="{DynamicResource ForegroundSecondary}"
       IsHitTestVisible="False"
-      FontSize="14"/>
+      Margin="5,0"
+      MinWidth="50"
+      Name="Placeholder"
+      Text="Take a note..."/>
 
       <RichTextBox
-        Name="NoteInput"
         Background="Transparent"
         BorderBrush="Transparent"
         BorderThickness="0"
-        VerticalScrollBarVisibility="Auto"
-        HorizontalScrollBarVisibility="Auto"
-        TextChanged="OnTextChanged"
+        FontSize="14"
         Foreground="{DynamicResource Foreground}"
-        FontSize="14">
+        HorizontalScrollBarVisibility="Auto"
+        Name="NoteInput"
+        TextChanged="OnTextChanged"
+        VerticalScrollBarVisibility="Auto">
 
         <RichTextBox.Resources>
           <Style TargetType="{x:Type Paragraph}">

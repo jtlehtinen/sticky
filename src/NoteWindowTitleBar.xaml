@@ -5,7 +5,6 @@
   xmlns:local="clr-namespace:Sticky">
 
   <UserControl.Resources>
-    <!-- @NOTE: Just a hack to use value converter with dynamic resources. -->
     <local:BindingProxy x:Key="BackgroundProxy" Data="{DynamicResource BackgroundSecondary}"/>
 
     <Style
@@ -14,7 +13,6 @@
       x:Key="NoteWindowTitleBarButton">
 
       <Setter Property="Foreground" Value="{DynamicResource ForegroundSecondary}"/>
-
       <Setter Property="Template">
         <Setter.Value>
           <ControlTemplate TargetType="{x:Type Button}">
@@ -29,12 +27,6 @@
                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
               />
             </Border>
-            <!--
-              @TODO: Figure out a formula to compute
-            1) mouse over color
-            2) pressed color
-            from the background color
-            -->
             <ControlTemplate.Triggers>
               <Trigger Property="IsMouseOver" Value="true">
                 <Setter Property="Background" Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"/>
