@@ -180,6 +180,48 @@
           </Style>
         </RichTextBox.Resources>
 
+        <!-- Context Menu -->
+        <RichTextBox.ContextMenu>
+          <ContextMenu>
+            <!-- Copy -->
+            <MenuItem Command="ApplicationCommands.Copy">
+              <MenuItem.Icon>
+                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8C8;"/>
+              </MenuItem.Icon>
+            </MenuItem>
+
+            <!-- Cut -->
+            <MenuItem Command="ApplicationCommands.Cut">
+              <MenuItem.Icon>
+                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8C6;"/>
+              </MenuItem.Icon>
+            </MenuItem>
+
+            <!-- Paste -->
+            <MenuItem Command="ApplicationCommands.Paste">
+              <MenuItem.Icon>
+                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE77F;"/>
+              </MenuItem.Icon>
+            </MenuItem>
+
+            <Separator/>
+
+            <!-- Undo -->
+            <MenuItem Command="ApplicationCommands.Undo">
+              <MenuItem.Icon>
+                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE7A7;"/>
+              </MenuItem.Icon>
+            </MenuItem>
+
+            <!-- Redo -->
+            <MenuItem Command="ApplicationCommands.Redo">
+              <MenuItem.Icon>
+                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE7A6;"/>
+              </MenuItem.Icon>
+            </MenuItem>
+          </ContextMenu>
+        </RichTextBox.ContextMenu>
+
         <FlowDocument>
           <Paragraph>
             <Bold>httpie-go</Bold>
