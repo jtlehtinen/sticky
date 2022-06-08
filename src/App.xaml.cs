@@ -1,16 +1,34 @@
 using System;
+using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Input;
 
 namespace Sticky {
+
+  public class State {
+    public List<Note> Notes { get; set; } = new List<Note>();
+
+    public State() {
+      var notes = Notes;
+      notes.Add(new Note(){ Id = 1, CreatedAt = new DateTime(2022, 6, 8, 14, 30, 0), Content = "This is the first note." });
+      notes.Add(new Note(){ Id = 2, CreatedAt = new DateTime(2022, 6, 7, 15, 30, 0), Content = "This is the second note." });
+      notes.Add(new Note(){ Id = 3, CreatedAt = new DateTime(2022, 6, 6, 16, 30, 0), Content = "This is the third note." });
+    }
+  }
+
   /// <summary>
   /// Interaction logic for App.xaml
   /// </summary>
   public partial class App : Application {
+    // @TODO: Better way to detect if a resource dictionary
+    // is a theme.
     const string THEME_KEY = "THEME-MARKER-KEY";
     const string THEME_VALUE = "THEME-MARKER-VALUE";
 
+    public State state;
+
     private void Main(object sender, StartupEventArgs args) {
+      state = new State();
+
       this.Properties["Themes.Blue"] = LoadTheme("Themes/Blue.xaml");
       this.Properties["Themes.Charcoal"] = LoadTheme("Themes/Charcoal.xaml");
       this.Properties["Themes.Gray"] = LoadTheme("Themes/Gray.xaml");
@@ -43,7 +61,7 @@ namespace Sticky {
         }
       }
 
-      var theme = (ResourceDictionary)Properties[themeName];
+      var theme = (ResourceDictionary?)Properties[themeName];
       Resources.MergedDictionaries.Add(theme);
     }
   }

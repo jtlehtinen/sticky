@@ -5,6 +5,7 @@
   <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
   <local:BackgroundToHoverConverter x:Key="BackgroundToHoverConverter"/>
   <local:BackgroundToPressedConverter x:Key="BackgroundToPressedConverter"/>
+  <local:DateTimeConverter x:Key="DateTimeConverter"/>
 
   <!-- Header text style -->
   <Style x:Key="HeaderTextStyle">

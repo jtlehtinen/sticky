@@ -24,8 +24,28 @@ namespace Sticky {
     public static readonly DependencyProperty DataProperty = DependencyProperty.Register("Data", typeof(object), typeof(BindingProxy), new UIPropertyMetadata(null));
   }
 
+  public class DateTimeConverter : IValueConverter {
+    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+      if (value == null) return null;
+
+      var dt = (DateTime)value;
+      var today = DateTime.Today;
+
+      // https://stackoverflow.com/questions/3025361/c-sharp-datetime-to-yyyymmddhhmmss-format
+
+      var isToday = (dt.Year == today.Year && dt.Month == today.Month && dt.Day == today.Day);
+      var fmt = isToday ? "{0:t}" : "{0:m}";
+
+      return String.Format(fmt, dt);
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+      throw new NotImplementedException();
+    }
+  }
+
   public class BackgroundToHoverConverter : IValueConverter {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture) {
       if (value == null) return null;
 
       var brush = (SolidColorBrush)value;
@@ -35,11 +55,10 @@ namespace Sticky {
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
       throw new NotImplementedException();
     }
-
   }
 
   public class BackgroundToPressedConverter : IValueConverter {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture) {
       if (value == null) return null;
 
       var brush = (SolidColorBrush)value;

@@ -7,17 +7,25 @@ namespace Sticky {
   /// Interaction logic for MainWindow.xaml
   /// </summary>
   public partial class MainWindow : Window {
+    // @TODO: Remove windows when they are closed.
     private List<Window> noteWindows = new List<Window>();
 
     public static RoutedCommand ChangeThemeCommand = new RoutedCommand();
 
     public MainWindow() {
       InitializeComponent();
-      Native.ApplyRoundedWindowCorners(this);
-      ((App)Application.Current).SetTheme("Themes.Blue");
 
-      var binding = new CommandBinding(ChangeThemeCommand, ExecutedChangeThemeCommand, CanExecuteChangeThemeCommand);
-      CommandBindings.Add(binding);
+      var app = (App)Application.Current;
+
+      Native.ApplyRoundedWindowCorners(this);
+      app.SetTheme("Themes.Blue");
+
+      CommandBindings.Add(new CommandBinding(ChangeThemeCommand, ExecutedChangeThemeCommand, CanExecuteChangeThemeCommand));
+
+      // @NOTE:
+      // If you are binding to an object that has already been
+      // created, you need to set the DataContext in code.
+      this.DataContext = app.state;
     }
 
     private void ExecutedChangeThemeCommand(object sender, ExecutedRoutedEventArgs e) {

@@ -1,40 +1,20 @@
-<Window x:Class="Sticky.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Sticky"
-        mc:Ignorable="d"
-        Title="sticky"
-        MinHeight="500"
-        MinWidth="320"
-        Height="500"
-        Width="320"
-        WindowStyle="None"
-        AllowsTransparency="True"
-        SizeChanged="OnSizeChanged"
-        ResizeMode="CanResizeWithGrip">
+<Window
+  x:Class="Sticky.MainWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="clr-namespace:Sticky"
+  AllowsTransparency="True"
+  Height="500"
+  MinHeight="500"
+  MinWidth="320"
+  ResizeMode="CanResizeWithGrip"
+  SizeChanged="OnSizeChanged"
+  Title="sticky"
+  Width="320"
+  WindowStyle="None">
 
   <Window.Resources>
-  </Window.Resources>
-
-  <StackPanel Orientation="Vertical">
-    <local:MainWindowTitleBar Margin="0,0,0,0"/>
-    <Label Style="{StaticResource HeaderTextStyle}" Margin="5,0">
-      Sticky Notes
-    </Label>
-    <StackPanel Orientation="Vertical" Margin="10">
-      <!-- @TODO: Absolutely disgusting... -->
-      <UniformGrid Rows="1" Columns="7">
-        <Button Content="Blue" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Blue"/>
-        <Button Content="Charcoal" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Charcoal"/>
-        <Button Content="Gray" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Gray"/>
-        <Button Content="Green" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Green"/>
-        <Button Content="Pink" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Pink"/>
-        <Button Content="Purple" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Purple"/>
-        <Button Content="Yellow" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Yellow"/>
-      </UniformGrid>
-
+    <DataTemplate x:Key="NoteItemTemplate">
       <Border x:Name="PlaceholderName" BorderThickness="1" BorderBrush="Transparent" CornerRadius="5">
         <Border.Style>
           <Style TargetType="{x:Type Border}">
@@ -46,7 +26,6 @@
             </Style.Triggers>
           </Style>
         </Border.Style>
-
         <StackPanel Orientation="Vertical">
           <Grid HorizontalAlignment="Right" Height="23">
             <Button
@@ -71,7 +50,6 @@
               TextOptions.TextFormattingMode="Display"
               UseLayoutRounding="True"
               >
-              <!-- @TODO: The Border is a complete hack to make the text bottom aligned -->
               <Border BorderBrush="{x:Null}" Height="23" Margin="0,0,10,0">
                 <TextBlock Text="&#xE712;" VerticalAlignment="Bottom"/>
               </Border>
@@ -117,7 +95,8 @@
               HorizontalAlignment="Center"
               Foreground="{DynamicResource ForegroundSecondary}"
               Margin="0,0,10,0"
-              Text="12:31 PM">
+              Text="{Binding Path=CreatedAt, Converter={StaticResource DateTimeConverter}}">
+
               <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}">
                   <Setter Property="Visibility" Value="Visible"/>
@@ -143,14 +122,39 @@
               FontSize="14">
               <FlowDocument>
                 <Paragraph>
-                  <Bold>httpie-go</Bold>
+                  <Run Text="{Binding Content}"/>
                 </Paragraph>
-                <Paragraph>Add header "Accept: */*", nginx seems to block requests if no content negotiation headers specified</Paragraph>
               </FlowDocument>
             </RichTextBox>
           </StackPanel>
         </StackPanel>
       </Border>
+    </DataTemplate>
+  </Window.Resources>
+
+  <StackPanel Orientation="Vertical">
+    <local:MainWindowTitleBar Margin="0,0,0,0"/>
+    <Label Style="{StaticResource HeaderTextStyle}" Margin="5,0">
+      Sticky Notes
+    </Label>
+    <StackPanel Orientation="Vertical" Margin="10">
+      <UniformGrid Rows="1" Columns="7">
+        <Button Content="Blue" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Blue"/>
+        <Button Content="Charcoal" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Charcoal"/>
+        <Button Content="Gray" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Gray"/>
+        <Button Content="Green" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Green"/>
+        <Button Content="Pink" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Pink"/>
+        <Button Content="Purple" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Purple"/>
+        <Button Content="Yellow" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Yellow"/>
+      </UniformGrid>
+
+      <ItemsControl ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NoteItemTemplate}">
+        <ItemsControl.ItemContainerStyle>
+          <Style>
+            <Setter Property="FrameworkElement.Margin" Value="0,5"/>
+          </Style>
+        </ItemsControl.ItemContainerStyle>
+      </ItemsControl>
     </StackPanel>
   </StackPanel>
 </Window>
