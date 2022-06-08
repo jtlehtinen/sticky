@@ -169,6 +169,7 @@
         BorderThickness="0"
         FontSize="14"
         Foreground="{DynamicResource Foreground}"
+        SelectionBrush="{DynamicResource SelectionBackgroundColor}"
         HorizontalScrollBarVisibility="Auto"
         x:Name="NoteRichTextBox"
         TextChanged="OnTextChanged"

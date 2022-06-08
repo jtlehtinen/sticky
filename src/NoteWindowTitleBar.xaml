@@ -48,7 +48,7 @@
     MouseDown="OnMouseDown"
     MouseMove="OnMouseMove">
 
-      <!-- New Note Button -->
+      <!-- New Note -->
       <Button
         Click="OnNewNote"
         Content="&#xE710;"
@@ -58,17 +58,25 @@
         ToolTip="New note"
         Width="32"/>
 
-      <!-- Pin Note Button -->
-      <!-- @TODO: Unpin E77A -->
+      <!-- Pin Note -->
       <Button
         Content="&#xE718;"
         DockPanel.Dock="Left"
         FontSize="15"
         Style="{StaticResource NoteWindowTitleBarButton}"
-        ToolTip="Pin Note"
+        ToolTip="Pin note"
         Width="32"/>
 
-      <!-- Close Button -->
+      <!-- Unpin Note -->
+      <Button
+        Content="&#xE77A;"
+        DockPanel.Dock="Left"
+        FontSize="15"
+        Style="{StaticResource NoteWindowTitleBarButton}"
+        ToolTip="Unpin note"
+        Width="32"/>
+
+      <!-- Close Note -->
       <Button
         Click="OnClose"
         Content="&#xE711;"
@@ -78,7 +86,7 @@
         ToolTip="Close note"
         Width="32"/>
 
-      <!-- Menu Button -->
+      <!-- Open Menu -->
       <Button
         Click="OnMenu"
         Content="&#xE712;"

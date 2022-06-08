@@ -6,6 +6,7 @@
   <SolidColorBrush x:Key="BackgroundHover" Color="#FFE2D7EE"/>
   <SolidColorBrush x:Key="Foreground" Color="#FF000000"/>
   <SolidColorBrush x:Key="ForegroundSecondary" Color="#FF616161"/>
+  <SolidColorBrush x:Key="SelectionBackgroundColor" Color="#FF9159C7"/>
 
   <SolidColorBrush x:Key="TitleBar.Background.MouseOver" Color="#FFF3F3F3"/>
   <SolidColorBrush x:Key="TitleBar.Background.Pressed" Color="#FFDCDCDC"/>
