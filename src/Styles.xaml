@@ -8,6 +8,11 @@
   <local:StringToFlowDocumentConverter x:Key="StringToFlowDocumentConverter"/>
   <local:DateTimeConverter x:Key="DateTimeConverter"/>
 
+  <!-- Global ToolTip Styles -->
+  <Style TargetType="{x:Type ToolTip}">
+    <Setter Property="ToolTipService.Placement" Value="Top"/>
+  </Style>
+
   <!-- Header text style -->
   <Style x:Key="HeaderTextStyle">
     <Setter Property="Label.FontFamily" Value="Arial"/>
