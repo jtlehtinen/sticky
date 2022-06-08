@@ -12,15 +12,15 @@ namespace Sticky {
     public NoteWindow() {
       InitializeComponent();
       Native.ApplyRoundedWindowCorners(this);
-      this.Show();
-      this.NoteInput.GotKeyboardFocus += OnGotKeyboardFocus;
-      this.NoteInput.LostKeyboardFocus += OnLostKeyboardFocus;
+      Show();
+      NoteRichTextBox.GotKeyboardFocus += OnGotKeyboardFocus;
+      NoteRichTextBox.LostKeyboardFocus += OnLostKeyboardFocus;
     }
 
     // Can't believe this...
     // https://stackoverflow.com/questions/5825575/detect-if-a-richtextbox-is-empty
     public bool IsRichTextBoxEmpty() {
-      var box = this.NoteInput as RichTextBox;
+      var box = NoteRichTextBox as RichTextBox;
       if (box == null) return true;
 
       if (box.Document.Blocks.Count == 0) return true;
@@ -29,20 +29,20 @@ namespace Sticky {
       return start.CompareTo(end) == 0;
     }
 
-    private void OnTextChanged(object sender, TextChangedEventArgs args) {
+    private void OnTextChanged(object sender, TextChangedEventArgs e) {
       var visibility = IsRichTextBoxEmpty() ? Visibility.Visible : Visibility.Hidden;
-      this.Placeholder.Visibility = visibility;
+      Placeholder.Visibility = visibility;
     }
 
-    private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs args) {
-      this.TitleBar.SlideIn();
+    private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e) {
+      TitleBar.SlideIn();
     }
 
-    private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs args) {
-      this.TitleBar.SlideOut();
+    private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e) {
+      TitleBar.SlideOut();
     }
 
-    private void OnSizeChanged(object sender, SizeChangedEventArgs args) {
+    private void OnSizeChanged(object sender, SizeChangedEventArgs e) {
       // @NOTE: This hack is here because:
       // Given: AllowsTransparency="True"
       // When: Window maximized
@@ -52,9 +52,9 @@ namespace Sticky {
       this.BorderThickness = new System.Windows.Thickness(thickness);
     }
 
-    protected override void OnClosing(System.ComponentModel.CancelEventArgs args) {
+    protected override void OnClosing(System.ComponentModel.CancelEventArgs e) {
       // @TODO: Remove from main window...
-      base.OnClosing(args);
+      base.OnClosing(e);
     }
   }
 }

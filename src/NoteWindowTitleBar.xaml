@@ -58,6 +58,16 @@
         ToolTip="New note"
         Width="32"/>
 
+      <!-- Pin Note Button -->
+      <!-- @TODO: Unpin E77A -->
+      <Button
+        Content="&#xE718;"
+        DockPanel.Dock="Left"
+        FontSize="15"
+        Style="{StaticResource NoteWindowTitleBarButton}"
+        ToolTip="Pin Note"
+        Width="32"/>
+
       <!-- Close Button -->
       <Button
         Click="OnClose"

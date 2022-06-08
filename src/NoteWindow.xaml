@@ -1,21 +1,61 @@
-<Window x:Class="Sticky.NoteWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Sticky"
-        mc:Ignorable="d"
-        AllowsTransparency="True"
-        Height="200"
-        ResizeMode="CanResizeWithGrip"
-        ShowInTaskbar="False"
-        SizeChanged="OnSizeChanged"
-        Title="sticky"
-        Topmost="True"
-        Width="306"
-        WindowStyle="None">
+<Window
+  x:Class="Sticky.NoteWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="clr-namespace:Sticky"
+  AllowsTransparency="True"
+  Height="200"
+  ResizeMode="CanResizeWithGrip"
+  ShowInTaskbar="False"
+  SizeChanged="OnSizeChanged"
+  Title="sticky"
+  Topmost="True"
+  Width="340"
+  WindowStyle="None">
 
   <Window.Resources>
+    <local:BindingProxy x:Key="BackgroundProxy" Data="{DynamicResource Background}"/>
+
+    <!-- ContentControlButton Button -->
+    <Style
+      BasedOn="{StaticResource TitleBarButton}"
+      TargetType="{x:Type Button}"
+      x:Key="ContentControlButton">
+
+      <Setter Property="Foreground" Value="{DynamicResource ForegroundSecondary}"/>
+      <Setter Property="Height" Value="32"/>
+      <Setter Property="Margin" Value="5,5,5,5"/>
+      <Setter Property="Width" Value="32"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type Button}">
+            <Border
+              Background="{TemplateBinding Background}"
+              BorderBrush="Transparent"
+              BorderThickness="0"
+              SnapsToDevicePixels="True">
+              <ContentPresenter
+                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+              />
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="true">
+                <Setter
+                  Property="Background"
+                  Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"/>
+              </Trigger>
+              <Trigger Property="IsPressed" Value="true">
+                <Setter
+                  Property="Background"
+                  Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToPressedConverter}}"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
   </Window.Resources>
 
   <DockPanel Background="{DynamicResource Background}">
@@ -25,71 +65,103 @@
       </local:NoteWindowTitleBar.RenderTransform>
     </local:NoteWindowTitleBar>
 
+    <!-- RichTextBox Content Controls -->
     <Border DockPanel.Dock="Bottom" BorderThickness="0 1 0 0" BorderBrush="#10000000">
       <StackPanel  Orientation="Horizontal" Margin="0,0,0,0">
-        <StackPanel.Resources>
-          <local:BindingProxy x:Key="BackgroundProxy" Data="{DynamicResource Background}"/>
+        <!-- Bold Button -->
+        <Button
+          Style="{StaticResource ContentControlButton}"
+          Content="&#xE8DD;"
+          FontSize="16"
+          ToolTip="Bold"
+          Command="EditingCommands.ToggleBold"
+          CommandTarget="{Binding ElementName=NoteRichTextBox}"
+        />
 
-          <!-- Footer Button -->
-          <Style
-            BasedOn="{StaticResource TitleBarButton}"
-            TargetType="{x:Type Button}"
-            x:Key="FooterButton">
+        <!-- Italic Button -->
+        <Button
+          Style="{StaticResource ContentControlButton}"
+          Content="&#xE8DB;"
+          FontSize="16"
+          ToolTip="Italic"
+          Command="EditingCommands.ToggleItalic"
+          CommandTarget="{Binding ElementName=NoteRichTextBox}"
+        />
 
-            <Setter Property="Foreground" Value="{DynamicResource ForegroundSecondary}"/>
-            <Setter Property="Height" Value="32"/>
-            <Setter Property="Margin" Value="5,5,5,5"/>
-            <Setter Property="Width" Value="32"/>
-            <Setter Property="Template">
-              <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                  <Border
-                    Background="{TemplateBinding Background}"
-                    BorderBrush="Transparent"
-                    BorderThickness="0"
-                    SnapsToDevicePixels="True">
-                    <ContentPresenter
-                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                    />
-                  </Border>
-                  <ControlTemplate.Triggers>
-                    <Trigger Property="IsMouseOver" Value="true">
-                      <Setter
-                        Property="Background"
-                        Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"/>
-                    </Trigger>
-                    <Trigger Property="IsPressed" Value="true">
-                      <Setter
-                        Property="Background"
-                        Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToPressedConverter}}"/>
-                    </Trigger>
-                  </ControlTemplate.Triggers>
-                </ControlTemplate>
-              </Setter.Value>
-            </Setter>
-          </Style>
-        </StackPanel.Resources>
+        <!-- Underline Button -->
+        <Button
+          Style="{StaticResource ContentControlButton}"
+          Content="&#xE8DC;"
+          FontSize="16"
+          ToolTip="Underline"
+          Command="EditingCommands.ToggleUnderline"
+          CommandTarget="{Binding ElementName=NoteRichTextBox}"
+        />
 
-        <Button Style="{StaticResource FooterButton}" Content="&#xE8DD;" FontSize="16" ToolTip="Bold"/>
-        <Button Style="{StaticResource FooterButton}" Content="&#xE8DB;" FontSize="16" ToolTip="Italic"/>
-        <Button Style="{StaticResource FooterButton}" Content="&#xE8DC;" FontSize="16" ToolTip="Underline"/>
-        <Button Style="{StaticResource FooterButton}" Content="&#xEDE0;" FontSize="18" ToolTip="Strikethrough"/>
-        <Button Style="{StaticResource FooterButton}" Content="&#xE8FD;" FontSize="18" ToolTip="Toggle Bullets"/>
-        <Button Style="{StaticResource FooterButton}" Content="&#xEB9F;" FontSize="18" ToolTip="Add Image"/>
+        <!-- @TODO: Strikethrough Button -->
+        <Button
+          Style="{StaticResource ContentControlButton}"
+          Content="&#xEDE0;"
+          FontSize="18"
+          ToolTip="Strikethrough"
+        />
+
+        <!-- Toggle Bullets Button -->
+        <Button
+          Style="{StaticResource ContentControlButton}"
+          Content="&#xE8FD;"
+          FontSize="18"
+          ToolTip="Toggle Bullets"
+          Command="EditingCommands.ToggleBullets"
+          CommandTarget="{Binding ElementName=NoteRichTextBox}"
+        />
+
+        <!-- @TODO: Add Image Button -->
+        <Button
+          Style="{StaticResource ContentControlButton}"
+          Content="&#xEB9F;"
+          FontSize="18"
+          ToolTip="Add Image"
+        />
+
+        <!-- Decrease Font Size Button -->
+        <Button
+          Style="{StaticResource ContentControlButton}"
+          Content="&#xE8E7;"
+          FontSize="18"
+          ToolTip="Decrease Font Size"
+          Command="EditingCommands.DecreaseFontSize"
+          CommandTarget="{Binding ElementName=NoteRichTextBox}"
+        />
+
+        <!-- Increase Font Size Button -->
+        <Button
+          Style="{StaticResource ContentControlButton}"
+          Content="&#xE8E8;"
+          FontSize="18"
+          ToolTip="Increase Font Size"
+          Command="EditingCommands.IncreaseFontSize"
+          CommandTarget="{Binding ElementName=NoteRichTextBox}"
+        />
+
+        <!--
+          @TODO: EditingCommands.ToggleSubscript
+          @TODO: EditingCommands.ToggleSuperscript
+          -->
+
       </StackPanel>
     </Border>
 
     <Grid>
-     <TextBlock
-      FontSize="14"
-      Foreground="{DynamicResource ForegroundSecondary}"
-      IsHitTestVisible="False"
-      Margin="5,0"
-      MinWidth="50"
-      Name="Placeholder"
-      Text="Take a note..."/>
+      <!-- Placeholder Text -->
+      <TextBlock
+        FontSize="14"
+        Foreground="{DynamicResource ForegroundSecondary}"
+        IsHitTestVisible="False"
+        Margin="5,0"
+        MinWidth="50"
+        Name="Placeholder"
+        Text="Take a note..."/>
 
       <RichTextBox
         Background="Transparent"
@@ -98,7 +170,7 @@
         FontSize="14"
         Foreground="{DynamicResource Foreground}"
         HorizontalScrollBarVisibility="Auto"
-        Name="NoteInput"
+        x:Name="NoteRichTextBox"
         TextChanged="OnTextChanged"
         VerticalScrollBarVisibility="Auto">
 
@@ -107,6 +179,13 @@
             <Setter Property="Margin" Value="0"/>
           </Style>
         </RichTextBox.Resources>
+
+        <FlowDocument>
+          <Paragraph>
+            <Bold>httpie-go</Bold>
+          </Paragraph>
+          <Paragraph>Add header "Accept: */*", nginx seems to block requests if no content negotiation headers specified</Paragraph>
+        </FlowDocument>
       </RichTextBox>
     </Grid>
   </DockPanel>

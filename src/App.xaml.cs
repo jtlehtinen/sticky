@@ -9,9 +9,16 @@ namespace Sticky {
 
     public State() {
       var notes = Notes;
-      notes.Add(new Note(){ Id = 1, CreatedAt = new DateTime(2022, 6, 8, 14, 30, 0), Content = "This is the first note." });
-      notes.Add(new Note(){ Id = 2, CreatedAt = new DateTime(2022, 6, 7, 15, 30, 0), Content = "This is the second note." });
-      notes.Add(new Note(){ Id = 3, CreatedAt = new DateTime(2022, 6, 6, 16, 30, 0), Content = "This is the third note." });
+      notes.Add(new Note(){
+        Id = 1,
+        CreatedAt = new DateTime(2022, 6, 8, 14, 30, 0),
+        Content = "<FlowDocument xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" PagePadding=\"5,0,5,0\" AllowDrop=\"True\"><Paragraph><Bold>Note 1</Bold></Paragraph><Paragraph>This is note 1.</Paragraph></FlowDocument>"
+      });
+      notes.Add(new Note(){
+        Id = 2,
+        CreatedAt = new DateTime(2022, 6, 7, 15, 30, 0),
+        Content = "<FlowDocument xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" PagePadding=\"5,0,5,0\" AllowDrop=\"True\"><Paragraph><Bold>Note 2</Bold></Paragraph><Paragraph>This is note 2.</Paragraph></FlowDocument>"
+      });
     }
   }
 

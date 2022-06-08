@@ -2,6 +2,8 @@ using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Markup;
 using System.Windows.Media;
 
 namespace Sticky {
@@ -22,6 +24,21 @@ namespace Sticky {
     }
 
     public static readonly DependencyProperty DataProperty = DependencyProperty.Register("Data", typeof(object), typeof(BindingProxy), new UIPropertyMetadata(null));
+  }
+
+  public class StringToFlowDocumentConverter : IValueConverter {
+    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+      if (value == null) return null;
+
+      var s = (string)value;
+
+      var result = XamlReader.Parse(s);
+      return result;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+      throw new NotImplementedException();
+    }
   }
 
   public class DateTimeConverter : IValueConverter {
