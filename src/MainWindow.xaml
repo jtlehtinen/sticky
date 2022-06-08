@@ -127,6 +127,36 @@
                   <Setter Property="Margin" Value="0"/>
                 </Style>
               </local:BindableRichTextBox.Resources>
+
+              <!-- Context Menu -->
+              <local:BindableRichTextBox.ContextMenu>
+                <ContextMenu>
+                  <!-- Open Note -->
+                  <!-- @TODO: Visibility -->
+                  <MenuItem Header="Open note">
+                    <MenuItem.Icon>
+                      <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8A7;"/>
+                    </MenuItem.Icon>
+                  </MenuItem>
+
+                  <!-- Close Note -->
+                  <!-- @TODO: Visibility
+                  <MenuItem Header="Close note">
+                    <MenuItem.Icon>
+                      <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE73F;"/>
+                    </MenuItem.Icon>
+                  </MenuItem>
+                  -->
+
+                  <!-- Delete -->
+                  <MenuItem Header="Delete note">
+                    <MenuItem.Icon>
+                      <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE74D;"/>
+                    </MenuItem.Icon>
+                  </MenuItem>
+                </ContextMenu>
+              </local:BindableRichTextBox.ContextMenu>
+
             </local:BindableRichTextBox>
           </StackPanel>
         </StackPanel>
