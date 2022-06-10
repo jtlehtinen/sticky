@@ -2,7 +2,6 @@ using System.Windows.Media;
 
 namespace Sticky {
 
-
   public static class ColorExtension {
 
     private static Color Blend(Color src, Color dest) {

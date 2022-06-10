@@ -53,7 +53,8 @@
             Background="{TemplateBinding Background}"
             BorderBrush="Transparent"
             BorderThickness="0"
-            SnapsToDevicePixels="True">
+            SnapsToDevicePixels="True"
+          >
             <ContentPresenter
               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"

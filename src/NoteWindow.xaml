@@ -17,11 +17,11 @@
   <Window.Resources>
     <local:BindingProxy x:Key="BackgroundProxy" Data="{DynamicResource Background}"/>
 
-    <!-- ContentControlButton Button -->
+    <!-- ToolbarButton Button -->
     <Style
       BasedOn="{StaticResource TitleBarButton}"
       TargetType="{x:Type Button}"
-      x:Key="ContentControlButton"
+      x:Key="ToolbarButton"
     >
 
       <Setter Property="Foreground" Value="{DynamicResource ForegroundSecondary}"/>
@@ -70,60 +70,138 @@
       </local:NoteWindowTitleBar.RenderTransform>
     </local:NoteWindowTitleBar>
 
-    <!-- RichTextBox Content Controls -->
+    <!-- Toolbar -->
     <Border DockPanel.Dock="Bottom" BorderThickness="0 1 0 0" BorderBrush="#10000000">
       <StackPanel  Orientation="Horizontal" Margin="0,0,0,0">
+
         <!-- Bold Button -->
         <Button
-          Style="{StaticResource ContentControlButton}"
           Content="&#xE8DD;"
           FontSize="16"
           ToolTip="Bold"
           Command="EditingCommands.ToggleBold"
           CommandTarget="{Binding ElementName=NoteRichTextBox}"
-        />
+        >
+          <!--
+            @TODO: Any sane way to reduce the duplication? XAML macro?
+            Or templates with variables, where you literally
+            copy&paste the template and substitute the variables/placeholders.
+            I don't want to create a data context with values or subclass
+            a control to add a dummy field just for this. I hate XAML...
+          -->
+          <Button.Resources>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ToolbarButton}">
+              <Style.Triggers>
+                <MultiDataTrigger>
+                  <!--
+                    @NOTE: IsMouseOver prevents this trigger from overriding IsMouseOver
+                    and IsPressed triggers defined in the ToolbarButton style.
+                  -->
+                  <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="False"/>
+                    <Condition Binding="{Binding ElementName=NoteRichTextBox, Path=IsBold}" Value="True"/>
+                  </MultiDataTrigger.Conditions>
+                  <Setter
+                    Property="Background"
+                    Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"
+                  />
+                </MultiDataTrigger>
+              </Style.Triggers>
+            </Style>
+          </Button.Resources>
+        </Button>
 
         <!-- Italic Button -->
         <Button
-          Style="{StaticResource ContentControlButton}"
           Content="&#xE8DB;"
           FontSize="16"
           ToolTip="Italic"
           Command="EditingCommands.ToggleItalic"
           CommandTarget="{Binding ElementName=NoteRichTextBox}"
-        />
+        >
+          <Button.Resources>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ToolbarButton}">
+              <Style.Triggers>
+                <MultiDataTrigger>
+                  <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="False"/>
+                    <Condition Binding="{Binding ElementName=NoteRichTextBox, Path=IsItalic}" Value="True"/>
+                  </MultiDataTrigger.Conditions>
+                  <Setter
+                    Property="Background"
+                    Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"
+                  />
+                </MultiDataTrigger>
+              </Style.Triggers>
+            </Style>
+          </Button.Resources>
+        </Button>
 
         <!-- Underline Button -->
         <Button
-          Style="{StaticResource ContentControlButton}"
           Content="&#xE8DC;"
           FontSize="16"
           ToolTip="Underline"
           Command="EditingCommands.ToggleUnderline"
           CommandTarget="{Binding ElementName=NoteRichTextBox}"
-        />
+        >
+          <Button.Resources>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ToolbarButton}">
+              <Style.Triggers>
+                <MultiDataTrigger>
+                  <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="False"/>
+                    <Condition Binding="{Binding ElementName=NoteRichTextBox, Path=IsUnderline}" Value="True"/>
+                  </MultiDataTrigger.Conditions>
+                  <Setter
+                    Property="Background"
+                    Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"
+                  />
+                </MultiDataTrigger>
+              </Style.Triggers>
+            </Style>
+          </Button.Resources>
+        </Button>
+
 
         <!-- @TODO: Strikethrough Button -->
         <Button
-          Style="{StaticResource ContentControlButton}"
           Content="&#xEDE0;"
           FontSize="18"
           ToolTip="Strikethrough"
-        />
+        >
+          <Button.Resources>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ToolbarButton}">
+              <Style.Triggers>
+                <MultiDataTrigger>
+                  <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="False"/>
+                    <Condition Binding="{Binding ElementName=NoteRichTextBox, Path=IsStrikethrough}" Value="True"/>
+                  </MultiDataTrigger.Conditions>
+                  <Setter
+                    Property="Background"
+                    Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"
+                  />
+                </MultiDataTrigger>
+              </Style.Triggers>
+            </Style>
+          </Button.Resources>
+        </Button>
 
         <!-- Toggle Bullets Button -->
         <Button
-          Style="{StaticResource ContentControlButton}"
+          Style="{StaticResource ToolbarButton}"
           Content="&#xE8FD;"
           FontSize="18"
           ToolTip="Toggle Bullets"
           Command="EditingCommands.ToggleBullets"
           CommandTarget="{Binding ElementName=NoteRichTextBox}"
-        />
+        >
+        </Button>
 
         <!-- @TODO: Add Image Button -->
         <Button
-          Style="{StaticResource ContentControlButton}"
+          Style="{StaticResource ToolbarButton}"
           Content="&#xEB9F;"
           FontSize="18"
           ToolTip="Add Image"
@@ -131,7 +209,7 @@
 
         <!-- Decrease Font Size Button -->
         <Button
-          Style="{StaticResource ContentControlButton}"
+          Style="{StaticResource ToolbarButton}"
           Content="&#xE8E7;"
           FontSize="18"
           ToolTip="Decrease Font Size"
@@ -141,7 +219,7 @@
 
         <!-- Increase Font Size Button -->
         <Button
-          Style="{StaticResource ContentControlButton}"
+          Style="{StaticResource ToolbarButton}"
           Content="&#xE8E8;"
           FontSize="18"
           ToolTip="Increase Font Size"
@@ -168,7 +246,7 @@
         Text="Take a note..."
       />
 
-      <RichTextBox
+      <local:BindableRichTextBox
         Background="Transparent"
         BorderBrush="Transparent"
         BorderThickness="0"
@@ -181,14 +259,14 @@
         VerticalScrollBarVisibility="Auto"
       >
 
-        <RichTextBox.Resources>
+        <local:BindableRichTextBox.Resources>
           <Style TargetType="{x:Type Paragraph}">
             <Setter Property="Margin" Value="0"/>
           </Style>
-        </RichTextBox.Resources>
+        </local:BindableRichTextBox.Resources>
 
         <!-- Context Menu -->
-        <RichTextBox.ContextMenu>
+        <local:BindableRichTextBox.ContextMenu>
           <ContextMenu>
             <!-- Copy -->
             <MenuItem Command="ApplicationCommands.Copy">
@@ -227,7 +305,7 @@
               </MenuItem.Icon>
             </MenuItem>
           </ContextMenu>
-        </RichTextBox.ContextMenu>
+        </local:BindableRichTextBox.ContextMenu>
 
         <FlowDocument>
           <Paragraph>
@@ -235,7 +313,7 @@
           </Paragraph>
           <Paragraph>Add header "Accept: */*", nginx seems to block requests if no content negotiation headers specified</Paragraph>
         </FlowDocument>
-      </RichTextBox>
+      </local:BindableRichTextBox>
     </Grid>
   </DockPanel>
 </Window>

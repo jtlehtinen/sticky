@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Sticky {
   /// <summary>
@@ -17,6 +18,7 @@ namespace Sticky {
       Native.ApplyRoundedWindowCorners(this);
       Show();
     }
+
 
     // Can't believe this...
     // https://stackoverflow.com/questions/5825575/detect-if-a-richtextbox-is-empty
