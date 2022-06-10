@@ -9,6 +9,12 @@ namespace Sticky {
       InitializeComponent();
     }
 
+    // @TODO: Use command instead and let the note window to handle it.
+    private void OnToggleTopmost(object sender, RoutedEventArgs e) {
+      var window = (Window)Window.GetWindow(this);
+      window.Topmost = !window.Topmost;
+    }
+
     private void OnClose(object sender, RoutedEventArgs args) {
       Window.GetWindow(this).Close();
     }

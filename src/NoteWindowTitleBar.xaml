@@ -2,7 +2,8 @@
   x:Class="Sticky.NoteWindowTitleBar"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:local="clr-namespace:Sticky">
+  xmlns:local="clr-namespace:Sticky"
+>
 
   <UserControl.Resources>
     <local:BindingProxy x:Key="BackgroundProxy" Data="{DynamicResource BackgroundSecondary}"/>
@@ -10,7 +11,8 @@
     <Style
       BasedOn="{StaticResource TitleBarButton}"
       TargetType="{x:Type Button}"
-      x:Key="NoteWindowTitleBarButton">
+      x:Key="NoteWindowTitleBarButton"
+    >
 
       <Setter Property="Foreground" Value="{DynamicResource ForegroundSecondary}"/>
       <Setter Property="Template">
@@ -28,11 +30,17 @@
               />
             </Border>
             <ControlTemplate.Triggers>
-              <Trigger Property="IsMouseOver" Value="true">
-                <Setter Property="Background" Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"/>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter
+                  Property="Background"
+                  Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"
+                />
               </Trigger>
-              <Trigger Property="IsPressed" Value="true">
-                <Setter Property="Background" Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToPressedConverter}}"/>
+              <Trigger Property="IsPressed" Value="True">
+                <Setter
+                  Property="Background"
+                  Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToPressedConverter}}"
+                />
               </Trigger>
             </ControlTemplate.Triggers>
           </ControlTemplate>
@@ -46,7 +54,8 @@
     Height="32"
     LastChildFill="False"
     MouseDown="OnMouseDown"
-    MouseMove="OnMouseMove">
+    MouseMove="OnMouseMove"
+  >
 
       <!-- New Note -->
       <Button
@@ -56,25 +65,36 @@
         FontSize="15"
         Style="{StaticResource NoteWindowTitleBarButton}"
         ToolTip="New note"
-        Width="32"/>
+        Width="32"
+      />
 
-      <!-- Pin Note -->
+      <!-- Pin/Unpin Note -->
       <Button
-        Content="&#xE718;"
         DockPanel.Dock="Left"
         FontSize="15"
-        Style="{StaticResource NoteWindowTitleBarButton}"
-        ToolTip="Pin note"
-        Width="32"/>
-
-      <!-- Unpin Note -->
-      <Button
-        Content="&#xE77A;"
-        DockPanel.Dock="Left"
-        FontSize="15"
-        Style="{StaticResource NoteWindowTitleBarButton}"
-        ToolTip="Unpin note"
-        Width="32"/>
+        Width="32"
+        Click="OnToggleTopmost"
+      >
+        <Button.Resources>
+          <Style TargetType="{x:Type Button}" BasedOn="{StaticResource NoteWindowTitleBarButton}">
+            <Style.Triggers>
+              <!-- @TODO: For some reason ElementName did not work for this binding -->
+              <DataTrigger
+                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=Topmost}"
+                Value="True">
+                <Setter Property="Content" Value="&#xE77A;"/>
+                <Setter Property="ToolTip" Value="Unpin note"/>
+              </DataTrigger>
+              <DataTrigger
+                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=Topmost}"
+                Value="False">
+                <Setter Property="Content" Value="&#xE718;"/>
+                <Setter Property="ToolTip" Value="Pin note"/>
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </Button.Resources>
+      </Button>
 
       <!-- Close Note -->
       <Button
@@ -84,7 +104,8 @@
         FontSize="16"
         Style="{StaticResource NoteWindowTitleBarButton}"
         ToolTip="Close note"
-        Width="32"/>
+        Width="32"
+      />
 
       <!-- Open Menu -->
       <Button
@@ -94,7 +115,8 @@
         FontSize="16"
         Style="{StaticResource NoteWindowTitleBarButton}"
         ToolTip="Menu"
-        Width="32"/>
+        Width="32"
+      />
 
   </DockPanel>
 </UserControl>

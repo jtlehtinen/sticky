@@ -9,9 +9,10 @@
   ShowInTaskbar="False"
   SizeChanged="OnSizeChanged"
   Title="sticky"
-  Topmost="True"
+  Topmost="False"
   Width="340"
-  WindowStyle="None">
+  WindowStyle="None"
+>
 
   <Window.Resources>
     <local:BindingProxy x:Key="BackgroundProxy" Data="{DynamicResource Background}"/>
@@ -20,7 +21,8 @@
     <Style
       BasedOn="{StaticResource TitleBarButton}"
       TargetType="{x:Type Button}"
-      x:Key="ContentControlButton">
+      x:Key="ContentControlButton"
+    >
 
       <Setter Property="Foreground" Value="{DynamicResource ForegroundSecondary}"/>
       <Setter Property="Height" Value="32"/>
@@ -33,7 +35,8 @@
               Background="{TemplateBinding Background}"
               BorderBrush="Transparent"
               BorderThickness="0"
-              SnapsToDevicePixels="True">
+              SnapsToDevicePixels="True"
+            >
               <ContentPresenter
                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -44,12 +47,14 @@
               <Trigger Property="IsMouseOver" Value="true">
                 <Setter
                   Property="Background"
-                  Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"/>
+                  Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"
+                />
               </Trigger>
               <Trigger Property="IsPressed" Value="true">
                 <Setter
                   Property="Background"
-                  Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToPressedConverter}}"/>
+                  Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToPressedConverter}}"
+                />
               </Trigger>
             </ControlTemplate.Triggers>
           </ControlTemplate>
@@ -148,7 +153,6 @@
           @TODO: EditingCommands.ToggleSubscript
           @TODO: EditingCommands.ToggleSuperscript
           -->
-
       </StackPanel>
     </Border>
 
@@ -161,7 +165,8 @@
         Margin="5,0"
         MinWidth="50"
         Name="Placeholder"
-        Text="Take a note..."/>
+        Text="Take a note..."
+      />
 
       <RichTextBox
         Background="Transparent"
@@ -173,7 +178,8 @@
         HorizontalScrollBarVisibility="Auto"
         x:Name="NoteRichTextBox"
         TextChanged="OnTextChanged"
-        VerticalScrollBarVisibility="Auto">
+        VerticalScrollBarVisibility="Auto"
+      >
 
         <RichTextBox.Resources>
           <Style TargetType="{x:Type Paragraph}">

@@ -11,10 +11,11 @@ namespace Sticky {
 
     public NoteWindow() {
       InitializeComponent();
-      Native.ApplyRoundedWindowCorners(this);
-      Show();
       NoteRichTextBox.GotKeyboardFocus += OnGotKeyboardFocus;
       NoteRichTextBox.LostKeyboardFocus += OnLostKeyboardFocus;
+
+      Native.ApplyRoundedWindowCorners(this);
+      Show();
     }
 
     // Can't believe this...
@@ -23,9 +24,11 @@ namespace Sticky {
       var box = NoteRichTextBox as RichTextBox;
       if (box == null) return true;
 
-      if (box.Document.Blocks.Count == 0) return true;
-      var start = box.Document.ContentStart.GetNextInsertionPosition(LogicalDirection.Forward);
-      var end = box.Document.ContentEnd.GetNextInsertionPosition(LogicalDirection.Backward);
+      var doc = box.Document;
+      if (doc.Blocks.Count == 0) return true;
+
+      var start = doc.ContentStart.GetNextInsertionPosition(LogicalDirection.Forward);
+      var end = doc.ContentEnd.GetNextInsertionPosition(LogicalDirection.Backward);
       return start.CompareTo(end) == 0;
     }
 
