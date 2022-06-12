@@ -1,11 +1,12 @@
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace Sticky {
 
+  // @TODO: Clean this mess...
 
   // @TODO: The fact that there is even need for this
   // is so fucking dum...
@@ -28,13 +29,17 @@ namespace Sticky {
     }
 
     public BindableRichTextBox(): base() {
+      // @IMPORTANT: Callback registered with CommandManager.AddExecutedHandler()
+      // is not called if the command was handled...
+      CommandManager.AddPreviewExecutedHandler(this, OnPreviewExecuted);
+
       // Register strikethrough command handler.
       CommandManager.RegisterClassCommandBinding(
         typeof(BindableRichTextBox),
         new CommandBinding(
           ToggleStrikethrough,
-          new ExecutedRoutedEventHandler(OnToggleStrikethrough),
-          new CanExecuteRoutedEventHandler(CanToggleStrikethrough))
+          OnToggleStrikethrough,
+          CanToggleStrikethrough)
       );
 
       // Register strikethrough keyboard shortcut.
@@ -49,12 +54,21 @@ namespace Sticky {
       set { this.SetValue(DocumentProperty, value); }
     }
 
-    // @TODO: This mess of binding to a value computed
-    // from other dependency properties feels so ugly.
-    // Fix this shit by figuring out something more sane.
+#region TodoGarbage
+    private void OnPreviewExecuted(object sender, ExecutedRoutedEventArgs e) {
+      if (e.Command == ToggleStrikethrough ||
+          e.Command == EditingCommands.ToggleBold ||
+          e.Command == EditingCommands.ToggleUnderline ||
+          e.Command == EditingCommands.ToggleItalic ||
+          e.Command == EditingCommands.ToggleBullets
+        )
+      {
+        Dispatcher.InvokeAsync(() => UpdateComputedDependencyProperties());
+      }
+    }
+
     protected override void OnKeyUp(KeyEventArgs e) {
       base.OnKeyUp(e);
-      //var ctrl = e.KeyboardDevice.Modifiers.HasFlag(ModifierKeys.Control);
       UpdateComputedDependencyProperties();
     }
 
@@ -78,6 +92,7 @@ namespace Sticky {
 
       IsBullets = IsSelectionBulletList(Selection);
     }
+#endregion
 
     public bool IsBold {
       get { return (bool)GetValue(IsBoldProperty); }

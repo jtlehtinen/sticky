@@ -268,6 +268,7 @@
       />
 
       <local:BindableRichTextBox
+        x:Name="NoteRichTextBox"
         Background="Transparent"
         BorderBrush="Transparent"
         BorderThickness="0"
@@ -275,9 +276,8 @@
         Foreground="{DynamicResource Foreground}"
         SelectionBrush="{DynamicResource SelectionBackgroundColor}"
         HorizontalScrollBarVisibility="Auto"
-        x:Name="NoteRichTextBox"
-        TextChanged="OnTextChanged"
         VerticalScrollBarVisibility="Auto"
+        TextChanged="OnTextChanged"
       >
 
         <local:BindableRichTextBox.Resources>
