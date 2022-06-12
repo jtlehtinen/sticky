@@ -2,7 +2,7 @@
 
 Simple post-it notes for Windows.
 
-## Keyboard shortcuts
+## ⌨ Keyboard shortcuts
 
     Toggle bold:          CTRL+B
     Toggle italic:        CTRL+I

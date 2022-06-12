@@ -28,7 +28,7 @@ namespace Sticky {
     }
 
     public BindableRichTextBox(): base() {
-      // Register strikethrough command handler and keyboard shortcut.
+      // Register strikethrough command handler.
       CommandManager.RegisterClassCommandBinding(
         typeof(BindableRichTextBox),
         new CommandBinding(
@@ -37,6 +37,7 @@ namespace Sticky {
           new CanExecuteRoutedEventHandler(CanToggleStrikethrough))
       );
 
+      // Register strikethrough keyboard shortcut.
       CommandManager.RegisterClassInputBinding(
         typeof(BindableRichTextBox),
         new InputBinding(ToggleStrikethrough, new KeyGesture(Key.D, ModifierKeys.Control))
@@ -62,39 +63,20 @@ namespace Sticky {
       UpdateComputedDependencyProperties();
     }
 
-    private List? FindListAncestor(DependencyObject element) {
-      while (element != null) {
-        var list = element as List;
-        if (list != null) return list;
-
-        element = LogicalTreeHelper.GetParent(element);
-      }
-      return null;
-    }
-
-    private bool IsSelectionBulletList() {
-      var list = FindListAncestor(Selection.Start.Parent);
-      if (list == null) return false;
-
-      return (list.MarkerStyle == TextMarkerStyle.Disc);
-    }
-
     private void UpdateComputedDependencyProperties() {
-      var fontWeight = Selection.GetPropertyValue(Inline.FontWeightProperty);
-      IsBold = fontWeight.Equals(FontWeights.Bold);
-
-      var fontStyle = Selection.GetPropertyValue(Run.FontStyleProperty);
-      IsItalic = fontStyle.Equals(FontStyles.Italic);
-
       var textDecorations = Selection.GetPropertyValue(Inline.TextDecorationsProperty);
-      IsUnderline = textDecorations.Equals(TextDecorations.Underline);
-      IsStrikethrough = textDecorations.Equals(TextDecorations.Strikethrough);
+      var set = textDecorations != DependencyProperty.UnsetValue;
+      IsUnderline = set && ContainsTextDecoration((TextDecorationCollection)textDecorations, TextDecorations.Underline[0]);
+      IsStrikethrough = set && ContainsTextDecoration((TextDecorationCollection)textDecorations, TextDecorations.Strikethrough[0]);
 
-      var baselineAlignment = Selection.GetPropertyValue(Inline.BaselineAlignmentProperty);
-      IsSubscript = baselineAlignment.Equals(BaselineAlignment.Subscript);
-      IsSuperscript = baselineAlignment.Equals(BaselineAlignment.Superscript);
+      IsBold = FontWeights.Bold.Equals(Selection.GetPropertyValue(Inline.FontWeightProperty));
+      IsItalic = FontStyles.Italic.Equals(Selection.GetPropertyValue(Inline.FontStyleProperty));
 
-      IsBullets = IsSelectionBulletList();
+      var alignment = Selection.GetPropertyValue(Inline.BaselineAlignmentProperty);
+      IsSubscript = BaselineAlignment.Subscript.Equals(alignment);
+      IsSuperscript = BaselineAlignment.Superscript.Equals(alignment);
+
+      IsBullets = IsSelectionBulletList(Selection);
     }
 
     public bool IsBold {
@@ -155,6 +137,44 @@ namespace Sticky {
       }
 
       rtb.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty, toggledTextDecorations);
+    }
+
+    private static bool ContainsTextDecoration(TextDecorationCollection? collection, TextDecoration decoration) {
+      if (collection == null) return false;
+
+      var ValueEquals = (TextDecoration a, TextDecoration b) => {
+        if (a == null && b == null) return true;
+        if (a == null || b == null) return false;
+
+        return (
+          a.Location == b.Location &&
+          a.PenOffset == b.PenOffset &&
+          a.PenOffsetUnit == b.PenOffsetUnit &&
+          a.PenThicknessUnit == b.PenThicknessUnit &&
+          (a.Pen == null ? b.Pen == null : a.Pen.Equals( b.Pen)));
+      };
+
+      foreach (var textDecoration in collection) {
+        if (ValueEquals(textDecoration, decoration)) return true;
+      }
+      return false;
+    }
+
+    private static List? FindListAncestor(DependencyObject element) {
+      while (element != null) {
+        var list = element as List;
+        if (list != null) return list;
+
+        element = LogicalTreeHelper.GetParent(element);
+      }
+      return null;
+    }
+
+    private static bool IsSelectionBulletList(TextRange selection) {
+      var list = FindListAncestor(selection.Start.Parent);
+      if (list == null) return false;
+
+      return (list.MarkerStyle == TextMarkerStyle.Disc);
     }
   }
 
