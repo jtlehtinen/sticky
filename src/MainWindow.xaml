@@ -11,6 +11,7 @@
   SizeChanged="OnSizeChanged"
   Title="sticky"
   Width="320"
+  Icon="icon.ico"
   WindowStyle="None">
 
   <Window.Resources>
