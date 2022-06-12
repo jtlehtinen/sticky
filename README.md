@@ -2,8 +2,15 @@
 
 Simple post-it notes for Windows.
 
-## Notes
-* In XAML the namespace `xmlns:d="http://schemas.microsoft.com/expression/blend/2008` is only for the Visual Studio XAML designer. If the designer is not used then this namespace and all of the tags/attributes using it can be removed.
+## Keyboard shortcuts
+
+    Toggle bold:          CTRL+B
+    Toggle italic:        CTRL+I
+    Toggle underline:     CTRL+U
+    Toggle strikethrough: CTRL+D
+    Decrease font size:   CTRL+[
+    Increase font size:   CTRL+]
+    Reset formatting:     CTRL+SPACE
 
 ## Resources
 

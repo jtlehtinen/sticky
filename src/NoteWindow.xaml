@@ -83,6 +83,10 @@
           CommandTarget="{Binding ElementName=NoteRichTextBox}"
         >
           <!--
+            @TODO: "{Binding ElementName=foo}" can be replaced by "{x:Reference foo}"
+            -->
+
+          <!--
             @TODO: Any sane way to reduce the duplication? XAML macro?
             Or templates with variables, where you literally
             copy&paste the template and substitute the variables/placeholders.
@@ -169,6 +173,8 @@
           Content="&#xEDE0;"
           FontSize="18"
           ToolTip="Strikethrough"
+          Command="{x:Static local:BindableRichTextBox.ToggleStrikethrough}"
+          CommandTarget="{Binding ElementName=NoteRichTextBox}"
         >
           <Button.Resources>
             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ToolbarButton}">
@@ -190,13 +196,28 @@
 
         <!-- Toggle Bullets Button -->
         <Button
-          Style="{StaticResource ToolbarButton}"
           Content="&#xE8FD;"
           FontSize="18"
           ToolTip="Toggle Bullets"
           Command="EditingCommands.ToggleBullets"
           CommandTarget="{Binding ElementName=NoteRichTextBox}"
         >
+          <Button.Resources>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ToolbarButton}">
+              <Style.Triggers>
+                <MultiDataTrigger>
+                  <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="False"/>
+                    <Condition Binding="{Binding ElementName=NoteRichTextBox, Path=IsBullets}" Value="True"/>
+                  </MultiDataTrigger.Conditions>
+                  <Setter
+                    Property="Background"
+                    Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"
+                  />
+                </MultiDataTrigger>
+              </Style.Triggers>
+            </Style>
+          </Button.Resources>
         </Button>
 
         <!-- @TODO: Add Image Button -->
