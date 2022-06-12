@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows;
 
 namespace Sticky {
@@ -32,8 +33,16 @@ namespace Sticky {
     const string THEME_VALUE = "THEME-MARKER-VALUE";
 
     public State state;
+    private Mutex singleInstanceMutex;
 
     private void Main(object sender, StartupEventArgs args) {
+      var createdNewMutex = false;
+      singleInstanceMutex = new Mutex(true, "cbe6e195-20b6-4950-97fa-6da85c3715f8", out createdNewMutex);
+      if (!createdNewMutex) {
+        Shutdown();
+        return;
+      }
+
       state = new State();
 
       this.Properties["Themes.Blue"] = LoadTheme("Themes/Blue.xaml");
