@@ -25,10 +25,13 @@
       MouseLeftButtonDown="OnToggleOverlay"
     >
       <Grid.Background>
-        <SolidColorBrush Color="Black" Opacity="0.5"/>
+        <SolidColorBrush Color="Black" Opacity="0.3"/>
       </Grid.Background>
 
-      <StackPanel Orientation="Vertical">
+      <StackPanel
+        x:Name="OverlayControls"
+        Orientation="Vertical"
+      >
         <Grid>
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

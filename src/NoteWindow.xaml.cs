@@ -36,11 +36,20 @@ namespace Sticky {
 
     public void ShowOverlay() {
       Overlay.Visibility = Visibility.Visible;
+      SlideOverlayControlsIn();
+    }
+
+    private void SlideOverlayControlsIn() {
+      // @TODO: Find away to change this one liner to million
+      // lines in the XAML.
+      OverlayControls.RenderTransform = Animation.MakeTranslateYTransform(-200, 0, 150);
     }
 
     private void OnToggleOverlay(object sender, RoutedEventArgs e) {
-      var visibility = Overlay.Visibility;
-      Overlay.Visibility = visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+      var visibility = Overlay.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+      Overlay.Visibility = visibility;
+
+      if (visibility == Visibility.Visible) SlideOverlayControlsIn();
     }
 
     private void OnOpenNotesList(object sender, RoutedEventArgs e) {
