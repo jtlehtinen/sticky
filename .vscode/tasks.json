@@ -10,7 +10,8 @@
         "${workspaceFolder}/src/Sticky.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary",
-        "/p:Platform=x64"
+        "/p:Platform=x64",
+        "/nologo"
       ],
       "problemMatcher": "$msCompile"
     },
@@ -23,7 +24,8 @@
         "${workspaceFolder}/src/Sticky.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary",
-        "/p:Platform=x64"
+        "/p:Platform=x64",
+        "/nologo"
       ],
       "problemMatcher": "$msCompile"
     },
