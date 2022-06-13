@@ -19,8 +19,10 @@ namespace Sticky {
       Window.GetWindow(this).Close();
     }
 
+    // @TODO: Use command.
     private void OnMenu(object sender, RoutedEventArgs args) {
-      System.Console.WriteLine("OnMenu()");
+      var window = (NoteWindow)Window.GetWindow(this);
+      window.ShowMenu();
     }
 
     private void OnNewNote(object sender, RoutedEventArgs args) {

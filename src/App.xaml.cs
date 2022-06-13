@@ -32,8 +32,8 @@ namespace Sticky {
     const string THEME_KEY = "THEME-MARKER-KEY";
     const string THEME_VALUE = "THEME-MARKER-VALUE";
 
-    public State state;
-    private Mutex singleInstanceMutex;
+    public State? state;
+    private Mutex? singleInstanceMutex;
 
     private void Main(object sender, StartupEventArgs args) {
       var createdNewMutex = false;

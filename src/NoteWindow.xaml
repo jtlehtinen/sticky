@@ -13,328 +13,263 @@
   Width="340"
   WindowStyle="None"
 >
-
   <Window.Resources>
-    <local:BindingProxy x:Key="BackgroundProxy" Data="{DynamicResource Background}"/>
-
-    <!-- ToolbarButton Button -->
-    <Style
-      BasedOn="{StaticResource TitleBarButton}"
-      TargetType="{x:Type Button}"
-      x:Key="ToolbarButton"
-    >
-
-      <Setter Property="Foreground" Value="{DynamicResource ForegroundSecondary}"/>
-      <Setter Property="Height" Value="32"/>
-      <Setter Property="Margin" Value="5,5,5,5"/>
-      <Setter Property="Width" Value="32"/>
-      <Setter Property="Template">
-        <Setter.Value>
-          <ControlTemplate TargetType="{x:Type Button}">
-            <Border
-              Background="{TemplateBinding Background}"
-              BorderBrush="Transparent"
-              BorderThickness="0"
-              SnapsToDevicePixels="True"
-            >
-              <ContentPresenter
-                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-              />
-            </Border>
-            <ControlTemplate.Triggers>
-              <Trigger Property="IsMouseOver" Value="true">
-                <Setter
-                  Property="Background"
-                  Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"
-                />
-              </Trigger>
-              <Trigger Property="IsPressed" Value="true">
-                <Setter
-                  Property="Background"
-                  Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToPressedConverter}}"
-                />
-              </Trigger>
-            </ControlTemplate.Triggers>
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-    </Style>
   </Window.Resources>
 
-  <DockPanel Background="{DynamicResource Background}">
-    <local:NoteWindowTitleBar x:Name="TitleBar" Margin="0,0,0,10" VerticalAlignment="Top" DockPanel.Dock="Top">
-      <local:NoteWindowTitleBar.RenderTransform>
-        <TranslateTransform Y="-42"/>
-      </local:NoteWindowTitleBar.RenderTransform>
-    </local:NoteWindowTitleBar>
+  <Grid x:Name="LayoutRoot">
 
-    <!-- Toolbar -->
-    <Border DockPanel.Dock="Bottom" BorderThickness="0 1 0 0" BorderBrush="#10000000">
-      <StackPanel  Orientation="Horizontal" Margin="0,0,0,0">
+    <!-- Overlay -->
+    <Grid x:Name="Overlay" Panel.ZIndex="1000" Visibility="Collapsed">
+      <Grid.Background>
+        <SolidColorBrush Color="Black" Opacity="0.5"/>
+      </Grid.Background>
 
-        <!-- Bold Button -->
-        <Button
-          Content="&#xE8DD;"
-          FontSize="16"
-          ToolTip="Bold"
-          Command="EditingCommands.ToggleBold"
-          CommandTarget="{Binding ElementName=NoteRichTextBox}"
-        >
-          <!--
-            @TODO: "{Binding ElementName=foo}" can be replaced by "{x:Reference foo}"
-            -->
+      <StackPanel Orientation="Vertical">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
 
-          <!--
-            @TODO: Any sane way to reduce the duplication? XAML macro?
-            Or templates with variables, where you literally
-            copy&paste the template and substitute the variables/placeholders.
-            I don't want to create a data context with values or subclass
-            a control to add a dummy field just for this. I hate XAML...
-          -->
-          <Button.Resources>
-            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ToolbarButton}">
-              <Style.Triggers>
-                <MultiDataTrigger>
-                  <!--
-                    @NOTE: IsMouseOver prevents this trigger from overriding IsMouseOver
-                    and IsPressed triggers defined in the ToolbarButton style.
-                  -->
-                  <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="False"/>
-                    <Condition Binding="{Binding ElementName=NoteRichTextBox, Path=IsBold}" Value="True"/>
-                  </MultiDataTrigger.Conditions>
-                  <Setter
-                    Property="Background"
-                    Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"
-                  />
-                </MultiDataTrigger>
-              </Style.Triggers>
-            </Style>
-          </Button.Resources>
+          <local:ButtonEx Height="52" Grid.Column="0" BackgroundColor="#FFFFE66E"/>
+          <local:ButtonEx Height="52" Grid.Column="1" BackgroundColor="#FFA1EF9B"/>
+          <local:ButtonEx Height="52" Grid.Column="2" BackgroundColor="#FFFFAFDF"/>
+          <local:ButtonEx Height="52" Grid.Column="3" BackgroundColor="#FFD7AFFF"/>
+          <local:ButtonEx Height="52" Grid.Column="4" BackgroundColor="#FF9EDFFF"/>
+          <local:ButtonEx Height="52" Grid.Column="5" BackgroundColor="#FFE0E0E0"/>
+          <local:ButtonEx Height="52" Grid.Column="6" BackgroundColor="#FF767676"/>
+        </Grid>
+
+        <Button HorizontalContentAlignment="Left">
+          <Button.Content>
+            <StackPanel Orientation="Horizontal">
+            <TextBlock
+              Text="&#xE74D;"
+              FontFamily="Segoe MDL2 Assets"
+              FontSize="16"
+              Foreground="Red"
+            />
+            <TextBlock
+              Margin="10,0,0,0"
+              Text="Delete note"
+              FontSize="16"
+              FontFamily="Arial"
+              Foreground="Red"
+            />
+            </StackPanel>
+          </Button.Content>
         </Button>
 
-        <!-- Italic Button -->
-        <Button
-          Content="&#xE8DB;"
-          FontSize="16"
-          ToolTip="Italic"
-          Command="EditingCommands.ToggleItalic"
-          CommandTarget="{Binding ElementName=NoteRichTextBox}"
-        >
-          <Button.Resources>
-            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ToolbarButton}">
-              <Style.Triggers>
-                <MultiDataTrigger>
-                  <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="False"/>
-                    <Condition Binding="{Binding ElementName=NoteRichTextBox, Path=IsItalic}" Value="True"/>
-                  </MultiDataTrigger.Conditions>
-                  <Setter
-                    Property="Background"
-                    Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"
-                  />
-                </MultiDataTrigger>
-              </Style.Triggers>
-            </Style>
-          </Button.Resources>
+        <Button HorizontalContentAlignment="Left">
+          <Button.Content>
+            <StackPanel Orientation="Horizontal">
+            <TextBlock
+              Text="&#xEA37;"
+              FontFamily="Segoe MDL2 Assets"
+              FontSize="16"
+              Foreground="Black"
+            />
+            <TextBlock
+              Margin="10,0,0,0"
+              Text="Notes list"
+              FontSize="16"
+              FontFamily="Arial"
+              Foreground="Black"
+            />
+            </StackPanel>
+          </Button.Content>
         </Button>
-
-        <!-- Underline Button -->
-        <Button
-          Content="&#xE8DC;"
-          FontSize="16"
-          ToolTip="Underline"
-          Command="EditingCommands.ToggleUnderline"
-          CommandTarget="{Binding ElementName=NoteRichTextBox}"
-        >
-          <Button.Resources>
-            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ToolbarButton}">
-              <Style.Triggers>
-                <MultiDataTrigger>
-                  <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="False"/>
-                    <Condition Binding="{Binding ElementName=NoteRichTextBox, Path=IsUnderline}" Value="True"/>
-                  </MultiDataTrigger.Conditions>
-                  <Setter
-                    Property="Background"
-                    Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"
-                  />
-                </MultiDataTrigger>
-              </Style.Triggers>
-            </Style>
-          </Button.Resources>
-        </Button>
-
-
-        <!-- @TODO: Strikethrough Button -->
-        <Button
-          Content="&#xEDE0;"
-          FontSize="18"
-          ToolTip="Strikethrough"
-          Command="{x:Static local:BindableRichTextBox.ToggleStrikethrough}"
-          CommandTarget="{Binding ElementName=NoteRichTextBox}"
-        >
-          <Button.Resources>
-            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ToolbarButton}">
-              <Style.Triggers>
-                <MultiDataTrigger>
-                  <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="False"/>
-                    <Condition Binding="{Binding ElementName=NoteRichTextBox, Path=IsStrikethrough}" Value="True"/>
-                  </MultiDataTrigger.Conditions>
-                  <Setter
-                    Property="Background"
-                    Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"
-                  />
-                </MultiDataTrigger>
-              </Style.Triggers>
-            </Style>
-          </Button.Resources>
-        </Button>
-
-        <!-- Toggle Bullets Button -->
-        <Button
-          Content="&#xE8FD;"
-          FontSize="18"
-          ToolTip="Toggle Bullets"
-          Command="EditingCommands.ToggleBullets"
-          CommandTarget="{Binding ElementName=NoteRichTextBox}"
-        >
-          <Button.Resources>
-            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ToolbarButton}">
-              <Style.Triggers>
-                <MultiDataTrigger>
-                  <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="False"/>
-                    <Condition Binding="{Binding ElementName=NoteRichTextBox, Path=IsBullets}" Value="True"/>
-                  </MultiDataTrigger.Conditions>
-                  <Setter
-                    Property="Background"
-                    Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"
-                  />
-                </MultiDataTrigger>
-              </Style.Triggers>
-            </Style>
-          </Button.Resources>
-        </Button>
-
-        <!-- @TODO: Add Image Button -->
-        <Button
-          Style="{StaticResource ToolbarButton}"
-          Content="&#xEB9F;"
-          FontSize="18"
-          ToolTip="Add Image"
-        />
-
-        <!-- Decrease Font Size Button -->
-        <Button
-          Style="{StaticResource ToolbarButton}"
-          Content="&#xE8E7;"
-          FontSize="18"
-          ToolTip="Decrease Font Size"
-          Command="EditingCommands.DecreaseFontSize"
-          CommandTarget="{Binding ElementName=NoteRichTextBox}"
-        />
-
-        <!-- Increase Font Size Button -->
-        <Button
-          Style="{StaticResource ToolbarButton}"
-          Content="&#xE8E8;"
-          FontSize="18"
-          ToolTip="Increase Font Size"
-          Command="EditingCommands.IncreaseFontSize"
-          CommandTarget="{Binding ElementName=NoteRichTextBox}"
-        />
-
-        <!--
-          @TODO: EditingCommands.ToggleSubscript
-          @TODO: EditingCommands.ToggleSuperscript
-          -->
       </StackPanel>
-    </Border>
-
-    <Grid>
-      <!-- Placeholder Text -->
-      <TextBlock
-        FontSize="14"
-        Foreground="{DynamicResource ForegroundSecondary}"
-        IsHitTestVisible="False"
-        Margin="5,0"
-        MinWidth="50"
-        Name="Placeholder"
-        Text="Take a note..."
-      />
-
-      <local:BindableRichTextBox
-        x:Name="NoteRichTextBox"
-        Background="Transparent"
-        BorderBrush="Transparent"
-        BorderThickness="0"
-        FontSize="14"
-        Foreground="{DynamicResource Foreground}"
-        SelectionBrush="{DynamicResource SelectionBackgroundColor}"
-        HorizontalScrollBarVisibility="Auto"
-        VerticalScrollBarVisibility="Auto"
-        TextChanged="OnTextChanged"
-      >
-
-        <local:BindableRichTextBox.Resources>
-          <Style TargetType="{x:Type Paragraph}">
-            <Setter Property="Margin" Value="0"/>
-          </Style>
-        </local:BindableRichTextBox.Resources>
-
-        <!-- Context Menu -->
-        <local:BindableRichTextBox.ContextMenu>
-          <ContextMenu>
-            <!-- Copy -->
-            <MenuItem Command="ApplicationCommands.Copy">
-              <MenuItem.Icon>
-                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8C8;"/>
-              </MenuItem.Icon>
-            </MenuItem>
-
-            <!-- Cut -->
-            <MenuItem Command="ApplicationCommands.Cut">
-              <MenuItem.Icon>
-                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8C6;"/>
-              </MenuItem.Icon>
-            </MenuItem>
-
-            <!-- Paste -->
-            <MenuItem Command="ApplicationCommands.Paste">
-              <MenuItem.Icon>
-                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE77F;"/>
-              </MenuItem.Icon>
-            </MenuItem>
-
-            <Separator/>
-
-            <!-- Undo -->
-            <MenuItem Command="ApplicationCommands.Undo">
-              <MenuItem.Icon>
-                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE7A7;"/>
-              </MenuItem.Icon>
-            </MenuItem>
-
-            <!-- Redo -->
-            <MenuItem Command="ApplicationCommands.Redo">
-              <MenuItem.Icon>
-                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE7A6;"/>
-              </MenuItem.Icon>
-            </MenuItem>
-          </ContextMenu>
-        </local:BindableRichTextBox.ContextMenu>
-
-        <FlowDocument>
-          <Paragraph>
-            <Bold>httpie-go</Bold>
-          </Paragraph>
-          <Paragraph>Add header "Accept: */*", nginx seems to block requests if no content negotiation headers specified</Paragraph>
-        </FlowDocument>
-      </local:BindableRichTextBox>
     </Grid>
-  </DockPanel>
+
+    <!-- <ContentControl x:Name="MainContent" /> -->
+    <DockPanel Background="{DynamicResource Background}">
+      <local:NoteWindowTitleBar x:Name="TitleBar" Margin="0,0,0,10" VerticalAlignment="Top" DockPanel.Dock="Top">
+        <local:NoteWindowTitleBar.RenderTransform>
+          <TranslateTransform Y="-42"/>
+        </local:NoteWindowTitleBar.RenderTransform>
+      </local:NoteWindowTitleBar>
+
+      <!-- Toolbar -->
+      <Border DockPanel.Dock="Bottom" BorderThickness="0 1 0 0" BorderBrush="#10000000">
+        <StackPanel  Orientation="Horizontal" Margin="0,0,0,0">
+
+          <!-- Bold Button -->
+          <local:ButtonEx
+            Style="{StaticResource ButtonExToolbar}"
+            Content="&#xE8DD;"
+            FontSize="16"
+            ToolTip="Bold"
+            Command="EditingCommands.ToggleBold"
+            CommandTarget="{Binding ElementName=NoteRichTextBox}"
+            IsActive="{Binding ElementName=NoteRichTextBox, Path=IsBold}"
+          />
+
+          <!-- Italic Button -->
+          <local:ButtonEx
+            Style="{StaticResource ButtonExToolbar}"
+            Content="&#xE8DB;"
+            FontSize="16"
+            ToolTip="Italic"
+            Command="EditingCommands.ToggleItalic"
+            CommandTarget="{Binding ElementName=NoteRichTextBox}"
+            IsActive="{Binding ElementName=NoteRichTextBox, Path=IsItalic}"
+          />
+
+          <!-- Underline Button -->
+          <local:ButtonEx
+            Style="{StaticResource ButtonExToolbar}"
+            Content="&#xE8DC;"
+            FontSize="16"
+            ToolTip="Underline"
+            Command="EditingCommands.ToggleUnderline"
+            CommandTarget="{Binding ElementName=NoteRichTextBox}"
+            IsActive="{Binding ElementName=NoteRichTextBox, Path=IsUnderline}"
+          />
+
+          <!-- Strikethrough Button -->
+          <local:ButtonEx
+            Style="{StaticResource ButtonExToolbar}"
+            Content="&#xEDE0;"
+            FontSize="18"
+            ToolTip="Strikethrough"
+            Command="{x:Static local:BindableRichTextBox.ToggleStrikethrough}"
+            CommandTarget="{Binding ElementName=NoteRichTextBox}"
+            IsActive="{Binding ElementName=NoteRichTextBox, Path=IsStrikethrough}"
+          />
+
+          <!-- Toggle Bullets Button -->
+          <local:ButtonEx
+            Style="{StaticResource ButtonExToolbar}"
+            Content="&#xE8FD;"
+            FontSize="18"
+            ToolTip="Toggle Bullets"
+            Command="EditingCommands.ToggleBullets"
+            CommandTarget="{Binding ElementName=NoteRichTextBox}"
+            IsActive="{Binding ElementName=NoteRichTextBox, Path=IsBullets}"
+          />
+
+          <!-- @TODO: Add Image Button -->
+          <local:ButtonEx
+            Style="{StaticResource ButtonExToolbar}"
+            Content="&#xEB9F;"
+            FontSize="18"
+            ToolTip="Add Image"
+          />
+
+          <!-- Decrease Font Size Button -->
+          <local:ButtonEx
+            Style="{StaticResource ButtonExToolbar}"
+            Content="&#xE8E7;"
+            FontSize="18"
+            ToolTip="Decrease Font Size"
+            Command="EditingCommands.DecreaseFontSize"
+            CommandTarget="{Binding ElementName=NoteRichTextBox}"
+          />
+
+          <!-- Increase Font Size Button -->
+          <local:ButtonEx
+            Style="{StaticResource ButtonExToolbar}"
+            Content="&#xE8E8;"
+            FontSize="18"
+            ToolTip="Increase Font Size"
+            Command="EditingCommands.IncreaseFontSize"
+            CommandTarget="{Binding ElementName=NoteRichTextBox}"
+          />
+
+          <!--
+            @TODO: EditingCommands.ToggleSubscript
+            @TODO: EditingCommands.ToggleSuperscript
+            -->
+        </StackPanel>
+      </Border>
+
+      <Grid>
+        <!-- Placeholder Text -->
+        <TextBlock
+          FontSize="14"
+          Foreground="{DynamicResource ForegroundSecondary}"
+          IsHitTestVisible="False"
+          Margin="5,0"
+          MinWidth="50"
+          Name="Placeholder"
+          Text="Take a note..."
+        />
+
+        <local:BindableRichTextBox
+          x:Name="NoteRichTextBox"
+          Background="Transparent"
+          BorderBrush="Transparent"
+          BorderThickness="0"
+          FontSize="14"
+          Foreground="{DynamicResource Foreground}"
+          SelectionBrush="{DynamicResource SelectionBackgroundColor}"
+          HorizontalScrollBarVisibility="Auto"
+          VerticalScrollBarVisibility="Auto"
+          TextChanged="OnTextChanged"
+        >
+
+          <local:BindableRichTextBox.Resources>
+            <Style TargetType="{x:Type Paragraph}">
+              <Setter Property="Margin" Value="0"/>
+            </Style>
+          </local:BindableRichTextBox.Resources>
+
+          <!-- Context Menu -->
+          <local:BindableRichTextBox.ContextMenu>
+            <ContextMenu>
+              <!-- Copy -->
+              <MenuItem Command="ApplicationCommands.Copy">
+                <MenuItem.Icon>
+                  <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8C8;"/>
+                </MenuItem.Icon>
+              </MenuItem>
+
+              <!-- Cut -->
+              <MenuItem Command="ApplicationCommands.Cut">
+                <MenuItem.Icon>
+                  <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8C6;"/>
+                </MenuItem.Icon>
+              </MenuItem>
+
+              <!-- Paste -->
+              <MenuItem Command="ApplicationCommands.Paste">
+                <MenuItem.Icon>
+                  <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE77F;"/>
+                </MenuItem.Icon>
+              </MenuItem>
+
+              <Separator/>
+
+              <!-- Undo -->
+              <MenuItem Command="ApplicationCommands.Undo">
+                <MenuItem.Icon>
+                  <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE7A7;"/>
+                </MenuItem.Icon>
+              </MenuItem>
+
+              <!-- Redo -->
+              <MenuItem Command="ApplicationCommands.Redo">
+                <MenuItem.Icon>
+                  <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE7A6;"/>
+                </MenuItem.Icon>
+              </MenuItem>
+            </ContextMenu>
+          </local:BindableRichTextBox.ContextMenu>
+
+          <FlowDocument>
+            <Paragraph>
+              <Bold>httpie-go</Bold>
+            </Paragraph>
+            <Paragraph>Add header "Accept: */*", nginx seems to block requests if no content negotiation headers specified</Paragraph>
+          </FlowDocument>
+        </local:BindableRichTextBox>
+      </Grid>
+    </DockPanel>
+  </Grid>
 </Window>

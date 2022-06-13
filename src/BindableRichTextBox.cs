@@ -144,8 +144,10 @@ namespace Sticky {
 
       TextDecorationCollection toggledTextDecorations;
 
-      var noDecorations = textDecorations == null || textDecorations.Count == 0;
-      if (noDecorations) {
+      // @NOTE: Seems that roslyn warning analyzer issues tons of false positives.
+      // Here just pulling out the if condition to a local variable causes
+      // a false positive of CS8602: Dereference of a possibly null reference.
+      if (textDecorations == null || textDecorations.Count == 0) {
         toggledTextDecorations = TextDecorations.Strikethrough;
       } else if (!textDecorations.TryRemove(TextDecorations.Strikethrough, out toggledTextDecorations)) {
         toggledTextDecorations.Add(TextDecorations.Strikethrough);
