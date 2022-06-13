@@ -69,6 +69,7 @@
       />
 
       <!-- Pin/Unpin Note -->
+      <!-- Use E840 Pinned for this? -->
       <Button
         DockPanel.Dock="Left"
         FontSize="15"

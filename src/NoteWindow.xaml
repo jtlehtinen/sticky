@@ -3,22 +3,19 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:local="clr-namespace:Sticky"
-  AllowsTransparency="True"
-  Height="200"
-  ResizeMode="CanResizeWithGrip"
-  ShowInTaskbar="False"
-  SizeChanged="OnSizeChanged"
   Title="sticky"
-  Topmost="False"
   Width="340"
+  Height="200"
+  AllowsTransparency="True"
+  Topmost="False"
   WindowStyle="None"
+  ResizeMode="CanResizeWithGrip"
+  ShowInTaskbar="True"
+  SizeChanged="OnSizeChanged"
 >
-  <Window.Resources>
-  </Window.Resources>
-
   <Grid x:Name="LayoutRoot">
 
-    <!-- Overlay -->
+    <!-- Drop Down Overlay -->
     <Grid x:Name="Overlay" Panel.ZIndex="1000" Visibility="Collapsed">
       <Grid.Background>
         <SolidColorBrush Color="Black" Opacity="0.5"/>
@@ -36,58 +33,65 @@
             <ColumnDefinition Width="*"/>
           </Grid.ColumnDefinitions>
 
-          <local:ButtonEx Height="52" Grid.Column="0" BackgroundColor="#FFFFE66E"/>
-          <local:ButtonEx Height="52" Grid.Column="1" BackgroundColor="#FFA1EF9B"/>
-          <local:ButtonEx Height="52" Grid.Column="2" BackgroundColor="#FFFFAFDF"/>
-          <local:ButtonEx Height="52" Grid.Column="3" BackgroundColor="#FFD7AFFF"/>
-          <local:ButtonEx Height="52" Grid.Column="4" BackgroundColor="#FF9EDFFF"/>
-          <local:ButtonEx Height="52" Grid.Column="5" BackgroundColor="#FFE0E0E0"/>
-          <local:ButtonEx Height="52" Grid.Column="6" BackgroundColor="#FF767676"/>
+          <!-- @TODO: Move colors to resources -->
+          <local:ToggleButtonEx Height="52" Grid.Column="0" BackgroundColor="#FFFFE66E"/>
+          <local:ToggleButtonEx Height="52" Grid.Column="1" BackgroundColor="#FFA1EF9B"/>
+          <local:ToggleButtonEx Height="52" Grid.Column="2" BackgroundColor="#FFFFAFDF"/>
+          <local:ToggleButtonEx Height="52" Grid.Column="3" BackgroundColor="#FFD7AFFF"/>
+          <local:ToggleButtonEx Height="52" Grid.Column="4" BackgroundColor="#FF9EDFFF"/>
+          <local:ToggleButtonEx Height="52" Grid.Column="5" BackgroundColor="#FFE0E0E0"/>
+          <local:ToggleButtonEx Height="52" Grid.Column="6" BackgroundColor="#FF767676"/>
         </Grid>
 
-        <Button HorizontalContentAlignment="Left">
-          <Button.Content>
-            <StackPanel Orientation="Horizontal">
-            <TextBlock
-              Text="&#xE74D;"
-              FontFamily="Segoe MDL2 Assets"
-              FontSize="16"
-              Foreground="Red"
-            />
-            <TextBlock
-              Margin="10,0,0,0"
-              Text="Delete note"
-              FontSize="16"
-              FontFamily="Arial"
-              Foreground="Red"
-            />
-            </StackPanel>
-          </Button.Content>
-        </Button>
-
-        <Button HorizontalContentAlignment="Left">
+        <!-- Notes List Button -->
+        <local:ButtonEx
+          HorizontalContentAlignment="Left"
+          BackgroundColor="White"
+          Foreground="Black"
+          Padding="17"
+        >
           <Button.Content>
             <StackPanel Orientation="Horizontal">
             <TextBlock
               Text="&#xEA37;"
-              FontFamily="Segoe MDL2 Assets"
-              FontSize="16"
-              Foreground="Black"
+              FontSize="20"
             />
             <TextBlock
-              Margin="10,0,0,0"
+              Margin="15,0,0,0"
               Text="Notes list"
               FontSize="16"
               FontFamily="Arial"
-              Foreground="Black"
             />
             </StackPanel>
           </Button.Content>
-        </Button>
+        </local:ButtonEx>
+
+        <!-- Delete Note Button -->
+        <local:ButtonEx
+          HorizontalContentAlignment="Left"
+          BackgroundColor="White"
+          Foreground="Red"
+          Padding="17"
+        >
+          <Button.Content>
+            <StackPanel Orientation="Horizontal">
+              <TextBlock
+              Text="&#xE74D;"
+              FontSize="18"
+            />
+              <TextBlock
+              Margin="15,0,0,0"
+              Text="Delete note"
+              FontSize="16"
+              FontFamily="Arial"
+            />
+            </StackPanel>
+          </Button.Content>
+        </local:ButtonEx>
       </StackPanel>
     </Grid>
 
-    <!-- <ContentControl x:Name="MainContent" /> -->
+    <!-- Main Content -->
     <DockPanel Background="{DynamicResource Background}">
       <local:NoteWindowTitleBar x:Name="TitleBar" Margin="0,0,0,10" VerticalAlignment="Top" DockPanel.Dock="Top">
         <local:NoteWindowTitleBar.RenderTransform>
@@ -100,58 +104,58 @@
         <StackPanel  Orientation="Horizontal" Margin="0,0,0,0">
 
           <!-- Bold Button -->
-          <local:ButtonEx
-            Style="{StaticResource ButtonExToolbar}"
+          <local:ToggleButtonEx
+            x:Name="ToolbarButtonBold"
+            Style="{StaticResource ToggleButtonExToolbar}"
             Content="&#xE8DD;"
             FontSize="16"
             ToolTip="Bold"
             Command="EditingCommands.ToggleBold"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
-            IsActive="{Binding ElementName=NoteRichTextBox, Path=IsBold}"
           />
 
           <!-- Italic Button -->
-          <local:ButtonEx
-            Style="{StaticResource ButtonExToolbar}"
+          <local:ToggleButtonEx
+            x:Name="ToolbarButtonItalic"
+            Style="{StaticResource ToggleButtonExToolbar}"
             Content="&#xE8DB;"
             FontSize="16"
             ToolTip="Italic"
             Command="EditingCommands.ToggleItalic"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
-            IsActive="{Binding ElementName=NoteRichTextBox, Path=IsItalic}"
           />
 
           <!-- Underline Button -->
-          <local:ButtonEx
-            Style="{StaticResource ButtonExToolbar}"
+          <local:ToggleButtonEx
+            x:Name="ToolbarButtonUnderline"
+            Style="{StaticResource ToggleButtonExToolbar}"
             Content="&#xE8DC;"
             FontSize="16"
             ToolTip="Underline"
             Command="EditingCommands.ToggleUnderline"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
-            IsActive="{Binding ElementName=NoteRichTextBox, Path=IsUnderline}"
           />
 
           <!-- Strikethrough Button -->
-          <local:ButtonEx
-            Style="{StaticResource ButtonExToolbar}"
+          <local:ToggleButtonEx
+            x:Name="ToolbarButtonStrikethrough"
+            Style="{StaticResource ToggleButtonExToolbar}"
             Content="&#xEDE0;"
             FontSize="18"
             ToolTip="Strikethrough"
             Command="{x:Static local:BindableRichTextBox.ToggleStrikethrough}"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
-            IsActive="{Binding ElementName=NoteRichTextBox, Path=IsStrikethrough}"
           />
 
           <!-- Toggle Bullets Button -->
-          <local:ButtonEx
-            Style="{StaticResource ButtonExToolbar}"
+          <local:ToggleButtonEx
+            x:Name="ToolbarButtonBullets"
+            Style="{StaticResource ToggleButtonExToolbar}"
             Content="&#xE8FD;"
             FontSize="18"
             ToolTip="Toggle Bullets"
             Command="EditingCommands.ToggleBullets"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
-            IsActive="{Binding ElementName=NoteRichTextBox, Path=IsBullets}"
           />
 
           <!-- @TODO: Add Image Button -->
@@ -185,6 +189,12 @@
           <!--
             @TODO: EditingCommands.ToggleSubscript
             @TODO: EditingCommands.ToggleSuperscript
+            @TODO: EditingCommands.AlignLeft
+            @TODO: EditingCommands.AlignCenter
+            @TODO: EditingCommands.AlignRight
+            @TODO: EditingCommands.IncreaseIndentation
+            @TODO: EditingCommands.DecreaseIndentation
+            @TODO: EditingCommands.ToggleNumbering
             -->
         </StackPanel>
       </Border>
@@ -201,6 +211,7 @@
           Text="Take a note..."
         />
 
+        <!-- Rich Text Box -->
         <local:BindableRichTextBox
           x:Name="NoteRichTextBox"
           Background="Transparent"

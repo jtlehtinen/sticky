@@ -13,6 +13,8 @@ namespace Sticky {
       InitializeComponent();
       NoteRichTextBox.GotKeyboardFocus += OnGotKeyboardFocus;
       NoteRichTextBox.LostKeyboardFocus += OnLostKeyboardFocus;
+      NoteRichTextBox.SelectionChanged += OnSelectionChanged;
+      NoteRichTextBox.KeyUp += OnKeyUp;
 
       Native.ApplyRoundedWindowCorners(this);
       Show();
@@ -39,6 +41,23 @@ namespace Sticky {
     private void OnTextChanged(object sender, TextChangedEventArgs e) {
       var visibility = IsRichTextBoxEmpty() ? Visibility.Visible : Visibility.Hidden;
       Placeholder.Visibility = visibility;
+    }
+
+    private void RefreshToolbarButtons() {
+      ToolbarButtonBold.IsChecked = NoteRichTextBox.IsBold();
+      ToolbarButtonItalic.IsChecked = NoteRichTextBox.IsItalic();
+      ToolbarButtonUnderline.IsChecked = NoteRichTextBox.IsUnderline();
+      ToolbarButtonStrikethrough.IsChecked = NoteRichTextBox.IsStrikethrough();
+      ToolbarButtonBullets.IsChecked = NoteRichTextBox.IsBullets();
+    }
+
+    private void OnSelectionChanged(object sender, RoutedEventArgs e) {
+      RefreshToolbarButtons();
+    }
+
+    private void OnKeyUp(object sender, KeyEventArgs e) {
+      // @TODO: Don't refresh unnecessarily.
+      RefreshToolbarButtons();
     }
 
     private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e) {

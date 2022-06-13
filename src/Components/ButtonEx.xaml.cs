@@ -37,10 +37,6 @@ namespace Sticky {
       button.Background = active ? new SolidColorBrush(background.Color.ToHoverColor()) : background;
     }
 
-    public ButtonEx() {
-      //InitializeComponent();
-    }
-
     public bool IsActive {
       get { return (bool)GetValue(IsActiveProperty); }
       set { SetValue(IsActiveProperty, value); }
