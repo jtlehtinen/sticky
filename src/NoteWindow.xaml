@@ -28,10 +28,39 @@
         <SolidColorBrush Color="Black" Opacity="0.3"/>
       </Grid.Background>
 
-      <StackPanel
-        x:Name="OverlayControls"
-        Orientation="Vertical"
-      >
+      <StackPanel Orientation="Vertical">
+        <!-- Slide Down Animation -->
+        <StackPanel.Style>
+          <Style TargetType="{x:Type StackPanel}">
+            <Setter Property="RenderTransform">
+              <Setter.Value>
+                <TranslateTransform X="0" Y="-200"/>
+              </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding ElementName=Overlay, Path=Visibility}" Value="Visible">
+                <DataTrigger.EnterActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation
+                        Storyboard.TargetProperty="RenderTransform.Y"
+                        Duration="0:0:0.2"
+                        From="-200"
+                        To="0"
+                      >
+                        <DoubleAnimation.EasingFunction>
+                          <QuadraticEase EasingMode="EaseOut"/>
+                        </DoubleAnimation.EasingFunction>
+                      </DoubleAnimation>
+                    </Storyboard>
+                  </BeginStoryboard>
+                </DataTrigger.EnterActions>
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </StackPanel.Style>
+
+        <!-- Color Theme Buttons -->
         <Grid>
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -45,8 +74,6 @@
 
           <!-- @TODO: Move colors to resources -->
           <!-- @TODO: Use radio buttons -->
-          <!-- @TODO: Close the overlay when button is clicked -->
-          <!-- @TODO: Animate the overlay -->
           <local:ToggleButtonEx Style="{StaticResource ToggleButtonExOverlay}" Grid.Column="0" BackgroundColor="#FFFFE66E"/>
           <local:ToggleButtonEx Style="{StaticResource ToggleButtonExOverlay}" Grid.Column="1" BackgroundColor="#FFA1EF9B"/>
           <local:ToggleButtonEx Style="{StaticResource ToggleButtonExOverlay}" Grid.Column="2" BackgroundColor="#FFFFAFDF"/>
