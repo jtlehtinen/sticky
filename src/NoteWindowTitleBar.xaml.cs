@@ -22,7 +22,7 @@ namespace Sticky {
     // @TODO: Use command.
     private void OnMenu(object sender, RoutedEventArgs args) {
       var window = (NoteWindow)Window.GetWindow(this);
-      window.ShowMenu();
+      window.ShowOverlay();
     }
 
     private void OnNewNote(object sender, RoutedEventArgs args) {

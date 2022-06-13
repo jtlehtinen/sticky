@@ -20,10 +20,6 @@ namespace Sticky {
       Show();
     }
 
-    public void ShowMenu() {
-      Overlay.Visibility = Visibility.Visible;
-    }
-
     // Can't believe this...
     // https://stackoverflow.com/questions/5825575/detect-if-a-richtextbox-is-empty
     public bool IsRichTextBoxEmpty() {
@@ -36,6 +32,23 @@ namespace Sticky {
       var start = doc.ContentStart.GetNextInsertionPosition(LogicalDirection.Forward);
       var end = doc.ContentEnd.GetNextInsertionPosition(LogicalDirection.Backward);
       return start.CompareTo(end) == 0;
+    }
+
+    public void ShowOverlay() {
+      Overlay.Visibility = Visibility.Visible;
+    }
+
+    private void OnToggleOverlay(object sender, RoutedEventArgs e) {
+      var visibility = Overlay.Visibility;
+      Overlay.Visibility = visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+    }
+
+    private void OnOpenNotesList(object sender, RoutedEventArgs e) {
+      System.Console.WriteLine("OnOpenNotesList");
+    }
+
+    private void OnDeleteNote(object sender, RoutedEventArgs e) {
+      System.Console.WriteLine("OnDeleteNote");
     }
 
     private void OnTextChanged(object sender, TextChangedEventArgs e) {

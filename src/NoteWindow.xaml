@@ -4,8 +4,10 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:local="clr-namespace:Sticky"
   Title="sticky"
+  MinWidth="340"
+  MinHeight="240"
   Width="340"
-  Height="200"
+  Height="240"
   AllowsTransparency="True"
   Topmost="False"
   WindowStyle="None"
@@ -16,7 +18,12 @@
   <Grid x:Name="LayoutRoot">
 
     <!-- Drop Down Overlay -->
-    <Grid x:Name="Overlay" Panel.ZIndex="1000" Visibility="Collapsed">
+    <Grid
+      x:Name="Overlay"
+      Panel.ZIndex="1000"
+      Visibility="Collapsed"
+      MouseLeftButtonDown="OnToggleOverlay"
+    >
       <Grid.Background>
         <SolidColorBrush Color="Black" Opacity="0.5"/>
       </Grid.Background>
@@ -34,57 +41,56 @@
           </Grid.ColumnDefinitions>
 
           <!-- @TODO: Move colors to resources -->
-          <local:ToggleButtonEx Height="52" Grid.Column="0" BackgroundColor="#FFFFE66E"/>
-          <local:ToggleButtonEx Height="52" Grid.Column="1" BackgroundColor="#FFA1EF9B"/>
-          <local:ToggleButtonEx Height="52" Grid.Column="2" BackgroundColor="#FFFFAFDF"/>
-          <local:ToggleButtonEx Height="52" Grid.Column="3" BackgroundColor="#FFD7AFFF"/>
-          <local:ToggleButtonEx Height="52" Grid.Column="4" BackgroundColor="#FF9EDFFF"/>
-          <local:ToggleButtonEx Height="52" Grid.Column="5" BackgroundColor="#FFE0E0E0"/>
-          <local:ToggleButtonEx Height="52" Grid.Column="6" BackgroundColor="#FF767676"/>
+          <!-- @TODO: Use radio buttons -->
+          <!-- @TODO: Close the overlay when button is clicked -->
+          <!-- @TODO: Animate the overlay -->
+          <local:ToggleButtonEx Style="{StaticResource ToggleButtonExOverlay}" Grid.Column="0" BackgroundColor="#FFFFE66E"/>
+          <local:ToggleButtonEx Style="{StaticResource ToggleButtonExOverlay}" Grid.Column="1" BackgroundColor="#FFA1EF9B"/>
+          <local:ToggleButtonEx Style="{StaticResource ToggleButtonExOverlay}" Grid.Column="2" BackgroundColor="#FFFFAFDF"/>
+          <local:ToggleButtonEx Style="{StaticResource ToggleButtonExOverlay}" Grid.Column="3" BackgroundColor="#FFD7AFFF"/>
+          <local:ToggleButtonEx Style="{StaticResource ToggleButtonExOverlay}" Grid.Column="4" BackgroundColor="#FF9EDFFF"/>
+          <local:ToggleButtonEx Style="{StaticResource ToggleButtonExOverlay}" Grid.Column="5" BackgroundColor="#FFE0E0E0"/>
+          <local:ToggleButtonEx Style="{StaticResource ToggleButtonExOverlay}" Grid.Column="6" BackgroundColor="#FF767676"/>
         </Grid>
 
         <!-- Notes List Button -->
         <local:ButtonEx
-          HorizontalContentAlignment="Left"
           BackgroundColor="White"
           Foreground="Black"
+          HorizontalContentAlignment="Left"
           Padding="17"
+          Click="OnOpenNotesList"
         >
           <Button.Content>
             <StackPanel Orientation="Horizontal">
-            <TextBlock
-              Text="&#xEA37;"
-              FontSize="20"
-            />
-            <TextBlock
-              Margin="15,0,0,0"
-              Text="Notes list"
-              FontSize="16"
-              FontFamily="Arial"
-            />
+              <TextBlock Text="&#xEA37;" FontSize="16"/>
+              <TextBlock
+                Text="Notes list"
+                FontFamily="Arial"
+                FontSize="15"
+                Margin="15,0,0,0"
+              />
             </StackPanel>
           </Button.Content>
         </local:ButtonEx>
 
         <!-- Delete Note Button -->
         <local:ButtonEx
-          HorizontalContentAlignment="Left"
           BackgroundColor="White"
           Foreground="Red"
+          HorizontalContentAlignment="Left"
           Padding="17"
+          Click="OnDeleteNote"
         >
           <Button.Content>
             <StackPanel Orientation="Horizontal">
+              <TextBlock Text="&#xE74D;" FontSize="16"/>
               <TextBlock
-              Text="&#xE74D;"
-              FontSize="18"
-            />
-              <TextBlock
-              Margin="15,0,0,0"
-              Text="Delete note"
-              FontSize="16"
-              FontFamily="Arial"
-            />
+                Text="Delete note"
+                FontFamily="Arial"
+                FontSize="15"
+                Margin="15,0,0,0"
+              />
             </StackPanel>
           </Button.Content>
         </local:ButtonEx>

@@ -81,4 +81,17 @@
     <Setter Property="BackgroundColor" Value="{DynamicResource Background}"/>
     <Setter Property="Foreground" Value="{DynamicResource ForegroundSecondary}"/>
   </Style>
+
+  <Style x:Key="ToggleButtonExOverlay" TargetType="{x:Type local:ToggleButtonEx}" BasedOn="{StaticResource {x:Type local:ToggleButtonEx}}">
+    <Setter Property="Height" Value="52"/>
+    <Setter Property="FontSize" Value="18"/>
+    <Style.Triggers>
+      <Trigger Property="IsChecked" Value="True">
+        <Setter Property="Content" Value="&#xE73E;" />
+      </Trigger>
+      <Trigger Property="IsChecked" Value="False">
+        <Setter Property="Content" Value="{x:Null}"/>
+      </Trigger>
+    </Style.Triggers>
+  </Style>
 </ResourceDictionary>
