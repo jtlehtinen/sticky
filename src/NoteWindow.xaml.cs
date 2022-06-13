@@ -50,6 +50,13 @@ namespace Sticky {
 
     private void OnDeleteNote(object sender, RoutedEventArgs e) {
       System.Console.WriteLine("OnDeleteNote");
+
+      var confirm = new ConfirmDeleteDialog { Owner = this };
+      confirm.ShowDialog();
+
+      if (confirm.DialogResult == true) {
+        // @TODO: Delete note
+      }
     }
 
     private void OnTextChanged(object sender, TextChangedEventArgs e) {
