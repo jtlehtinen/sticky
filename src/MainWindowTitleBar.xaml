@@ -1,41 +1,47 @@
 <UserControl
   x:Class="Sticky.MainWindowTitleBar"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="clr-namespace:Sticky"
+>
   <DockPanel
     Background="Transparent"
     Height="40"
     LastChildFill="False"
     MouseDown="OnMouseDown"
-    MouseMove="OnMouseMove">
+    MouseMove="OnMouseMove"
+  >
+    <!-- New Note Button -->
+    <local:ButtonEx
+      Click="OnNewNote"
+      Content="&#xE710;"
+      DockPanel.Dock="Left"
+      FontSize="15"
+      ToolTip="New note"
+      Width="40"
+      Height="Auto"
+    />
 
-      <!-- New Note Button -->
-      <Button
-        Click="OnNewNote"
-        Content="&#xE710;"
-        DockPanel.Dock="Left"
-        FontSize="15"
-        Style="{StaticResource TitleBarButton}"
-        ToolTip="New note"/>
+    <!-- Close Button -->
+    <local:ButtonEx
+      Click="OnClose"
+      Content="&#xE8BB;"
+      DockPanel.Dock="Right"
+      FontSize="12"
+      ToolTip="Close window"
+      Width="40"
+      Height="Auto"
+    />
 
-      <!-- Close Button -->
-      <Button
-        Click="OnClose"
-        Content="&#xE8BB;"
-        DockPanel.Dock="Right"
-        FontSize="12"
-        Style="{StaticResource TitleBarButton}"
-        ToolTip="Close window"/>
-
-      <!-- Settings Button -->
-      <Button
-        Click="OnSettings"
-        Content="&#xE713;"
-        DockPanel.Dock="Right"
-        FontSize="16"
-        Style="{StaticResource TitleBarButton}"
-        ToolTip="Settings"/>
-
+    <!-- Settings Button -->
+    <local:ButtonEx
+      Click="OnSettings"
+      Content="&#xE713;"
+      DockPanel.Dock="Right"
+      FontSize="16"
+      ToolTip="Settings"
+      Width="40"
+      Height="Auto"
+    />
   </DockPanel>
 </UserControl>

@@ -4,51 +4,6 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:local="clr-namespace:Sticky"
 >
-
-  <UserControl.Resources>
-    <local:BindingProxy x:Key="BackgroundProxy" Data="{DynamicResource BackgroundSecondary}"/>
-
-    <Style
-      BasedOn="{StaticResource TitleBarButton}"
-      TargetType="{x:Type Button}"
-      x:Key="NoteWindowTitleBarButton"
-    >
-
-      <Setter Property="Foreground" Value="{DynamicResource ForegroundSecondary}"/>
-      <Setter Property="Template">
-        <Setter.Value>
-          <ControlTemplate TargetType="{x:Type Button}">
-            <Border
-              Background="{TemplateBinding Background}"
-              BorderBrush="Transparent"
-              BorderThickness="0"
-              SnapsToDevicePixels="True">
-              <ContentPresenter
-                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-              />
-            </Border>
-            <ControlTemplate.Triggers>
-              <Trigger Property="IsMouseOver" Value="True">
-                <Setter
-                  Property="Background"
-                  Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToHoverConverter}}"
-                />
-              </Trigger>
-              <Trigger Property="IsPressed" Value="True">
-                <Setter
-                  Property="Background"
-                  Value="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToPressedConverter}}"
-                />
-              </Trigger>
-            </ControlTemplate.Triggers>
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-    </Style>
-  </UserControl.Resources>
-
   <DockPanel
     Background="{DynamicResource BackgroundSecondary}"
     Height="32"
@@ -56,68 +11,67 @@
     MouseDown="OnMouseDown"
     MouseMove="OnMouseMove"
   >
+    <!-- New Note -->
+    <local:ButtonEx
+      BackgroundColor="{DynamicResource BackgroundSecondary}"
+      Click="OnNewNote"
+      Content="&#xE710;"
+      DockPanel.Dock="Left"
+      FontSize="15"
+      ToolTip="New note"
+      Width="32"
+    />
 
-      <!-- New Note -->
-      <Button
-        Click="OnNewNote"
-        Content="&#xE710;"
-        DockPanel.Dock="Left"
-        FontSize="15"
-        Style="{StaticResource NoteWindowTitleBarButton}"
-        ToolTip="New note"
-        Width="32"
-      />
+    <!-- Pin/Unpin Note -->
+    <local:ButtonEx
+      BackgroundColor="{DynamicResource BackgroundSecondary}"
+      DockPanel.Dock="Left"
+      FontSize="15"
+      Width="32"
+      Click="OnToggleTopmost"
+    >
+      <Button.Resources>
+        <Style TargetType="{x:Type local:ButtonEx}" BasedOn="{StaticResource {x:Type local:ButtonEx}}">
+          <Style.Triggers>
+            <DataTrigger
+              Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=Topmost}"
+              Value="True"
+            >
+              <Setter Property="Content" Value="&#xE77A;"/>
+              <Setter Property="ToolTip" Value="Unpin note"/>
+            </DataTrigger>
+            <DataTrigger
+              Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=Topmost}"
+              Value="False"
+            >
+              <Setter Property="Content" Value="&#xE840;"/>
+              <Setter Property="ToolTip" Value="Pin note"/>
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </Button.Resources>
+    </local:ButtonEx>
 
-      <!-- Pin/Unpin Note -->
-      <!-- Use E840 Pinned for this? -->
-      <Button
-        DockPanel.Dock="Left"
-        FontSize="15"
-        Width="32"
-        Click="OnToggleTopmost"
-      >
-        <Button.Resources>
-          <Style TargetType="{x:Type Button}" BasedOn="{StaticResource NoteWindowTitleBarButton}">
-            <Style.Triggers>
-              <!-- @TODO: For some reason ElementName did not work for this binding -->
-              <DataTrigger
-                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=Topmost}"
-                Value="True">
-                <Setter Property="Content" Value="&#xE77A;"/>
-                <Setter Property="ToolTip" Value="Unpin note"/>
-              </DataTrigger>
-              <DataTrigger
-                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=Topmost}"
-                Value="False">
-                <Setter Property="Content" Value="&#xE718;"/>
-                <Setter Property="ToolTip" Value="Pin note"/>
-              </DataTrigger>
-            </Style.Triggers>
-          </Style>
-        </Button.Resources>
-      </Button>
+    <!-- Close Note -->
+    <local:ButtonEx
+      BackgroundColor="{DynamicResource BackgroundSecondary}"
+      Click="OnClose"
+      Content="&#xE711;"
+      DockPanel.Dock="Right"
+      FontSize="16"
+      ToolTip="Close note"
+      Width="32"
+    />
 
-      <!-- Close Note -->
-      <Button
-        Click="OnClose"
-        Content="&#xE711;"
-        DockPanel.Dock="Right"
-        FontSize="16"
-        Style="{StaticResource NoteWindowTitleBarButton}"
-        ToolTip="Close note"
-        Width="32"
-      />
-
-      <!-- Open Menu -->
-      <Button
-        Click="OnMenu"
-        Content="&#xE712;"
-        DockPanel.Dock="Right"
-        FontSize="16"
-        Style="{StaticResource NoteWindowTitleBarButton}"
-        ToolTip="Menu"
-        Width="32"
-      />
-
+    <!-- Open Menu -->
+    <local:ButtonEx
+      BackgroundColor="{DynamicResource BackgroundSecondary}"
+      Click="OnMenu"
+      Content="&#xE712;"
+      DockPanel.Dock="Right"
+      FontSize="16"
+      ToolTip="Menu"
+      Width="32"
+    />
   </DockPanel>
 </UserControl>

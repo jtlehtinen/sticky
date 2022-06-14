@@ -6,6 +6,9 @@
     <Platforms>x64</Platforms>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <!-- https://www.hanselman.com/blog/making-a-tiny-net-core-30-entirely-selfcontained-single-executable
+    <PublishTrimmed>true</PublishTrimmed>
+    -->
 
     <!--
       @TODO:

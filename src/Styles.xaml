@@ -1,7 +1,8 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Sticky">
-
+<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="clr-namespace:Sticky"
+>
   <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
   <local:BackgroundToHoverConverter x:Key="BackgroundToHoverConverter"/>
   <local:BackgroundToPressedConverter x:Key="BackgroundToPressedConverter"/>
@@ -27,50 +28,5 @@
         <Setter Property="Label.Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
       </DataTrigger>
     </Style.Triggers>
-  </Style>
-
-  <Style x:Key="TitleBarButton" TargetType="{x:Type Button}">
-    <Setter Property="Background" Value="Transparent"/>
-    <Setter Property="Focusable" Value="False"/>
-    <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
-    <Setter Property="FontWeight" Value="Thin"/>
-    <Setter Property="Foreground" Value="{DynamicResource TitleBar.Foreground}"/>
-    <Setter Property="Height" Value="Auto"/>
-    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-    <Setter Property="Margin" Value="0,0,0,0"/>
-    <Setter Property="TextBlock.FontFamily" Value="Segoe MDL2 Assets"/>
-    <Setter Property="TextBlock.FontWeight" Value="Thin"/>
-    <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/>
-    <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
-    <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
-    <Setter Property="UseLayoutRounding" Value="True"/>
-    <Setter Property="VerticalContentAlignment" Value="Center"/>
-    <Setter Property="Width" Value="40"/>
-    <Setter Property="Template">
-      <Setter.Value>
-        <ControlTemplate TargetType="{x:Type Button}">
-          <Border
-            Background="{TemplateBinding Background}"
-            BorderBrush="Transparent"
-            BorderThickness="0"
-            SnapsToDevicePixels="True"
-          >
-            <ContentPresenter
-              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-            />
-          </Border>
-          <ControlTemplate.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-              <Setter Property="Background" Value="{DynamicResource TitleBar.Background.MouseOver}"/>
-            </Trigger>
-            <Trigger Property="IsPressed" Value="True">
-              <Setter Property="Background" Value="{DynamicResource TitleBar.Background.Pressed}"/>
-            </Trigger>
-          </ControlTemplate.Triggers>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
   </Style>
 </ResourceDictionary>
