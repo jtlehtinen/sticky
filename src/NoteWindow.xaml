@@ -129,16 +129,53 @@
 
     <!-- Main Content -->
     <DockPanel Background="{DynamicResource Background}">
+      <!-- TitleBar -->
       <local:NoteWindowTitleBar x:Name="TitleBar" Margin="0,0,0,10" VerticalAlignment="Top" DockPanel.Dock="Top">
-        <local:NoteWindowTitleBar.RenderTransform>
-          <TranslateTransform Y="-42"/>
-        </local:NoteWindowTitleBar.RenderTransform>
+        <!-- Slide In/Out Animation -->
+        <local:NoteWindowTitleBar.Style>
+          <Style>
+            <Setter Property="local:NoteWindowTitleBar.RenderTransform">
+              <Setter.Value>
+                <TranslateTransform X="0" Y="-42"/>
+              </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding ElementName=NoteRichTextBox, Path=IsKeyboardFocusWithin}" Value="True">
+                <DataTrigger.EnterActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Y" Duration="0:0:0.2" To="0">
+                        <DoubleAnimation.EasingFunction>
+                          <QuadraticEase EasingMode="EaseOut"/>
+                        </DoubleAnimation.EasingFunction>
+                      </DoubleAnimation>
+                    </Storyboard>
+                  </BeginStoryboard>
+                </DataTrigger.EnterActions>
+                <DataTrigger.ExitActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Y" Duration="0:0:0.2" To="-42">
+                        <DoubleAnimation.EasingFunction>
+                          <QuadraticEase EasingMode="EaseIn"/>
+                        </DoubleAnimation.EasingFunction>
+                      </DoubleAnimation>
+                    </Storyboard>
+                  </BeginStoryboard>
+                </DataTrigger.ExitActions>
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </local:NoteWindowTitleBar.Style>
       </local:NoteWindowTitleBar>
 
       <!-- Toolbar -->
-      <Border DockPanel.Dock="Bottom" BorderThickness="0 1 0 0" BorderBrush="#10000000">
+      <Border
+        DockPanel.Dock="Bottom"
+        BorderThickness="0,1,0,0"
+        BorderBrush="#10000000"
+      >
         <StackPanel  Orientation="Horizontal" Margin="0,0,0,0">
-
           <!-- Bold Button -->
           <local:ToggleButtonEx
             x:Name="ToolbarButtonBold"
@@ -260,7 +297,6 @@
           VerticalScrollBarVisibility="Auto"
           TextChanged="OnTextChanged"
         >
-
           <local:BindableRichTextBox.Resources>
             <Style TargetType="{x:Type Paragraph}">
               <Setter Property="Margin" Value="0"/>

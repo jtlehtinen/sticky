@@ -12,8 +12,6 @@ namespace Sticky {
 
     public NoteWindow() {
       InitializeComponent();
-      NoteRichTextBox.GotKeyboardFocus += OnGotKeyboardFocus;
-      NoteRichTextBox.LostKeyboardFocus += OnLostKeyboardFocus;
       NoteRichTextBox.SelectionChanged += OnSelectionChanged;
       NoteRichTextBox.KeyUp += OnKeyUp;
 
@@ -23,6 +21,7 @@ namespace Sticky {
 
     // Can't believe this...
     // https://stackoverflow.com/questions/5825575/detect-if-a-richtextbox-is-empty
+    // @TODO: Is property and bind Placeholder visiblity on it...
     public bool IsRichTextBoxEmpty() {
       var box = NoteRichTextBox as RichTextBox;
       if (box == null) return true;
@@ -79,14 +78,6 @@ namespace Sticky {
     private void OnKeyUp(object sender, KeyEventArgs e) {
       // @TODO: Don't refresh unnecessarily.
       RefreshToolbarButtons();
-    }
-
-    private void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e) {
-      TitleBar.SlideIn();
-    }
-
-    private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e) {
-      TitleBar.SlideOut();
     }
 
     private void OnSizeChanged(object sender, SizeChangedEventArgs e) {

@@ -23,6 +23,7 @@
     MouseDown="OnMouseDown"
     MouseMove="OnMouseMove"
   >
+    <!-- Left Side Controls -->
     <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
       <!-- New Note -->
       <local:ButtonEx
@@ -59,6 +60,7 @@
       </local:ButtonEx>
     </StackPanel>
 
+    <!-- Right Side Controls -->
     <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
       <!-- Open Menu -->
       <local:ButtonEx

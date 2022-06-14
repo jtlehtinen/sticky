@@ -11,7 +11,7 @@ namespace Sticky {
 
     // @TODO: Use command instead and let the note window to handle it.
     private void OnToggleTopmost(object sender, RoutedEventArgs e) {
-      var window = (Window)Window.GetWindow(this);
+      var window = Window.GetWindow(this);
       window.Topmost = !window.Topmost;
     }
 
@@ -61,14 +61,6 @@ namespace Sticky {
       }
 
       window.DragMove();
-    }
-
-    public void SlideIn() {
-      this.RenderTransform = Animation.MakeTranslateYTransform(-42, 0, 150);
-    }
-
-    public void SlideOut() {
-      this.RenderTransform = Animation.MakeTranslateYTransform(0, -42, 150);
     }
   }
 
