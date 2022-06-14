@@ -175,6 +175,43 @@
         BorderThickness="0,1,0,0"
         BorderBrush="#10000000"
       >
+        <!-- Slide In/Out Animation -->
+        <Border.Style>
+          <Style>
+            <Setter Property="Border.RenderTransform">
+              <Setter.Value>
+                <TranslateTransform X="0" Y="42"/>
+              </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding ElementName=NoteRichTextBox, Path=IsKeyboardFocusWithin}" Value="True">
+                <DataTrigger.EnterActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Y" Duration="0:0:0.2" To="0">
+                        <DoubleAnimation.EasingFunction>
+                          <QuadraticEase EasingMode="EaseOut"/>
+                        </DoubleAnimation.EasingFunction>
+                      </DoubleAnimation>
+                    </Storyboard>
+                  </BeginStoryboard>
+                </DataTrigger.EnterActions>
+                <DataTrigger.ExitActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Y" Duration="0:0:0.2" To="42">
+                        <DoubleAnimation.EasingFunction>
+                          <QuadraticEase EasingMode="EaseIn"/>
+                        </DoubleAnimation.EasingFunction>
+                      </DoubleAnimation>
+                    </Storyboard>
+                  </BeginStoryboard>
+                </DataTrigger.ExitActions>
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </Border.Style>
+
         <StackPanel  Orientation="Horizontal" Margin="0,0,0,0">
           <!-- Bold Button -->
           <local:ToggleButtonEx
