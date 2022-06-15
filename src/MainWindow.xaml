@@ -12,7 +12,8 @@
   Title="sticky"
   Width="320"
   Icon="/icon.ico"
-  WindowStyle="None">
+  WindowStyle="None"
+>
 
   <Window.Resources>
     <DataTemplate x:Key="NoteItemTemplate">
@@ -171,16 +172,6 @@
       Sticky Notes
     </Label>
     <StackPanel Orientation="Vertical" Margin="10">
-      <UniformGrid Rows="1" Columns="7">
-        <Button Content="Blue" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Blue"/>
-        <Button Content="Charcoal" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Charcoal"/>
-        <Button Content="Gray" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Gray"/>
-        <Button Content="Green" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Green"/>
-        <Button Content="Pink" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Pink"/>
-        <Button Content="Purple" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Purple"/>
-        <Button Content="Yellow" Command="{x:Static local:MainWindow.ChangeThemeCommand}" CommandParameter="Themes.Yellow"/>
-      </UniformGrid>
-
       <!-- ItemsControl represents a control that can be used to present a collection of items. -->
       <ItemsControl ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NoteItemTemplate}">
         <ItemsControl.ItemContainerStyle>

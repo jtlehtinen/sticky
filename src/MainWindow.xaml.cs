@@ -8,38 +8,23 @@ namespace Sticky {
   /// </summary>
   public partial class MainWindow : Window {
 
-    public static RoutedCommand ChangeThemeCommand = new RoutedCommand();
-
     // @TODO: Remove windows when they are closed.
     private List<Window> noteWindows = new List<Window>();
 
     public MainWindow() {
       InitializeComponent();
 
-      var app = GetApp();
-
       Native.ApplyRoundedWindowCorners(this);
-      app.SetTheme("Themes.Blue");
-
-      CommandBindings.Add(new CommandBinding(ChangeThemeCommand, ExecutedChangeThemeCommand, CanExecuteChangeThemeCommand));
 
       // @NOTE:
       // If you are binding to an object that has already been
       // created, you need to set the DataContext in code.
+      var app = GetApp();
       this.DataContext = app.state;
     }
 
     private App GetApp() {
       return (App)Application.Current;
-    }
-
-    private void ExecutedChangeThemeCommand(object sender, ExecutedRoutedEventArgs e) {
-      var parameter = (string)e.Parameter;
-      GetApp().SetTheme(parameter);
-    }
-
-    private void CanExecuteChangeThemeCommand(object sender, CanExecuteRoutedEventArgs e) {
-      e.CanExecute = true;
     }
 
     public void OnAddNote() {

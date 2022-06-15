@@ -2,21 +2,52 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace Sticky {
   /// <summary>
   /// Interaction logic for NoteWindow.xaml
   /// </summary>
   public partial class NoteWindow : Window {
+    public static RoutedCommand ChangeThemeCommand = new RoutedCommand();
 
     public NoteWindow() {
       InitializeComponent();
+
+      CommandBindings.Add(new CommandBinding(ChangeThemeCommand, ExecutedChangeThemeCommand));
+
       NoteRichTextBox.SelectionChanged += OnSelectionChanged;
       NoteRichTextBox.KeyUp += OnKeyUp;
 
+      SetTheme("Theme.Green");
       Native.ApplyRoundedWindowCorners(this);
       Show();
+    }
+
+    private ResourceDictionary? FindThemeFromResources() {
+      foreach (var dic in Resources.MergedDictionaries) {
+        if (dic.Contains(App.THEME_MARKER_KEY)) return dic;
+      }
+      return null;
+    }
+
+    private void SetTheme(string themeName) {
+      var app = Application.Current as App;
+      if (app == null) return;
+
+      if (!app.Properties.Contains(themeName)) return;
+
+      var theme = app.Properties[themeName] as ResourceDictionary;
+      if (theme == null) return;
+
+      var currentTheme = FindThemeFromResources();
+      if (currentTheme != null) Resources.MergedDictionaries.Remove(currentTheme);
+
+      Resources.MergedDictionaries.Add(theme);
+    }
+
+    private void ExecutedChangeThemeCommand(object sender, ExecutedRoutedEventArgs e) {
+      var parameter = (string)e.Parameter;
+      SetTheme(parameter);
     }
 
     // Can't believe this...
