@@ -14,32 +14,15 @@ namespace Sticky {
     public static readonly DependencyProperty BackgroundColorProperty = DependencyProperty.Register("BackgroundColor", typeof(SolidColorBrush), typeof(ButtonEx), new PropertyMetadata(new SolidColorBrush(Colors.Transparent), OnBackgroundColorChanged));
     public static readonly DependencyProperty HoverBackgroundColorProperty = DependencyProperty.Register("HoverBackgroundColor", typeof(SolidColorBrush), typeof(ButtonEx));
     public static readonly DependencyProperty PressedBackgroundColorProperty = DependencyProperty.Register("PressedBackgroundColor", typeof(SolidColorBrush), typeof(ButtonEx));
-    public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register("IsActive", typeof(bool), typeof(ButtonEx), new PropertyMetadata(false, OnIsActiveChanged));
 
     private static void OnBackgroundColorChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e) {
       var button = obj as ButtonEx;
       if (button == null) return;
 
       var brush = (SolidColorBrush)e.NewValue;
-
-      var active = button.IsActive;
-      button.Background = active ? new SolidColorBrush(brush.Color.ToHoverColor()) : brush;
+      button.Background = brush;
       button.HoverBackgroundColor = new SolidColorBrush(brush.Color.ToHoverColor());
       button.PressedBackgroundColor = new SolidColorBrush(brush.Color.ToPressedColor());
-    }
-
-    private static void OnIsActiveChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e) {
-      var button = obj as ButtonEx;
-      if (button == null) return;
-
-      var active = button.IsActive;
-      var background = button.BackgroundColor;
-      button.Background = active ? new SolidColorBrush(background.Color.ToHoverColor()) : background;
-    }
-
-    public bool IsActive {
-      get { return (bool)GetValue(IsActiveProperty); }
-      set { SetValue(IsActiveProperty, value); }
     }
 
     public SolidColorBrush BackgroundColor {
