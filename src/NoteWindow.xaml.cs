@@ -27,15 +27,16 @@ namespace Sticky {
     }
 
     private void SetTheme(string themeName) {
-      var app = Application.Current as App;
+      var app = App.Current;
       if (app == null) return;
 
-      if (!app.Properties.Contains(themeName)) return;
+      var themeService = app.Services.GetService<ThemeService>();
+      if (themeService == null) return;
 
-      var theme = app.Properties[themeName] as ResourceDictionary;
+      var theme = themeService.GetTheme(themeName);
       if (theme == null) return;
 
-      var currentTheme = Resources.MergedDictionaries.FirstOrDefault(d => d.Contains(App.THEME_MARKER_KEY));
+      var currentTheme = Resources.MergedDictionaries.FirstOrDefault(d => themeService.IsTheme(d));
       if (currentTheme != null) Resources.MergedDictionaries.Remove(currentTheme);
 
       Resources.MergedDictionaries.Add(theme);
@@ -65,9 +66,8 @@ namespace Sticky {
       Overlay.Visibility = Visibility.Visible;
     }
 
-    private void OnToggleOverlay(object sender, RoutedEventArgs e) {
-      var visibility = Overlay.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-      Overlay.Visibility = visibility;
+    private void HideOverlay(object sender, RoutedEventArgs e) {
+      Overlay.Visibility = Visibility.Collapsed;
     }
 
     private void OnOpenNotesList(object sender, RoutedEventArgs e) {

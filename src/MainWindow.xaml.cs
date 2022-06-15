@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Input;
 
 namespace Sticky {
   /// <summary>
@@ -12,19 +11,10 @@ namespace Sticky {
     private List<Window> noteWindows = new List<Window>();
 
     public MainWindow() {
+      this.DataContext = App.Current.state;
+
       InitializeComponent();
-
       Native.ApplyRoundedWindowCorners(this);
-
-      // @NOTE:
-      // If you are binding to an object that has already been
-      // created, you need to set the DataContext in code.
-      var app = GetApp();
-      this.DataContext = app.state;
-    }
-
-    private App GetApp() {
-      return (App)Application.Current;
     }
 
     public void OnAddNote() {
@@ -35,7 +25,7 @@ namespace Sticky {
       noteWindows.Remove(window);
     }
 
-    private void OnSizeChanged(object sender, SizeChangedEventArgs args) {
+    private void OnSizeChanged(object sender, SizeChangedEventArgs e) {
       // @NOTE: This hack is here because:
       // Given: AllowsTransparency="True"
       // When: Window maximized
@@ -45,10 +35,10 @@ namespace Sticky {
       this.BorderThickness = new System.Windows.Thickness(thickness);
     }
 
-    protected override void OnClosing(System.ComponentModel.CancelEventArgs args) {
+    protected override void OnClosing(System.ComponentModel.CancelEventArgs e) {
       noteWindows.ForEach(window => window.Close());
       noteWindows.Clear();
-      base.OnClosing(args);
+      base.OnClosing(e);
     }
   }
 }

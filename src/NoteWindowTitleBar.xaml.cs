@@ -26,7 +26,7 @@ namespace Sticky {
     }
 
     private void OnNewNote(object sender, RoutedEventArgs args) {
-      var window = Application.Current.MainWindow as MainWindow;
+      var window = App.Current.MainWindow;
       if (window == null) return;
 
       window.OnAddNote();

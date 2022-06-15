@@ -22,7 +22,7 @@
       x:Name="Overlay"
       Panel.ZIndex="1000"
       Visibility="Collapsed"
-      MouseLeftButtonDown="OnToggleOverlay"
+      MouseLeftButtonDown="HideOverlay"
     >
       <Grid.Background>
         <SolidColorBrush Color="Black" Opacity="0.3"/>

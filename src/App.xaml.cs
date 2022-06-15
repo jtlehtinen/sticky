@@ -27,14 +27,29 @@ namespace Sticky {
   /// Interaction logic for App.xaml
   /// </summary>
   public partial class App : Application {
-    // @TODO: Better way to detect if a resource dictionary
-    // is a theme.
-    public const string THEME_NAME_KEY = "ThemeName";
-    public const string THEME_MARKER_KEY = "THEME-MARKER-KEY";
-    public const string THEME_MARKER_VALUE = "THEME-MARKER-VALUE";
-
-    public State? state;
     private Mutex? singleInstanceMutex;
+
+    public State state = new State();
+
+    public App() {
+      Services = CreateServices();
+      InitializeComponent();
+    }
+
+    public IServiceProvider Services { get; }
+
+    public new static App Current => (App)Application.Current;
+
+    public new MainWindow MainWindow {
+      get { return (MainWindow)base.MainWindow; }
+      set { base.MainWindow = value; }
+    }
+
+    private IServiceProvider CreateServices() {
+      var services = new ServiceCollection();
+      services.AddService(new ThemeService());
+      return services;
+    }
 
     private void Main(object sender, StartupEventArgs args) {
       var createdNewMutex = false;
@@ -44,27 +59,8 @@ namespace Sticky {
         return;
       }
 
-      state = new State();
-
-      LoadThemes();
-
       var window = new MainWindow();
       window.Show();
-    }
-
-    private void LoadThemes() {
-      var themes = new string[]{"Blue.xaml", "Charcoal.xaml", "Gray.xaml", "Green.xaml", "Pink.xaml", "Purple.xaml", "Yellow.xaml"};
-
-      foreach (var theme in themes) {
-        var path = "Themes/" + theme;
-        var dic = (ResourceDictionary)LoadComponent(new Uri(path, UriKind.Relative));
-        if (dic == null) continue;
-
-        var name = dic.Contains(THEME_NAME_KEY) ? dic[THEME_NAME_KEY] as string : null;
-        if (name == null) continue;
-
-        Properties[name] = dic;
-      }
     }
   }
 }
