@@ -7,36 +7,37 @@
     <ResourceDictionary Source="/Components/Colors.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
-  <Style TargetType="{x:Type local:ButtonEx}">
+  <Style TargetType="{x:Type local:RadioButtonEx}">
     <Setter Property="Background" Value="Transparent"/>
     <Setter Property="BackgroundColor" Value="Transparent"/>
+    <Setter Property="BorderBrush" Value="Transparent"/>
+    <Setter Property="BorderThickness" Value="0"/>
+    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
     <Setter Property="Focusable" Value="False"/>
     <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
     <Setter Property="FontWeight" Value="Thin"/>
-    <Setter Property="Margin" Value="0,0,0,0"/>
-    <Setter Property="Padding" Value="0,0,0,0"/>
-    <Setter Property="TextBlock.FontFamily" Value="Segoe MDL2 Assets"/>
-    <Setter Property="TextBlock.FontWeight" Value="Thin"/>
-    <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/>
-    <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
-    <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
-    <Setter Property="UseLayoutRounding" Value="True"/>
-    <Setter Property="VerticalContentAlignment" Value="Center"/>
-    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-    <Setter Property="BorderBrush" Value="Transparent"/>
-    <Setter Property="Foreground" Value="{DynamicResource TitleBar.Foreground}"/>
-    <Setter Property="BorderThickness" Value="0"/>
+    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+    <Setter Property="Margin" Value="0"/>
+    <Setter Property="Padding" Value="0"/>
+    <Setter Property="Height" Value="22"/>
     <Setter Property="HorizontalContentAlignment" Value="Center"/>
     <Setter Property="VerticalContentAlignment" Value="Center"/>
+    <Setter Property="TextBlock.FontFamily" Value="Segoe MDL2 Assets"/>
+    <Setter Property="TextBlock.FontWeight" Value="Thin"/>
+    <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+    <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/>
+    <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
+
+    <Setter Property="Foreground" Value="{DynamicResource TitleBar.Foreground}"/>
     <Setter Property="Template">
       <Setter.Value>
-        <ControlTemplate TargetType="{x:Type local:ButtonEx}">
+        <ControlTemplate TargetType="{x:Type local:RadioButtonEx}">
           <Border
             x:Name="border"
             BorderBrush="{TemplateBinding BorderBrush}"
             BorderThickness="{TemplateBinding BorderThickness}"
             Background="{TemplateBinding Background}"
-            SnapsToDevicePixels="True"
+            SnapsToDevicePixels="true"
           >
             <ContentPresenter
               x:Name="contentPresenter"
@@ -50,18 +51,18 @@
           </Border>
 
           <ControlTemplate.Triggers>
-            <Trigger Property="IsDefaulted" Value="True">
-              <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-            </Trigger>
+            <Trigger Property="HasContent" Value="True"></Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-              <Setter Property="Background" TargetName="border" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}, Path=HoverBackgroundColor}"/>
+              <Setter Property="Background" TargetName="border" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=RadioButton}, Path=HoverBackgroundColor}"/>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-              <Setter Property="Background" TargetName="border" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}, Path=PressedBackgroundColor}"/>
+              <Setter Property="Background" TargetName="border" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=RadioButton}, Path=PressedBackgroundColor}"/>
             </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-              <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
-              <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+            <Trigger Property="IsChecked" Value="True">
+              <Setter Property="Content" Value="&#xE73E;"/>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="{x:Null}">
+              <Setter Property="Content" Value="{x:Null}"/>
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -69,11 +70,9 @@
     </Setter>
   </Style>
 
-  <Style x:Key="ButtonExToolbar" TargetType="{x:Type local:ButtonEx}" BasedOn="{StaticResource {x:Type local:ButtonEx}}">
-    <Setter Property="Height" Value="32"/>
-    <Setter Property="Width" Value="32"/>
-    <Setter Property="Margin" Value="5,5,5,5"/>
-    <Setter Property="BackgroundColor" Value="{DynamicResource Background}"/>
+  <Style x:Key="RadioButtonExOverlay" TargetType="{x:Type local:RadioButtonEx}" BasedOn="{StaticResource {x:Type local:RadioButtonEx}}">
+    <Setter Property="Height" Value="52"/>
+    <Setter Property="FontSize" Value="18"/>
     <Setter Property="Foreground" Value="{DynamicResource ForegroundSecondary}"/>
   </Style>
 </ResourceDictionary>

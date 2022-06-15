@@ -73,14 +73,13 @@
           </Grid.ColumnDefinitions>
 
           <!-- @TODO: Move colors to resources -->
-          <!-- @TODO: Use radio buttons -->
-          <local:ToggleButtonEx Style="{StaticResource ToggleButtonExOverlay}" Grid.Column="0" BackgroundColor="#FFFFE66E" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Yellow"/>
-          <local:ToggleButtonEx Style="{StaticResource ToggleButtonExOverlay}" Grid.Column="1" BackgroundColor="#FFA1EF9B" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Green"/>
-          <local:ToggleButtonEx Style="{StaticResource ToggleButtonExOverlay}" Grid.Column="2" BackgroundColor="#FFFFAFDF" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Pink"/>
-          <local:ToggleButtonEx Style="{StaticResource ToggleButtonExOverlay}" Grid.Column="3" BackgroundColor="#FFD7AFFF" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Purple"/>
-          <local:ToggleButtonEx Style="{StaticResource ToggleButtonExOverlay}" Grid.Column="4" BackgroundColor="#FF9EDFFF" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Blue"/>
-          <local:ToggleButtonEx Style="{StaticResource ToggleButtonExOverlay}" Grid.Column="5" BackgroundColor="#FFE0E0E0" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Gray"/>
-          <local:ToggleButtonEx Style="{StaticResource ToggleButtonExOverlay}" Grid.Column="6" BackgroundColor="#FF767676" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Charcoal"/>
+          <local:RadioButtonEx GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="0" BackgroundColor="#FFFFE66E" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Yellow"/>
+          <local:RadioButtonEx GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="1" BackgroundColor="#FFA1EF9B" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Green"/>
+          <local:RadioButtonEx GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="2" BackgroundColor="#FFFFAFDF" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Pink"/>
+          <local:RadioButtonEx GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="3" BackgroundColor="#FFD7AFFF" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Purple"/>
+          <local:RadioButtonEx GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="4" BackgroundColor="#FF9EDFFF" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Blue"/>
+          <local:RadioButtonEx GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="5" BackgroundColor="#FFE0E0E0" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Gray"/>
+          <local:RadioButtonEx GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="6" BackgroundColor="#FF767676" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Charcoal"/>
         </Grid>
 
         <!-- Notes List Button -->
