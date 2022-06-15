@@ -16,6 +16,12 @@ namespace Sticky {
 
       InitializeComponent();
       Native.ApplyRoundedWindowCorners(this);
+
+      noteService?.GetNotes().ForEach(note => OpenNote(note));
+    }
+
+    private void OpenNote(Note note) {
+      noteWindows.Add(new NoteWindow(note));
     }
 
     public void OnAddNote() {

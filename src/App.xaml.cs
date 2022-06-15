@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
 
@@ -14,6 +12,8 @@ namespace Sticky {
     public App() {
       Services = CreateServices();
       InitializeComponent();
+
+      Exit += (sender, e) => Services.GetService<NoteService>()?.Commit();
     }
 
     public IServiceProvider Services { get; }

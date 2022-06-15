@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 
 namespace Sticky {
   /// <summary>
@@ -10,6 +11,8 @@ namespace Sticky {
   /// </summary>
   public partial class NoteWindow : Window {
     public static RoutedCommand ChangeThemeCommand = new RoutedCommand();
+
+    private int noteId;
 
     public NoteWindow() {
       InitializeComponent();
@@ -24,6 +27,15 @@ namespace Sticky {
 
       Native.ApplyRoundedWindowCorners(this);
       Show();
+    }
+
+    // @TODO: ...
+    public NoteWindow(Note note) : this() {
+      if (note.Content != null) {
+        noteId = note.Id;
+        var document = XamlReader.Parse(note.Content) as FlowDocument;
+        if (document != null) NoteRichTextBox.Document = document;
+      }
     }
 
     private void SetTheme(string themeName) {
