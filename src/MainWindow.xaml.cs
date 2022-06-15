@@ -11,7 +11,8 @@ namespace Sticky {
     private List<Window> noteWindows = new List<Window>();
 
     public MainWindow() {
-      this.DataContext = App.Current.state;
+      var noteService = App.Current.Services.GetService<NoteService>();
+      if (noteService != null) DataContext = noteService.GetNotes();
 
       InitializeComponent();
       Native.ApplyRoundedWindowCorners(this);

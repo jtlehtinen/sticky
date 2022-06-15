@@ -69,5 +69,37 @@ namespace Sticky {
     }
   }
 
+  public class NoteService {
+    private Dictionary<int, Note> notes = new();
+
+    public NoteService() {
+      AddPlaceholderNotes();
+    }
+
+    private void AddPlaceholderNotes() {
+      var note = new Note {
+        Id = 1,
+        CreatedAt = new DateTime(2022, 6, 8, 14, 30, 0),
+        Content = "<FlowDocument xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" PagePadding=\"5,0,5,0\" AllowDrop=\"True\"><Paragraph><Bold>Note 1</Bold></Paragraph><Paragraph>This is note 1.</Paragraph></FlowDocument>"
+      };
+      notes.Add(note.Id, note);
+
+      note = new Note {
+        Id = 2,
+        CreatedAt = new DateTime(2022, 6, 7, 15, 30, 0),
+        Content = "<FlowDocument xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" PagePadding=\"5,0,5,0\" AllowDrop=\"True\"><Paragraph><Bold>Note 2</Bold></Paragraph><Paragraph>This is note 2.</Paragraph></FlowDocument>"
+      };
+      notes.Add(note.Id, note);
+    }
+
+    public Note? GetNote(int id) {
+      return notes.GetValueOrDefault(id);
+    }
+
+    public List<Note> GetNotes() {
+      return new List<Note>(notes.Values);
+    }
+  }
+
 }
 

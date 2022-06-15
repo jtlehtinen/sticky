@@ -173,7 +173,7 @@
     </Label>
     <StackPanel Orientation="Vertical" Margin="10">
       <!-- ItemsControl represents a control that can be used to present a collection of items. -->
-      <ItemsControl ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NoteItemTemplate}">
+      <ItemsControl ItemsSource="{Binding}" ItemTemplate="{StaticResource NoteItemTemplate}">
         <ItemsControl.ItemContainerStyle>
           <Style>
             <Setter Property="FrameworkElement.Margin" Value="0,5"/>
