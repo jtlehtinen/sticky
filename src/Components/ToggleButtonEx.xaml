@@ -12,7 +12,7 @@
     <Setter Property="BorderBrush" Value="Transparent"/>
     <Setter Property="BorderThickness" Value="0"/>
     <Setter Property="Focusable" Value="False"/>
-    <!--<Setter Property="FocusVisualStyle" Value="{x:Null}"/>-->
+    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
     <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
     <Setter Property="FontWeight" Value="Thin"/>
     <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
@@ -20,8 +20,6 @@
     <Setter Property="Padding" Value="0"/>
     <Setter Property="HorizontalContentAlignment" Value="Center"/>
     <Setter Property="VerticalContentAlignment" Value="Center"/>
-    <Setter Property="TextBlock.FontFamily" Value="Segoe MDL2 Assets"/>
-    <Setter Property="TextBlock.FontWeight" Value="Thin"/>
     <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
     <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/>
     <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
@@ -55,15 +53,6 @@
             <Trigger Property="IsPressed" Value="true">
               <Setter Property="Background" TargetName="border" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ToggleButton}, Path=PressedBackgroundColor}"/>
             </Trigger>
-            <!--
-            <MultiTrigger>
-              <MultiTrigger.Conditions>
-                <Condition Property="IsChecked" Value="True"/>
-                <Condition Property="IsMouseOver" Value="True"/>
-              </MultiTrigger.Conditions>
-              <Setter Property="Background" TargetName="border" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ToggleButtonEx}, Path=HoverBackgroundColor}"/>
-            </MultiTrigger>
-            -->
             <Trigger Property="IsEnabled" Value="False">
               <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
               <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>

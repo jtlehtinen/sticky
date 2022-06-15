@@ -22,8 +22,6 @@
     <Setter Property="Height" Value="22"/>
     <Setter Property="HorizontalContentAlignment" Value="Center"/>
     <Setter Property="VerticalContentAlignment" Value="Center"/>
-    <Setter Property="TextBlock.FontFamily" Value="Segoe MDL2 Assets"/>
-    <Setter Property="TextBlock.FontWeight" Value="Thin"/>
     <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
     <Setter Property="TextOptions.TextHintingMode" Value="Fixed"/>
     <Setter Property="TextOptions.TextRenderingMode" Value="ClearType"/>
