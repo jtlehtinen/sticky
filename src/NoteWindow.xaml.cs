@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -19,15 +20,10 @@ namespace Sticky {
       NoteRichTextBox.KeyUp += OnKeyUp;
 
       SetTheme("Theme.Green");
+      RadioButtonThemeGreen.IsChecked = true;
+
       Native.ApplyRoundedWindowCorners(this);
       Show();
-    }
-
-    private ResourceDictionary? FindThemeFromResources() {
-      foreach (var dic in Resources.MergedDictionaries) {
-        if (dic.Contains(App.THEME_MARKER_KEY)) return dic;
-      }
-      return null;
     }
 
     private void SetTheme(string themeName) {
@@ -39,15 +35,15 @@ namespace Sticky {
       var theme = app.Properties[themeName] as ResourceDictionary;
       if (theme == null) return;
 
-      var currentTheme = FindThemeFromResources();
+      var currentTheme = Resources.MergedDictionaries.FirstOrDefault(d => d.Contains(App.THEME_MARKER_KEY));
       if (currentTheme != null) Resources.MergedDictionaries.Remove(currentTheme);
 
       Resources.MergedDictionaries.Add(theme);
     }
 
     private void ExecutedChangeThemeCommand(object sender, ExecutedRoutedEventArgs e) {
-      var parameter = (string)e.Parameter;
-      SetTheme(parameter);
+      var themeName = (string)e.Parameter;
+      SetTheme(themeName);
     }
 
     // Can't believe this...
