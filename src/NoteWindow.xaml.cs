@@ -35,6 +35,20 @@ namespace Sticky {
         noteId = note.Id;
         var document = XamlReader.Parse(note.Content) as FlowDocument;
         if (document != null) NoteRichTextBox.Document = document;
+
+        if (note.Theme != null) {
+          SetTheme(note.Theme);
+
+          switch (note.Theme) {
+            case "Theme.Yellow": RadioButtonThemeYellow.IsChecked = true; break;
+            case "Theme.Green": RadioButtonThemeGreen.IsChecked = true; break;
+            case "Theme.Pink": RadioButtonThemePink.IsChecked = true; break;
+            case "Theme.Purple": RadioButtonThemePurple.IsChecked = true; break;
+            case "Theme.Blue": RadioButtonThemeBlue.IsChecked = true; break;
+            case "Theme.Gray": RadioButtonThemeGray.IsChecked = true; break;
+            case "Theme.Charcoal": RadioButtonThemeCharcoal.IsChecked = true; break;
+          }
+        }
       }
     }
 
