@@ -2,7 +2,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32505.426
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sticky", "src\Sticky.csproj", "{D3522809-FAAC-4A9D-9EE0-185A816E210E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sticky", "src\Sticky\Sticky.csproj", "{D3522809-FAAC-4A9D-9EE0-185A816E210E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModernWpf", "src\ModernWpf\ModernWpf.csproj", "{0D5C261A-6431-48B3-B5EB-284DCDD433DD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModernWpf.Controls", "src\ModernWpf.Controls\ModernWpf.Controls.csproj", "{A68201CD-CCA2-4DD8-9483-F58F53BB9E8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,6 +18,14 @@ Global
 		{D3522809-FAAC-4A9D-9EE0-185A816E210E}.Debug|x64.Build.0 = Debug|x64
 		{D3522809-FAAC-4A9D-9EE0-185A816E210E}.Release|x64.ActiveCfg = Release|x64
 		{D3522809-FAAC-4A9D-9EE0-185A816E210E}.Release|x64.Build.0 = Release|x64
+		{0D5C261A-6431-48B3-B5EB-284DCDD433DD}.Debug|x64.ActiveCfg = Debug|x64
+		{0D5C261A-6431-48B3-B5EB-284DCDD433DD}.Debug|x64.Build.0 = Debug|x64
+		{0D5C261A-6431-48B3-B5EB-284DCDD433DD}.Release|x64.ActiveCfg = Release|x64
+		{0D5C261A-6431-48B3-B5EB-284DCDD433DD}.Release|x64.Build.0 = Release|x64
+		{A68201CD-CCA2-4DD8-9483-F58F53BB9E8B}.Debug|x64.ActiveCfg = Debug|x64
+		{A68201CD-CCA2-4DD8-9483-F58F53BB9E8B}.Debug|x64.Build.0 = Debug|x64
+		{A68201CD-CCA2-4DD8-9483-F58F53BB9E8B}.Release|x64.ActiveCfg = Release|x64
+		{A68201CD-CCA2-4DD8-9483-F58F53BB9E8B}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

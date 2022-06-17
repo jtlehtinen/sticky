@@ -13,7 +13,7 @@
       // If you have changed target frameworks, make sure to update the program path.
       "program": "${workspaceFolder}/build/x64-Debug/Sticky.dll",
       "args": [],
-      "cwd": "${workspaceFolder}/src",
+      "cwd": "${workspaceFolder}/src/Sticky",
       // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
       "console": "internalConsole",
       "stopAtEntry": false,

@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <!-- @TODO:
+      Can't use $(MSBuildProjectName), see:
+      https://github.com/dotnet/msbuild/issues/3483
+      -->
+    <BaseIntermediateOutputPath>$(ProjectDir)..\..\build-temp\Sticky\</BaseIntermediateOutputPath>
+    <MSBuildProjectExtensionsPath>$(ProjectDir)..\..\build-temp\Sticky\</MSBuildProjectExtensionsPath>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <!-- @TODO:
+      Can't use $(MSBuildProjectName), see:
+      https://github.com/dotnet/msbuild/issues/3483
+      -->
+    <BaseIntermediateOutputPath>$(ProjectDir)..\..\build-temp\ModernWpf\</BaseIntermediateOutputPath>
+    <MSBuildProjectExtensionsPath>$(ProjectDir)..\..\build-temp\ModernWpf\</MSBuildProjectExtensionsPath>
+  </PropertyGroup>
+</Project>

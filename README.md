@@ -1,6 +1,6 @@
 # sticky
 
-Simple post-it notes for Windows.
+Windows sticky notes.
 
 ## ⌨ Keyboard shortcuts
 
@@ -11,7 +11,3 @@ Simple post-it notes for Windows.
     Decrease font size:   CTRL+[
     Increase font size:   CTRL+]
     Reset formatting:     CTRL+SPACE
-
-## Resources
-
-* [Segoe MDL2 Assets icons](https://docs.microsoft.com/en-us/windows/apps/design/style/segoe-ui-symbol-font)

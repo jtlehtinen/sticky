@@ -1,0 +1,395 @@
+<Window
+  x:Class="Sticky.NoteWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="clr-namespace:Sticky"
+  Title="sticky"
+  MinWidth="340"
+  MinHeight="240"
+  Width="340"
+  Height="240"
+  AllowsTransparency="True"
+  Topmost="False"
+  WindowStyle="None"
+  ResizeMode="CanResizeWithGrip"
+  ShowInTaskbar="True"
+  SizeChanged="OnSizeChanged"
+>
+  <Grid x:Name="LayoutRoot">
+
+    <!-- Drop Down Overlay -->
+    <Grid
+      x:Name="Overlay"
+      Panel.ZIndex="1000"
+      Visibility="Collapsed"
+      MouseLeftButtonDown="HideOverlay"
+    >
+      <Grid.Background>
+        <SolidColorBrush Color="Black" Opacity="0.3"/>
+      </Grid.Background>
+
+      <StackPanel Orientation="Vertical">
+        <!-- Slide Down Animation -->
+        <StackPanel.Style>
+          <Style TargetType="{x:Type StackPanel}">
+            <Setter Property="RenderTransform">
+              <Setter.Value>
+                <TranslateTransform X="0" Y="-200"/>
+              </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding ElementName=Overlay, Path=Visibility}" Value="Visible">
+                <DataTrigger.EnterActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation
+                        Storyboard.TargetProperty="RenderTransform.Y"
+                        Duration="0:0:0.2"
+                        From="-200"
+                        To="0"
+                      >
+                        <DoubleAnimation.EasingFunction>
+                          <QuadraticEase EasingMode="EaseOut"/>
+                        </DoubleAnimation.EasingFunction>
+                      </DoubleAnimation>
+                    </Storyboard>
+                  </BeginStoryboard>
+                </DataTrigger.EnterActions>
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </StackPanel.Style>
+
+        <!-- Color Theme Buttons -->
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+
+          <!-- @TODO: Pull checked from view model -->
+          <local:RadioButtonEx x:Name="RadioButtonThemeYellow"   GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="0" BackgroundColor="#FFFFE66E" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Yellow"/>
+          <local:RadioButtonEx x:Name="RadioButtonThemeGreen"    GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="1" BackgroundColor="#FFA1EF9B" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Green"/>
+          <local:RadioButtonEx x:Name="RadioButtonThemePink"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="2" BackgroundColor="#FFFFAFDF" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Pink"/>
+          <local:RadioButtonEx x:Name="RadioButtonThemePurple"   GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="3" BackgroundColor="#FFD7AFFF" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Purple"/>
+          <local:RadioButtonEx x:Name="RadioButtonThemeBlue"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="4" BackgroundColor="#FF9EDFFF" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Blue"/>
+          <local:RadioButtonEx x:Name="RadioButtonThemeGray"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="5" BackgroundColor="#FFE0E0E0" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Gray"/>
+          <local:RadioButtonEx x:Name="RadioButtonThemeCharcoal" GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="6" BackgroundColor="#FF767676" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Charcoal"/>
+        </Grid>
+
+        <!-- Notes List Button -->
+        <local:ButtonEx
+          BackgroundColor="White"
+          Foreground="Black"
+          HorizontalContentAlignment="Left"
+          Padding="17"
+          Click="OnOpenNotesList"
+        >
+          <Button.Content>
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="&#xEA37;" FontSize="16"/>
+              <TextBlock
+                Text="Notes list"
+                FontFamily="Arial"
+                FontSize="15"
+                Margin="15,0,0,0"
+              />
+            </StackPanel>
+          </Button.Content>
+        </local:ButtonEx>
+
+        <!-- Delete Note Button -->
+        <local:ButtonEx
+          BackgroundColor="White"
+          Foreground="Red"
+          HorizontalContentAlignment="Left"
+          Padding="17"
+          Click="OnDeleteNote"
+        >
+          <Button.Content>
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="&#xE74D;" FontSize="16"/>
+              <TextBlock
+                Text="Delete note"
+                FontFamily="Arial"
+                FontSize="15"
+                Margin="15,0,0,0"
+              />
+            </StackPanel>
+          </Button.Content>
+        </local:ButtonEx>
+      </StackPanel>
+    </Grid>
+
+    <!-- Main Content -->
+    <DockPanel Background="{DynamicResource Background}">
+      <!-- TitleBar -->
+      <local:NoteWindowTitleBar x:Name="TitleBar" Margin="0,0,0,10" VerticalAlignment="Top" DockPanel.Dock="Top">
+        <!-- Slide In/Out Animation -->
+        <local:NoteWindowTitleBar.Style>
+          <Style>
+            <Setter Property="local:NoteWindowTitleBar.RenderTransform">
+              <Setter.Value>
+                <TranslateTransform X="0" Y="-42"/>
+              </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding ElementName=NoteRichTextBox, Path=IsKeyboardFocusWithin}" Value="True">
+                <DataTrigger.EnterActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Y" Duration="0:0:0.2" To="0">
+                        <DoubleAnimation.EasingFunction>
+                          <QuadraticEase EasingMode="EaseOut"/>
+                        </DoubleAnimation.EasingFunction>
+                      </DoubleAnimation>
+                    </Storyboard>
+                  </BeginStoryboard>
+                </DataTrigger.EnterActions>
+                <DataTrigger.ExitActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Y" Duration="0:0:0.2" To="-42">
+                        <DoubleAnimation.EasingFunction>
+                          <QuadraticEase EasingMode="EaseIn"/>
+                        </DoubleAnimation.EasingFunction>
+                      </DoubleAnimation>
+                    </Storyboard>
+                  </BeginStoryboard>
+                </DataTrigger.ExitActions>
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </local:NoteWindowTitleBar.Style>
+      </local:NoteWindowTitleBar>
+
+      <!-- Toolbar -->
+      <Border
+        DockPanel.Dock="Bottom"
+        BorderThickness="0,1,0,0"
+        BorderBrush="#10000000"
+      >
+        <!-- Slide In/Out Animation -->
+        <Border.Style>
+          <Style>
+            <Setter Property="Border.RenderTransform">
+              <Setter.Value>
+                <TranslateTransform X="0" Y="42"/>
+              </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding ElementName=NoteRichTextBox, Path=IsKeyboardFocusWithin}" Value="True">
+                <DataTrigger.EnterActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Y" Duration="0:0:0.2" To="0">
+                        <DoubleAnimation.EasingFunction>
+                          <QuadraticEase EasingMode="EaseOut"/>
+                        </DoubleAnimation.EasingFunction>
+                      </DoubleAnimation>
+                    </Storyboard>
+                  </BeginStoryboard>
+                </DataTrigger.EnterActions>
+                <DataTrigger.ExitActions>
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Y" Duration="0:0:0.2" To="42">
+                        <DoubleAnimation.EasingFunction>
+                          <QuadraticEase EasingMode="EaseIn"/>
+                        </DoubleAnimation.EasingFunction>
+                      </DoubleAnimation>
+                    </Storyboard>
+                  </BeginStoryboard>
+                </DataTrigger.ExitActions>
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </Border.Style>
+
+        <StackPanel  Orientation="Horizontal" Margin="0,0,0,0">
+          <!-- Bold Button -->
+          <local:ToggleButtonEx
+            x:Name="ToolbarButtonBold"
+            Style="{StaticResource ToggleButtonExToolbar}"
+            Content="&#xE8DD;"
+            FontSize="16"
+            ToolTip="Bold"
+            Command="EditingCommands.ToggleBold"
+            CommandTarget="{Binding ElementName=NoteRichTextBox}"
+          />
+
+          <!-- Italic Button -->
+          <local:ToggleButtonEx
+            x:Name="ToolbarButtonItalic"
+            Style="{StaticResource ToggleButtonExToolbar}"
+            Content="&#xE8DB;"
+            FontSize="16"
+            ToolTip="Italic"
+            Command="EditingCommands.ToggleItalic"
+            CommandTarget="{Binding ElementName=NoteRichTextBox}"
+          />
+
+          <!-- Underline Button -->
+          <local:ToggleButtonEx
+            x:Name="ToolbarButtonUnderline"
+            Style="{StaticResource ToggleButtonExToolbar}"
+            Content="&#xE8DC;"
+            FontSize="16"
+            ToolTip="Underline"
+            Command="EditingCommands.ToggleUnderline"
+            CommandTarget="{Binding ElementName=NoteRichTextBox}"
+          />
+
+          <!-- Strikethrough Button -->
+          <local:ToggleButtonEx
+            x:Name="ToolbarButtonStrikethrough"
+            Style="{StaticResource ToggleButtonExToolbar}"
+            Content="&#xEDE0;"
+            FontSize="18"
+            ToolTip="Strikethrough"
+            Command="{x:Static local:BindableRichTextBox.ToggleStrikethrough}"
+            CommandTarget="{Binding ElementName=NoteRichTextBox}"
+          />
+
+          <!-- Toggle Bullets Button -->
+          <local:ToggleButtonEx
+            x:Name="ToolbarButtonBullets"
+            Style="{StaticResource ToggleButtonExToolbar}"
+            Content="&#xE8FD;"
+            FontSize="18"
+            ToolTip="Toggle Bullets"
+            Command="EditingCommands.ToggleBullets"
+            CommandTarget="{Binding ElementName=NoteRichTextBox}"
+          />
+
+          <!-- @TODO: Add Image Button -->
+          <local:ButtonEx
+            Style="{StaticResource ButtonExToolbar}"
+            Content="&#xEB9F;"
+            FontSize="18"
+            ToolTip="Add Image"
+          />
+
+          <!-- Decrease Font Size Button -->
+          <local:ButtonEx
+            Style="{StaticResource ButtonExToolbar}"
+            Content="&#xE8E7;"
+            FontSize="18"
+            ToolTip="Decrease Font Size"
+            Command="EditingCommands.DecreaseFontSize"
+            CommandTarget="{Binding ElementName=NoteRichTextBox}"
+          />
+
+          <!-- Increase Font Size Button -->
+          <local:ButtonEx
+            Style="{StaticResource ButtonExToolbar}"
+            Content="&#xE8E8;"
+            FontSize="18"
+            ToolTip="Increase Font Size"
+            Command="EditingCommands.IncreaseFontSize"
+            CommandTarget="{Binding ElementName=NoteRichTextBox}"
+          />
+
+          <!--
+            @TODO: EditingCommands.ToggleSubscript
+            @TODO: EditingCommands.ToggleSuperscript
+            @TODO: EditingCommands.AlignLeft
+            @TODO: EditingCommands.AlignCenter
+            @TODO: EditingCommands.AlignRight
+            @TODO: EditingCommands.IncreaseIndentation
+            @TODO: EditingCommands.DecreaseIndentation
+            @TODO: EditingCommands.ToggleNumbering
+            -->
+        </StackPanel>
+      </Border>
+
+      <Grid>
+        <!-- Placeholder Text -->
+        <TextBlock
+          FontSize="14"
+          Foreground="{DynamicResource ForegroundSecondary}"
+          IsHitTestVisible="False"
+          Margin="5,0"
+          MinWidth="50"
+          Name="Placeholder"
+          Text="Take a note..."
+        />
+
+        <!-- Rich Text Box -->
+        <local:BindableRichTextBox
+          x:Name="NoteRichTextBox"
+          Background="Transparent"
+          BorderBrush="Transparent"
+          BorderThickness="0"
+          FontSize="14"
+          Foreground="{DynamicResource Foreground}"
+          SelectionBrush="{DynamicResource SelectionBackgroundColor}"
+          HorizontalScrollBarVisibility="Auto"
+          VerticalScrollBarVisibility="Auto"
+          TextChanged="OnTextChanged"
+          SelectionTextBrush="Red"
+        >
+          <local:BindableRichTextBox.Resources>
+            <Style TargetType="{x:Type Paragraph}">
+              <Setter Property="Margin" Value="0"/>
+            </Style>
+          </local:BindableRichTextBox.Resources>
+
+          <!-- Context Menu -->
+          <local:BindableRichTextBox.ContextMenu>
+            <ContextMenu>
+              <!-- Copy -->
+              <MenuItem Command="ApplicationCommands.Copy">
+                <MenuItem.Icon>
+                  <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8C8;"/>
+                </MenuItem.Icon>
+              </MenuItem>
+
+              <!-- Cut -->
+              <MenuItem Command="ApplicationCommands.Cut">
+                <MenuItem.Icon>
+                  <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8C6;"/>
+                </MenuItem.Icon>
+              </MenuItem>
+
+              <!-- Paste -->
+              <MenuItem Command="ApplicationCommands.Paste">
+                <MenuItem.Icon>
+                  <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE77F;"/>
+                </MenuItem.Icon>
+              </MenuItem>
+
+              <Separator/>
+
+              <!-- Undo -->
+              <MenuItem Command="ApplicationCommands.Undo">
+                <MenuItem.Icon>
+                  <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE7A7;"/>
+                </MenuItem.Icon>
+              </MenuItem>
+
+              <!-- Redo -->
+              <MenuItem Command="ApplicationCommands.Redo">
+                <MenuItem.Icon>
+                  <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE7A6;"/>
+                </MenuItem.Icon>
+              </MenuItem>
+            </ContextMenu>
+          </local:BindableRichTextBox.ContextMenu>
+
+          <FlowDocument>
+            <Paragraph>
+              <Bold>httpie-go</Bold>
+            </Paragraph>
+            <Paragraph>Add header "Accept: */*", nginx seems to block requests if no content negotiation headers specified</Paragraph>
+          </FlowDocument>
+        </local:BindableRichTextBox>
+      </Grid>
+    </DockPanel>
+  </Grid>
+</Window>

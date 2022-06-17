@@ -7,7 +7,7 @@
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/src/Sticky.csproj",
+        "${workspaceFolder}/src/Sticky/Sticky.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary",
         "/p:Platform=x64",
@@ -21,7 +21,7 @@
       "type": "process",
       "args": [
         "publish",
-        "${workspaceFolder}/src/Sticky.csproj",
+        "${workspaceFolder}/src/Sticky/Sticky.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary",
         "/p:Platform=x64",
@@ -37,7 +37,7 @@
         "watch",
         "run",
         "--project",
-        "${workspaceFolder}/src/Sticky.csproj"
+        "${workspaceFolder}/src/Sticky/Sticky.csproj"
       ],
       "problemMatcher": "$msCompile"
     }

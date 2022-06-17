@@ -1,0 +1,55 @@
+<UserControl
+  x:Class="Sticky.MainWindowTitleBar"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="clr-namespace:Sticky"
+>
+  <UserControl.Resources>
+    <Style
+      x:Key="TitleBarButtonStyle"
+      TargetType="{x:Type local:ButtonEx}"
+      BasedOn="{StaticResource {x:Type local:ButtonEx}}"
+    >
+      <Setter Property="Width" Value="40"/>
+      <Setter Property="Height" Value="Auto"/>
+      <Setter Property="FontSize" Value="16"/>
+    </Style>
+  </UserControl.Resources>
+
+  <DockPanel
+    Background="Transparent"
+    Height="40"
+    LastChildFill="False"
+    MouseDown="OnMouseDown"
+    MouseMove="OnMouseMove"
+  >
+    <!-- New Note Button -->
+    <local:ButtonEx
+      Style="{StaticResource TitleBarButtonStyle}"
+      Click="OnNewNote"
+      Content="&#xE948;"
+      DockPanel.Dock="Left"
+      ToolTip="New note"
+    />
+
+    <!-- Right Side Buttons -->
+    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+      <!-- Settings Button -->
+      <local:ButtonEx
+        Style="{StaticResource TitleBarButtonStyle}"
+        Click="OnSettings"
+        Content="&#xE713;"
+        ToolTip="Settings"
+      />
+
+      <!-- Close Button -->
+      <local:ButtonEx
+        Style="{StaticResource TitleBarButtonStyle}"
+        Click="OnClose"
+        Content="&#xE947;"
+        ToolTip="Close window"
+      />
+    </StackPanel>
+
+  </DockPanel>
+</UserControl>
