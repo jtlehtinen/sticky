@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Markup;
+using ModernWpf.Controls;
 
 using System.Windows.Controls.Primitives;
 
@@ -102,14 +103,15 @@ namespace Sticky {
       System.Console.WriteLine("OnOpenNotesList");
     }
 
-    private void OnDeleteNote(object sender, RoutedEventArgs e) {
+    private async void OnDeleteNote(object sender, RoutedEventArgs e) {
       System.Console.WriteLine("OnDeleteNote");
 
-      var confirm = new ConfirmDeleteDialog { Owner = this };
-      confirm.ShowDialog();
+      ConfirmDeleteDialog dialog = new ConfirmDeleteDialog();
+      var result = await dialog.ShowAsync();
 
-      if (confirm.DialogResult == true) {
-        // @TODO: Delete note
+      var doDelete = (result == ContentDialogResult.Primary);
+      if (doDelete) {
+        // @TODO: Delete the note
       }
     }
 

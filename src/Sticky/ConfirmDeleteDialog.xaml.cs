@@ -1,19 +1,10 @@
-using System.Windows;
+using ModernWpf.Controls;
 
 namespace Sticky {
 
-  public partial class ConfirmDeleteDialog : Window {
+  public partial class ConfirmDeleteDialog : ContentDialog {
     public ConfirmDeleteDialog() {
       InitializeComponent();
-    }
-
-    private void OnDelete(object sender, RoutedEventArgs e) {
-      DialogResult = true;
-
-    }
-
-    private void OnKeep(object sender, RoutedEventArgs e) {
-      DialogResult = false;
     }
   }
 
