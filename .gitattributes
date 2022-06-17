@@ -1,0 +1,3 @@
+# Tell git to leave the files as they are
+# and not attempt line-ending conversions.
+* -text
