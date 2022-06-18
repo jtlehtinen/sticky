@@ -65,7 +65,9 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
 
+                                <!-- @TODO: Remove Visibility attribute -->
                                 <primitives:TitleBarControl
+                                    Visibility="Collapsed"
                                     Icon="{TemplateBinding Icon}"
                                     Title="{TemplateBinding Title}"
                                     IsActive="{TemplateBinding IsActive}"

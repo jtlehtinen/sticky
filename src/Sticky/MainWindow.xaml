@@ -13,6 +13,7 @@
   Title="sticky"
   Width="320"
   Icon="/icon.ico"
+  ui:WindowHelper.UseModernWindowStyle="True"
   WindowStyle="None"
 >
   <Window.Resources>
@@ -167,7 +168,11 @@
   </Window.Resources>
 
   <StackPanel Orientation="Vertical">
-    <local:MainWindowTitleBar Margin="0,0,0,0"/>
+    <local:MainWindowTitleBar Margin="0"/>
+    <StackPanel Orientation="Horizontal">
+      <Button Content="App Theme" Click="ToggleAppThemeHandler" Margin="5"/>
+      <Button Content="Window Theme" Click="ToggleWindowThemeHandler" Margin="5"/>
+    </StackPanel>
 
     <TextBlock
       Style="{StaticResource SubtitleTextBlockStyle}"
@@ -176,12 +181,7 @@
       Margin="5,0"
     />
 
-    <Button Content="I am a button"/>
-    <Button Content="I am an accent button" Style="{StaticResource AccentButtonStyle}"/>
-    <Button Content="Toggle Theme" Click="OnToggleTheme"/>
-
     <StackPanel Orientation="Vertical" Margin="10">
-      <!-- ItemsControl represents a control that can be used to present a collection of items. -->
       <ItemsControl ItemsSource="{Binding}" ItemTemplate="{StaticResource NoteItemTemplate}">
         <ItemsControl.ItemContainerStyle>
           <Style>

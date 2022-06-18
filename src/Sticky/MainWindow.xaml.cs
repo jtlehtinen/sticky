@@ -21,9 +21,17 @@ namespace Sticky {
       noteService?.GetNotes().ForEach(note => OpenNote(note));
     }
 
-    private void OnToggleTheme(object sender, RoutedEventArgs e) {
-      var newTheme = ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark ? ApplicationTheme.Light : ApplicationTheme.Dark;
+    private void ToggleAppThemeHandler(object sender, RoutedEventArgs e) {
+      ClearValue(ThemeManager.RequestedThemeProperty);
+
+      var isDark = ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark;
+      var newTheme = isDark ? ApplicationTheme.Light : ApplicationTheme.Dark;
       ThemeManager.Current.ApplicationTheme = newTheme;
+    }
+
+    private void ToggleWindowThemeHandler(object sender, RoutedEventArgs e) {
+      var newTheme = ThemeManager.GetActualTheme(this) == ElementTheme.Light ? ElementTheme.Dark : ElementTheme.Light;
+      ThemeManager.SetRequestedTheme(this, newTheme);
     }
 
     private void OpenNote(Note note) {

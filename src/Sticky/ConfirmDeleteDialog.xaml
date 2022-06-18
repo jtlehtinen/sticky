@@ -9,6 +9,6 @@
   DefaultButton="Primary"
 >
   <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-    <CheckBox Content="Don't ask me again?"/>
+    <CheckBox Content="Don't ask me again"/>
   </StackPanel>
 </ui:ContentDialog>
