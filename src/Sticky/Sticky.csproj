@@ -23,6 +23,8 @@
     <ErrorReport>prompt</ErrorReport>
     <OutputPath>../../build/$(Platform)-$(Configuration)</OutputPath>
     <WarningLevel>4</WarningLevel>
+    <!-- https://github.com/dotnet/sdk/pull/2042 -->
+    <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -52,5 +54,4 @@
     <ProjectReference Include="..\ModernWpf.Controls\ModernWpf.Controls.csproj" />
     <ProjectReference Include="..\ModernWpf\ModernWpf.csproj" />
   </ItemGroup>
-
 </Project>

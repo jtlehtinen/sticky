@@ -9,6 +9,8 @@
     <ErrorReport>prompt</ErrorReport>
     <OutputPath>../../build/$(Platform)-$(Configuration)</OutputPath>
     <WarningLevel>4</WarningLevel>
+    <!-- https://github.com/dotnet/sdk/pull/2042 -->
+    <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
   </PropertyGroup>
 
   <ItemGroup>

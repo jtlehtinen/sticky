@@ -10,13 +10,9 @@
     <ErrorReport>prompt</ErrorReport>
     <OutputPath>../../build/$(Platform)-$(Configuration)</OutputPath>
     <WarningLevel>4</WarningLevel>
+    <!-- https://github.com/dotnet/sdk/pull/2042 -->
+    <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
   </PropertyGroup>
-
-  <!--
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<NoWarn>4130;0162,0169,0414;0649;0067</NoWarn>
-	</PropertyGroup>
-  -->
 
   <ItemGroup>
     <Page Remove="Properties\DesignTimeResources.xaml" />
