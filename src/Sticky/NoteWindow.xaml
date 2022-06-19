@@ -78,7 +78,6 @@
             <ColumnDefinition Width="*"/>
           </Grid.ColumnDefinitions>
 
-          <!-- @TODO: Pull checked from view model -->
           <local:RadioButtonEx x:Name="RadioButtonThemeYellow"   GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="0" BackgroundColor="#FFFFE66E" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Yellow"/>
           <local:RadioButtonEx x:Name="RadioButtonThemeGreen"    GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="1" BackgroundColor="#FFA1EF9B" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Green"/>
           <local:RadioButtonEx x:Name="RadioButtonThemePink"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="2" BackgroundColor="#FFFFAFDF" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Pink"/>

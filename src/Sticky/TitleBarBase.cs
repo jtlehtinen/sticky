@@ -5,7 +5,7 @@ using System.Windows.Input;
 namespace Sticky {
 
   public abstract class TitleBarBase : UserControl {
-    protected void OnClose(object sender, RoutedEventArgs args) {
+    protected virtual void OnClose(object sender, RoutedEventArgs args) {
       Window.GetWindow(this).Close();
     }
 

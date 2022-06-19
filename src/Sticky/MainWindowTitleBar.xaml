@@ -27,7 +27,6 @@
     <local:ButtonEx
       Style="{StaticResource TitleBarButtonStyle}"
       Command="local:Commands.NewNote"
-      CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
       Content="&#xE948;"
       DockPanel.Dock="Left"
       ToolTip="New note"

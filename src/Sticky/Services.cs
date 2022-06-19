@@ -4,32 +4,6 @@ using System.Windows;
 
 namespace Sticky {
 
-  public interface IServiceProvider {
-    T? GetService<T>();
-  }
-
-  public sealed class ServiceCollection : IServiceProvider {
-    private Dictionary<Type, Object> services = new();
-
-    public T? GetService<T>() {
-      if (!services.ContainsKey(typeof(T))) return default(T);
-
-      return (T)services[typeof(T)];
-    }
-
-    public void AddService<T>(T service) {
-      if (service == null) {
-        throw new ArgumentNullException("service");
-      }
-
-      if (services.ContainsKey(typeof(T))) {
-        throw new InvalidOperationException($"Service of type {typeof(T)} already exists.");
-      }
-
-      services[typeof(T)] = service;
-    }
-  }
-
   public class ThemeService {
     private const string THEME_NAME_KEY = "ThemeName";
 
@@ -66,40 +40,6 @@ namespace Sticky {
       var name = dic[THEME_NAME_KEY] as string;
 
       return name != null && themes.ContainsKey(name);
-    }
-  }
-
-  public class NoteService {
-    private Dictionary<int, Note> notes = new();
-    private bool dirty = false;
-
-    public NoteService() {
-      // @TODO: Lazy load
-      LoadNotes();
-    }
-
-    public Note? GetNote(int id) {
-      return notes.GetValueOrDefault(id);
-    }
-
-    public List<Note> GetNotes() {
-      return new List<Note>(notes.Values);
-    }
-
-    public void Commit() {
-      if (!dirty) return;
-
-      dirty = false;
-      Export.ToJson("sticky.json", GetNotes());
-    }
-
-    private void LoadNotes() {
-      notes.Clear();
-
-      var list = Import.FromJson("sticky.json") ?? new List<Note>();
-      foreach (var note in list) {
-        notes[note.Id] = note;
-      }
     }
   }
 

@@ -144,23 +144,35 @@
                 <ContextMenu>
                   <!-- Open Note -->
                   <!-- @TODO: Visibility -->
-                  <MenuItem Header="Open note">
+                  <MenuItem
+                    Header="Open note"
+                    Command="local:Commands.OpenNote"
+                    CommandParameter="{Binding Path=Id}"
+                    Visibility="{Binding Path=Open, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
+                  >
                     <MenuItem.Icon>
                       <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8A7;"/>
                     </MenuItem.Icon>
                   </MenuItem>
 
                   <!-- Close Note -->
-                  <!-- @TODO: Visibility
-                  <MenuItem Header="Close note">
+                  <MenuItem
+                    Header="Close note"
+                    Command="local:Commands.CloseNote"
+                    CommandParameter="{Binding Path=Id}"
+                    Visibility="{Binding Path=Open, Converter={StaticResource BooleanToVisibilityConverter}}"
+                  >
                     <MenuItem.Icon>
                       <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE73F;"/>
                     </MenuItem.Icon>
                   </MenuItem>
-                  -->
 
                   <!-- Delete -->
-                  <MenuItem Header="Delete note">
+                  <MenuItem
+                    Header="Delete note"
+                    Command="local:Commands.DeleteNote"
+                    CommandParameter="{Binding Path=Id}"
+                  >
                     <MenuItem.Icon>
                       <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE74D;"/>
                     </MenuItem.Icon>
@@ -193,7 +205,14 @@
     />
 
     <StackPanel Orientation="Vertical" Margin="10">
-      <ItemsControl ItemsSource="{Binding}" ItemTemplate="{StaticResource NoteItemTemplate}">
+      <ItemsControl ItemsSource="{Binding Path=Notes}" ItemTemplate="{StaticResource NoteItemTemplate}">
+        <!--
+        <ItemsControl.ItemContainerStyle>
+          <Style>
+            <Setter Property="FrameworkElement.DataContext" Value="{Binding RelativeSource={RelativeSource Self}}"/>
+          </Style>
+        </ItemsControl.ItemContainerStyle>
+          -->
         <ItemsControl.ItemContainerStyle>
           <Style>
             <Setter Property="FrameworkElement.Margin" Value="0,5"/>

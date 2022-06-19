@@ -10,40 +10,31 @@ namespace Sticky {
   /// Interaction logic for NoteWindow.xaml
   /// </summary>
   public partial class NoteWindow : Window {
-    private int noteId;
+    public NoteViewModel Note { get; private set; }
 
-    public NoteWindow() {
+    public NoteWindow(NoteViewModel note) {
+      Note = note;
+
       InitializeComponent();
 
       NoteRichTextBox.SelectionChanged += OnSelectionChanged;
       NoteRichTextBox.KeyUp += OnKeyUp;
 
-      SetTheme("Theme.Green");
-      RadioButtonThemeGreen.IsChecked = true;
-
       Native.ApplyRoundedWindowCorners(this);
-    }
 
-    // @TODO: ...
-    public NoteWindow(Note note) : this() {
-      if (note.Content != null) {
-        noteId = note.Id;
-        var document = XamlReader.Parse(note.Content) as FlowDocument;
-        if (document != null) NoteRichTextBox.Document = document;
+      var document = XamlReader.Parse(note.Content) as FlowDocument;
+      if (document != null) NoteRichTextBox.Document = document;
 
-        if (note.Theme != null) {
-          SetTheme(note.Theme);
+      SetTheme(note.Theme);
 
-          switch (note.Theme) {
-            case "Theme.Yellow": RadioButtonThemeYellow.IsChecked = true; break;
-            case "Theme.Green": RadioButtonThemeGreen.IsChecked = true; break;
-            case "Theme.Pink": RadioButtonThemePink.IsChecked = true; break;
-            case "Theme.Purple": RadioButtonThemePurple.IsChecked = true; break;
-            case "Theme.Blue": RadioButtonThemeBlue.IsChecked = true; break;
-            case "Theme.Gray": RadioButtonThemeGray.IsChecked = true; break;
-            case "Theme.Charcoal": RadioButtonThemeCharcoal.IsChecked = true; break;
-          }
-        }
+      switch (note.Theme) {
+        case "Theme.Yellow": RadioButtonThemeYellow.IsChecked = true; break;
+        case "Theme.Green": RadioButtonThemeGreen.IsChecked = true; break;
+        case "Theme.Pink": RadioButtonThemePink.IsChecked = true; break;
+        case "Theme.Purple": RadioButtonThemePurple.IsChecked = true; break;
+        case "Theme.Blue": RadioButtonThemeBlue.IsChecked = true; break;
+        case "Theme.Gray": RadioButtonThemeGray.IsChecked = true; break;
+        case "Theme.Charcoal": RadioButtonThemeCharcoal.IsChecked = true; break;
       }
     }
 
@@ -51,7 +42,7 @@ namespace Sticky {
       var app = App.Current;
       if (app == null) return;
 
-      var themeService = app.Services.GetService<ThemeService>();
+      var themeService = App.Current.Themes;
       if (themeService == null) return;
 
       var theme = themeService.GetTheme(themeName);
@@ -118,11 +109,8 @@ namespace Sticky {
     }
 
     private void OnSizeChanged(object sender, SizeChangedEventArgs e) {
-      // @NOTE: This hack is here because:
-      // Given: AllowsTransparency="True"
-      // When: Window maximized
-      // Then: Window size is greater than the monitor size... WTF?
-
+      // @NOTE: Hack! When the window is maximized the window size ends
+      // up being greater than the monitor size.
       var thickness = (this.WindowState == WindowState.Maximized ? 8 : 0);
       this.BorderThickness = new System.Windows.Thickness(thickness);
     }

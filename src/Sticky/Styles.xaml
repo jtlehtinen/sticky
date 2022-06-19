@@ -4,6 +4,7 @@
   xmlns:local="clr-namespace:Sticky"
 >
   <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+  <local:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibilityConverter"/>
   <local:StringToFlowDocumentConverter x:Key="StringToFlowDocumentConverter"/>
   <local:DateTimeConverter x:Key="DateTimeConverter"/>
 

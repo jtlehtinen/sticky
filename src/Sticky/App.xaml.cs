@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
@@ -12,33 +12,43 @@ namespace Sticky {
   /// </summary>
   public partial class App : Application {
     private Mutex? singleInstanceMutex;
-    private List<Window> noteWindows = new();
+
+    public Model Model;
+    public ViewModel ViewModel;
+    public ThemeService Themes = new ThemeService();
 
     public App() {
+      Model = new Model();
+      ViewModel = new ViewModel(Model);
+
+      ViewModel.PropertyChanged += (sender, e) => {
+        System.Console.WriteLine("ViewModel.PropertyChanged: " + e.PropertyName);
+      };
+
+      ViewModel.Notes.CollectionChanged += (sender, e) => {
+        System.Console.WriteLine("ViewModel.Notes.CollectionChanged: " + e.Action);
+
+        switch (e.Action) {
+          case NotifyCollectionChangedAction.Add: OnNoteCreated(e.NewItems[0] as NoteViewModel); break;
+          case NotifyCollectionChangedAction.Remove: OnNoteDeleted(e.OldItems[0] as NoteViewModel); break;
+          case NotifyCollectionChangedAction.Replace: OnNoteReplaced(e.NewItems[0] as NoteViewModel); break;
+        }
+      };
+
       // @NOTE: TextBox SelectionTextBrush doesn't work without this.
       // @TODO: RichTextBox SelectionTextBrush doesn't work event with this.
       // https://github.com/microsoft/dotnet/blob/master/Documentation/compatibility/wpf-SelectionTextBrush-property-for-non-adorner-selection.md
       // https://github.com/Microsoft/dotnet/blob/master/Documentation/compatibility/wpf-TextBox-PasswordBox-text-selection-does-not-follow-system-colors.md
       AppContext.SetSwitch("Switch.System.Windows.Controls.Text.UseAdornerForTextboxSelectionRendering", false);
 
-      Services = CreateServices();
       InitializeComponent();
     }
-
-    public IServiceProvider Services { get; private set; }
 
     public new static App Current => (App)Application.Current;
 
     public new MainWindow MainWindow {
       get { return (MainWindow)base.MainWindow; }
       set { base.MainWindow = value; }
-    }
-
-    private IServiceProvider CreateServices() {
-      var services = new ServiceCollection();
-      services.AddService(new ThemeService());
-      services.AddService(new NoteService());
-      return services;
     }
 
     private void Main(object sender, StartupEventArgs args) {
@@ -49,51 +59,66 @@ namespace Sticky {
         return;
       }
 
-      Exit += (sender, e) => Services.GetService<NoteService>()?.Commit();
+      Exit += (sender, e) => Model.Save();
 
       Commands.Register(typeof(Window), Commands.ToggleAppTheme, ToggleAppThemeExecuted);
+      Commands.Register(typeof(Window), Commands.DeleteNote, DeleteNoteExecuted);
       Commands.Register(typeof(Window), Commands.NewNote, NewNoteExecuted);
+      Commands.Register(typeof(Window), Commands.CloseNote, CloseNoteExecuted);
+      Commands.Register(typeof(Window), Commands.OpenNote, OpenNoteExecuted);
 
       var window = new MainWindow();
       window.Show();
-
-      var noteService = Services.GetService<NoteService>();
-      noteService?.GetNotes().ForEach(note => OpenNote(note, MainWindow));
     }
-
-    private void OpenNote(Note? note, Window? positionNextTo = null) {
-      var window = note != null ? new NoteWindow(note) : new NoteWindow();
-
-      if (positionNextTo != null) {
-        window.Left = positionNextTo.Left + positionNextTo.Width + 12;
-        window.Top = positionNextTo.Top;
-      }
-
-      noteWindows.Add(window);
-      window.Show();
-    }
-
-    private void NewNoteExecuted(object sender, ExecutedRoutedEventArgs e) {
-      System.Console.WriteLine("NewNoteCommandExecuted()");
-      OpenNote(null, e.Parameter as Window);
-		}
 
     private void ToggleAppThemeExecuted(object sender, ExecutedRoutedEventArgs e) {
-      System.Console.WriteLine("ToggleAppThemeCommandExecuted()");
-
-      var window = MainWindow;
-      window.ClearValue(ThemeManager.RequestedThemeProperty);
+      // @TODO: Ensure MainWindow is the notes list window.
+      MainWindow.ClearValue(ThemeManager.RequestedThemeProperty);
 
       var isDark = ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark;
       var newTheme = isDark ? ApplicationTheme.Light : ApplicationTheme.Dark;
       ThemeManager.Current.ApplicationTheme = newTheme;
     }
 
-    private void ToggleWindowThemeCommandExecuted(object sender, ExecutedRoutedEventArgs e) {
-      #if false
-      var newTheme = ThemeManager.GetActualTheme(this) == ElementTheme.Light ? ElementTheme.Dark : ElementTheme.Light;
-      ThemeManager.SetRequestedTheme(this, newTheme);
-      #endif
+    private void OnNoteCreated(NoteViewModel note) {
+      if (note == null) return;
+
+      if (note.Open) OpenNoteWindow(note);
     }
+
+    private void OnNoteDeleted(NoteViewModel note) {
+      if (note == null) return;
+
+      CloseNoteWindow(note);
+    }
+
+    private void OnNoteReplaced(NoteViewModel note) {
+      if (note == null) return;
+
+      if (note.Open) OpenNoteWindow(note);
+      else CloseNoteWindow(note);
+    }
+
+    private void OpenNoteWindow(NoteViewModel note) {
+      var window = new NoteWindow(note);
+      window.Left = MainWindow.Left + MainWindow.Width + 12;
+      window.Top = MainWindow.Top;
+      window.Show();
+    }
+
+    private void CloseNoteWindow(NoteViewModel note) {
+      foreach (var window in Windows) {
+        if (window is NoteWindow noteWindow && noteWindow.Note == note) {
+          noteWindow.Close();
+          break;
+        }
+      }
+    }
+
+    private void CloseNoteExecuted(object sender, ExecutedRoutedEventArgs e) => ViewModel.CloseNoteCommand.Execute(e.Parameter);
+    private void OpenNoteExecuted(object sender, ExecutedRoutedEventArgs e) => ViewModel.OpenNoteCommand.Execute(e.Parameter);
+
+    private void NewNoteExecuted(object sender, ExecutedRoutedEventArgs e) => ViewModel.CreateNoteCommand.Execute(null);
+    private void DeleteNoteExecuted(object sender, ExecutedRoutedEventArgs e) => ViewModel.DeleteNoteCommand.Execute(e.Parameter);
   }
 }
