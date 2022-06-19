@@ -170,8 +170,11 @@
   <StackPanel Orientation="Vertical">
     <local:MainWindowTitleBar Margin="0"/>
     <StackPanel Orientation="Horizontal">
-      <Button Content="App Theme" Click="ToggleAppThemeHandler" Margin="5"/>
-      <Button Content="Window Theme" Click="ToggleWindowThemeHandler" Margin="5"/>
+      <Button
+        Content="App Theme"
+        Command="{x:Static local:AppCommands.ToggleAppThemeCommand}"
+        Margin="5"
+      />
     </StackPanel>
 
     <TextBlock

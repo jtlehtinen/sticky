@@ -9,28 +9,28 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModernWpf.Controls", "src\ModernWpf.Controls\ModernWpf.Controls.csproj", "{A68201CD-CCA2-4DD8-9483-F58F53BB9E8B}"
 EndProject
 Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x64 = Debug|x64
-		Release|x64 = Release|x64
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D3522809-FAAC-4A9D-9EE0-185A816E210E}.Debug|x64.ActiveCfg = Debug|x64
-		{D3522809-FAAC-4A9D-9EE0-185A816E210E}.Debug|x64.Build.0 = Debug|x64
-		{D3522809-FAAC-4A9D-9EE0-185A816E210E}.Release|x64.ActiveCfg = Release|x64
-		{D3522809-FAAC-4A9D-9EE0-185A816E210E}.Release|x64.Build.0 = Release|x64
-		{0D5C261A-6431-48B3-B5EB-284DCDD433DD}.Debug|x64.ActiveCfg = Debug|x64
-		{0D5C261A-6431-48B3-B5EB-284DCDD433DD}.Debug|x64.Build.0 = Debug|x64
-		{0D5C261A-6431-48B3-B5EB-284DCDD433DD}.Release|x64.ActiveCfg = Release|x64
-		{0D5C261A-6431-48B3-B5EB-284DCDD433DD}.Release|x64.Build.0 = Release|x64
-		{A68201CD-CCA2-4DD8-9483-F58F53BB9E8B}.Debug|x64.ActiveCfg = Debug|x64
-		{A68201CD-CCA2-4DD8-9483-F58F53BB9E8B}.Debug|x64.Build.0 = Debug|x64
-		{A68201CD-CCA2-4DD8-9483-F58F53BB9E8B}.Release|x64.ActiveCfg = Release|x64
-		{A68201CD-CCA2-4DD8-9483-F58F53BB9E8B}.Release|x64.Build.0 = Release|x64
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {93362FF0-E879-43BC-BA81-213CDBD4F121}
-	EndGlobalSection
+  GlobalSection(SolutionConfigurationPlatforms) = preSolution
+    Debug|x64 = Debug|x64
+    Release|x64 = Release|x64
+  EndGlobalSection
+  GlobalSection(ProjectConfigurationPlatforms) = postSolution
+    {D3522809-FAAC-4A9D-9EE0-185A816E210E}.Debug|x64.ActiveCfg = Debug|x64
+    {D3522809-FAAC-4A9D-9EE0-185A816E210E}.Debug|x64.Build.0 = Debug|x64
+    {D3522809-FAAC-4A9D-9EE0-185A816E210E}.Release|x64.ActiveCfg = Release|x64
+    {D3522809-FAAC-4A9D-9EE0-185A816E210E}.Release|x64.Build.0 = Release|x64
+    {0D5C261A-6431-48B3-B5EB-284DCDD433DD}.Debug|x64.ActiveCfg = Debug|x64
+    {0D5C261A-6431-48B3-B5EB-284DCDD433DD}.Debug|x64.Build.0 = Debug|x64
+    {0D5C261A-6431-48B3-B5EB-284DCDD433DD}.Release|x64.ActiveCfg = Release|x64
+    {0D5C261A-6431-48B3-B5EB-284DCDD433DD}.Release|x64.Build.0 = Release|x64
+    {A68201CD-CCA2-4DD8-9483-F58F53BB9E8B}.Debug|x64.ActiveCfg = Debug|x64
+    {A68201CD-CCA2-4DD8-9483-F58F53BB9E8B}.Debug|x64.Build.0 = Debug|x64
+    {A68201CD-CCA2-4DD8-9483-F58F53BB9E8B}.Release|x64.ActiveCfg = Release|x64
+    {A68201CD-CCA2-4DD8-9483-F58F53BB9E8B}.Release|x64.Build.0 = Release|x64
+  EndGlobalSection
+  GlobalSection(SolutionProperties) = preSolution
+    HideSolutionNode = FALSE
+  EndGlobalSection
+  GlobalSection(ExtensibilityGlobals) = postSolution
+    SolutionGuid = {93362FF0-E879-43BC-BA81-213CDBD4F121}
+  EndGlobalSection
 EndGlobal

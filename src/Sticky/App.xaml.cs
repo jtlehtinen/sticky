@@ -1,29 +1,39 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
+using System.Windows.Input;
+using ModernWpf;
 
 namespace Sticky {
+
+  public static class AppCommands {
+    public static RoutedCommand ToggleAppThemeCommand = new RoutedCommand();
+    public static RoutedCommand NewNoteCommand = new RoutedCommand();
+
+    public static void Register(Type type, RoutedCommand command, ExecutedRoutedEventHandler executed) {
+      CommandManager.RegisterClassCommandBinding(type, new CommandBinding(command, executed));
+    }
+  }
 
   /// <summary>
   /// Interaction logic for App.xaml
   /// </summary>
   public partial class App : Application {
     private Mutex? singleInstanceMutex;
+    private List<Window> noteWindows = new();
 
     public App() {
       // @NOTE: TextBox SelectionTextBrush doesn't work without this.
-      // @TODO: RichTextBox SelectionTextBrush doesn't work at all.
+      // @TODO: RichTextBox SelectionTextBrush doesn't work event with this.
       // https://github.com/microsoft/dotnet/blob/master/Documentation/compatibility/wpf-SelectionTextBrush-property-for-non-adorner-selection.md
       // https://github.com/Microsoft/dotnet/blob/master/Documentation/compatibility/wpf-TextBox-PasswordBox-text-selection-does-not-follow-system-colors.md
       AppContext.SetSwitch("Switch.System.Windows.Controls.Text.UseAdornerForTextboxSelectionRendering", false);
 
-      Services = CreateServices();
       InitializeComponent();
-
-      Exit += (sender, e) => Services.GetService<NoteService>()?.Commit();
     }
 
-    public IServiceProvider Services { get; }
+    public IServiceProvider Services { get; private set; }
 
     public new static App Current => (App)Application.Current;
 
@@ -47,8 +57,53 @@ namespace Sticky {
         return;
       }
 
+      Services = CreateServices();
+      Exit += (sender, e) => Services.GetService<NoteService>()?.Commit();
+
+      AppCommands.Register(typeof(MainWindow), AppCommands.ToggleAppThemeCommand, ToggleAppThemeCommandExecuted);
+      AppCommands.Register(typeof(MainWindow), AppCommands.NewNoteCommand, NewNoteCommandExecuted);
+      AppCommands.Register(typeof(NoteWindow), AppCommands.NewNoteCommand, NewNoteCommandExecuted);
+
       var window = new MainWindow();
       window.Show();
+
+      var noteService = Services.GetService<NoteService>();
+      noteService?.GetNotes().ForEach(note => OpenNote(note, MainWindow));
+    }
+
+    private void OpenNote(Note? note, Window? positionNextTo = null) {
+      var window = note != null ? new NoteWindow(note) : new NoteWindow();
+
+      if (positionNextTo != null) {
+        window.Left = positionNextTo.Left + positionNextTo.Width + 12;
+        window.Top = positionNextTo.Top;
+      }
+
+      noteWindows.Add(window);
+      window.Show();
+    }
+
+    private void NewNoteCommandExecuted(object sender, ExecutedRoutedEventArgs e) {
+      System.Console.WriteLine("NewNoteCommandExecuted()");
+      OpenNote(null, e.Parameter as Window);
+		}
+
+    private void ToggleAppThemeCommandExecuted(object sender, ExecutedRoutedEventArgs e) {
+      System.Console.WriteLine("ToggleAppThemeCommandExecuted()");
+
+      var window = MainWindow;
+      window.ClearValue(ThemeManager.RequestedThemeProperty);
+
+      var isDark = ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark;
+      var newTheme = isDark ? ApplicationTheme.Light : ApplicationTheme.Dark;
+      ThemeManager.Current.ApplicationTheme = newTheme;
+    }
+
+    private void ToggleWindowThemeCommandExecuted(object sender, ExecutedRoutedEventArgs e) {
+      #if false
+      var newTheme = ThemeManager.GetActualTheme(this) == ElementTheme.Light ? ElementTheme.Dark : ElementTheme.Light;
+      ThemeManager.SetRequestedTheme(this, newTheme);
+      #endif
     }
   }
 }

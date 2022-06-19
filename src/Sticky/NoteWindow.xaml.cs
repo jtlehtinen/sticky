@@ -6,8 +6,6 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using ModernWpf.Controls;
 
-using System.Windows.Controls.Primitives;
-
 namespace Sticky {
   /// <summary>
   /// Interaction logic for NoteWindow.xaml
@@ -29,7 +27,6 @@ namespace Sticky {
       RadioButtonThemeGreen.IsChecked = true;
 
       Native.ApplyRoundedWindowCorners(this);
-      Show();
     }
 
     // @TODO: ...

@@ -13,13 +13,6 @@ namespace Sticky {
       Window.GetWindow(this).Close();
     }
 
-    private void OnNewNote(object sender, RoutedEventArgs args) {
-      var window = App.Current.MainWindow;
-      if (window == null) return;
-
-      window.OnAddNote();
-    }
-
     private void OnSettings(object sender, RoutedEventArgs args) {
       System.Console.WriteLine("OnSettings()");
     }

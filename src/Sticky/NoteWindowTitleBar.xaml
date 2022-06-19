@@ -29,7 +29,8 @@
       <!-- New Note -->
       <local:ButtonEx
         Style="{StaticResource TitleBarButtonStyle}"
-        Click="OnNewNote"
+        Command="{x:Static local:AppCommands.NewNoteCommand}"
+        CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
         Content="&#xE948;"
         ToolTip="New note"
       />

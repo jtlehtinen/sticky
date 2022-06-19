@@ -25,13 +25,6 @@ namespace Sticky {
       window.ShowOverlay();
     }
 
-    private void OnNewNote(object sender, RoutedEventArgs args) {
-      var window = App.Current.MainWindow;
-      if (window == null) return;
-
-      window.OnAddNote();
-    }
-
     private void OnMaximizeOrRestore(object sender, RoutedEventArgs args) {
       var state = Window.GetWindow(this).WindowState;
       var newState = state == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
