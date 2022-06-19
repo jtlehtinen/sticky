@@ -16,6 +16,14 @@
   ui:WindowHelper.UseModernWindowStyle="True"
   WindowStyle="None"
 >
+  <!-- @TODO: About page
+  <Window.CommandBindings>
+    <CommandBinding Command="{x:Static local:Commands.About}" Executed="AboutExecuted"/>
+  </Window.CommandBindings>
+
+  Commands.About.InputGestures.Add(new KeyGesture(Key.F1, ModifierKeys.None));
+  -->
+
   <Window.Resources>
     <DataTemplate x:Key="NoteItemTemplate">
       <Border x:Name="PlaceholderName" BorderThickness="1" BorderBrush="Transparent" CornerRadius="5">
@@ -172,7 +180,7 @@
     <StackPanel Orientation="Horizontal">
       <Button
         Content="App Theme"
-        Command="{x:Static local:AppCommands.ToggleAppThemeCommand}"
+        Command="{x:Static local:Commands.ToggleAppTheme}"
         Margin="5"
       />
     </StackPanel>

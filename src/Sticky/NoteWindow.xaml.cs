@@ -11,14 +11,10 @@ namespace Sticky {
   /// Interaction logic for NoteWindow.xaml
   /// </summary>
   public partial class NoteWindow : Window {
-    public static RoutedCommand ChangeThemeCommand = new RoutedCommand();
-
     private int noteId;
 
     public NoteWindow() {
       InitializeComponent();
-
-      CommandBindings.Add(new CommandBinding(ChangeThemeCommand, ExecutedChangeThemeCommand));
 
       NoteRichTextBox.SelectionChanged += OnSelectionChanged;
       NoteRichTextBox.KeyUp += OnKeyUp;
@@ -68,24 +64,17 @@ namespace Sticky {
       Resources.MergedDictionaries.Add(theme);
     }
 
-    private void ExecutedChangeThemeCommand(object sender, ExecutedRoutedEventArgs e) {
+    private void ChangeNoteThemeExecuted(object sender, ExecutedRoutedEventArgs e) {
       var themeName = (string)e.Parameter;
       SetTheme(themeName);
     }
 
-    // Can't believe this...
-    // https://stackoverflow.com/questions/5825575/detect-if-a-richtextbox-is-empty
-    // @TODO: Is property and bind Placeholder visiblity on it...
-    public bool IsRichTextBoxEmpty() {
-      var box = NoteRichTextBox as RichTextBox;
-      if (box == null) return true;
+    private void ToggleTopmostExecuted(object sender, ExecutedRoutedEventArgs e) {
+      Topmost = !Topmost;
+    }
 
-      var doc = box.Document;
-      if (doc.Blocks.Count == 0) return true;
-
-      var start = doc.ContentStart.GetNextInsertionPosition(LogicalDirection.Forward);
-      var end = doc.ContentEnd.GetNextInsertionPosition(LogicalDirection.Backward);
-      return start.CompareTo(end) == 0;
+    private void ShowMenuExecuted(object sender, ExecutedRoutedEventArgs e) {
+      ShowOverlay();
     }
 
     public void ShowOverlay() {
@@ -110,11 +99,6 @@ namespace Sticky {
       if (doDelete) {
         // @TODO: Delete the note
       }
-    }
-
-    private void OnTextChanged(object sender, TextChangedEventArgs e) {
-      var visibility = IsRichTextBoxEmpty() ? Visibility.Visible : Visibility.Hidden;
-      Placeholder.Visibility = visibility;
     }
 
     private void RefreshToolbarButtons() {
@@ -142,11 +126,6 @@ namespace Sticky {
 
       var thickness = (this.WindowState == WindowState.Maximized ? 8 : 0);
       this.BorderThickness = new System.Windows.Thickness(thickness);
-    }
-
-    protected override void OnClosing(System.ComponentModel.CancelEventArgs e) {
-      // @TODO: Remove from main window...
-      base.OnClosing(e);
     }
   }
 }

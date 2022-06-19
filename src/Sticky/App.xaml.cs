@@ -7,15 +7,6 @@ using ModernWpf;
 
 namespace Sticky {
 
-  public static class AppCommands {
-    public static RoutedCommand ToggleAppThemeCommand = new RoutedCommand();
-    public static RoutedCommand NewNoteCommand = new RoutedCommand();
-
-    public static void Register(Type type, RoutedCommand command, ExecutedRoutedEventHandler executed) {
-      CommandManager.RegisterClassCommandBinding(type, new CommandBinding(command, executed));
-    }
-  }
-
   /// <summary>
   /// Interaction logic for App.xaml
   /// </summary>
@@ -30,6 +21,7 @@ namespace Sticky {
       // https://github.com/Microsoft/dotnet/blob/master/Documentation/compatibility/wpf-TextBox-PasswordBox-text-selection-does-not-follow-system-colors.md
       AppContext.SetSwitch("Switch.System.Windows.Controls.Text.UseAdornerForTextboxSelectionRendering", false);
 
+      Services = CreateServices();
       InitializeComponent();
     }
 
@@ -57,12 +49,10 @@ namespace Sticky {
         return;
       }
 
-      Services = CreateServices();
       Exit += (sender, e) => Services.GetService<NoteService>()?.Commit();
 
-      AppCommands.Register(typeof(MainWindow), AppCommands.ToggleAppThemeCommand, ToggleAppThemeCommandExecuted);
-      AppCommands.Register(typeof(MainWindow), AppCommands.NewNoteCommand, NewNoteCommandExecuted);
-      AppCommands.Register(typeof(NoteWindow), AppCommands.NewNoteCommand, NewNoteCommandExecuted);
+      Commands.Register(typeof(Window), Commands.ToggleAppTheme, ToggleAppThemeExecuted);
+      Commands.Register(typeof(Window), Commands.NewNote, NewNoteExecuted);
 
       var window = new MainWindow();
       window.Show();
@@ -83,12 +73,12 @@ namespace Sticky {
       window.Show();
     }
 
-    private void NewNoteCommandExecuted(object sender, ExecutedRoutedEventArgs e) {
+    private void NewNoteExecuted(object sender, ExecutedRoutedEventArgs e) {
       System.Console.WriteLine("NewNoteCommandExecuted()");
       OpenNote(null, e.Parameter as Window);
 		}
 
-    private void ToggleAppThemeCommandExecuted(object sender, ExecutedRoutedEventArgs e) {
+    private void ToggleAppThemeExecuted(object sender, ExecutedRoutedEventArgs e) {
       System.Console.WriteLine("ToggleAppThemeCommandExecuted()");
 
       var window = MainWindow;

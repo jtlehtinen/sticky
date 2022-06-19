@@ -4,29 +4,11 @@
   xmlns:local="clr-namespace:Sticky"
 >
   <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-  <local:BackgroundToHoverConverter x:Key="BackgroundToHoverConverter"/>
-  <local:BackgroundToPressedConverter x:Key="BackgroundToPressedConverter"/>
   <local:StringToFlowDocumentConverter x:Key="StringToFlowDocumentConverter"/>
   <local:DateTimeConverter x:Key="DateTimeConverter"/>
 
   <!-- Global ToolTip Styles -->
   <Style TargetType="{x:Type ToolTip}">
     <Setter Property="ToolTipService.Placement" Value="Top"/>
-  </Style>
-
-  <!-- Header text style -->
-  <Style x:Key="HeaderTextStyle">
-    <Setter Property="Label.FontFamily" Value="Arial"/>
-    <Setter Property="Label.FontSize" Value="20"/>
-    <Setter Property="Label.FontWeight" Value="Bold"/>
-    <Setter Property="Label.Foreground" Value="Black"/>
-    <Setter Property="Label.VerticalAlignment" Value="Center"/>
-    <Style.Triggers>
-      <!-- When in high contrast modes, follow system colors to present proper contrast between adjacent colors. -->
-      <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="true">
-        <Setter Property="Label.Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-        <Setter Property="Label.Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
-      </DataTrigger>
-    </Style.Triggers>
   </Style>
 </ResourceDictionary>

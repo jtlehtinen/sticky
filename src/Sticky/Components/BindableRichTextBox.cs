@@ -12,6 +12,7 @@ namespace Sticky {
     public static readonly RoutedUICommand ToggleStrikethrough = new RoutedUICommand("ToggleStrikethrough", "ToggleStrikethrough", typeof(BindableRichTextBox));
 
     public static readonly DependencyProperty DocumentProperty = DependencyProperty.Register("Document", typeof(FlowDocument), typeof(BindableRichTextBox), new FrameworkPropertyMetadata(null, new PropertyChangedCallback(OnDocumentChanged)));
+    public static readonly DependencyProperty IsEmptyProperty = DependencyProperty.Register("IsEmpty", typeof(bool), typeof(BindableRichTextBox), new FrameworkPropertyMetadata(true));
 
     public static void OnDocumentChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e) {
       var rtb = (RichTextBox)obj;
@@ -35,9 +36,28 @@ namespace Sticky {
       );
     }
 
+    protected override void OnTextChanged(TextChangedEventArgs e) {
+      base.OnTextChanged(e);
+
+      var empty = () => {
+        // https://stackoverflow.com/questions/5825575/detect-if-a-richtextbox-is-empty
+        if (Document.Blocks.Count == 0) return true;
+
+        var start = Document.ContentStart.GetNextInsertionPosition(LogicalDirection.Forward);
+        var end = Document.ContentEnd.GetNextInsertionPosition(LogicalDirection.Backward);
+        return start.CompareTo(end) == 0;
+      };
+      IsEmpty = empty();
+    }
+
     public new FlowDocument Document {
-      get { return (FlowDocument)this.GetValue(DocumentProperty); }
+      get { return (FlowDocument)GetValue(DocumentProperty); }
       set { this.SetValue(DocumentProperty, value); }
+    }
+
+    public bool IsEmpty {
+      get { return (bool)GetValue(IsEmptyProperty); }
+      set { SetValue(IsEmptyProperty, value); }
     }
 
     public bool IsBold() {

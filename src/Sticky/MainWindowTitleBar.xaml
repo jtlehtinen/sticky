@@ -4,7 +4,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:local="clr-namespace:Sticky"
 >
-  <UserControl.Resources>
+  <local:TitleBarBase.Resources>
     <Style
       x:Key="TitleBarButtonStyle"
       TargetType="{x:Type local:ButtonEx}"
@@ -14,7 +14,7 @@
       <Setter Property="Height" Value="Auto"/>
       <Setter Property="FontSize" Value="16"/>
     </Style>
-  </UserControl.Resources>
+  </local:TitleBarBase.Resources>
 
   <DockPanel
     Background="Transparent"
@@ -26,7 +26,7 @@
     <!-- New Note Button -->
     <local:ButtonEx
       Style="{StaticResource TitleBarButtonStyle}"
-      Command="{x:Static local:AppCommands.NewNoteCommand}"
+      Command="local:Commands.NewNote"
       CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
       Content="&#xE948;"
       DockPanel.Dock="Left"

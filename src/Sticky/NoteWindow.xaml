@@ -15,6 +15,12 @@
   ShowInTaskbar="True"
   SizeChanged="OnSizeChanged"
 >
+  <Window.CommandBindings>
+    <CommandBinding Command="{x:Static local:Commands.ChangeNoteTheme}" Executed="ChangeNoteThemeExecuted"/>
+    <CommandBinding Command="{x:Static local:Commands.ShowMenu}" Executed="ShowMenuExecuted"/>
+    <CommandBinding Command="{x:Static local:Commands.ToggleTopmost}" Executed="ToggleTopmostExecuted"/>
+  </Window.CommandBindings>
+
   <Grid x:Name="LayoutRoot">
 
     <!-- Drop Down Overlay -->
@@ -73,13 +79,13 @@
           </Grid.ColumnDefinitions>
 
           <!-- @TODO: Pull checked from view model -->
-          <local:RadioButtonEx x:Name="RadioButtonThemeYellow"   GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="0" BackgroundColor="#FFFFE66E" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Yellow"/>
-          <local:RadioButtonEx x:Name="RadioButtonThemeGreen"    GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="1" BackgroundColor="#FFA1EF9B" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Green"/>
-          <local:RadioButtonEx x:Name="RadioButtonThemePink"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="2" BackgroundColor="#FFFFAFDF" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Pink"/>
-          <local:RadioButtonEx x:Name="RadioButtonThemePurple"   GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="3" BackgroundColor="#FFD7AFFF" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Purple"/>
-          <local:RadioButtonEx x:Name="RadioButtonThemeBlue"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="4" BackgroundColor="#FF9EDFFF" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Blue"/>
-          <local:RadioButtonEx x:Name="RadioButtonThemeGray"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="5" BackgroundColor="#FFE0E0E0" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Gray"/>
-          <local:RadioButtonEx x:Name="RadioButtonThemeCharcoal" GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="6" BackgroundColor="#FF767676" Command="{x:Static local:NoteWindow.ChangeThemeCommand}" CommandParameter="Theme.Charcoal"/>
+          <local:RadioButtonEx x:Name="RadioButtonThemeYellow"   GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="0" BackgroundColor="#FFFFE66E" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Yellow"/>
+          <local:RadioButtonEx x:Name="RadioButtonThemeGreen"    GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="1" BackgroundColor="#FFA1EF9B" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Green"/>
+          <local:RadioButtonEx x:Name="RadioButtonThemePink"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="2" BackgroundColor="#FFFFAFDF" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Pink"/>
+          <local:RadioButtonEx x:Name="RadioButtonThemePurple"   GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="3" BackgroundColor="#FFD7AFFF" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Purple"/>
+          <local:RadioButtonEx x:Name="RadioButtonThemeBlue"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="4" BackgroundColor="#FF9EDFFF" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Blue"/>
+          <local:RadioButtonEx x:Name="RadioButtonThemeGray"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="5" BackgroundColor="#FFE0E0E0" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Gray"/>
+          <local:RadioButtonEx x:Name="RadioButtonThemeCharcoal" GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="6" BackgroundColor="#FF767676" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Charcoal"/>
         </Grid>
 
         <!-- Notes List Button -->
@@ -318,6 +324,7 @@
           MinWidth="50"
           Name="Placeholder"
           Text="Take a note..."
+          Visibility="{Binding ElementName=NoteRichTextBox, Path=IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"
         />
 
         <!-- Rich Text Box -->
@@ -331,7 +338,6 @@
           SelectionBrush="{DynamicResource SelectionBackgroundColor}"
           HorizontalScrollBarVisibility="Auto"
           VerticalScrollBarVisibility="Auto"
-          TextChanged="OnTextChanged"
           SelectionTextBrush="Red"
         >
           <local:BindableRichTextBox.Resources>
