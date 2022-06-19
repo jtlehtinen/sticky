@@ -1,4 +1,4 @@
-<UserControl
+<local:TitleBarBase
   x:Class="Sticky.NoteWindowTitleBar"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -81,4 +81,4 @@
       />
     </StackPanel>
   </DockPanel>
-</UserControl>
+</local:TitleBarBase>
