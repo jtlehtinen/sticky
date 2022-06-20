@@ -3,15 +3,17 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
-    <Platforms>x64</Platforms>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ErrorReport>prompt</ErrorReport>
     <OutputPath>../../build/$(Platform)-$(Configuration)</OutputPath>
     <WarningLevel>4</WarningLevel>
-    <!-- https://github.com/dotnet/sdk/pull/2042 -->
     <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+    <Platform>x64</Platform>
+    <Platforms>$(Platform)</Platforms>
+    <PlatformName>$(Platform)</PlatformName>
+    <PlatformTarget>$(Platform)</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>

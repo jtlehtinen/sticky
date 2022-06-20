@@ -1,10 +1,7 @@
 <Project>
   <PropertyGroup>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <!-- @TODO:
-      Can't use $(MSBuildProjectName), see:
-      https://github.com/dotnet/msbuild/issues/3483
-      -->
     <BaseIntermediateOutputPath>$(ProjectDir)..\..\build-temp\ModernWpf.Controls\</BaseIntermediateOutputPath>
     <MSBuildProjectExtensionsPath>$(ProjectDir)..\..\build-temp\ModernWpf.Controls\</MSBuildProjectExtensionsPath>
   </PropertyGroup>

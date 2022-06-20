@@ -3,11 +3,11 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
-    <Platforms>x64</Platforms>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <!-- https://www.hanselman.com/blog/making-a-tiny-net-core-30-entirely-selfcontained-single-executable
-    <PublishTrimmed>true</PublishTrimmed>
+    <!--
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     -->
 
     <!--
@@ -15,16 +15,26 @@
       OutputPath should be in Directory.Build.props. Can't do it since
       some of the variables (Configuration, Platform) needed are not
       defined when Directory.Build.props is evaluated.
-
-      For some reason ../build/AnyCPU-Debug directory is created too,
-      even if platforms are specifically set to only x64... Don't know atm
-      who creates it and when or how to get rid of it.
     -->
-    <ErrorReport>prompt</ErrorReport>
     <OutputPath>../../build/$(Platform)-$(Configuration)</OutputPath>
     <WarningLevel>4</WarningLevel>
     <!-- https://github.com/dotnet/sdk/pull/2042 -->
     <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+
+    <!--
+      @TODO: Omnisharp seems to have extremely hard time finding
+      the generated WPF files and hence giving false positive errors
+      in visual studio code. Especially if you have run vcvarsall.bat
+      with or without x64 argument in the terminal before opening visual
+      studio code. The only way I got it working, e.g. for x64, was to
+      run "vcvarsall.bat x64" in the terminal and then have Platform
+      as x64, build the project, run "Omnisharp: Reset Omnisharp"
+      command, and hope for the best.
+      -->
+    <Platform>x64</Platform>
+    <Platforms>$(Platform)</Platforms>
+    <PlatformName>$(Platform)</PlatformName>
+    <PlatformTarget>$(Platform)</PlatformTarget>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -36,14 +46,12 @@
     <DebugType>portable</DebugType>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <Optimize>false</Optimize>
-    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>pdbonly</DebugType>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
