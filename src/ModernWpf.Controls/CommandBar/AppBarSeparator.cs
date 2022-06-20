@@ -12,6 +12,9 @@ namespace ModernWpf.Controls {
 
       ToolBar.OverflowModeProperty.OverrideMetadata(typeof(AppBarSeparator),
           new FrameworkPropertyMetadata(OnOverflowModePropertyChanged));
+
+      AppBarElementProperties.IsInOverflowPropertyKey.OverrideMetadata(typeof(AppBarSeparator),
+          new FrameworkPropertyMetadata(OnIsInOverflowChanged));
     }
 
     public AppBarSeparator() {
@@ -37,6 +40,11 @@ namespace ModernWpf.Controls {
 
     public bool IsInOverflow {
       get => (bool)GetValue(IsInOverflowProperty);
+    }
+
+    private static void OnIsInOverflowChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+      var separator = (AppBarSeparator)d;
+      separator.UpdateVisualState();
     }
 
     #endregion
