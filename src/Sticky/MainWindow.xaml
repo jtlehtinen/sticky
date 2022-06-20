@@ -20,7 +20,6 @@
   <Window.CommandBindings>
     <CommandBinding Command="{x:Static local:Commands.About}" Executed="AboutExecuted"/>
   </Window.CommandBindings>
-
   Commands.About.InputGestures.Add(new KeyGesture(Key.F1, ModifierKeys.None));
   -->
 
@@ -143,7 +142,6 @@
               <local:BindableRichTextBox.ContextMenu>
                 <ContextMenu>
                   <!-- Open Note -->
-                  <!-- @TODO: Visibility -->
                   <MenuItem
                     Header="Open note"
                     Command="local:Commands.OpenNote"
@@ -187,38 +185,63 @@
     </DataTemplate>
   </Window.Resources>
 
-  <StackPanel Orientation="Vertical">
+  <ui:SimpleStackPanel
+    Orientation="Vertical"
+    Spacing="10"
+  >
     <local:MainWindowTitleBar Margin="0"/>
-    <StackPanel Orientation="Horizontal">
-      <Button
-        Content="App Theme"
-        Command="{x:Static local:Commands.ToggleAppTheme}"
-        Margin="5"
+    <ui:SimpleStackPanel
+      Orientation="Vertical"
+      Margin="10,0"
+      Spacing="10"
+    >
+      <!--
+      <StackPanel Orientation="Horizontal">
+        <Button
+          Content="App Theme"
+          Command="{x:Static local:Commands.ToggleAppTheme}"
+          Margin="0,5"
+        />
+      </StackPanel>
+      -->
+
+      <TextBlock
+        Style="{StaticResource SubtitleTextBlockStyle}"
+        Text="Sticky Notes"
+        FontWeight="Bold"
       />
-    </StackPanel>
 
-    <TextBlock
-      Style="{StaticResource SubtitleTextBlockStyle}"
-      Text="Sticky Notes"
-      FontWeight="Bold"
-      Margin="5,0"
-    />
+      <!-- Autosuggest Box -->
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ui:AutoSuggestBox
+          QueryIcon="Find"
+          PlaceholderText="Search..."
+          SuggestionChosen="OnSearchSuggestionChosen"
+          TextChanged="OnSearchTextChanged"
+          QuerySubmitted="OnSearchQuerySubmitted"
+        />
+        <StackPanel
+          x:Name="AutoSuggestBoxItemDropDown"
+          Grid.Row="1"
+          HorizontalAlignment="Left"
+          Visibility="Collapsed"
+          Margin="0,8,0,0"
+        >
+          <TextBlock
+            x:Name="AutoSuggestBoxItemTitle"
+            Style="{StaticResource BaseTextBlockStyle}"
+          />
+          <ui:HyperlinkButton x:Name="AutoSuggestBoxItemLink" Click="OnAutoSuggestBoxItemLinkClicked"/>
+        </StackPanel>
+      </Grid>
 
-    <StackPanel Orientation="Vertical" Margin="10">
-      <ItemsControl ItemsSource="{Binding Path=Notes}" ItemTemplate="{StaticResource NoteItemTemplate}">
-        <!--
-        <ItemsControl.ItemContainerStyle>
-          <Style>
-            <Setter Property="FrameworkElement.DataContext" Value="{Binding RelativeSource={RelativeSource Self}}"/>
-          </Style>
-        </ItemsControl.ItemContainerStyle>
-          -->
-        <ItemsControl.ItemContainerStyle>
-          <Style>
-            <Setter Property="FrameworkElement.Margin" Value="0,5"/>
-          </Style>
-        </ItemsControl.ItemContainerStyle>
-      </ItemsControl>
-    </StackPanel>
-  </StackPanel>
+      <ui:SimpleStackPanel Orientation="Vertical">
+        <ItemsControl ItemsSource="{Binding Path=Notes}" ItemTemplate="{StaticResource NoteItemTemplate}"/>
+      </ui:SimpleStackPanel>
+    </ui:SimpleStackPanel>
+  </ui:SimpleStackPanel>
 </Window>
