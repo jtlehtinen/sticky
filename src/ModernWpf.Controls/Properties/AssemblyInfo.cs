@@ -15,4 +15,3 @@ using System.Windows.Markup;
 
 [assembly: XmlnsDefinition("http://schemas.modernwpf.com/2019", "ModernWpf.Controls")]
 [assembly: XmlnsDefinition("http://schemas.modernwpf.com/2019", "ModernWpf.Controls.Primitives")]
-[assembly: XmlnsDefinition("http://schemas.modernwpf.com/2019", "ModernWpf")]

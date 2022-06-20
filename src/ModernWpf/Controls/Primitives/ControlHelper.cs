@@ -311,6 +311,53 @@ namespace ModernWpf.Controls.Primitives {
 
     #endregion
 
+    #region VisualState
+
+    /// <summary>
+    /// Identifies the VisualState dependency property.
+    /// </summary>
+    public static readonly DependencyProperty VisualStateProperty =
+        DependencyProperty.RegisterAttached(
+            "VisualState",
+            typeof(string),
+            typeof(ControlHelper),
+            new FrameworkPropertyMetadata(OnVisualStateChanged));
+
+    /// <summary>
+    /// Gets the visual state for the control.
+    /// </summary>
+    /// <param name="control">The element on which to set the attached property.</param>
+    /// <returns>The visual state for the control.</returns>
+    public static string GetVisualState(FrameworkElement control) {
+      return (string)control.GetValue(VisualStateProperty);
+    }
+
+    /// <summary>
+    /// Sets the visual state for the control.
+    /// </summary>
+    /// <param name="control">The element on which to set the attached property.</param>
+    /// <param name="value">The visual state for the control.</param>
+    public static void SetVisualState(FrameworkElement control, string value) {
+      control.SetValue(VisualStateProperty, value);
+    }
+
+    private static void OnVisualStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+      UpdateVisualState((FrameworkElement)d);
+    }
+
+    private static void UpdateVisualState(FrameworkElement control) {
+      string State = GetVisualState(control);
+      if (!string.IsNullOrEmpty(State)) {
+        if (control.IsLoaded) {
+          VisualStateManager.GoToElementState(control, State, true);
+        } else {
+          control.Loaded += (sender, e) => VisualStateManager.GoToElementState(control, State, true);
+        }
+      }
+    }
+
+    #endregion
+
     internal static bool IsNullOrEmptyString(object obj) {
       return obj == null || obj is string s && string.IsNullOrEmpty(s);
     }

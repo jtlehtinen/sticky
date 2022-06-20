@@ -1,6 +1,9 @@
+using System;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 
 namespace ModernWpf.Controls.Primitives {
   public static class WindowHelper {
@@ -49,9 +52,47 @@ namespace ModernWpf.Controls.Primitives {
         var window = (Window)d;
         if (newValue) {
           window.SetResourceReference(FrameworkElement.StyleProperty, DefaultWindowStyleKey);
+          if (window.IsLoaded) {
+            window.RemoveTitleBar();
+          } else {
+            window.Loaded += (sender, e) => window.RemoveTitleBar();
+            ThemeManager.Current.ActualApplicationThemeChanged += (sender, e) => {
+              if (sender.ApplicationTheme == ApplicationTheme.Light) {
+                window.RemoveDarkMode();
+              } else {
+                window.ApplyDarkMode();
+              }
+            };
+          }
         } else {
           window.ClearValue(FrameworkElement.StyleProperty);
+          window.RemoveDarkMode();
         }
+      }
+    }
+
+    #endregion
+
+    #region SystemBackdropType
+
+    public static readonly DependencyProperty SystemBackdropTypeProperty =
+        DependencyProperty.RegisterAttached(
+            "SystemBackdropType",
+            typeof(BackdropType),
+            typeof(WindowHelper),
+            new PropertyMetadata(BackdropType.Auto, OnSystemBackdropTypeChanged));
+
+    public static BackdropType GetSystemBackdropType(Window window) {
+      return (BackdropType)window.GetValue(SystemBackdropTypeProperty);
+    }
+
+    public static void SetSystemBackdropType(Window window, BackdropType value) {
+      window.SetValue(SystemBackdropTypeProperty, value);
+    }
+
+    private static void OnSystemBackdropTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+      if (d is Window window) {
+        window.Apply((BackdropType)e.NewValue);
       }
     }
 

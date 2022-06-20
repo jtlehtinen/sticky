@@ -14,14 +14,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-		<Page Remove="Properties\DesignTimeResources.xaml" />
-	</ItemGroup>
+    <Page Remove="Properties\DesignTimeResources.xaml" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<None Include="Properties\DesignTimeResources.xaml">
-		  <Generator>MSBuild:Compile</Generator>
-		</None>
-	</ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DesignTimeResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ModernWpf\ModernWpf.csproj" />

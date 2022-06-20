@@ -108,7 +108,11 @@ namespace ModernWpf {
     }
 
     private void UpdateActualApplicationTheme() {
-      ActualApplicationTheme = ApplicationTheme ?? ModernWpf.ApplicationTheme.Light;
+      if (UsingSystemTheme) {
+        ActualApplicationTheme = GetDefaultAppTheme();
+      } else {
+        ActualApplicationTheme = ApplicationTheme ?? ModernWpf.ApplicationTheme.Light;
+      }
     }
 
     private void ApplyApplicationTheme() {
@@ -174,11 +178,19 @@ namespace ModernWpf {
     }
 
     private void UpdateActualAccentColor() {
-      ActualAccentColor = AccentColor ?? ColorsHelper.DefaultAccentColor;
+      if (UsingSystemAccentColor) {
+        ActualAccentColor = ColorsHelper.Current.SystemAccentColor;
+      } else {
+        ActualAccentColor = AccentColor ?? ColorsHelper.DefaultAccentColor;
+      }
     }
 
     private void UpdateAccentColors() {
-      ColorsHelper.Current.SetAccent(ActualAccentColor);
+      if (UsingSystemAccentColor) {
+        ColorsHelper.Current.FetchSystemAccentColors();
+      } else {
+        ColorsHelper.Current.SetAccent(ActualAccentColor);
+      }
     }
 
     #endregion
@@ -570,10 +582,13 @@ namespace ModernWpf {
     #endregion
 
     public static ThemeManager Current { get; } = new ThemeManager();
+
     internal bool UsingSystemTheme => ColorsHelper.SystemColorsSupported && ApplicationTheme == null;
+
     internal bool UsingSystemAccentColor => ColorsHelper.SystemColorsSupported && AccentColor == null;
 
     public TypedEventHandler<ThemeManager, object> ActualApplicationThemeChanged;
+
     public TypedEventHandler<ThemeManager, object> ActualAccentColorChanged;
 
     internal static void UpdateThemeBrushes(ResourceDictionary colors) {
@@ -592,6 +607,10 @@ namespace ModernWpf {
 
     internal static void SetDefaultThemeDictionary(string key, ResourceDictionary dictionary) {
       _defaultThemeDictionaries[key] = dictionary;
+    }
+
+    private static ApplicationTheme GetDefaultAppTheme() {
+      return ColorsHelper.Current.SystemTheme.GetValueOrDefault(ModernWpf.ApplicationTheme.Light);
     }
 
     private static Uri GetDefaultSource(string theme) {
@@ -624,12 +643,14 @@ namespace ModernWpf {
         return;
       }
 
+      Debug.Assert(ThemeResources.Current != null);
 
       SystemParameters.StaticPropertyChanged += OnSystemParametersChanged;
 
       if (Application.Current != null) {
         var appResources = Application.Current.Resources;
         appResources.MergedDictionaries.RemoveAll<IntellisenseResourcesBase>();
+
         ColorsHelper.Current.SystemThemeChanged += OnSystemThemeChanged;
         ColorsHelper.Current.SystemAccentColorChanged += OnSystemAccentColorChanged;
         appResources.MergedDictionaries.Insert(0, ColorsHelper.Current.Colors);
