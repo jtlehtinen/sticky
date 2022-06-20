@@ -195,7 +195,6 @@
       Margin="10,0"
       Spacing="10"
     >
-      <!--
       <StackPanel Orientation="Horizontal">
         <Button
           Content="App Theme"
@@ -203,7 +202,6 @@
           Margin="0,5"
         />
       </StackPanel>
-      -->
 
       <TextBlock
         Style="{StaticResource SubtitleTextBlockStyle}"
