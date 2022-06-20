@@ -11,8 +11,6 @@ namespace Sticky {
   /// Interaction logic for App.xaml
   /// </summary>
   public partial class App : Application {
-    private Mutex? singleInstanceMutex;
-
     public Model Model;
     public ViewModel ViewModel;
     public ThemeService Themes = new ThemeService();
@@ -41,24 +39,6 @@ namespace Sticky {
       // https://github.com/Microsoft/dotnet/blob/master/Documentation/compatibility/wpf-TextBox-PasswordBox-text-selection-does-not-follow-system-colors.md
       AppContext.SetSwitch("Switch.System.Windows.Controls.Text.UseAdornerForTextboxSelectionRendering", false);
 
-      InitializeComponent();
-    }
-
-    public new static App Current => (App)Application.Current;
-
-    public new MainWindow MainWindow {
-      get { return (MainWindow)base.MainWindow; }
-      set { base.MainWindow = value; }
-    }
-
-    private void Main(object sender, StartupEventArgs args) {
-      var createdNewMutex = false;
-      singleInstanceMutex = new Mutex(true, "cbe6e195-20b6-4950-97fa-6da85c3715f8", out createdNewMutex);
-      if (!createdNewMutex) {
-        Shutdown();
-        return;
-      }
-
       Exit += (sender, e) => Model.Save();
 
       Commands.Register(typeof(Window), Commands.ToggleAppTheme, ToggleAppThemeExecuted);
@@ -66,9 +46,13 @@ namespace Sticky {
       Commands.Register(typeof(Window), Commands.NewNote, NewNoteExecuted);
       Commands.Register(typeof(Window), Commands.CloseNote, CloseNoteExecuted);
       Commands.Register(typeof(Window), Commands.OpenNote, OpenNoteExecuted);
+    }
 
-      var window = new MainWindow();
-      window.Show();
+    public new static App Current => (App)Application.Current;
+
+    public new MainWindow MainWindow {
+      get { return (MainWindow)base.MainWindow; }
+      set { base.MainWindow = value; }
     }
 
     private void ToggleAppThemeExecuted(object sender, ExecutedRoutedEventArgs e) {
