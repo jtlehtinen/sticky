@@ -12,7 +12,7 @@
         <ui:ThemeResources/>
         <ui:XamlControlsResources/>
         <ResourceDictionary Source="/Styles.xaml"/>
-        <ResourceDictionary Source="/Components/Generic.xaml"/>
+        <ResourceDictionary Source="/Components/All.xaml"/>
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>
