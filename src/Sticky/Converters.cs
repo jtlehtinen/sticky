@@ -6,6 +6,21 @@ using System.Windows.Markup;
 
 namespace Sticky {
 
+  public class StringToThemeConverter : IValueConverter {
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+      var themeName = (string)value;
+      var theme = App.Current.Themes.GetTheme(themeName);
+      return theme;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+      var dic = (ResourceDictionary)value;
+      if (!App.Current.Themes.IsTheme(dic)) return null;
+
+      return App.Current.Themes.GetThemeName(dic);
+    }
+  }
+
   public class ReverseBooleanToVisibilityConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
       var flag = (bool)value;

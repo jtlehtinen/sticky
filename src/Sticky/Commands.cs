@@ -15,6 +15,8 @@ namespace Sticky {
     public static RoutedCommand ShowMenu { get; } = new RoutedCommand("ShowMenu", typeof(Commands));
     public static RoutedCommand ToggleTopmost { get; } = new RoutedCommand("ToggleTopmost", typeof(Commands));
 
+    public static RoutedCommand OpenContextMenu { get; } = new RoutedCommand("OpenContextMenu", typeof(Commands));
+
     public static void Register(Type type, RoutedCommand command, ExecutedRoutedEventHandler executed) {
       CommandManager.RegisterClassCommandBinding(type, new CommandBinding(command, executed));
     }

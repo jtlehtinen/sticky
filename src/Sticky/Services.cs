@@ -34,6 +34,11 @@ namespace Sticky {
       return themes.GetValueOrDefault(themeName);
     }
 
+    public string GetThemeName(ResourceDictionary dic) {
+      var name = (string)dic[THEME_NAME_KEY];
+      return name;
+    }
+
     public bool IsTheme(ResourceDictionary dic) {
       if (!dic.Contains(THEME_NAME_KEY)) return false;
 

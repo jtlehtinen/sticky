@@ -16,200 +16,26 @@
   ui:WindowHelper.UseModernWindowStyle="True"
   WindowStyle="None"
 >
-  <!-- @TODO: About page
-  <Window.CommandBindings>
-    <CommandBinding Command="{x:Static local:Commands.About}" Executed="AboutExecuted"/>
-  </Window.CommandBindings>
-  Commands.About.InputGestures.Add(new KeyGesture(Key.F1, ModifierKeys.None));
-  -->
-
-  <Window.Resources>
-    <DataTemplate x:Key="NoteItemTemplate">
-      <Border x:Name="PlaceholderName" BorderThickness="1" BorderBrush="Transparent" CornerRadius="5">
-        <Border.Style>
-          <Style TargetType="{x:Type Border}">
-            <Setter Property="Background" Value="{DynamicResource Background}"/>
-            <Style.Triggers>
-              <DataTrigger Binding="{Binding ElementName=PlaceholderName, Path=IsMouseOver}" Value="True">
-                <Setter Property="Background" Value="{DynamicResource BackgroundHover}"/>
-              </DataTrigger>
-            </Style.Triggers>
-          </Style>
-        </Border.Style>
-        <StackPanel Orientation="Vertical">
-          <Grid HorizontalAlignment="Right" Height="23">
-            <Button
-              ToolTip="Menu"
-              HorizontalAlignment="Right"
-              VerticalContentAlignment="Bottom"
-              VerticalAlignment="Bottom"
-              Width="32"
-              Height="23"
-              Background="Transparent"
-              BorderThickness="0"
-              Focusable="False"
-              FontFamily="Segoe MDL2 Assets"
-              FontSize="16"
-              Foreground="{DynamicResource ForegroundSecondary}"
-              Margin="0,0,0,0"
-              Opacity="1.0"
-              TextBlock.FontFamily="Segoe MDL2 Assets"
-              TextBlock.Foreground="{DynamicResource ForegroundSecondary}"
-              TextOptions.TextHintingMode="Fixed"
-              TextOptions.TextRenderingMode="ClearType"
-              TextOptions.TextFormattingMode="Display"
-              UseLayoutRounding="True"
-              >
-              <Border BorderBrush="{x:Null}" Height="23" Margin="0,0,10,0">
-                <TextBlock Text="&#xE712;" VerticalAlignment="Bottom"/>
-              </Border>
-              <Button.Style>
-                <Style TargetType="{x:Type Button}">
-                  <Setter Property="Template">
-                    <Setter.Value>
-                      <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="border" SnapsToDevicePixels="true">
-                          <ContentPresenter
-                            Focusable="False"
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            Margin="{TemplateBinding Margin}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                          <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Background" TargetName="border" Value="Transparent"/>
-                            <Setter Property="BorderBrush" TargetName="border" Value="Transparent"/>
-                          </Trigger>
-                          <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Background" TargetName="border" Value="Transparent"/>
-                            <Setter Property="BorderBrush" TargetName="border" Value="Transparent"/>
-                          </Trigger>
-                        </ControlTemplate.Triggers>
-                      </ControlTemplate>
-                    </Setter.Value>
-                  </Setter>
-
-                  <Setter Property="Visibility" Value="Hidden"/>
-                  <Style.Triggers>
-                    <DataTrigger Binding="{Binding ElementName=PlaceholderName, Path=IsMouseOver}" Value="True">
-                      <Setter Property="Visibility" Value="Visible"/>
-                    </DataTrigger>
-                  </Style.Triggers>
-                </Style>
-              </Button.Style>
-            </Button>
-            <TextBlock
-              FontSize="10"
-              VerticalAlignment="Bottom"
-              HorizontalAlignment="Center"
-              Foreground="{DynamicResource ForegroundSecondary}"
-              Margin="0,0,10,0"
-              Text="{Binding Path=CreatedAt, Converter={StaticResource DateTimeConverter}}">
-
-              <TextBlock.Style>
-                <Style TargetType="{x:Type TextBlock}">
-                  <Setter Property="Visibility" Value="Visible"/>
-                  <Style.Triggers>
-                    <DataTrigger Binding="{Binding ElementName=PlaceholderName, Path=IsMouseOver}" Value="True">
-                      <Setter Property="Visibility" Value="Hidden"/>
-                    </DataTrigger>
-                  </Style.Triggers>
-                </Style>
-              </TextBlock.Style>
-            </TextBlock>
-          </Grid>
-          <StackPanel Margin="10,0,10,15">
-            <local:BindableRichTextBox
-              Margin="0,0,0,0"
-              Background="Transparent"
-              BorderBrush="Transparent"
-              BorderThickness="0"
-              IsReadOnly="True"
-              VerticalScrollBarVisibility="Auto"
-              HorizontalScrollBarVisibility="Auto"
-              Foreground="{DynamicResource Foreground}"
-              FontSize="14"
-              Document="{Binding Path=Content, Converter={StaticResource StringToFlowDocumentConverter}}"
-              >
-              <local:BindableRichTextBox.Resources>
-                <Style TargetType="{x:Type Paragraph}">
-                  <Setter Property="Margin" Value="0"/>
-                </Style>
-              </local:BindableRichTextBox.Resources>
-
-              <!-- Context Menu -->
-              <local:BindableRichTextBox.ContextMenu>
-                <ContextMenu>
-                  <!-- Open Note -->
-                  <MenuItem
-                    Header="Open note"
-                    Command="local:Commands.OpenNote"
-                    CommandParameter="{Binding Path=Id}"
-                    Visibility="{Binding Path=Open, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
-                  >
-                    <MenuItem.Icon>
-                      <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8A7;"/>
-                    </MenuItem.Icon>
-                  </MenuItem>
-
-                  <!-- Close Note -->
-                  <MenuItem
-                    Header="Close note"
-                    Command="local:Commands.CloseNote"
-                    CommandParameter="{Binding Path=Id}"
-                    Visibility="{Binding Path=Open, Converter={StaticResource BooleanToVisibilityConverter}}"
-                  >
-                    <MenuItem.Icon>
-                      <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE73F;"/>
-                    </MenuItem.Icon>
-                  </MenuItem>
-
-                  <!-- Delete -->
-                  <MenuItem
-                    Header="Delete note"
-                    Command="local:Commands.DeleteNote"
-                    CommandParameter="{Binding Path=Id}"
-                  >
-                    <MenuItem.Icon>
-                      <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE74D;"/>
-                    </MenuItem.Icon>
-                  </MenuItem>
-                </ContextMenu>
-              </local:BindableRichTextBox.ContextMenu>
-
-            </local:BindableRichTextBox>
-          </StackPanel>
-        </StackPanel>
-      </Border>
-    </DataTemplate>
-  </Window.Resources>
-
   <ui:SimpleStackPanel
     Orientation="Vertical"
     Spacing="10"
   >
+    <!-- Title Bar -->
     <local:MainWindowTitleBar Margin="0"/>
+
     <ui:SimpleStackPanel
       Orientation="Vertical"
       Margin="10,0"
       Spacing="10"
     >
-      <StackPanel Orientation="Horizontal">
-        <Button
-          Content="App Theme"
-          Command="{x:Static local:Commands.ToggleAppTheme}"
-          Margin="0,5"
-        />
-      </StackPanel>
-
+      <!-- Heading -->
       <TextBlock
         Style="{StaticResource SubtitleTextBlockStyle}"
         Text="Sticky Notes"
         FontWeight="Bold"
       />
 
-      <!-- Autosuggest Box -->
+      <!-- Search Box -->
       <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto" />
@@ -237,9 +63,23 @@
         </StackPanel>
       </Grid>
 
-      <ui:SimpleStackPanel Orientation="Vertical">
-        <ItemsControl ItemsSource="{Binding Path=Notes}" ItemTemplate="{StaticResource NoteItemTemplate}"/>
-      </ui:SimpleStackPanel>
+      <!-- Note List -->
+      <ItemsControl ItemsSource="{Binding Path=Notes}">
+        <!-- Container Template -->
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <ui:SimpleStackPanel Orientation="Vertical" Spacing="10"/>
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+
+        <!-- Item Template -->
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <local:NoteControl/>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+
     </ui:SimpleStackPanel>
   </ui:SimpleStackPanel>
 </Window>

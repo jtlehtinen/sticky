@@ -33,12 +33,14 @@ namespace Sticky {
     }
 
     private void OnSearchTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs e) {
+      #if false
       if (e.Reason != AutoSuggestionBoxTextChangeReason.UserInput) return;
 
       System.Console.WriteLine("OnSearchTextChanged");
 
       var suggestions = DoSearch(sender.Text);
       sender.ItemsSource = suggestions.Count > 0 ? suggestions : new string[] { "No result found" };
+      #endif
     }
 
     private void OnSearchQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs e) {
