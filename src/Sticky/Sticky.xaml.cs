@@ -79,8 +79,15 @@ namespace Sticky {
     private void OnNoteReplaced(NoteViewModel note) {
       if (note == null) return;
 
-      if (note.Open) OpenNoteWindow(note);
-      else CloseNoteWindow(note);
+      if (note.Open) {
+
+        var window = FindNoteWindow(note);
+        if (window != null) window.Activate();
+        else OpenNoteWindow(note);
+
+      } else {
+        CloseNoteWindow(note);
+      }
     }
 
     private void OpenNoteWindow(NoteViewModel note) {
@@ -90,13 +97,18 @@ namespace Sticky {
       window.Show();
     }
 
-    private void CloseNoteWindow(NoteViewModel note) {
+    private Window? FindNoteWindow(NoteViewModel note) {
       foreach (var window in Windows) {
         if (window is NoteWindow noteWindow && noteWindow.Note == note) {
-          noteWindow.Close();
-          break;
+          return noteWindow;
         }
       }
+      return null;
+    }
+
+    private void CloseNoteWindow(NoteViewModel note) {
+      var window = FindNoteWindow(note);
+      if (window != null) window.Close();
     }
 
     private void CloseNoteExecuted(object sender, ExecutedRoutedEventArgs e) => ViewModel.CloseNoteCommand.Execute(e.Parameter);

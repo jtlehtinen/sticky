@@ -4,6 +4,15 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:local="clr-namespace:Sticky"
 >
+  <!-- Double Click Opens Note -->
+  <UserControl.InputBindings>
+    <MouseBinding
+      MouseAction="LeftDoubleClick"
+      Command="{x:Static local:Commands.OpenNote}"
+      CommandParameter="{Binding Id}"
+    />
+  </UserControl.InputBindings>
+
   <UserControl.CommandBindings>
     <CommandBinding Command="{x:Static local:Commands.OpenContextMenu}" Executed="OnOpenContextMenu"/>
   </UserControl.CommandBindings>
@@ -52,8 +61,9 @@
 
       <StackPanel Margin="10,0,10,15">
         <local:BindableRichTextBox
+          Focusable="False"
           x:Name="NoteRichTextBox"
-          Margin="0,0,0,0"
+          Margin="0"
           Background="Transparent"
           BorderBrush="Transparent"
           BorderThickness="0"

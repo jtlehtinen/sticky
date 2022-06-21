@@ -24,8 +24,6 @@ namespace Sticky {
     }
 
     private void OnOpenContextMenu(object sender, ExecutedRoutedEventArgs e) {
-      System.Console.WriteLine("OnOpenContextMenu");
-
       // @TODO: Something weird happens here. The bindings used
       // in the context menu do not work before the note control
       // is left clicked once. That is, at least one of the note
