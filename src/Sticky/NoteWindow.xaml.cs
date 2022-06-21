@@ -75,10 +75,6 @@ namespace Sticky {
       Overlay.Visibility = Visibility.Collapsed;
     }
 
-    private void OnOpenNotesList(object sender, RoutedEventArgs e) {
-      System.Console.WriteLine("OnOpenNotesList");
-    }
-
     private async void OnDeleteNote(object sender, RoutedEventArgs e) {
       System.Console.WriteLine("OnDeleteNote");
 

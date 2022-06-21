@@ -46,12 +46,13 @@ namespace Sticky {
       Commands.Register(typeof(Window), Commands.NewNote, NewNoteExecuted);
       Commands.Register(typeof(Window), Commands.CloseNote, CloseNoteExecuted);
       Commands.Register(typeof(Window), Commands.OpenNote, OpenNoteExecuted);
+      Commands.Register(typeof(Window), Commands.OpenNoteList, OpenNoteListExecuted);
     }
 
     public new static App Current => (App)Application.Current;
 
-    public new MainWindow MainWindow {
-      get { return (MainWindow)base.MainWindow; }
+    public new MainWindow? MainWindow {
+      get { return base.MainWindow as MainWindow; }
       set { base.MainWindow = value; }
     }
 
@@ -92,8 +93,13 @@ namespace Sticky {
 
     private void OpenNoteWindow(NoteViewModel note) {
       var window = new NoteWindow(note);
-      window.Left = MainWindow.Left + MainWindow.Width + 12;
-      window.Top = MainWindow.Top;
+
+      var mainWindow = MainWindow;
+      if (mainWindow != null) {
+        window.Left = MainWindow.Left + MainWindow.Width + 12;
+        window.Top = MainWindow.Top;
+      }
+
       window.Show();
     }
 
@@ -109,6 +115,16 @@ namespace Sticky {
     private void CloseNoteWindow(NoteViewModel note) {
       var window = FindNoteWindow(note);
       if (window != null) window.Close();
+    }
+
+    private void OpenNoteListExecuted(object sender, ExecutedRoutedEventArgs e) {
+      var mainWindow = MainWindow;
+      if (mainWindow != null) {
+        mainWindow.Activate();
+      } else {
+        MainWindow = new MainWindow();
+        MainWindow.Show();
+      }
     }
 
     private void CloseNoteExecuted(object sender, ExecutedRoutedEventArgs e) => ViewModel.CloseNoteCommand.Execute(e.Parameter);

@@ -4,6 +4,8 @@ using System.Windows.Input;
 namespace Sticky {
 
   public static class Commands {
+    public static RoutedCommand OpenNoteList = new RoutedCommand("OpenNoteList", typeof(Commands));
+
     public static RoutedCommand About { get; } = new RoutedCommand("About", typeof(Commands));
     public static RoutedCommand NewNote { get; } = new RoutedCommand("NewNote", typeof(Commands));
     public static RoutedCommand DeleteNote { get; } = new RoutedCommand("DeleteNote", typeof(Commands));
