@@ -61,9 +61,10 @@
 
       <StackPanel Margin="10,0,10,15">
         <local:BindableRichTextBox
-          Focusable="False"
           x:Name="NoteRichTextBox"
           Margin="0"
+          Cursor="Arrow"
+          Focusable="False"
           Background="Transparent"
           BorderBrush="Transparent"
           BorderThickness="0"
@@ -73,7 +74,7 @@
           Foreground="{DynamicResource Foreground}"
           FontSize="14"
           Document="{Binding Path=Content, Converter={StaticResource StringToFlowDocumentConverter}}"
-          >
+        >
           <local:BindableRichTextBox.Resources>
             <Style TargetType="{x:Type Paragraph}">
               <Setter Property="Margin" Value="0"/>
