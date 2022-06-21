@@ -63,22 +63,41 @@
         </StackPanel>
       </Grid>
 
-      <!-- Note List -->
-      <ItemsControl ItemsSource="{Binding Path=Notes}">
-        <!-- Container Template -->
-        <ItemsControl.ItemsPanel>
-          <ItemsPanelTemplate>
-            <ui:SimpleStackPanel Orientation="Vertical" Spacing="10"/>
-          </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
+      <!--
+      <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="False">
+        <StackPanel Orientation="Vertical">
+          <Button Content="Foo" Height="100" Width="100"/>
+          <Button Content="Foo" Height="100" Width="100"/>
+          <Button Content="Foo" Height="100" Width="100"/>
+          <Button Content="Foo" Height="100" Width="100"/>
+          <Button Content="Foo" Height="100" Width="100"/>
+          <Button Content="Foo" Height="100" Width="100"/>
+          <Button Content="Foo" Height="100" Width="100"/>
+          <Button Content="Foo" Height="100" Width="100"/>
+          <Button Content="Foo" Height="100" Width="100"/>
+          <Button Content="Foo" Height="100" Width="100"/>
+        </StackPanel>
+      </ScrollViewer>
+      -->
 
-        <!-- Item Template -->
-        <ItemsControl.ItemTemplate>
-          <DataTemplate>
-            <local:NoteControl/>
-          </DataTemplate>
-        </ItemsControl.ItemTemplate>
-      </ItemsControl>
+      <!-- Note List -->
+      <ui:ScrollViewerEx VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+        <ItemsControl ItemsSource="{Binding Path=Notes}">
+          <!-- Container Template -->
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <ui:SimpleStackPanel Orientation="Vertical" Spacing="10"/>
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+
+          <!-- Item Template -->
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <local:NoteControl/>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ui:ScrollViewerEx>
 
     </ui:SimpleStackPanel>
   </ui:SimpleStackPanel>
