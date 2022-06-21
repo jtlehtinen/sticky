@@ -1543,8 +1543,9 @@ namespace ModernWpf.Controls {
         if (!m_initialListSizeStateSet) {
           m_initialListSizeStateSet = true;
           VisualStateManager.GoToState(this, m_isClosedCompact ? "ListSizeCompact" : "ListSizeFull", true /*useTransitions*/);
-        } else if (false /*!SharedHelpers.IsRS3OrHigher()*/) // Do any changes that would otherwise happen on opening/closing for RS2 and earlier:
-          {
+        }
+        #if false
+        else if (!SharedHelpers.IsRS3OrHigher()) { // Do any changes that would otherwise happen on opening/closing for RS2 and earlier:
           // RS3+ animation timing enhancement:
           // Pre-RS3, we didn't have the full suite of Closed, Closing, Opened,
           // Opening events on SplitView. So when doing open/closed operations,
@@ -1554,6 +1555,7 @@ namespace ModernWpf.Controls {
           // closed event fires.
           VisualStateManager.GoToState(this, m_isClosedCompact ? "ListSizeCompact" : "ListSizeFull", true /*useTransitions*/);
         }
+        #endif
 
         UpdateTitleBarPadding();
         UpdateBackAndCloseButtonsVisibility();

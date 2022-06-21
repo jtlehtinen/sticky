@@ -1,19 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
-    <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <ErrorReport>prompt</ErrorReport>
-    <OutputPath>../../build/$(Platform)-$(Configuration)</OutputPath>
-    <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
     <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <OutputPath>../../build/$(Platform)-$(Configuration)</OutputPath>
     <Platform>x64</Platform>
     <Platforms>$(Platform)</Platforms>
     <PlatformName>$(Platform)</PlatformName>
     <PlatformTarget>$(Platform)</PlatformTarget>
+    <WarningLevel>5</WarningLevel>
+    <NoWarn>0067,0168,0169,0414,0649,8600,8601,8602,8603,8604,8605,8612,8616,8618,8622,8625,8765,8767</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -22,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <Optimize>false</Optimize>
   </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>pdbonly</DebugType>
@@ -30,14 +33,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\FluentSystemIcons-Filled.ttf" />
+    <None Remove="Fonts\FluentSystemIcons-Regular.ttf" />
+    <None Remove="Materials\Acrylic\noise.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Page Remove="Properties\DesignTimeResources.xaml" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Properties\DesignTimeResources.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
+    <None Include="Properties\DesignTimeResources.xaml" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\FluentSystemIcons-Filled.ttf" />
+    <Resource Include="Fonts\FluentSystemIcons-Regular.ttf" />
+    <Resource Include="Materials\Acrylic\noise.png" />
+  </ItemGroup>
+
   <ItemGroup>
     <Compile Update="Resources\Strings.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -52,9 +66,5 @@
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ModernWpf</CustomToolNamespace>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controls\TextContextMenu\" />
   </ItemGroup>
 </Project>
