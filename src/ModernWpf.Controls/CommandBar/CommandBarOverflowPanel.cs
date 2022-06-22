@@ -90,6 +90,10 @@ namespace ModernWpf.Controls.Primitives {
           if (!hasMenuIcon && appBarButton.Icon != null) {
             hasMenuIcon = true;
           }
+        } else if (child is AppBarRepeatButton appBarRepeatButton) {
+          if (!hasMenuIcon && appBarRepeatButton.Icon != null) {
+            hasMenuIcon = true;
+          }
         } else if (child is AppBarToggleButton appBarToggleButton) {
           if (!hasMenuIcon && appBarToggleButton.Icon != null) {
             hasMenuIcon = true;

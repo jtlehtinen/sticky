@@ -1,5 +1,9 @@
 <!--  Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. See LICENSE in the project root for license information.  -->
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:ModernWpf.Controls" xmlns:primitives="clr-namespace:ModernWpf.Controls.Primitives" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="clr-namespace:ModernWpf.Controls"
+  xmlns:primitives="clr-namespace:ModernWpf.Controls.Primitives"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib">
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary>
       <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -9,53 +13,6 @@
       <primitives:CornerRadiusFilterConverter x:Key="LeftCornerRadiusFilterConverter" Filter="Left" />
     </ResourceDictionary>
   </ResourceDictionary.MergedDictionaries>
-
-  <Thickness x:Key="TabViewHeaderPadding">0,8,0,0</Thickness>
-  <Thickness x:Key="TabViewItemHeaderPadding">8,3,4,3</Thickness>
-  <Thickness x:Key="TabViewSelectedItemHeaderPadding">9,3,5,4</Thickness>
-
-  <sys:Double x:Key="TabViewItemMinHeight">32</sys:Double>
-  <sys:Double x:Key="TabViewItemMaxWidth">240</sys:Double>
-  <sys:Double x:Key="TabViewItemMinWidth">100</sys:Double>
-
-  <sys:Double x:Key="TabViewItemHeaderFontSize">12</sys:Double>
-  <sys:Double x:Key="TabViewItemHeaderIconSize">16</sys:Double>
-  <Thickness x:Key="TabViewItemHeaderIconMargin">0,0,10,0</Thickness>
-
-
-  <sys:Double x:Key="TabViewItemHeaderCloseButtonHeight">24</sys:Double>
-  <sys:Double x:Key="TabViewItemHeaderCloseButtonWidth">32</sys:Double>
-
-  <sys:Double x:Key="TabViewItemHeaderCloseButtonSize">16</sys:Double>
-  <sys:Double x:Key="TabViewItemHeaderCloseFontSize">12</sys:Double>
-  <Thickness x:Key="TabViewItemHeaderCloseMargin">4,0,0,0</Thickness>
-
-  <sys:Double x:Key="TabViewItemScrollButtonWidth">32</sys:Double>
-  <sys:Double x:Key="TabViewItemScrollButtonHeight">24</sys:Double>
-  <sys:Double x:Key="TabViewItemScrollButonFontSize">15</sys:Double>
-  <Thickness x:Key="TabViewItemScrollButtonPadding">7,3,7,3</Thickness>
-  <Thickness x:Key="TabViewItemLeftScrollButtonContainerPadding">8,0,3,3</Thickness>
-  <Thickness x:Key="TabViewItemRightScrollButtonContainerPadding">3,0,8,3</Thickness>
-
-  <sys:Double x:Key="TabViewItemAddButtonWidth">32</sys:Double>
-  <sys:Double x:Key="TabViewItemAddButtonHeight">24</sys:Double>
-  <sys:Double x:Key="TabViewItemAddButtonFontSize">12</sys:Double>
-  <Thickness x:Key="TabViewItemAddButtonContainerPadding">3,0,0,3</Thickness>
-
-  <sys:Double x:Key="TabViewShadowDepth">16</sys:Double>
-
-  <Thickness x:Key="TabViewItemSeparatorMargin">0,8,0,8</Thickness>
-
-  <Thickness x:Key="TabViewItemBorderThickness">1</Thickness>
-
-  <Thickness x:Key="TabViewSelectedItemBorderThickness">1,1,1,0</Thickness>
-
-  <Thickness x:Key="TabViewSelectedItemHeaderMargin">-1,0,-1,0</Thickness>
-
-  <Thickness x:Key="TabViewTopHeaderPadding">8,8,0,0</Thickness>
-  <Thickness x:Key="TabViewBottomHeaderPadding">8,0,0,8</Thickness>
-  <Thickness x:Key="TabViewLeftHeaderPadding">8,8,0,8</Thickness>
-  <Thickness x:Key="TabViewRightHeaderPadding">0,8,8,8</Thickness>
 
   <Style x:Key="TabViewButtonStyle" TargetType="Button">
     <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -193,8 +150,7 @@
         <Path x:Name="RightRadiusRenderArc" Grid.Column="2" Width="4" Height="4" Margin="0,0,-4,0" VerticalAlignment="Bottom" Data="M0 0C0 1.19469 0.523755 2.26706 1.35418 3H4C2.34315 3 1 1.65685 1 0H0Z" Fill="{DynamicResource TabViewBorderBrush}" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed" />
         <Path x:Name="SelectedBackgroundPath" Grid.ColumnSpan="3" Margin="-4,0,-4,0" VerticalAlignment="Bottom" Data="{TemplateBinding primitives:TabItemHelper.TabGeometry}" Fill="{DynamicResource TabViewItemHeaderBackgroundSelected}" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed" />
         <Border x:Name="TabSeparator" Grid.Column="1" Width="1" Margin="{DynamicResource TabViewItemSeparatorMargin}" HorizontalAlignment="Right" BorderBrush="{DynamicResource TabViewItemSeparator}" BorderThickness="1" />
-        <Border x:Name="TabContainer" Grid.Column="1" Padding="{DynamicResource TabViewItemHeaderPadding}" primitives:FocusVisualHelper.IsTemplateFocusTarget="True" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding primitives:ControlHelper.CornerRadius,
-                                                   Converter={StaticResource TopCornerRadiusFilterConverter}}">
+        <Border x:Name="TabContainer" Grid.Column="1" Padding="{DynamicResource TabViewItemHeaderPadding}" primitives:FocusVisualHelper.IsTemplateFocusTarget="True" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding primitives:ControlHelper.CornerRadius, Converter={StaticResource TopCornerRadiusFilterConverter}}">
           <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition x:Name="IconColumn" Width="Auto" />
@@ -482,8 +438,7 @@
             <RepeatButton x:Name="ScrollIncreaseButton" Command="{x:Static ScrollBar.LineRightCommand}" CommandTarget="{Binding ElementName=ScrollViewer}" Content="&#xF268;" Delay="50" IsEnabled="False" Style="{StaticResource TabViewScrollButtonStyle}" />
           </Border>
           <Border x:Name="InnerRightBottomBorderLine" Grid.Column="2" Height="1" VerticalAlignment="Bottom" BorderBrush="{DynamicResource TabViewBorderBrush}" BorderThickness="1" />
-          <Border Grid.Column="3" Padding="{DynamicResource TabViewItemAddButtonContainerPadding}" VerticalAlignment="Bottom" Visibility="{TemplateBinding primitives:TabControlHelper.IsAddTabButtonVisible,
-                                                     Converter={StaticResource BooleanToVisibilityConverter}}">
+          <Border Grid.Column="3" Padding="{DynamicResource TabViewItemAddButtonContainerPadding}" VerticalAlignment="Bottom" Visibility="{TemplateBinding primitives:TabControlHelper.IsAddTabButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Button x:Name="AddButton" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{TemplateBinding primitives:TabControlHelper.AddTabButtonCommand}" CommandParameter="{TemplateBinding primitives:TabControlHelper.AddTabButtonCommandParameter}" Content="&#xF10A;" Style="{StaticResource TabViewButtonStyle}" />
           </Border>
         </Grid>
@@ -551,8 +506,7 @@
             </Border>
           </primitives:PivotHeaderScrollViewer>
           <Border x:Name="TabSeparator" Grid.Row="2" Height="1" Margin="8,4" VerticalAlignment="Top" BorderBrush="{DynamicResource TabViewItemSeparator}" BorderThickness="1" />
-          <Border Grid.Row="3" Padding="{DynamicResource TabViewItemAddButtonContainerPadding}" HorizontalAlignment="Center" Visibility="{TemplateBinding primitives:TabControlHelper.IsAddTabButtonVisible,
-                                                     Converter={StaticResource BooleanToVisibilityConverter}}">
+          <Border Grid.Row="3" Padding="{DynamicResource TabViewItemAddButtonContainerPadding}" HorizontalAlignment="Center" Visibility="{TemplateBinding primitives:TabControlHelper.IsAddTabButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Button x:Name="AddButton" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{TemplateBinding primitives:TabControlHelper.AddTabButtonCommand}" CommandParameter="{TemplateBinding primitives:TabControlHelper.AddTabButtonCommandParameter}" Content="&#xF10A;" Style="{StaticResource TabViewButtonStyle}" />
           </Border>
         </Grid>

@@ -236,16 +236,14 @@ namespace ModernWpf.Controls.Primitives {
     protected override void PrepareContainerForItemOverride(DependencyObject element, object item) {
       base.PrepareContainerForItemOverride(element, item);
 
-      if (element is AppBarButton ||
-          element is AppBarToggleButton) {
+      if (element is AppBarButton || element is AppBarRepeatButton || element is AppBarToggleButton) {
         var appBarElement = (FrameworkElement)element;
         appBarElement.SetBinding(DefaultLabelPositionProperty, DefaultLabelPositionProperty, this);
       }
     }
 
     protected override void ClearContainerForItemOverride(DependencyObject element, object item) {
-      if (element is AppBarButton ||
-          element is AppBarToggleButton) {
+      if (element is AppBarButton || element is AppBarRepeatButton || element is AppBarToggleButton) {
         element.ClearValue(DefaultLabelPositionProperty);
       }
 

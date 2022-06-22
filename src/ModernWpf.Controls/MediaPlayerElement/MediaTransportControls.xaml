@@ -1,8 +1,13 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:ModernWpf.Controls" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:ui="http://schemas.modernwpf.com/2019">
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="clr-namespace:ModernWpf.Controls"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+  xmlns:ui="http://schemas.modernwpf.com/2019">
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="/ModernWpf;component/Styles/Slider.xaml" />
     <ResourceDictionary Source="/ModernWpf;component/Styles/TextStyles.xaml" />
     <ResourceDictionary Source="/ModernWpf.Controls;component/CommandBar/AppBarButton.xaml" />
+    <ResourceDictionary Source="/ModernWpf.Controls;component/CommandBar/AppBarRepeatButton.xaml" />
     <ResourceDictionary Source="/ModernWpf.Controls;component/CommandBar/AppBarToggleButton.xaml" />
     <ResourceDictionary Source="/ModernWpf.Controls;component/CommandBar/CommandBar.xaml" />
     <ResourceDictionary Source="/ModernWpf.Controls;component/Flyout/FlyoutPresenter.xaml" />
@@ -28,6 +33,11 @@
           <ControlTemplate.Resources>
             <!--  New AppBar button style 40x40 pixels in size  -->
             <Style x:Key="AppBarButtonStyle" BasedOn="{StaticResource DefaultAppBarButtonStyle}" TargetType="local:AppBarButton">
+              <Setter Property="Height" Value="{DynamicResource MediaTransportControlsAppBarButtonHeight}" />
+              <Setter Property="Width" Value="{DynamicResource MediaTransportControlsAppBarButtonWidth}" />
+            </Style>
+            <!--  New AppBarRepeatButton button style 40x40 pixels in size  -->
+            <Style x:Key="AppBarRepeatButtonStyle" BasedOn="{StaticResource DefaultAppBarRepeatButtonStyle}" TargetType="local:AppBarRepeatButton">
               <Setter Property="Height" Value="{DynamicResource MediaTransportControlsAppBarButtonHeight}" />
               <Setter Property="Width" Value="{DynamicResource MediaTransportControlsAppBarButtonWidth}" />
             </Style>
@@ -87,7 +97,7 @@
                       <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <Slider x:Name="ProgressSlider" Height="{DynamicResource MediaTransportControlsSliderHeight}" MinWidth="80" Margin="7,2,7,1" VerticalAlignment="Center" AutoToolTipPlacement="None" Maximum="{Binding Target.DurationTime, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" Value="{Binding Target.CurrentTime, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}" />
+                    <Slider x:Name="ProgressSlider" Height="{DynamicResource MediaTransportControlsSliderHeight}" Margin="7,2,7,1" VerticalAlignment="Center" AutoToolTipPlacement="None" Maximum="{Binding Target.DurationTime, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" Value="{Binding Target.CurrentTime, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}" />
 
                     <local:ProgressBar x:Name="BufferingProgressBar" Height="4" Margin="0,2,0,0" VerticalAlignment="Top" IsHitTestVisible="False" IsIndeterminate="True" Visibility="Collapsed" />
 
@@ -105,12 +115,15 @@
                       <Thickness x:Key="AppBarButtonContentViewboxCollapsedMargin">0,12</Thickness>
                     </local:AppBarButton.Resources>
                     <local:AppBarButton.Icon>
-                      <ui:FontIcon x:Name="PlayPauseSymbolLeft" Glyph="&#xF5B0;" />
+                      <ui:FontIcon x:Name="PlayPauseSymbolLeft" FontFamily="{DynamicResource FluentSystemIconsFilled}" Glyph="&#xF60F;" />
                     </local:AppBarButton.Icon>
                   </local:AppBarButton>
                 </Border>
                 <Border x:Name="MediaTransportControls_Command_Border" Grid.Row="2" Grid.Column="1">
-                  <local:CommandBar x:Name="MediaControlsCommandBar" Margin="0,3" IsDynamicOverflowEnabled="False" Style="{StaticResource CommandBarStyle}">
+                  <local:CommandBar x:Name="MediaControlsCommandBar" Margin="0,3,0,3" IsDynamicOverflowEnabled="False" Style="{StaticResource CommandBarStyle}">
+                    <local:CommandBar.RenderTransform>
+                      <TranslateTransform X="-4" />
+                    </local:CommandBar.RenderTransform>
                     <local:CommandBar.Resources>
                       <Thickness x:Key="AppBarButtonInnerBorderMargin">5</Thickness>
                       <Thickness x:Key="AppBarButtonContentViewboxCollapsedMargin">0,12</Thickness>
@@ -118,8 +131,7 @@
                       <sys:Double x:Key="AppBarMoreButtonColumnMinWidth">0</sys:Double>
                     </local:CommandBar.Resources>
                     <local:CommandBar.PrimaryCommands>
-                      <local:AppBarButton x:Name="VolumeMuteButton" IsEnabled="{TemplateBinding IsVolumeEnabled}" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsVolumeButtonVisible,
-                                                                             Converter={StaticResource BooleanToVisibilityConverter}}">
+                      <local:AppBarButton x:Name="VolumeMuteButton" IsEnabled="{TemplateBinding IsVolumeEnabled}" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsVolumeButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <local:AppBarButton.Flyout>
                           <local:Flyout x:Name="VolumeFlyout" FlyoutPresenterStyle="{StaticResource FlyoutStyle}">
                             <ui:SimpleStackPanel Margin="3,11" Orientation="Horizontal">
@@ -129,7 +141,7 @@
                                   <Thickness x:Key="AppBarButtonInnerBorderMargin">5</Thickness>
                                 </local:AppBarButton.Resources>
                                 <local:AppBarButton.Icon>
-                                  <ui:SymbolIcon x:Name="AudioMuteSymbol" Symbol="Volume" />
+                                  <ui:FontIcon x:Name="AudioMuteSymbol" FontFamily="{DynamicResource FluentSystemIcons}" Glyph="&#xFC65;" />
                                 </local:AppBarButton.Icon>
                               </local:AppBarButton>
                               <Slider x:Name="VolumeSlider" Width="{DynamicResource MediaTransportControlsSliderWidth}" Height="{DynamicResource MediaTransportControlsSliderHeight}" Margin="12,0,8,0" HorizontalAlignment="Center" VerticalAlignment="Center" AutoToolTipPlacement="None" IsSnapToTickEnabled="True" Maximum="100" TickFrequency="1" />
@@ -138,7 +150,7 @@
                           </local:Flyout>
                         </local:AppBarButton.Flyout>
                         <local:AppBarButton.Icon>
-                          <ui:SymbolIcon x:Name="VolumeMuteSymbol" Symbol="Volume" />
+                          <ui:FontIcon x:Name="VolumeMuteSymbol" FontFamily="{DynamicResource FluentSystemIcons}" Glyph="&#xFC65;" />
                         </local:AppBarButton.Icon>
                       </local:AppBarButton>
                       <local:AppBarButton x:Name="CCSelectionButton" Style="{StaticResource AppBarButtonStyle}" Visibility="Collapsed">
@@ -152,83 +164,75 @@
                         </local:AppBarButton.Icon>
                       </local:AppBarButton>
                       <local:AppBarSeparator x:Name="LeftSeparator" Width="0" Height="0" Margin="0,0" />
-                      <local:AppBarButton x:Name="StopButton" Icon="Stop" IsEnabled="{TemplateBinding IsStopEnabled}" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsStopButtonVisible,
-                                                                             Converter={StaticResource BooleanToVisibilityConverter}}" />
-                      <local:AppBarButton x:Name="SkipBackwardButton" IsEnabled="{TemplateBinding IsSkipBackwardEnabled}" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsSkipBackwardButtonVisible,
-                                                                             Converter={StaticResource BooleanToVisibilityConverter}}">
+                      <local:AppBarButton x:Name="StopButton" IsEnabled="{TemplateBinding IsStopEnabled}" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsStopButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <local:AppBarButton.Icon>
-                          <ui:FontIcon Glyph="&#xED3C;" />
+                          <ui:FontIcon FontFamily="{DynamicResource FluentSystemIcons}" Glyph="&#x01F6;" />
                         </local:AppBarButton.Icon>
                       </local:AppBarButton>
-                      <local:AppBarButton x:Name="PreviousTrackButton" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsPreviousTrackButtonVisible,
-                                                                             Converter={StaticResource BooleanToVisibilityConverter}}">
+                      <local:AppBarButton x:Name="SkipBackwardButton" IsEnabled="{TemplateBinding IsSkipBackwardEnabled}" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsSkipBackwardButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <local:AppBarButton.Icon>
-                          <ui:FontIcon Glyph="&#xF8AC;" />
+                          <ui:FontIcon FontFamily="{DynamicResource FluentSystemIcons}" Glyph="&#x04D4;" />
                         </local:AppBarButton.Icon>
                       </local:AppBarButton>
-                      <local:AppBarButton x:Name="RewindButton" IsEnabled="{TemplateBinding IsFastRewindEnabled}" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsFastRewindButtonVisible,
-                                                                             Converter={StaticResource BooleanToVisibilityConverter}}">
+                      <local:AppBarButton x:Name="PreviousTrackButton" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsPreviousTrackButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <local:AppBarButton.Icon>
-                          <ui:FontIcon Glyph="&#xE627;" />
+                          <ui:FontIcon FontFamily="{DynamicResource FluentSystemIconsFilled}" Glyph="&#xF633;" />
                         </local:AppBarButton.Icon>
                       </local:AppBarButton>
+                      <local:AppBarRepeatButton x:Name="RewindButton" IsEnabled="{TemplateBinding IsFastRewindEnabled}" Style="{StaticResource AppBarRepeatButtonStyle}" Visibility="{TemplateBinding IsFastRewindButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <local:AppBarRepeatButton.Icon>
+                          <ui:FontIcon FontFamily="{DynamicResource FluentSystemIconsFilled}" Glyph="&#x028B;" />
+                        </local:AppBarRepeatButton.Icon>
+                      </local:AppBarRepeatButton>
                       <local:AppBarButton x:Name="PlayPauseButton" Style="{StaticResource AppBarButtonStyle}">
                         <local:AppBarButton.Icon>
-                          <ui:FontIcon x:Name="PlayPauseSymbol" Glyph="&#xF5B0;" />
+                          <ui:FontIcon x:Name="PlayPauseSymbol" FontFamily="{DynamicResource FluentSystemIconsFilled}" Glyph="&#xF60F;" />
                         </local:AppBarButton.Icon>
                       </local:AppBarButton>
-                      <local:AppBarButton x:Name="FastForwardButton" IsEnabled="{TemplateBinding IsFastForwardEnabled}" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsFastForwardButtonVisible,
-                                                                             Converter={StaticResource BooleanToVisibilityConverter}}">
+                      <local:AppBarRepeatButton x:Name="FastForwardButton" IsEnabled="{TemplateBinding IsFastForwardEnabled}" Style="{StaticResource AppBarRepeatButtonStyle}" Visibility="{TemplateBinding IsFastForwardButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <local:AppBarRepeatButton.Icon>
+                          <ui:FontIcon FontFamily="{DynamicResource FluentSystemIconsFilled}" Glyph="&#x027A;" />
+                        </local:AppBarRepeatButton.Icon>
+                      </local:AppBarRepeatButton>
+                      <local:AppBarButton x:Name="NextTrackButton" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsNextTrackButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <local:AppBarButton.Icon>
-                          <ui:FontIcon Glyph="&#xE628;" />
+                          <ui:FontIcon FontFamily="{DynamicResource FluentSystemIconsFilled}" Glyph="&#xF574;" />
                         </local:AppBarButton.Icon>
                       </local:AppBarButton>
-                      <local:AppBarButton x:Name="NextTrackButton" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsNextTrackButtonVisible,
-                                                                             Converter={StaticResource BooleanToVisibilityConverter}}">
+                      <local:AppBarButton x:Name="SkipForwardButton" IsEnabled="{TemplateBinding IsSkipForwardEnabled}" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsSkipForwardButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <local:AppBarButton.Icon>
-                          <ui:FontIcon Glyph="&#xF8AD;" />
+                          <ui:FontIcon FontFamily="{DynamicResource FluentSystemIcons}" Glyph="&#xFDED;" />
                         </local:AppBarButton.Icon>
                       </local:AppBarButton>
-                      <local:AppBarButton x:Name="SkipForwardButton" IsEnabled="{TemplateBinding IsSkipForwardEnabled}" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsSkipForwardButtonVisible,
-                                                                             Converter={StaticResource BooleanToVisibilityConverter}}">
+                      <local:AppBarButton x:Name="PlaybackRateButton" IsEnabled="{TemplateBinding IsPlaybackRateEnabled}" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsPlaybackRateButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <local:AppBarButton.Icon>
-                          <ui:FontIcon Glyph="&#xED3D;" />
-                        </local:AppBarButton.Icon>
-                      </local:AppBarButton>
-                      <local:AppBarButton x:Name="PlaybackRateButton" IsEnabled="{TemplateBinding IsPlaybackRateEnabled}" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsPlaybackRateButtonVisible,
-                                                                             Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <local:AppBarButton.Icon>
-                          <ui:FontIcon Glyph="&#xEC57;" />
+                          <ui:FontIcon FontFamily="{DynamicResource FluentSystemIcons}" Glyph="&#x00E8;" />
                         </local:AppBarButton.Icon>
                       </local:AppBarButton>
                       <local:AppBarSeparator x:Name="RightSeparator" Width="0" Height="0" Margin="0,0" />
-                      <local:AppBarToggleButton x:Name="RepeatButton" IsChecked="{Binding Target.IsRepeat, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}" IsEnabled="{TemplateBinding IsRepeatEnabled}" Style="{StaticResource AppBarToggleButtonStyle}" Visibility="{TemplateBinding IsRepeatButtonVisible,
-                                                                             Converter={StaticResource BooleanToVisibilityConverter}}">
+                      <local:AppBarToggleButton x:Name="RepeatButton" IsChecked="{Binding Target.IsRepeat, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}" IsEnabled="{TemplateBinding IsRepeatEnabled}" Style="{StaticResource AppBarToggleButtonStyle}" Visibility="{TemplateBinding IsRepeatButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <local:AppBarToggleButton.Icon>
-                          <ui:SymbolIcon x:Name="RepeatSymbol" Symbol="RepeatAll" />
+                          <ui:FontIcon x:Name="RepeatSymbol" FontFamily="{DynamicResource FluentSystemIcons}" Glyph="&#xF172;" />
                         </local:AppBarToggleButton.Icon>
                       </local:AppBarToggleButton>
-                      <local:AppBarButton x:Name="ZoomButton" IsEnabled="{TemplateBinding IsZoomEnabled}" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsZoomButtonVisible,
-                                                                             Converter={StaticResource BooleanToVisibilityConverter}}">
+                      <local:AppBarButton x:Name="ZoomButton" IsEnabled="{TemplateBinding IsZoomEnabled}" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsZoomButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <local:AppBarButton.Icon>
-                          <ui:FontIcon Glyph="&#xE799;" />
+                          <ui:FontIcon FontFamily="{DynamicResource FluentSystemIcons}" Glyph="&#xF66F;" />
                         </local:AppBarButton.Icon>
                       </local:AppBarButton>
                       <local:AppBarButton x:Name="CastButton" Style="{StaticResource AppBarButtonStyle}">
                         <local:AppBarButton.Icon>
-                          <ui:FontIcon Glyph="&#xEC15;" />
+                          <ui:FontIcon FontFamily="{DynamicResource FluentSystemIcons}" Glyph="&#xF26E;" />
                         </local:AppBarButton.Icon>
                       </local:AppBarButton>
-                      <local:AppBarButton x:Name="CompactOverlayButton" IsEnabled="{TemplateBinding IsCompactOverlayEnabled}" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsCompactOverlayButtonVisible,
-                                                                             Converter={StaticResource BooleanToVisibilityConverter}}">
+                      <local:AppBarButton x:Name="CompactOverlayButton" IsEnabled="{TemplateBinding IsCompactOverlayEnabled}" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsCompactOverlayButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <local:AppBarButton.Icon>
-                          <ui:FontIcon Glyph="&#xE8B9;" />
+                          <ui:FontIcon x:Name="CompactOverlaySymbol" FontFamily="{DynamicResource FluentSystemIcons}" Glyph="&#xF37B;" />
                         </local:AppBarButton.Icon>
                       </local:AppBarButton>
-                      <local:AppBarButton x:Name="FullWindowButton" IsEnabled="{TemplateBinding IsFullWindowEnabled}" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsFullWindowButtonVisible,
-                                                                             Converter={StaticResource BooleanToVisibilityConverter}}">
+                      <local:AppBarButton x:Name="FullWindowButton" IsEnabled="{TemplateBinding IsFullWindowEnabled}" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsFullWindowButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <local:AppBarButton.Icon>
-                          <ui:SymbolIcon x:Name="FullWindowSymbol" Symbol="FullScreen" />
+                          <ui:FontIcon x:Name="FullWindowSymbol" FontFamily="{DynamicResource FluentSystemIcons}" Glyph="&#x01CA;" />
                         </local:AppBarButton.Icon>
                       </local:AppBarButton>
                     </local:CommandBar.PrimaryCommands>
@@ -282,6 +286,14 @@
                 <VisualState x:Name="VolumeState" />
                 <VisualState x:Name="MuteState" />
               </VisualStateGroup>
+              <!--  FullWindow states  -->
+              <VisualStateGroup x:Name="FullWindowStates">
+                <ui:VisualStateGroupListener.Listener>
+                  <ui:VisualStateGroupListener x:Name="FullWindowStatesListener" />
+                </ui:VisualStateGroupListener.Listener>
+                <VisualState x:Name="NonFullWindowState" />
+                <VisualState x:Name="FullWindowState" />
+              </VisualStateGroup>
             </ui:DebugVisualStateManager.VisualStateGroups>
           </Grid>
           <ControlTemplate.Triggers>
@@ -296,16 +308,21 @@
               <Setter TargetName="PlayPauseButton" Property="Visibility" Value="Collapsed" />
               <Setter TargetName="ProgressSlider" Property="Margin" Value="{DynamicResource MediaTransportControlsProgressSliderCompactMargin}" />
               <Setter TargetName="ControlPanelGrid" Property="Padding" Value="3" />
+              <Setter TargetName="CompactOverlaySymbol" Property="Glyph" Value="&#xF496;" />
             </Trigger>
             <!--  PauseState  -->
             <Trigger SourceName="PlayPauseStatesListener" Property="CurrentStateName" Value="PlayState">
-              <Setter TargetName="PlayPauseSymbolLeft" Property="Glyph" Value="&#xF8AE;" />
-              <Setter TargetName="PlayPauseSymbol" Property="Glyph" Value="&#xF8AE;" />
+              <Setter TargetName="PlayPauseSymbolLeft" Property="Glyph" Value="&#xF5AB;" />
+              <Setter TargetName="PlayPauseSymbol" Property="Glyph" Value="&#xF5AB;" />
             </Trigger>
             <!--  PauseState  -->
             <Trigger SourceName="VolumeMuteStatesListener" Property="CurrentStateName" Value="MuteState">
-              <Setter TargetName="AudioMuteSymbol" Property="Symbol" Value="Mute" />
-              <Setter TargetName="VolumeMuteSymbol" Property="Symbol" Value="Mute" />
+              <Setter TargetName="AudioMuteSymbol" Property="Glyph" Value="&#xFC6A;" />
+              <Setter TargetName="VolumeMuteSymbol" Property="Glyph" Value="&#xFC6A;" />
+            </Trigger>
+            <!--  PauseState  -->
+            <Trigger SourceName="FullWindowStatesListener" Property="CurrentStateName" Value="FullWindowState">
+              <Setter TargetName="FullWindowSymbol" Property="Glyph" Value="&#xF167;" />
             </Trigger>
 
             <MultiTrigger>

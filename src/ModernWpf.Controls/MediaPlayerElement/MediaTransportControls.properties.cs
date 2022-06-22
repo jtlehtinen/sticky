@@ -19,6 +19,7 @@ namespace ModernWpf.Controls {
 
     private static void OnIsCompactPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
       ((MediaTransportControls)d).UpdateState(true);
+      ((MediaTransportControls)d).UpdateLayouts();
     }
 
     #endregion
