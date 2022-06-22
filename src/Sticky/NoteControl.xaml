@@ -64,7 +64,6 @@
           x:Name="NoteRichTextBox"
           Margin="0"
           Cursor="Arrow"
-          Focusable="False"
           Background="Transparent"
           BorderBrush="Transparent"
           BorderThickness="0"
