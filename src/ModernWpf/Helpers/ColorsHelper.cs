@@ -188,7 +188,7 @@ namespace ModernWpf {
 #if false // @TODO
     private UISettings _uiSettings;
 #else
-    private const bool light = true;
+    private const bool _light = true;
 #endif
 
     private Color _systemBackground;
@@ -291,7 +291,7 @@ namespace ModernWpf {
       _systemAccent = _uiSettings.GetColorValue(UIColorType.Accent).ToColor();
       UpdateSystemAppTheme();
 #else
-    _systemBackground =light ? Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF) :  Color.FromArgb(0xFF, 0x00, 0x00, 0x00);
+    _systemBackground = _light ? Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF) :  Color.FromArgb(0xFF, 0x00, 0x00, 0x00);
     _systemAccent = Color.FromArgb(0xFF, 0x00, 0x78, 0xD4);
     UpdateSystemAppTheme();
 #endif
@@ -328,7 +328,7 @@ namespace ModernWpf {
       }
       #else
 
-      var background = light ? Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF) :  Color.FromArgb(0xFF, 0x00, 0x00, 0x00);
+      var background = _light ? Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF) :  Color.FromArgb(0xFF, 0x00, 0x00, 0x00);
       if (_systemBackground != background) {
         _systemBackground = background;
         UpdateSystemAppTheme();

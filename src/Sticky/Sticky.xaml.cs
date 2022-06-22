@@ -41,7 +41,7 @@ namespace Sticky {
 
       Exit += (sender, e) => Model.Save();
 
-      Commands.Register(typeof(Window), Commands.ToggleAppTheme, ToggleAppThemeExecuted);
+      Commands.Register(typeof(Window), Commands.ChangeAppTheme, ChangeAppThemeExecuted);
       Commands.Register(typeof(Window), Commands.DeleteNote, DeleteNoteExecuted);
       Commands.Register(typeof(Window), Commands.NewNote, NewNoteExecuted);
       Commands.Register(typeof(Window), Commands.CloseNote, CloseNoteExecuted);
@@ -54,15 +54,6 @@ namespace Sticky {
     public new MainWindow? MainWindow {
       get { return base.MainWindow as MainWindow; }
       set { base.MainWindow = value; }
-    }
-
-    private void ToggleAppThemeExecuted(object sender, ExecutedRoutedEventArgs e) {
-      // @TODO: Ensure MainWindow is the notes list window.
-      MainWindow.ClearValue(ThemeManager.RequestedThemeProperty);
-
-      var isDark = ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark;
-      var newTheme = isDark ? ApplicationTheme.Light : ApplicationTheme.Dark;
-      ThemeManager.Current.ApplicationTheme = newTheme;
     }
 
     private void OnNoteCreated(NoteViewModel note) {
@@ -124,6 +115,25 @@ namespace Sticky {
       } else {
         MainWindow = new MainWindow();
         MainWindow.Show();
+      }
+    }
+
+    private void ChangeAppThemeExecuted(object sender, ExecutedRoutedEventArgs e) {
+      // @TODO: Save the setting.
+      if (MainWindow == null) return;
+
+      MainWindow.ClearValue(ThemeManager.RequestedThemeProperty);
+
+      var ToEnum = (string theme) => {
+        if (theme == "Dark") return ApplicationTheme.Dark;
+        if (theme == "Light") return ApplicationTheme.Light;
+        if (theme == "System") return ApplicationTheme.Light; // @TODO:
+        throw new ArgumentException("Unknown theme: " + theme);
+      };
+
+      var newTheme = ToEnum((string)e.Parameter);
+      if (newTheme != ThemeManager.Current.ActualApplicationTheme) {
+        ThemeManager.Current.ApplicationTheme = newTheme;
       }
     }
 

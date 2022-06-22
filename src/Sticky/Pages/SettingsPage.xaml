@@ -51,10 +51,10 @@
         FontWeight="Bold"
       />
 
-      <ui:RadioButtons x:Name="Options" SelectedIndex="0">
-        <RadioButton x:Name="RadioButtonThemeLight" Content="Light"/>
-        <RadioButton x:Name="RadioButtonThemeDark" Content="Dark"/>
-        <RadioButton x:Name="RadioButtonThemeSystem" Content="Use system setting"/>
+      <ui:RadioButtons x:Name="ThemeOptions" SelectedIndex="0">
+        <RadioButton x:Name="RadioButtonThemeLight" Content="Light" Command="{x:Static local:Commands.ChangeAppTheme}" CommandParameter="Light"/>
+        <RadioButton x:Name="RadioButtonThemeDark" Content="Dark" Command="{x:Static local:Commands.ChangeAppTheme}" CommandParameter="Dark"/>
+        <RadioButton x:Name="RadioButtonThemeSystem" Content="Use system setting" Command="{x:Static local:Commands.ChangeAppTheme}" CommandParameter="System"/>
       </ui:RadioButtons>
 
       <!-- About -->
