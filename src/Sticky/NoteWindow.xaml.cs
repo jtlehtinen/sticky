@@ -16,26 +16,19 @@ namespace Sticky {
       Note = note;
 
       InitializeComponent();
+      Native.ApplyRoundedWindowCorners(this);
+
+      DataContext = Note;
 
       NoteRichTextBox.SelectionChanged += OnSelectionChanged;
       NoteRichTextBox.KeyUp += OnKeyUp;
 
-      Native.ApplyRoundedWindowCorners(this);
-
-      var document = XamlReader.Parse(note.Content) as FlowDocument;
-      if (document != null) NoteRichTextBox.Document = document;
+      // @TODO: Remove event handler.
+      Note.PropertyChanged += (s, e) => {
+        if (e.PropertyName == "Theme") SetTheme(note.Theme);
+      };
 
       SetTheme(note.Theme);
-
-      switch (note.Theme) {
-        case "Theme.Yellow": RadioButtonThemeYellow.IsChecked = true; break;
-        case "Theme.Green": RadioButtonThemeGreen.IsChecked = true; break;
-        case "Theme.Pink": RadioButtonThemePink.IsChecked = true; break;
-        case "Theme.Purple": RadioButtonThemePurple.IsChecked = true; break;
-        case "Theme.Blue": RadioButtonThemeBlue.IsChecked = true; break;
-        case "Theme.Gray": RadioButtonThemeGray.IsChecked = true; break;
-        case "Theme.Charcoal": RadioButtonThemeCharcoal.IsChecked = true; break;
-      }
     }
 
     private void SetTheme(string themeName) {
@@ -52,11 +45,20 @@ namespace Sticky {
       if (currentTheme != null) Resources.MergedDictionaries.Remove(currentTheme);
 
       Resources.MergedDictionaries.Add(theme);
+
+      switch (themeName) {
+        case "Theme.Yellow": RadioButtonThemeYellow.IsChecked = true; break;
+        case "Theme.Green": RadioButtonThemeGreen.IsChecked = true; break;
+        case "Theme.Pink": RadioButtonThemePink.IsChecked = true; break;
+        case "Theme.Purple": RadioButtonThemePurple.IsChecked = true; break;
+        case "Theme.Blue": RadioButtonThemeBlue.IsChecked = true; break;
+        case "Theme.Gray": RadioButtonThemeGray.IsChecked = true; break;
+        case "Theme.Charcoal": RadioButtonThemeCharcoal.IsChecked = true; break;
+      }
     }
 
     private void ChangeNoteThemeExecuted(object sender, ExecutedRoutedEventArgs e) {
-      var themeName = (string)e.Parameter;
-      SetTheme(themeName);
+      Note.Theme = (string)e.Parameter;
     }
 
     private void ToggleTopmostExecuted(object sender, ExecutedRoutedEventArgs e) {

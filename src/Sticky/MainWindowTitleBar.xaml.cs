@@ -8,7 +8,7 @@ namespace Sticky {
     }
 
     private void OnSettings(object sender, RoutedEventArgs args) {
-      System.Console.WriteLine("OnSettings()");
+      App.Current.MainWindow?.Navigate(PageType.Settings);
     }
   }
 

@@ -2,9 +2,30 @@ using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Markup;
 
 namespace Sticky {
+
+  public class FlowDocumentConverter : IValueConverter {
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+      var xaml = value as string;
+      if (xaml == null) return null;
+
+      var document = XamlReader.Parse(xaml) as FlowDocument;
+      if (document == null) throw new ArgumentException("value");
+
+      return document;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+      var document = value as FlowDocument;
+      if (document == null) return null;
+
+      var xaml = XamlWriter.Save(document);
+      return xaml;
+    }
+  }
 
   public class StringToThemeConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {

@@ -1,0 +1,80 @@
+<UserControl
+  x:Class="Sticky.MainPage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
+  xmlns:local="clr-namespace:Sticky"
+>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <!-- Title Bar -->
+    <local:MainWindowTitleBar Grid.Row="0" Margin="0"/>
+
+    <ui:SimpleStackPanel
+      Grid.Row="1"
+      Orientation="Vertical"
+      Margin="10,0,10,10"
+      Spacing="10"
+    >
+      <!-- Heading -->
+      <TextBlock
+        Style="{StaticResource SubtitleTextBlockStyle}"
+        Text="Sticky Notes"
+        FontWeight="Bold"
+      />
+
+      <!-- Search Box -->
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ui:AutoSuggestBox
+          Grid.Row="0"
+          QueryIcon="Find"
+          PlaceholderText="Search..."
+          SuggestionChosen="OnSearchSuggestionChosen"
+          TextChanged="OnSearchTextChanged"
+          QuerySubmitted="OnSearchQuerySubmitted"
+        />
+        <StackPanel
+          x:Name="AutoSuggestBoxItemDropDown"
+          Grid.Row="1"
+          HorizontalAlignment="Left"
+          Visibility="Collapsed"
+          Margin="0,8,0,0"
+        >
+          <TextBlock
+            x:Name="AutoSuggestBoxItemTitle"
+            Style="{StaticResource BaseTextBlockStyle}"
+          />
+          <ui:HyperlinkButton x:Name="AutoSuggestBoxItemLink" Click="OnAutoSuggestBoxItemLinkClicked"/>
+        </StackPanel>
+      </Grid>
+    </ui:SimpleStackPanel>
+
+    <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" CanContentScroll="False" Margin="0,0,0,15">
+      <!-- Note List -->
+      <ItemsControl ItemsSource="{Binding Path=Notes}">
+        <!-- Container Template -->
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <ui:SimpleStackPanel Orientation="Vertical" Spacing="10" Margin="15,0"/>
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+
+        <!-- Item Template -->
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <local:NoteControl/>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+  </Grid>
+</UserControl>

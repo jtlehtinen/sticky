@@ -39,6 +39,10 @@ namespace Sticky {
       return name;
     }
 
+    public bool IsValidThemeName(string name) {
+      return themes.ContainsKey(name);
+    }
+
     public bool IsTheme(ResourceDictionary dic) {
       if (!dic.Contains(THEME_NAME_KEY)) return false;
 
