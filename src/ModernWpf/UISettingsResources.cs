@@ -15,7 +15,7 @@ namespace ModernWpf {
     private readonly Dispatcher _dispatcher = Dispatcher.CurrentDispatcher;
 
 #if false // @TODO
-        private UISettings _uiSettings;
+    private UISettings _uiSettings;
 #endif
 
     public UISettingsResources() {
@@ -31,73 +31,63 @@ namespace ModernWpf {
     [MethodImpl(MethodImplOptions.NoInlining)]
     private void Initialize() {
 #if false // @TODO
-            _uiSettings = new UISettings();
+      _uiSettings = new UISettings();
 
-            if (ApiInformation.IsApiContractPresent(UniversalApiContractName, 4))
-            {
-                InitializeForContract4();
-            }
+      if (ApiInformation.IsApiContractPresent(UniversalApiContractName, 4)) {
+        InitializeForContract4();
+      }
 
-            if (ApiInformation.IsApiContractPresent(UniversalApiContractName, 8))
-            {
-                InitializeForContract8();
-            }
+      if (ApiInformation.IsApiContractPresent(UniversalApiContractName, 8)) {
+        InitializeForContract8();
+      }
 #endif
     }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
     private void InitializeForContract4() {
 #if false // @TODO
-            _uiSettings.AdvancedEffectsEnabledChanged += (sender, args) =>
-            {
-                _dispatcher.BeginInvoke(ApplyAdvancedEffectsEnabled);
-            };
+      _uiSettings.AdvancedEffectsEnabledChanged += (sender, args) => {
+        _dispatcher.BeginInvoke(ApplyAdvancedEffectsEnabled);
+      };
 
-            if (PackagedAppHelper.IsPackagedApp)
-            {
-                SystemEvents.UserPreferenceChanged += (sender, args) =>
-                {
-                    if (args.Category == UserPreferenceCategory.General)
-                    {
-                        ApplyAdvancedEffectsEnabled();
-                    }
-                };
-            }
-
+      if (PackagedAppHelper.IsPackagedApp) {
+        SystemEvents.UserPreferenceChanged += (sender, args) => {
+          if (args.Category == UserPreferenceCategory.General) {
             ApplyAdvancedEffectsEnabled();
+          }
+        };
+      }
+
+      ApplyAdvancedEffectsEnabled();
 #endif
     }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
     private void InitializeForContract8() {
 #if false // @TODO
-            _uiSettings.AutoHideScrollBarsChanged += (sender, args) =>
-            {
-                _dispatcher.BeginInvoke(ApplyAutoHideScrollBars);
-            };
-            ApplyAutoHideScrollBars();
+      _uiSettings.AutoHideScrollBarsChanged += (sender, args) => {
+        _dispatcher.BeginInvoke(ApplyAutoHideScrollBars);
+      };
+      ApplyAutoHideScrollBars();
 #endif
     }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
     private void ApplyAdvancedEffectsEnabled() {
 #if false // @TODO
-            var key = SystemParameters.DropShadowKey;
-            if (_uiSettings.AdvancedEffectsEnabled)
-            {
-                Remove(key);
-            }
-            else
-            {
-                this[key] = false;
-            }
+      var key = SystemParameters.DropShadowKey;
+      if (_uiSettings.AdvancedEffectsEnabled) {
+        Remove(key);
+      } else {
+        this[key] = false;
+      }
 #endif
     }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
     private void ApplyAutoHideScrollBars() {
 #if false // @TODO
-            this[AutoHideScrollBarsKey] = _uiSettings.AutoHideScrollBars;
+      this[AutoHideScrollBarsKey] = _uiSettings.AutoHideScrollBars;
 #endif
     }
   }

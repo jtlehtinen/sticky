@@ -54,8 +54,10 @@
               <Setter Property="Background" TargetName="border" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ToggleButton}, Path=PressedBackgroundColor}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
+              <!--
               <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
               <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+              -->
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>

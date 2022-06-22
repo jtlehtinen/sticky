@@ -48,6 +48,7 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
 
+                                <!-- @TODO: Remove Visibility.Collapsed -->
                                 <primitives:TitleBarControl Visibility="Collapsed" Title="{TemplateBinding Title}" Panel.ZIndex="1" BackButtonCommand="{TemplateBinding local:TitleBar.BackButtonCommand}" BackButtonCommandParameter="{TemplateBinding local:TitleBar.BackButtonCommandParameter}" BackButtonCommandTarget="{TemplateBinding local:TitleBar.BackButtonCommandTarget}" BackButtonStyle="{TemplateBinding local:TitleBar.BackButtonStyle}" Background="{TemplateBinding local:TitleBar.Background}" ButtonStyle="{TemplateBinding local:TitleBar.ButtonStyle}" ExtendViewIntoTitleBar="{TemplateBinding local:TitleBar.ExtendViewIntoTitleBar}" Foreground="{TemplateBinding local:TitleBar.Foreground}" Icon="{TemplateBinding Icon}" InactiveBackground="{TemplateBinding local:TitleBar.InactiveBackground}" InactiveForeground="{TemplateBinding local:TitleBar.InactiveForeground}" IsActive="{TemplateBinding IsActive}" IsBackButtonVisible="{TemplateBinding local:TitleBar.IsBackButtonVisible}" IsBackEnabled="{TemplateBinding local:TitleBar.IsBackEnabled}" IsIconVisible="{TemplateBinding local:TitleBar.IsIconVisible}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Style="{TemplateBinding local:TitleBar.Style}" />
 
                                 <AdornerDecorator x:Name="AdornerDecorator" Grid.Row="1">
