@@ -2,8 +2,8 @@ using System.Windows;
 
 namespace Sticky {
 
-  public partial class MainWindowTitleBar : TitleBarBase {
-    public MainWindowTitleBar() {
+  public partial class MainPageTitleBar : TitleBarBase {
+    public MainPageTitleBar() {
       InitializeComponent();
     }
 

@@ -13,7 +13,7 @@
     </Grid.RowDefinitions>
 
     <!-- Title Bar -->
-    <local:MainWindowTitleBar Grid.Row="0" Margin="0"/>
+    <local:MainPageTitleBar Grid.Row="0" Margin="0"/>
 
     <ui:SimpleStackPanel
       Grid.Row="1"
