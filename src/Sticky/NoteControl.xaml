@@ -17,12 +17,12 @@
     <CommandBinding Command="{x:Static local:Commands.OpenContextMenu}" Executed="OnOpenContextMenu"/>
   </UserControl.CommandBindings>
 
-  <Border x:Name="PlaceholderName" BorderThickness="1" BorderBrush="Red" CornerRadius="5">
+  <Border x:Name="OuterBorder" BorderThickness="1" BorderBrush="Gray" CornerRadius="5">
     <Border.Style>
       <Style TargetType="{x:Type Border}">
         <Setter Property="Background" Value="{DynamicResource Background}"/>
         <Style.Triggers>
-          <DataTrigger Binding="{Binding ElementName=PlaceholderName, Path=IsMouseOver}" Value="True">
+          <DataTrigger Binding="{Binding ElementName=OuterBorder, Path=IsMouseOver}" Value="True">
             <Setter Property="Background" Value="{DynamicResource BackgroundHover}"/>
           </DataTrigger>
         </Style.Triggers>
@@ -44,7 +44,7 @@
           FontSize="16"
           BackgroundColor="Transparent"
           Foreground="{DynamicResource ForegroundSecondary}"
-          Visibility="{Binding ElementName=PlaceholderName, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter}}"
+          Visibility="{Binding ElementName=OuterBorder, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter}}"
           Command="local:Commands.OpenContextMenu"
         />
 
@@ -55,7 +55,7 @@
           Foreground="{DynamicResource ForegroundSecondary}"
           Margin="0,0,10,0"
           Text="{Binding Path=CreatedAt, Converter={StaticResource DateTimeConverter}}"
-          Visibility="{Binding ElementName=PlaceholderName, Path=IsMouseOver, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
+          Visibility="{Binding ElementName=OuterBorder, Path=IsMouseOver, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
         />
       </StackPanel>
 
@@ -64,6 +64,7 @@
           x:Name="NoteRichTextBox"
           Margin="0"
           Cursor="Arrow"
+          Focusable="True"
           Background="Transparent"
           BorderBrush="Transparent"
           BorderThickness="0"
@@ -74,6 +75,14 @@
           FontSize="14"
           Document="{Binding Path=Content, Converter={StaticResource StringToFlowDocumentConverter}}"
         >
+          <local:BindableRichTextBox.InputBindings>
+            <MouseBinding
+              MouseAction="LeftDoubleClick"
+              Command="{x:Static local:Commands.OpenNote}"
+              CommandParameter="{Binding Id}"
+            />
+          </local:BindableRichTextBox.InputBindings>
+
           <local:BindableRichTextBox.Resources>
             <Style TargetType="{x:Type Paragraph}">
               <Setter Property="Margin" Value="0"/>
@@ -119,7 +128,6 @@
               </MenuItem>
             </ContextMenu>
           </local:BindableRichTextBox.ContextMenu>
-
         </local:BindableRichTextBox>
       </StackPanel>
     </StackPanel>
