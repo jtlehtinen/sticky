@@ -203,7 +203,7 @@
         <ControlTemplate TargetType="TextBox">
           <Grid SnapsToDevicePixels="True">
             <Border x:Name="BorderElement" primitives:FocusVisualHelper.IsTemplateFocusTarget="True" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding primitives:ControlHelper.CornerRadius}" />
-            <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" IsTabStop="False" Style="{DynamicResource TextControlContentHostStyle}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
+            <local:ScrollViewerEx x:Name="PART_ContentHost" Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" IsTabStop="False" Style="{DynamicResource TextControlContentHostStyle}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
             <TextBlock x:Name="PlaceholderTextContentPresenter" Margin="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" Foreground="{DynamicResource TextControlPlaceholderForeground}" IsHitTestVisible="False" Text="{TemplateBinding primitives:ControlHelper.PlaceholderText}" TextAlignment="{TemplateBinding TextAlignment}" TextWrapping="{TemplateBinding TextWrapping}" Visibility="Collapsed" />
           </Grid>
           <ControlTemplate.Triggers>
@@ -334,9 +334,9 @@
               <primitives:ThemeShadowChrome x:Name="Shdw" MinWidth="{Binding ActualWidth, ElementName=LayoutRoot}" MaxHeight="{TemplateBinding MaxDropDownHeight}" primitives:OpeningAnimationHelper.Storyboard="{StaticResource OverlayOpeningAnimation}" CornerRadius="{Binding ElementName=PopupBorder, Path=CornerRadius}" IsShadowEnabled="{DynamicResource {x:Static SystemParameters.DropShadowKey}}">
                 <Border x:Name="PopupBorder" Margin="0,-0.5,0,-1" HorizontalAlignment="Stretch" Background="{DynamicResource ComboBoxDropDownBackground}" BorderBrush="{DynamicResource ComboBoxDropDownBorderBrush}" BorderThickness="{DynamicResource ComboBoxDropdownBorderThickness}" CornerRadius="{DynamicResource OverlayCornerRadius}">
                   <Border Padding="{DynamicResource ComboBoxDropdownBorderPadding}" CornerRadius="{Binding ElementName=PopupBorder, Path=CornerRadius}">
-                    <ScrollViewer x:Name="ScrollViewer" Foreground="{DynamicResource ComboBoxDropDownForeground}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                    <local:ScrollViewerEx x:Name="ScrollViewer" Foreground="{DynamicResource ComboBoxDropDownForeground}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
                       <ItemsPresenter Margin="{DynamicResource ComboBoxDropdownContentMargin}" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                    </ScrollViewer>
+                    </local:ScrollViewerEx>
                   </Border>
                 </Border>
               </primitives:ThemeShadowChrome>

@@ -28,9 +28,9 @@
         <ControlTemplate TargetType="ContextMenu">
           <primitives:ThemeShadowChrome x:Name="Shdw" CornerRadius="{TemplateBinding primitives:ControlHelper.CornerRadius}" IsShadowEnabled="{TemplateBinding HasDropShadow}" SnapsToDevicePixels="True">
             <Border MinHeight="{DynamicResource MenuFlyoutThemeMinHeight}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding primitives:ControlHelper.CornerRadius}">
-              <ScrollViewer x:Name="ContextMenuScrollViewer" MinWidth="{DynamicResource FlyoutThemeMinWidth}" Margin="{TemplateBinding Padding}" Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+              <local:ScrollViewerEx x:Name="ContextMenuScrollViewer" MinWidth="{DynamicResource FlyoutThemeMinWidth}" Margin="{TemplateBinding Padding}" Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
                 <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Cycle" RenderOptions.ClearTypeHint="Enabled" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-              </ScrollViewer>
+              </local:ScrollViewerEx>
             </Border>
           </primitives:ThemeShadowChrome>
         </ControlTemplate>

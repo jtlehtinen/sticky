@@ -104,7 +104,7 @@
       <Setter.Value>
         <ControlTemplate TargetType="ListBox">
           <Border x:Name="LayoutRoot" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
-            <ScrollViewer x:Name="ScrollViewer" Padding="{TemplateBinding Padding}" primitives:ScrollViewerHelper.AutoHideScrollBars="{TemplateBinding primitives:ScrollViewerHelper.AutoHideScrollBars}" Focusable="False" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+            <local:ScrollViewerEx x:Name="ScrollViewer" Padding="{TemplateBinding Padding}" primitives:ScrollViewerHelper.AutoHideScrollBars="{TemplateBinding primitives:ScrollViewerHelper.AutoHideScrollBars}" Focusable="False" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
               <Grid>
                 <Grid.RowDefinitions>
                   <RowDefinition Height="Auto" />
@@ -115,7 +115,7 @@
                 <ItemsPresenter Grid.Row="1" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                 <ContentPresenter Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{TemplateBinding primitives:ListViewHelper.Footer}" ContentTemplate="{TemplateBinding primitives:ListViewHelper.FooterTemplate}" />
               </Grid>
-            </ScrollViewer>
+            </local:ScrollViewerEx>
           </Border>
           <ControlTemplate.Triggers>
             <MultiTrigger>

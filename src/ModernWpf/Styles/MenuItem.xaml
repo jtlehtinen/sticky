@@ -64,9 +64,9 @@
         <primitives:MenuPopup x:Name="PART_Popup" AllowsTransparency="true" Focusable="false" IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" Placement="Bottom" PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
           <primitives:ThemeShadowChrome CornerRadius="{DynamicResource OverlayCornerRadius}" IsShadowEnabled="{DynamicResource {x:Static SystemParameters.DropShadowKey}}">
             <Border x:Name="SubMenuRoot" MinHeight="{DynamicResource MenuFlyoutThemeMinHeight}" Background="{DynamicResource MenuFlyoutPresenterBackground}" BorderBrush="{DynamicResource MenuFlyoutPresenterBorderBrush}" BorderThickness="{DynamicResource MenuFlyoutPresenterBorderThemeThickness}" CornerRadius="{DynamicResource OverlayCornerRadius}">
-              <ScrollViewer x:Name="SubMenuScrollViewer" MinWidth="{DynamicResource FlyoutThemeMinWidth}" Margin="{DynamicResource MenuFlyoutPresenterThemePadding}" Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+              <local:ScrollViewerEx x:Name="SubMenuScrollViewer" MinWidth="{DynamicResource FlyoutThemeMinWidth}" Margin="{DynamicResource MenuFlyoutPresenterThemePadding}" Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
                 <ItemsPresenter Grid.IsSharedSizeScope="true" KeyboardNavigation.DirectionalNavigation="Cycle" KeyboardNavigation.TabNavigation="Cycle" RenderOptions.ClearTypeHint="Enabled" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-              </ScrollViewer>
+              </local:ScrollViewerEx>
             </Border>
           </primitives:ThemeShadowChrome>
         </primitives:MenuPopup>

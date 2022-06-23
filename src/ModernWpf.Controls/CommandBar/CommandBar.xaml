@@ -123,7 +123,7 @@
         <ControlTemplate TargetType="primitives:CommandBarOverflowPresenter">
           <Border x:Name="LayoutRoot" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{DynamicResource CommandBarOverflowPresenterBorderThickness}" CornerRadius="{TemplateBinding CornerRadius}" SnapsToDevicePixels="True">
             <Border Padding="{TemplateBinding Padding}" CornerRadius="{TemplateBinding CornerRadius}">
-              <ScrollViewer Padding="{DynamicResource CommandBarOverflowPresenterMargin}" Content="{TemplateBinding Content}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
+              <ui:ScrollViewerEx Padding="{DynamicResource CommandBarOverflowPresenterMargin}" Content="{TemplateBinding Content}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
             </Border>
             <VisualStateManager.VisualStateGroups>
               <VisualStateGroup x:Name="DisplayModeStates">

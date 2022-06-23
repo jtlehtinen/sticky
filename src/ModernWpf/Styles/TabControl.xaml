@@ -429,7 +429,7 @@
           <Border x:Name="ScrollDecreaseButtonContainer" Padding="{DynamicResource TabViewItemLeftScrollButtonContainerPadding}" VerticalAlignment="Bottom" Visibility="Collapsed">
             <RepeatButton x:Name="ScrollDecreaseButton" Command="{x:Static ScrollBar.LineLeftCommand}" CommandTarget="{Binding ElementName=ScrollViewer}" Content="&#xF264;" Delay="50" IsEnabled="False" Style="{StaticResource TabViewScrollButtonStyle}" />
           </Border>
-          <primitives:PivotHeaderScrollViewer x:Name="ScrollViewer" Grid.Column="1" Padding="1,0,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Stretch" HorizontalScrollBarVisibility="Hidden" Style="{DynamicResource {x:Type ScrollViewer}}" Template="{DynamicResource ScrollViewerScrollBarlessTemplate}" VerticalScrollBarVisibility="Disabled">
+          <primitives:PivotHeaderScrollViewer x:Name="ScrollViewer" Grid.Column="1" Padding="1,0,0,0" HorizontalAlignment="Left" VerticalContentAlignment="Stretch" HorizontalScrollBarVisibility="Hidden" Orientation="Horizontal" Style="{DynamicResource {x:Type ScrollViewer}}" Template="{DynamicResource ScrollViewerScrollBarlessTemplate}" VerticalScrollBarVisibility="Disabled">
             <Border Padding="{TemplateBinding Padding}">
               <StackPanel Panel.ZIndex="1" IsItemsHost="true" KeyboardNavigation.DirectionalNavigation="Contained" KeyboardNavigation.TabIndex="1" KeyboardNavigation.TabNavigation="Once" Orientation="Horizontal" />
             </Border>

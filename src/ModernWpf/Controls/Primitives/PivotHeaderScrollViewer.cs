@@ -4,11 +4,12 @@ using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace ModernWpf.Controls.Primitives {
-  public class PivotHeaderScrollViewer : ScrollViewer {
+  public class PivotHeaderScrollViewer : ScrollViewerEx {
     private TabControl _tabControl;
 
     static PivotHeaderScrollViewer() {
       FlowDirectionProperty.OverrideMetadata(typeof(PivotHeaderScrollViewer), new FrameworkPropertyMetadata(OnFlowDirectionChanged));
+      VerticalScrollBarVisibilityProperty.OverrideMetadata(typeof(PivotHeaderScrollViewer), new FrameworkPropertyMetadata(OnVerticalScrollBarVisibilityChanged));
       HorizontalScrollBarVisibilityProperty.OverrideMetadata(typeof(PivotHeaderScrollViewer), new FrameworkPropertyMetadata(OnHorizontalScrollBarVisibilityChanged));
     }
 
@@ -184,7 +185,13 @@ namespace ModernWpf.Controls.Primitives {
 
     private static void OnFlowDirectionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
       var sv = (PivotHeaderScrollViewer)d;
+      sv.UpdateCanScrollVertically();
       sv.UpdateCanScrollHorizontally();
+    }
+
+    private static void OnVerticalScrollBarVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+      var sv = (PivotHeaderScrollViewer)d;
+      sv.UpdateCanScrollVertically();
     }
 
     private static void OnHorizontalScrollBarVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {

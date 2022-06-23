@@ -41,7 +41,7 @@
                       <RowDefinition Height="*" />
                       <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <ScrollViewer x:Name="ContentScrollViewer" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsTabStop="False" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                    <ui:ScrollViewerEx x:Name="ContentScrollViewer" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsTabStop="False" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
                       <Border Padding="{DynamicResource ContentDialogPadding}" Background="{DynamicResource ContentDialogTopOverlay}" BorderBrush="{DynamicResource ContentDialogSeparatorBorderBrush}" BorderThickness="{DynamicResource ContentDialogSeparatorThickness}">
                         <Grid>
                           <Grid.RowDefinitions>
@@ -58,7 +58,7 @@
                           <ui:ContentPresenterEx x:Name="Content" Grid.Row="1" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" FontFamily="{DynamicResource ContentControlThemeFontFamily}" FontSize="{DynamicResource ControlContentThemeFontSize}" Foreground="{TemplateBinding Foreground}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" TextWrapping="Wrap" />
                         </Grid>
                       </Border>
-                    </ScrollViewer>
+                    </ui:ScrollViewerEx>
                     <Border x:Name="CommandSpace" Grid.Row="1" Padding="{DynamicResource ContentDialogPadding}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="{TemplateBinding Background}" CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BottomCornerRadiusDoubleValueConverter}}">
                       <Grid KeyboardNavigation.DirectionalNavigation="Contained">
                         <Grid.ColumnDefinitions>

@@ -20,7 +20,7 @@
             <Border x:Name="BorderElement" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding primitives:ControlHelper.CornerRadius}" />
             <Border x:Name="ContentElement" Padding="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
             <ContentControl x:Name="PART_Watermark" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Focusable="False" Foreground="{DynamicResource CalendarDatePickerTextForeground}" IsHitTestVisible="False" Opacity="0" />
-            <ScrollViewer x:Name="PART_ContentHost" Margin="0" Padding="{TemplateBinding Padding}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Style="{DynamicResource TextControlContentHostStyle}" />
+            <local:ScrollViewerEx x:Name="PART_ContentHost" Margin="0" Padding="{TemplateBinding Padding}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Style="{DynamicResource TextControlContentHostStyle}" />
             <VisualStateManager.VisualStateGroups>
               <VisualStateGroup x:Name="WatermarkStates">
                 <VisualState x:Name="Unwatermarked" />
