@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Specialized;
-using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using ModernWpf;
@@ -47,6 +46,15 @@ namespace Sticky {
       Commands.Register(typeof(Window), Commands.CloseNote, CloseNoteExecuted);
       Commands.Register(typeof(Window), Commands.OpenNote, OpenNoteExecuted);
       Commands.Register(typeof(Window), Commands.OpenNoteList, OpenNoteListExecuted);
+    }
+
+    protected override void OnStartup(StartupEventArgs e) {
+      base.OnStartup(e);
+
+      AppDomain.CurrentDomain.UnhandledException += (sender, e) => {
+        MessageBox.Show("An unexpected error has occurred. Stick Notes is going to terminate.", "Sticky Notes", MessageBoxButton.OK, MessageBoxImage.Error);
+        Environment.Exit(0);
+      };
     }
 
     public new static App Current => (App)Application.Current;

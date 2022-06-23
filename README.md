@@ -12,7 +12,7 @@ Windows sticky notes.
     Increase font size:   CTRL+]
     Reset formatting:     CTRL+SPACE
 
-## Notes
+## 🗎 Notes
 
 If your build randomly fails while VSCode is open add the following to your VSCode settings:
 
