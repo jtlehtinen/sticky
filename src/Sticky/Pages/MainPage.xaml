@@ -58,7 +58,7 @@
       </Grid>
     </ui:SimpleStackPanel>
 
-    <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" CanContentScroll="False" Margin="0,0,0,15">
+    <ui:ScrollViewerEx Grid.Row="2" VerticalScrollBarVisibility="Auto" CanContentScroll="False" Margin="0,0,0,15">
       <!-- Note List -->
       <ItemsControl ItemsSource="{Binding Path=Notes}">
         <!-- Container Template -->
@@ -75,6 +75,6 @@
           </DataTemplate>
         </ItemsControl.ItemTemplate>
       </ItemsControl>
-    </ScrollViewer>
+    </ui:ScrollViewerEx>
   </Grid>
 </UserControl>
