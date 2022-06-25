@@ -1,5 +1,8 @@
+using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace Sticky {
@@ -96,6 +99,15 @@ namespace Sticky {
 
     private void OnKeyUp(object sender, KeyEventArgs e) {
       RefreshToolbarButtons();
+    }
+
+    private void OnMouseWheel(object sender, MouseWheelEventArgs e) {
+      if (Keyboard.Modifiers != ModifierKeys.Control)
+        return;
+
+      // @NOTE: Delta should be always 120 or -120.
+      var command = e.Delta > 0 ? EditingCommands.IncreaseFontSize : EditingCommands.DecreaseFontSize;
+      command.Execute(null, (RichTextBox)sender);
     }
 
     private void OnSizeChanged(object sender, SizeChangedEventArgs e) {

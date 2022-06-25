@@ -331,6 +331,7 @@
           VerticalScrollBarVisibility="Auto"
           ui:ControlHelper.PlaceholderText="Take a note..."
           local:RichTextBoxHelper.DocumentXaml="{Binding Path=Content}"
+          MouseWheel="OnMouseWheel"
         >
           <!-- @TODO: Enter vs Shift+Enter -->
           <local:BindableRichTextBox.Resources>
