@@ -12,8 +12,4 @@
   <SolidColorBrush x:Key="Foreground" Color="#FFFFFFFF"/>
   <SolidColorBrush x:Key="ForegroundSecondary" Color="#FFCCCCCC"/>
   <SolidColorBrush x:Key="SelectionBackgroundColor" Color="#FF767676"/>
-
-  <SolidColorBrush x:Key="TitleBar.Background.MouseOver" Color="#FFF3F3F3"/>
-  <SolidColorBrush x:Key="TitleBar.Background.Pressed" Color="#FFDCDCDC"/>
-  <SolidColorBrush x:Key="TitleBar.Foreground" Color="#FF616161"/>
 </ResourceDictionary>

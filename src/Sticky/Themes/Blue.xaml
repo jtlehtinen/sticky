@@ -6,7 +6,6 @@
   <system:String x:Key="ThemeName">Theme.Blue</system:String>
   <SolidColorBrush x:Key="ThemeColor" Color="#FF9EDFFF"/>
 
-
   <!-- NoteWindow Styles -->
   <SolidColorBrush x:Key="Background" Color="#FFE2F1FF"/>
   <SolidColorBrush x:Key="BackgroundSecondary" Color="#FFCDE9FF"/>
@@ -14,9 +13,4 @@
   <SolidColorBrush x:Key="Foreground" Color="#FF000000"/>
   <SolidColorBrush x:Key="ForegroundSecondary" Color="#FF616161"/>
   <SolidColorBrush x:Key="SelectionBackgroundColor" Color="#FF307B98"/>
-
-  <!-- MainWindow Styles -->
-  <SolidColorBrush x:Key="TitleBar.Background.MouseOver" Color="#FFF3F3F3"/>
-  <SolidColorBrush x:Key="TitleBar.Background.Pressed" Color="#FFDCDCDC"/>
-  <SolidColorBrush x:Key="TitleBar.Foreground" Color="#FF616161"/>
 </ResourceDictionary>
