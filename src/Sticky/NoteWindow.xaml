@@ -2,6 +2,7 @@
   x:Class="Sticky.NoteWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:local="clr-namespace:Sticky"
   Title="sticky"
   MinWidth="340"
@@ -268,7 +269,7 @@
             Style="{StaticResource ToggleButtonExToolbar}"
             Content="&#xE8FD;"
             FontSize="18"
-            ToolTip="Toggle Bullets"
+            ToolTip="Toggle bullets"
             Command="EditingCommands.ToggleBullets"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
           />
@@ -278,7 +279,7 @@
             Style="{StaticResource ButtonExToolbar}"
             Content="&#xEB9F;"
             FontSize="18"
-            ToolTip="Add Image"
+            ToolTip="Add image"
           />
 
           <!-- Decrease Font Size Button -->
@@ -286,7 +287,7 @@
             Style="{StaticResource ButtonExToolbar}"
             Content="&#xE8E7;"
             FontSize="18"
-            ToolTip="Decrease Font Size"
+            ToolTip="Decrease font size"
             Command="EditingCommands.DecreaseFontSize"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
           />
@@ -296,7 +297,7 @@
             Style="{StaticResource ButtonExToolbar}"
             Content="&#xE8E8;"
             FontSize="18"
-            ToolTip="Increase Font Size"
+            ToolTip="Increase font size"
             Command="EditingCommands.IncreaseFontSize"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
           />
@@ -314,21 +315,10 @@
         </StackPanel>
       </Border>
 
+      <!-- Rich Text Box -->
       <Grid>
-        <!-- Placeholder Text -->
-        <TextBlock
-          FontSize="14"
-          Foreground="{DynamicResource ForegroundSecondary}"
-          IsHitTestVisible="False"
-          Margin="5,0"
-          MinWidth="50"
-          Name="Placeholder"
-          Text="Take a note..."
-          Visibility="{Binding ElementName=NoteRichTextBox, Path=IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"
-        />
-
-        <!-- Rich Text Box -->
         <local:BindableRichTextBox
+          Style="{StaticResource DefaultRichTextBoxStyle}"
           x:Name="NoteRichTextBox"
           Background="Transparent"
           BorderBrush="Transparent"
@@ -339,55 +329,16 @@
           HorizontalScrollBarVisibility="Auto"
           VerticalScrollBarVisibility="Auto"
           SelectionTextBrush="Red"
+          ui:ControlHelper.PlaceholderText="Take a note..."
         >
+          <!-- @TODO: Enter vs Shift+Enter -->
           <local:BindableRichTextBox.Resources>
             <Style TargetType="{x:Type Paragraph}">
               <Setter Property="Margin" Value="0"/>
             </Style>
           </local:BindableRichTextBox.Resources>
 
-          <!-- Context Menu -->
-          <local:BindableRichTextBox.ContextMenu>
-            <ContextMenu>
-              <!-- Copy -->
-              <MenuItem Command="ApplicationCommands.Copy">
-                <MenuItem.Icon>
-                  <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8C8;"/>
-                </MenuItem.Icon>
-              </MenuItem>
-
-              <!-- Cut -->
-              <MenuItem Command="ApplicationCommands.Cut">
-                <MenuItem.Icon>
-                  <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8C6;"/>
-                </MenuItem.Icon>
-              </MenuItem>
-
-              <!-- Paste -->
-              <MenuItem Command="ApplicationCommands.Paste">
-                <MenuItem.Icon>
-                  <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE77F;"/>
-                </MenuItem.Icon>
-              </MenuItem>
-
-              <Separator/>
-
-              <!-- Undo -->
-              <MenuItem Command="ApplicationCommands.Undo">
-                <MenuItem.Icon>
-                  <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE7A7;"/>
-                </MenuItem.Icon>
-              </MenuItem>
-
-              <!-- Redo -->
-              <MenuItem Command="ApplicationCommands.Redo">
-                <MenuItem.Icon>
-                  <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE7A6;"/>
-                </MenuItem.Icon>
-              </MenuItem>
-            </ContextMenu>
-          </local:BindableRichTextBox.ContextMenu>
-
+          <!-- @TODO: Content -->
           <FlowDocument>
             <Paragraph>
               <Bold>httpie-go</Bold>
