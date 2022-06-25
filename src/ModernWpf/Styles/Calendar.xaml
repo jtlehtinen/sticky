@@ -125,7 +125,7 @@
                     <ColumnDefinition Width="Auto" />
                   </Grid.ColumnDefinitions>
                   <Button x:Name="PART_HeaderButton" HorizontalContentAlignment="Left" Focusable="False" Style="{StaticResource HeaderNavigationButtonStyle}" />
-                  <Button x:Name="PART_PreviousButton" Grid.Column="1" Margin="{DynamicResource CalendarViewNavigationPreviousButtonMargin}" HorizontalContentAlignment="Center" Content="&#xF966;" Focusable="False" Style="{StaticResource NavigationButtonStyle}" />
+                  <Button x:Name="PART_PreviousButton" Grid.Column="1" Margin="{DynamicResource CalendarViewNavigationPreviousButtonMargin}" HorizontalContentAlignment="Center" Content="&#xE2BC;" Focusable="False" Style="{StaticResource NavigationButtonStyle}" />
                   <Button x:Name="PART_NextButton" Grid.Column="2" Margin="{DynamicResource CalendarViewNavigationNextButtonMargin}" HorizontalContentAlignment="Center" Content="&#xF260;" Focusable="False" Style="{StaticResource NavigationButtonStyle}" />
                 </Grid>
                 <Border Grid.Row="1" Height="1" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" />

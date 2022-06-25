@@ -39,7 +39,7 @@
                   <primitives:CommandBarPanel x:Name="PART_ToolBarPanel" Grid.Column="1" MinHeight="{DynamicResource AppBarThemeCompactHeight}" HorizontalAlignment="Right" IsItemsHost="true" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                 </Grid>
                 <ToggleButton x:Name="MoreButton" Grid.Column="1" MinHeight="{DynamicResource AppBarThemeCompactHeight}" Padding="{DynamicResource CommandBarMoreButtonMargin}" VerticalAlignment="Top" ClickMode="Press" Foreground="{TemplateBinding Foreground}" IsChecked="{Binding Path=IsOverflowOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" IsEnabled="{TemplateBinding HasOverflowItems}" Style="{DynamicResource EllipsisButton}" Visibility="{TemplateBinding EffectiveOverflowButtonVisibility}">
-                  <ui:FontIcon x:Name="EllipsisIcon" Height="{DynamicResource AppBarExpandButtonCircleDiameter}" VerticalAlignment="Center" FontFamily="{DynamicResource FluentSystemIcons}" FontSize="20" Glyph="&#xFC2D;" />
+                  <ui:FontIcon x:Name="EllipsisIcon" Height="{DynamicResource AppBarExpandButtonCircleDiameter}" VerticalAlignment="Center" FontFamily="{DynamicResource FluentSystemIcons}" FontSize="20" Glyph="&#xE826;" />
                 </ToggleButton>
                 <Rectangle x:Name="HighContrastBorder" Grid.ColumnSpan="2" VerticalAlignment="Stretch" Stroke="{DynamicResource CommandBarHighContrastBorder}" StrokeThickness="1" Visibility="Collapsed" />
                 <Border x:Name="OpenBorder" Grid.ColumnSpan="2" VerticalAlignment="Stretch" BorderBrush="{DynamicResource CommandBarBorderBrushOpen}" BorderThickness="{DynamicResource CommandBarBorderThicknessOpen}" CornerRadius="{TemplateBinding CornerRadius}" Visibility="Collapsed" />

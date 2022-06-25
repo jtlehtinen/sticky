@@ -35,7 +35,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
               </Grid.RowDefinitions>
-              <TextBlock x:Name="OverflowCheckGlyph" Width="14" Height="14" Margin="{DynamicResource AppBarToggleButtonOverflowCheckMargin}" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="{DynamicResource FluentSystemIconsFilled}" FontSize="16" Foreground="{DynamicResource AppBarToggleButtonCheckGlyphForeground}" Opacity="0" Text="&#xF984;" Visibility="Collapsed" />
+              <TextBlock x:Name="OverflowCheckGlyph" Width="14" Height="14" Margin="{DynamicResource AppBarToggleButtonOverflowCheckMargin}" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="{DynamicResource FluentSystemIconsFilled}" FontSize="16" Foreground="{DynamicResource AppBarToggleButtonCheckGlyphForeground}" Opacity="0" Text="&#xF296;" Visibility="Collapsed" />
               <Viewbox x:Name="ContentViewbox" Height="{DynamicResource AppBarButtonContentHeight}" Margin="{DynamicResource AppBarButtonContentViewboxCollapsedMargin}" HorizontalAlignment="Stretch">
                 <ui:ContentPresenterEx x:Name="Content" Content="{TemplateBinding Icon}" Foreground="{TemplateBinding Foreground}" />
               </Viewbox>

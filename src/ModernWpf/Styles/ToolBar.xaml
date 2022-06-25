@@ -369,7 +369,7 @@
                 <Thumb x:Name="ToolBarThumb" Width="10" Style="{StaticResource ToolBarThumbStyle}" />
                 <ToolBarPanel x:Name="PART_ToolBarPanel" Grid.Column="1" MinHeight="{DynamicResource ToolBarThemeCompactHeight}" HorizontalAlignment="Left" IsItemsHost="true" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                 <ToggleButton x:Name="MoreButton" Grid.Column="2" MinHeight="{DynamicResource ToolBarThemeCompactHeight}" Padding="{DynamicResource ToolBarMoreButtonMargin}" VerticalAlignment="Top" ClickMode="Press" Foreground="{TemplateBinding Foreground}" IsChecked="{Binding Path=IsOverflowOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" IsEnabled="{TemplateBinding HasOverflowItems}" Style="{StaticResource ToolBarOverflowButtonStyle}">
-                  <local:FontIcon x:Name="EllipsisIcon" Height="{DynamicResource ToolBarExpandButtonCircleDiameter}" VerticalAlignment="Center" FontFamily="{DynamicResource FluentSystemIcons}" FontSize="20" Glyph="&#xFC2D;" />
+                  <local:FontIcon x:Name="EllipsisIcon" Height="{DynamicResource ToolBarExpandButtonCircleDiameter}" VerticalAlignment="Center" FontFamily="{DynamicResource FluentSystemIcons}" FontSize="20" Glyph="&#xE827;" />
                 </ToggleButton>
                 <Popup x:Name="OverflowPopup" AllowsTransparency="True" Focusable="False" IsOpen="{Binding IsOverflowOpen, RelativeSource={RelativeSource TemplatedParent}}" Placement="Bottom" PlacementTarget="{Binding ElementName=MoreButton}" PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" StaysOpen="False">
                   <Popup.PlacementRectangle>

@@ -94,7 +94,7 @@
         <ControlTemplate TargetType="Button">
           <Grid x:Name="RootGrid" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Background="{TemplateBinding Background}">
             <Rectangle x:Name="PointerRectangle" Fill="Transparent" Visibility="Collapsed" />
-            <local:FontIcon x:Name="Icon" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource FluentSystemIcons}" FontSize="16" Foreground="{TemplateBinding Foreground}" Glyph="&#xFC2D;" IsHitTestVisible="False" />
+            <local:FontIcon x:Name="Icon" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource FluentSystemIcons}" FontSize="16" Foreground="{TemplateBinding Foreground}" Glyph="&#xE827;" IsHitTestVisible="False" />
           </Grid>
           <ControlTemplate.Triggers>
             <!--  PointerOver  -->
@@ -136,7 +136,7 @@
         <ControlTemplate TargetType="Button">
           <Grid x:Name="RootGrid" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Background="{TemplateBinding Background}">
             <Rectangle x:Name="PointerRectangle" Fill="Transparent" />
-            <local:FontIcon x:Name="Icon" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource FluentSystemIcons}" FontSize="20" Foreground="{TemplateBinding Foreground}" Glyph="&#xFC2D;" IsHitTestVisible="False" />
+            <local:FontIcon x:Name="Icon" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource FluentSystemIcons}" FontSize="20" Foreground="{TemplateBinding Foreground}" Glyph="&#xE827;" IsHitTestVisible="False" />
           </Grid>
           <ControlTemplate.Triggers>
             <!--  PointerOver  -->

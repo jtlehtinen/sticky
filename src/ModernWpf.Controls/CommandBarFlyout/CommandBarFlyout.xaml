@@ -414,7 +414,7 @@
                   <ColumnDefinition Width="*" />
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock x:Name="OverflowCheckGlyph" Margin="15,4,14,4" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="{DynamicResource FluentSystemIconsFilled}" FontSize="12" Foreground="{DynamicResource CommandBarFlyoutAppBarButtonForeground}" Opacity="0" Text="&#xF984;" Visibility="Collapsed" />
+                <TextBlock x:Name="OverflowCheckGlyph" Margin="15,4,14,4" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="{DynamicResource FluentSystemIconsFilled}" FontSize="12" Foreground="{DynamicResource CommandBarFlyoutAppBarButtonForeground}" Opacity="0" Text="&#xF296;" Visibility="Collapsed" />
                 <Viewbox x:Name="ContentViewbox" Height="16" HorizontalAlignment="Stretch">
                   <ui:ContentPresenterEx x:Name="Content" Content="{TemplateBinding Icon}" Foreground="{TemplateBinding Foreground}" />
                 </Viewbox>
@@ -847,7 +847,7 @@
                       <ToggleButton.RenderTransform>
                         <TranslateTransform x:Name="MoreButtonTransform" />
                       </ToggleButton.RenderTransform>
-                      <ui:FontIcon x:Name="EllipsisIcon" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource FluentSystemIcons}" FontSize="16" Glyph="&#xFC2D;" />
+                      <ui:FontIcon x:Name="EllipsisIcon" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource FluentSystemIcons}" FontSize="16" Glyph="&#xE827;" />
                     </ToggleButton>
                   </Grid>
                 </Border>

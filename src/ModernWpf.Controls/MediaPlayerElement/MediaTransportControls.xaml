@@ -141,7 +141,7 @@
                                   <Thickness x:Key="AppBarButtonInnerBorderMargin">5</Thickness>
                                 </local:AppBarButton.Resources>
                                 <local:AppBarButton.Icon>
-                                  <ui:FontIcon x:Name="AudioMuteSymbol" FontFamily="{DynamicResource FluentSystemIcons}" Glyph="&#xFC65;" />
+                                  <ui:FontIcon x:Name="AudioMuteSymbol" FontFamily="{DynamicResource FluentSystemIcons}" Glyph="&#xEB46;" />
                                 </local:AppBarButton.Icon>
                               </local:AppBarButton>
                               <Slider x:Name="VolumeSlider" Width="{DynamicResource MediaTransportControlsSliderWidth}" Height="{DynamicResource MediaTransportControlsSliderHeight}" Margin="12,0,8,0" HorizontalAlignment="Center" VerticalAlignment="Center" AutoToolTipPlacement="None" IsSnapToTickEnabled="True" Maximum="100" TickFrequency="1" />
@@ -150,7 +150,7 @@
                           </local:Flyout>
                         </local:AppBarButton.Flyout>
                         <local:AppBarButton.Icon>
-                          <ui:FontIcon x:Name="VolumeMuteSymbol" FontFamily="{DynamicResource FluentSystemIcons}" Glyph="&#xFC65;" />
+                          <ui:FontIcon x:Name="VolumeMuteSymbol" FontFamily="{DynamicResource FluentSystemIcons}" Glyph="&#xEB46;" />
                         </local:AppBarButton.Icon>
                       </local:AppBarButton>
                       <local:AppBarButton x:Name="CCSelectionButton" Style="{StaticResource AppBarButtonStyle}" Visibility="Collapsed">
@@ -166,7 +166,7 @@
                       <local:AppBarSeparator x:Name="LeftSeparator" Width="0" Height="0" Margin="0,0" />
                       <local:AppBarButton x:Name="StopButton" IsEnabled="{TemplateBinding IsStopEnabled}" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsStopButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <local:AppBarButton.Icon>
-                          <ui:FontIcon FontFamily="{DynamicResource FluentSystemIcons}" Glyph="&#x01F6;" />
+                          <ui:FontIcon FontFamily="{DynamicResource FluentSystemIcons}" Glyph="&#xEB78;" />
                         </local:AppBarButton.Icon>
                       </local:AppBarButton>
                       <local:AppBarButton x:Name="SkipBackwardButton" IsEnabled="{TemplateBinding IsSkipBackwardEnabled}" Style="{StaticResource AppBarButtonStyle}" Visibility="{TemplateBinding IsSkipBackwardButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -240,7 +240,7 @@
                 </Border>
               </Grid>
             </Border>
-            <ui:DebugVisualStateManager.VisualStateGroups>
+            <VisualStateManager.VisualStateGroups>
               <!--  ControlPanel Visibility states  -->
               <VisualStateGroup x:Name="ControlPanelVisibilityStates">
                 <VisualState x:Name="ControlPanelFadeIn">
@@ -294,7 +294,7 @@
                 <VisualState x:Name="NonFullWindowState" />
                 <VisualState x:Name="FullWindowState" />
               </VisualStateGroup>
-            </ui:DebugVisualStateManager.VisualStateGroups>
+            </VisualStateManager.VisualStateGroups>
           </Grid>
           <ControlTemplate.Triggers>
             <!--  PauseState  -->

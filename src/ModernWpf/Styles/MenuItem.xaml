@@ -105,7 +105,7 @@
           <ColumnDefinition Width="*" />
           <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <local:FontIcon x:Name="CheckGlyph" Width="16" Margin="0,0,12,0" FontFamily="{DynamicResource FluentSystemIconsFilled}" FontSize="16" Foreground="{DynamicResource ToggleMenuFlyoutItemCheckGlyphForeground}" Glyph="&#xF984;" Opacity="0" Visibility="Collapsed" />
+        <local:FontIcon x:Name="CheckGlyph" Width="16" Margin="0,0,12,0" FontFamily="{DynamicResource FluentSystemIconsFilled}" FontSize="16" Foreground="{DynamicResource ToggleMenuFlyoutItemCheckGlyphForeground}" Glyph="&#xF296;" Opacity="0" Visibility="Collapsed" />
         <Viewbox x:Name="IconRoot" Grid.Column="1" Width="16" Height="16" Margin="0,0,12,0" HorizontalAlignment="Left" VerticalAlignment="Center">
           <local:ContentPresenterEx x:Name="IconContent" ContentSource="Icon" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
         </Viewbox>
