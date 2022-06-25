@@ -8,10 +8,10 @@ namespace Sticky {
   /// </summary>
   public partial class NoteWindow : Window {
     public NoteWindow(NoteViewModel note) {
+      DataContext = note;
+
       InitializeComponent();
       Native.ApplyRoundedWindowCorners(this);
-
-      DataContext = note;
 
       // @TODO: Remove event handler.
       note.PropertyChanged += (s, e) => {

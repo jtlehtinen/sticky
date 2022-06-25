@@ -2,6 +2,7 @@
   x:Class="Sticky.NoteControl"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:local="clr-namespace:Sticky"
 >
   <!-- Double Click Opens Note -->
@@ -61,10 +62,12 @@
 
       <StackPanel Margin="10,0,10,15">
         <local:BindableRichTextBox
+          Style="{StaticResource DefaultRichTextBoxStyle}"
+          ui:ControlHelper.PlaceholderText="Take a note..."
           x:Name="NoteRichTextBox"
           Margin="0"
           Cursor="Arrow"
-          Focusable="True"
+          Focusable="False"
           Background="Transparent"
           BorderBrush="Transparent"
           BorderThickness="0"
@@ -73,7 +76,7 @@
           HorizontalScrollBarVisibility="Auto"
           Foreground="{DynamicResource Foreground}"
           FontSize="14"
-          Document="{Binding Path=Content, Converter={StaticResource StringToFlowDocumentConverter}}"
+          local:RichTextBoxHelper.DocumentXaml="{Binding Path=Content}"
         >
           <local:BindableRichTextBox.InputBindings>
             <MouseBinding

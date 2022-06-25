@@ -84,6 +84,15 @@ namespace Sticky {
       Theme = note.Theme;
       CreatedAt = note.CreatedAt;
     }
+
+    public Note ToNote() {
+      return new Note {
+        Id = Id,
+        Content = Content,
+        Theme = Theme,
+        CreatedAt = CreatedAt,
+      };
+    }
   }
 
   public class NotesViewModel : ObservableCollection<NoteViewModel> {
@@ -143,22 +152,35 @@ namespace Sticky {
     }
 
     private void CloseNote(object parameter) {
-      SetNoteOpen((int)parameter, false);
-    }
-
-    private void OpenNote(object parameter) {
-      SetNoteOpen((int)parameter, true);
-    }
-
-    private void SetNoteOpen(int id, bool open) {
+      var id = (int)parameter;
       var note = Notes.GetById(id);
       if (note == null) return;
 
-      note.Open = open;
+      note.Open = false;
 
       // @NOTE: Force CollectionChanged event.
       var idx = Notes.IndexOf(note);
       Notes[idx] = note;
+    }
+
+    private void OpenNote(object parameter) {
+      var id = (int)parameter;
+      var note = Notes.GetById(id);
+      if (note == null) return;
+
+      note.Open = true;
+
+      // @NOTE: Force CollectionChanged event.
+      var idx = Notes.IndexOf(note);
+      Notes[idx] = note;
+    }
+
+    // @TODO: Better way to move changes between view-model and the model.
+    public void Flush() {
+      model.Notes.Clear();
+      foreach (var note in Notes) {
+        model.Notes.Add(note.ToNote());
+      }
     }
   }
 

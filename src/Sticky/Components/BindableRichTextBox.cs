@@ -1,4 +1,6 @@
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -6,18 +8,61 @@ using System.Windows.Input;
 
 namespace Sticky {
 
-  // @NOTE: Work-around for RichTextBox.Document property being unboundable.
-  // https://www.codeproject.com/Articles/137209/Binding-and-styling-text-to-a-RichTextBox-in-WPF
+  // https://stackoverflow.com/questions/343468/richtextbox-wpf-binding
+  public class RichTextBoxHelper : DependencyObject {
+    public static string GetDocumentXaml(DependencyObject d) {
+      return (string)d.GetValue(DocumentXamlProperty);
+    }
+
+    public static void SetDocumentXaml(DependencyObject d, string value) {
+      d.SetValue(DocumentXamlProperty, value);
+    }
+
+    public static readonly DependencyProperty DocumentXamlProperty = DependencyProperty.RegisterAttached("DocumentXaml", typeof(string), typeof(RichTextBoxHelper), new FrameworkPropertyMetadata {
+      BindsTwoWayByDefault = true,
+      PropertyChangedCallback = OnDocumentXamlChanged,
+    });
+
+    private static void OnDocumentXamlChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+      var rtb = (RichTextBox)d;
+
+      var currentValue = DocumentToString(rtb.Document);
+      var newValue = GetDocumentXaml(rtb);
+      if (currentValue == newValue) return;
+
+      // @TODO: Use XamlReader.Parse() instead?
+
+      var doc = new FlowDocument();
+      if (string.IsNullOrEmpty(newValue)) {
+        doc.Blocks.Add(new Paragraph());
+      } else {
+        var range = new TextRange(doc.ContentStart, doc.ContentEnd);
+        range.Load(new MemoryStream(Encoding.UTF8.GetBytes(newValue)), DataFormats.Xaml);
+      }
+
+      rtb.Document = doc;
+      rtb.TextChanged -= TextChangedEventHandler;
+      rtb.TextChanged += TextChangedEventHandler;
+    }
+
+    private static void TextChangedEventHandler(object sender, TextChangedEventArgs e) {
+      var rtb = (RichTextBox)sender;
+      var xaml = DocumentToString(rtb.Document);
+      SetDocumentXaml(rtb, xaml);
+    }
+
+    private static string DocumentToString(FlowDocument doc) {
+      var range = new TextRange(doc.ContentStart, doc.ContentEnd);
+
+      var buffer = new MemoryStream();
+      range.Save(buffer, DataFormats.Xaml);
+
+      return Encoding.UTF8.GetString(buffer.ToArray());
+    }
+  }
+
   public class BindableRichTextBox : RichTextBox {
     public static readonly RoutedUICommand ToggleStrikethrough = new RoutedUICommand("ToggleStrikethrough", "ToggleStrikethrough", typeof(BindableRichTextBox));
-
-    public static readonly DependencyProperty DocumentProperty = DependencyProperty.Register("Document", typeof(FlowDocument), typeof(BindableRichTextBox), new FrameworkPropertyMetadata(null, new PropertyChangedCallback(OnDocumentChanged)));
-    public static readonly DependencyProperty IsEmptyProperty = DependencyProperty.Register("IsEmpty", typeof(bool), typeof(BindableRichTextBox), new FrameworkPropertyMetadata(true));
-
-    public static void OnDocumentChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e) {
-      var rtb = (RichTextBox)obj;
-      rtb.Document = (FlowDocument)e.NewValue;
-    }
 
     public BindableRichTextBox(): base() {
       // Register strikethrough command handler.
@@ -36,28 +81,15 @@ namespace Sticky {
       );
     }
 
-    protected override void OnTextChanged(TextChangedEventArgs e) {
-      base.OnTextChanged(e);
-
-      var empty = () => {
+    public bool IsEmpty {
+      get {
         // https://stackoverflow.com/questions/5825575/detect-if-a-richtextbox-is-empty
         if (Document.Blocks.Count == 0) return true;
 
         var start = Document.ContentStart.GetNextInsertionPosition(LogicalDirection.Forward);
         var end = Document.ContentEnd.GetNextInsertionPosition(LogicalDirection.Backward);
         return start.CompareTo(end) == 0;
-      };
-      IsEmpty = empty();
-    }
-
-    public new FlowDocument Document {
-      get { return (FlowDocument)GetValue(DocumentProperty); }
-      set { this.SetValue(DocumentProperty, value); }
-    }
-
-    public bool IsEmpty {
-      get { return (bool)GetValue(IsEmptyProperty); }
-      set { SetValue(IsEmptyProperty, value); }
+      }
     }
 
     public bool IsBold() {

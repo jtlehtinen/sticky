@@ -329,8 +329,8 @@
           SelectionBrush="{DynamicResource SelectionBackgroundColor}"
           HorizontalScrollBarVisibility="Auto"
           VerticalScrollBarVisibility="Auto"
-          SelectionTextBrush="Red"
           ui:ControlHelper.PlaceholderText="Take a note..."
+          local:RichTextBoxHelper.DocumentXaml="{Binding Path=Content}"
         >
           <!-- @TODO: Enter vs Shift+Enter -->
           <local:BindableRichTextBox.Resources>
@@ -338,14 +338,6 @@
               <Setter Property="Margin" Value="0"/>
             </Style>
           </local:BindableRichTextBox.Resources>
-
-          <!-- @TODO: Content -->
-          <FlowDocument>
-            <Paragraph>
-              <Bold>httpie-go</Bold>
-            </Paragraph>
-            <Paragraph>Add header "Accept: */*", nginx seems to block requests if no content negotiation headers specified</Paragraph>
-          </FlowDocument>
         </local:BindableRichTextBox>
       </Grid>
     </DockPanel>

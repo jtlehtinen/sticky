@@ -39,7 +39,10 @@ namespace Sticky {
       // https://github.com/Microsoft/dotnet/blob/master/Documentation/compatibility/wpf-TextBox-PasswordBox-text-selection-does-not-follow-system-colors.md
       AppContext.SetSwitch("Switch.System.Windows.Controls.Text.UseAdornerForTextboxSelectionRendering", false);
 
-      Exit += (sender, e) => Model.Save();
+      Exit += (sender, e) => {
+        ViewModel.Flush();
+        Model.Save();
+      };
 
       Commands.Register(typeof(Window), Commands.ChangeAppTheme, ChangeAppThemeExecuted);
       Commands.Register(typeof(Window), Commands.DeleteNote, DeleteNoteExecuted);
