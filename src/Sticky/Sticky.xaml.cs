@@ -53,7 +53,7 @@ namespace Sticky {
       base.OnStartup(e);
 
       AppDomain.CurrentDomain.UnhandledException += (sender, e) => {
-        MessageBox.Show("An unexpected error has occurred. Stick Notes is going to terminate.", "Sticky Notes", MessageBoxButton.OK, MessageBoxImage.Error);
+        MessageBox.Show("An unexpected error has occurred. Sticky Notes is going to terminate.", "Sticky Notes", MessageBoxButton.OK, MessageBoxImage.Error);
         Environment.Exit(0);
       };
     }
