@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Input;
 using ModernWpf;
+using ModernWpf.Controls;
 
 namespace Sticky {
 
@@ -145,10 +146,26 @@ namespace Sticky {
       }
     }
 
-    private void CloseNoteExecuted(object sender, ExecutedRoutedEventArgs e) => ViewModel.CloseNoteCommand.Execute(e.Parameter);
-    private void OpenNoteExecuted(object sender, ExecutedRoutedEventArgs e) => ViewModel.OpenNoteCommand.Execute(e.Parameter);
+    private void CloseNoteExecuted(object sender, ExecutedRoutedEventArgs e) {
+      ViewModel.CloseNoteCommand.Execute(e.Parameter);
+    }
 
-    private void NewNoteExecuted(object sender, ExecutedRoutedEventArgs e) => ViewModel.CreateNoteCommand.Execute(null);
-    private void DeleteNoteExecuted(object sender, ExecutedRoutedEventArgs e) => ViewModel.DeleteNoteCommand.Execute(e.Parameter);
+    private void OpenNoteExecuted(object sender, ExecutedRoutedEventArgs e) {
+      ViewModel.OpenNoteCommand.Execute(e.Parameter);
+    }
+
+    private void NewNoteExecuted(object sender, ExecutedRoutedEventArgs e) {
+      ViewModel.CreateNoteCommand.Execute(null);
+    }
+
+    async private void DeleteNoteExecuted(object sender, ExecutedRoutedEventArgs e) {
+      ConfirmDeleteDialog dialog = new ConfirmDeleteDialog();
+      var result = await dialog.ShowAsync();
+
+      var doDelete = (result == ContentDialogResult.Primary);
+      if (doDelete) {
+        ViewModel.DeleteNoteCommand.Execute(e.Parameter);
+      }
+    }
   }
 }

@@ -1,9 +1,6 @@
 using System.Linq;
 using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Markup;
-using ModernWpf.Controls;
 
 namespace Sticky {
   /// <summary>
@@ -35,13 +32,13 @@ namespace Sticky {
       var app = App.Current;
       if (app == null) return;
 
-      var themeService = App.Current.Themes;
-      if (themeService == null) return;
+      var themes = App.Current.Themes;
+      if (themes == null) return;
 
-      var theme = themeService.GetTheme(themeName);
+      var theme = themes.GetTheme(themeName);
       if (theme == null) return;
 
-      var currentTheme = Resources.MergedDictionaries.FirstOrDefault(d => themeService.IsTheme(d));
+      var currentTheme = Resources.MergedDictionaries.FirstOrDefault(d => themes.IsTheme(d));
       if (currentTheme != null) Resources.MergedDictionaries.Remove(currentTheme);
 
       Resources.MergedDictionaries.Add(theme);
@@ -75,18 +72,6 @@ namespace Sticky {
 
     private void HideOverlay(object sender, RoutedEventArgs e) {
       Overlay.Visibility = Visibility.Collapsed;
-    }
-
-    private async void OnDeleteNote(object sender, RoutedEventArgs e) {
-      System.Console.WriteLine("OnDeleteNote");
-
-      ConfirmDeleteDialog dialog = new ConfirmDeleteDialog();
-      var result = await dialog.ShowAsync();
-
-      var doDelete = (result == ContentDialogResult.Primary);
-      if (doDelete) {
-        // @TODO: Delete the note
-      }
     }
 
     private void RefreshToolbarButtons() {

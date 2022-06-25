@@ -116,7 +116,8 @@
           Foreground="Red"
           HorizontalContentAlignment="Left"
           Padding="17"
-          Click="OnDeleteNote"
+          Command="{x:Static local:Commands.DeleteNote}"
+          CommandParameter="{Binding Path=Id}"
         >
           <Button.Content>
             <StackPanel Orientation="Horizontal">
