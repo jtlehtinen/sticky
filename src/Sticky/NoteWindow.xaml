@@ -25,12 +25,12 @@
 
   <Grid x:Name="LayoutRoot">
 
-    <!-- Drop Down Overlay -->
+    <!-- Overlay -->
     <Grid
       x:Name="Overlay"
       Panel.ZIndex="1000"
       Visibility="Collapsed"
-      MouseLeftButtonDown="HideOverlay"
+      MouseLeftButtonDown="OnHideOverlay"
     >
       <Grid.Background>
         <SolidColorBrush Color="Black" Opacity="0.3"/>

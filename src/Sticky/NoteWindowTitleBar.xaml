@@ -76,7 +76,7 @@
       <local:ButtonEx
         Style="{StaticResource TitleBarButtonStyle}"
         Command="local:Commands.CloseNote"
-        CommandParameter="{Binding Path=Note.Id, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+        CommandParameter="{Binding Path=DataContext.Id, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
         Content="&#xE947;"
         ToolTip="Close note"
       />

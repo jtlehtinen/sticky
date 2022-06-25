@@ -105,7 +105,7 @@ namespace Sticky {
 
     private Window? FindNoteWindow(NoteViewModel note) {
       foreach (var window in Windows) {
-        if (window is NoteWindow noteWindow && noteWindow.Note == note) {
+        if (window is NoteWindow noteWindow && noteWindow.DataContext == note) {
           return noteWindow;
         }
       }

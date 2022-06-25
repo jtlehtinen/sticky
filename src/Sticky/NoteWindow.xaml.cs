@@ -7,23 +7,22 @@ namespace Sticky {
   /// Interaction logic for NoteWindow.xaml
   /// </summary>
   public partial class NoteWindow : Window {
-    public NoteViewModel Note { get; private set; }
-
     public NoteWindow(NoteViewModel note) {
-      Note = note;
-
       InitializeComponent();
       Native.ApplyRoundedWindowCorners(this);
 
-      DataContext = Note;
+      DataContext = note;
+
+      // @TODO: Remove event handler.
+      note.PropertyChanged += (s, e) => {
+        if (e.PropertyName == "Theme") SetTheme(note.Theme);
+      };
 
       NoteRichTextBox.SelectionChanged += OnSelectionChanged;
       NoteRichTextBox.KeyUp += OnKeyUp;
 
-      // @TODO: Remove event handler.
-      Note.PropertyChanged += (s, e) => {
-        if (e.PropertyName == "Theme") SetTheme(note.Theme);
-      };
+      LostKeyboardFocus += (sender, e) => HideOverlay();
+      LostFocus += (sender, e) => HideOverlay();
 
       SetTheme(note.Theme);
     }
@@ -39,9 +38,12 @@ namespace Sticky {
       if (theme == null) return;
 
       var currentTheme = Resources.MergedDictionaries.FirstOrDefault(d => themes.IsTheme(d));
-      if (currentTheme != null) Resources.MergedDictionaries.Remove(currentTheme);
+      if (currentTheme == theme) return;
 
+      // @NOTE: Add the new one before removing the old one to avoid
+      // missing key warnings. There is no atomic replace op...
       Resources.MergedDictionaries.Add(theme);
+      if (currentTheme != null) Resources.MergedDictionaries.Remove(currentTheme);
 
       switch (themeName) {
         case "Theme.Yellow": RadioButtonThemeYellow.IsChecked = true; break;
@@ -54,23 +56,11 @@ namespace Sticky {
       }
     }
 
-    private void ChangeNoteThemeExecuted(object sender, ExecutedRoutedEventArgs e) {
-      Note.Theme = (string)e.Parameter;
-    }
-
-    private void ToggleTopmostExecuted(object sender, ExecutedRoutedEventArgs e) {
-      Topmost = !Topmost;
-    }
-
-    private void ShowMenuExecuted(object sender, ExecutedRoutedEventArgs e) {
-      ShowOverlay();
-    }
-
-    public void ShowOverlay() {
+    private void ShowOverlay() {
       Overlay.Visibility = Visibility.Visible;
     }
 
-    private void HideOverlay(object sender, RoutedEventArgs e) {
+    private void HideOverlay() {
       Overlay.Visibility = Visibility.Collapsed;
     }
 
@@ -82,12 +72,29 @@ namespace Sticky {
       ToolbarButtonBullets.IsChecked = NoteRichTextBox.IsBullets();
     }
 
+    private void ChangeNoteThemeExecuted(object sender, ExecutedRoutedEventArgs e) {
+      var note = (NoteViewModel)DataContext;
+      note.Theme = (string)e.Parameter;
+      HideOverlay();
+    }
+
+    private void ToggleTopmostExecuted(object sender, ExecutedRoutedEventArgs e) {
+      Topmost = !Topmost;
+    }
+
+    private void OnHideOverlay(object sender, RoutedEventArgs e) {
+      HideOverlay();
+    }
+
+    private void ShowMenuExecuted(object sender, ExecutedRoutedEventArgs e) {
+      ShowOverlay();
+    }
+
     private void OnSelectionChanged(object sender, RoutedEventArgs e) {
       RefreshToolbarButtons();
     }
 
     private void OnKeyUp(object sender, KeyEventArgs e) {
-      // @TODO: Don't refresh unnecessarily.
       RefreshToolbarButtons();
     }
 
