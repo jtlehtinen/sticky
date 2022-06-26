@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32611.2
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sticky", "src\Sticky\Sticky.csproj", "{64180D8A-CAFA-48C7-828F-FED999755A6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sticky", "src\Sticky\Sticky.csproj", "{64180D8A-CAFA-48C7-828F-FED999755A6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernWpf", "src\ModernWpf\ModernWpf.csproj", "{348FE930-5590-463B-9E98-033286F7E29A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModernWpf", "src\ModernWpf\ModernWpf.csproj", "{348FE930-5590-463B-9E98-033286F7E29A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernWpf.Controls", "src\ModernWpf.Controls\ModernWpf.Controls.csproj", "{A899C117-B43E-4758-84E2-41F892F85631}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModernWpf.Controls", "src\ModernWpf.Controls\ModernWpf.Controls.csproj", "{A899C117-B43E-4758-84E2-41F892F85631}"
 EndProject
 Global
   GlobalSection(SolutionConfigurationPlatforms) = preSolution
