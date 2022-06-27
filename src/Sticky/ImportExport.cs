@@ -1,23 +1,22 @@
 using System.IO;
-using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Sticky {
 
   public static class Import {
-    public static List<Note>? FromJson(string filename) {
-      if (!File.Exists(filename)) return new List<Note>();
+    public static Model? FromJson(string filename) {
+      if (!File.Exists(filename)) return new Model();
 
       using (var stream = new FileStream(filename, FileMode.Open)) {
-        var notes = JsonSerializer.Deserialize<List<Note>>(stream);
-        return notes;
+        var model = JsonSerializer.Deserialize<Model>(stream);
+        return model;
       }
     }
   }
 
   public static class Export {
-    public static void ToJson(string filename, List<Note> notes) {
-      var json = JsonSerializer.Serialize(notes, new JsonSerializerOptions { WriteIndented = true });
+    public static void ToJson(string filename, Model model) {
+      var json = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
       File.WriteAllText(filename, json);
     }
   }

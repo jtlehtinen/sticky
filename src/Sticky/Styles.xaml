@@ -6,6 +6,7 @@
   <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
   <local:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibilityConverter"/>
   <local:DateTimeConverter x:Key="DateTimeConverter"/>
+  <local:BaseThemeToIndexConverter x:Key="BaseThemeToIndexConverter"/>
 
   <!-- Global ToolTip Styles -->
   <Style TargetType="{x:Type ToolTip}">

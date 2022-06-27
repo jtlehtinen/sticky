@@ -7,6 +7,26 @@ using System.Windows.Markup;
 
 namespace Sticky {
 
+  public class BaseThemeToIndexConverter : IValueConverter {
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+      var theme = (BaseTheme)value;
+      if (theme == BaseTheme.Light) return 0;
+      if (theme == BaseTheme.Dark) return 1;
+      if (theme == BaseTheme.System) return 2;
+
+      throw new ArgumentException("value");
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+      var index = (int)value;
+      if (index == 0) return BaseTheme.Light;
+      if (index == 1) return BaseTheme.Dark;
+      if (index == 2) return BaseTheme.System;
+
+      throw new ArgumentException("value");
+    }
+  }
+
   public class StringToThemeConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
       var themeName = (string)value;

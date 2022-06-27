@@ -5,6 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Sticky {
 
+  [JsonConverter(typeof(JsonStringEnumConverter))]
+  public enum BaseTheme { Dark, Light, System }
+
   public class Note {
     [JsonPropertyName("id")]
     public int Id { get; set; }
@@ -13,24 +16,29 @@ namespace Sticky {
     public string Content { get; set; } = "";
 
     [JsonPropertyName("created_at")]
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
 
     [JsonPropertyName("theme")]
-    public string Theme { get; set; } = "";
+    public String Theme { get; set; } = "Theme.Yellow";
+  }
 
-    public Note() {
-      Content = "";
-      CreatedAt = DateTime.Now;
-      Theme = "Theme.Pink";
-    }
+  public class Settings {
+    [JsonPropertyName("pin_new_note")]
+    public bool PinNewNote { get; set; } = false;
+
+    [JsonPropertyName("confirm_before_delete")]
+    public bool ConfirmBeforeDelete { get; set; } = true;
+
+    [JsonPropertyName("base_theme")]
+    public BaseTheme BaseTheme { get; set; } = BaseTheme.Light;
   }
 
   public class Model {
+    [JsonPropertyName("notes")]
     public List<Note> Notes { get; set; } = new();
 
-    public Model() {
-      Load();
-    }
+    [JsonPropertyName("settings")]
+    public Settings Settings { get; set; } = new();
 
     public Note CreateNote() {
       var note = new Note { Id = NextNoteId() };
@@ -41,19 +49,6 @@ namespace Sticky {
     private int NextNoteId() {
       var max = Notes.MaxBy(n => n.Id);
       return max?.Id + 1 ?? 1;
-    }
-
-    private void Load() {
-      Notes.Clear();
-
-      var list = Import.FromJson("sticky.json") ?? new List<Note>();
-      foreach (var note in list) {
-        Notes.Add(note);
-      }
-    }
-
-    public void Save() {
-      Export.ToJson("sticky.json", Notes);
     }
   }
 

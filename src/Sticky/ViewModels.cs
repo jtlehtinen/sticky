@@ -139,17 +139,25 @@ namespace Sticky {
   }
 
   public class SettingsViewModel : ViewModelBase {
-    private bool _confirmBeforeDelete = true;
-    private bool _pinNewNote = true;
+    private Settings _settings;
+
+    public SettingsViewModel(Settings settings) {
+      _settings = settings;
+    }
 
     public bool ConfirmBeforeDelete {
-      get { return _confirmBeforeDelete; }
-      set { _confirmBeforeDelete = value; OnPropertyChanged(); }
+      get { return _settings.ConfirmBeforeDelete; }
+      set { _settings.ConfirmBeforeDelete = value; OnPropertyChanged(); }
     }
 
     public bool PinNewNote {
-      get { return _pinNewNote; }
-      set { _pinNewNote = value; OnPropertyChanged(); }
+      get { return _settings.PinNewNote; }
+      set { _settings.PinNewNote = value; OnPropertyChanged(); }
+    }
+
+    public BaseTheme BaseTheme {
+      get { return _settings.BaseTheme; }
+      set { _settings.BaseTheme = value; OnPropertyChanged(); }
     }
   }
 
@@ -160,12 +168,15 @@ namespace Sticky {
     public RelayCommand CloseNoteCommand { get; private set; }
     public RelayCommand TogglePinnedCommand { get; private set; }
 
-    public NotesViewModel Notes { get; } = new NotesViewModel();
-    public SettingsViewModel Settings { get; } = new SettingsViewModel();
+    public NotesViewModel Notes { get; }
+    public SettingsViewModel Settings { get; }
 
     private Model model;
 
     public ViewModel(Model model) {
+      Notes = new NotesViewModel();
+      Settings = new SettingsViewModel(model.Settings);
+
       CreateNoteCommand = new RelayCommand(CreateNote);
       DeleteNoteCommand = new RelayCommand(DeleteNote);
       OpenNoteCommand = new RelayCommand(OpenNote);

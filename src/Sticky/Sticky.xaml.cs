@@ -16,7 +16,7 @@ namespace Sticky {
     public ThemeService Themes = new ThemeService();
 
     public App() {
-      Model = new Model();
+      Model = Import.FromJson("sticky.json") ?? new Model();
       ViewModel = new ViewModel(Model);
 
       ViewModel.PropertyChanged += (sender, e) => {
@@ -41,7 +41,7 @@ namespace Sticky {
 
       Exit += (sender, e) => {
         ViewModel.Flush();
-        Model.Save();
+        Export.ToJson("sticky.json", Model);
       };
 
       Commands.Register(typeof(Window), Commands.ChangeAppTheme, ChangeAppThemeExecuted);
@@ -60,6 +60,8 @@ namespace Sticky {
         MessageBox.Show("An unexpected error has occurred. Sticky Notes is going to terminate.", "Sticky Notes", MessageBoxButton.OK, MessageBoxImage.Error);
         Environment.Exit(0);
       };
+
+      ThemeManager.Current.ApplicationTheme = ToApplicationTheme(ViewModel.Settings.BaseTheme);
     }
 
     public new static App Current => (App)Application.Current;
@@ -131,20 +133,22 @@ namespace Sticky {
       }
     }
 
+    private ApplicationTheme ToApplicationTheme(BaseTheme theme) {
+      if (theme == BaseTheme.Dark) return ApplicationTheme.Dark;
+      if (theme == BaseTheme.Light) return ApplicationTheme.Light;
+      if (theme == BaseTheme.System) return ApplicationTheme.Light;
+      throw new ArgumentException("theme");
+    }
+
     private void ChangeAppThemeExecuted(object sender, ExecutedRoutedEventArgs e) {
       // @TODO: Save the setting.
       if (MainWindow == null) return;
 
       MainWindow.ClearValue(ThemeManager.RequestedThemeProperty);
+      // @TODO: Figure out system theme...
+      ViewModel.Settings.BaseTheme = (BaseTheme)e.Parameter;
 
-      var ToEnum = (string theme) => {
-        if (theme == "Dark") return ApplicationTheme.Dark;
-        if (theme == "Light") return ApplicationTheme.Light;
-        if (theme == "System") return ApplicationTheme.Light; // @TODO:
-        throw new ArgumentException("Unknown theme: " + theme);
-      };
-
-      var newTheme = ToEnum((string)e.Parameter);
+      var newTheme = ToApplicationTheme(ViewModel.Settings.BaseTheme);
       if (newTheme != ThemeManager.Current.ActualApplicationTheme) {
         ThemeManager.Current.ApplicationTheme = newTheme;
       }
