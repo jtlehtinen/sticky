@@ -37,7 +37,8 @@
 
       <!-- Pin/Unpin Note -->
       <local:ButtonEx
-        Command="local:Commands.ToggleTopmost"
+        Command="local:Commands.TogglePinned"
+        CommandParameter="{Binding Path=Id}"
       >
         <Button.Resources>
           <Style TargetType="{x:Type local:ButtonEx}" BasedOn="{StaticResource TitleBarButtonStyle}">

@@ -50,6 +50,7 @@ namespace Sticky {
       Commands.Register(typeof(Window), Commands.CloseNote, CloseNoteExecuted);
       Commands.Register(typeof(Window), Commands.OpenNote, OpenNoteExecuted);
       Commands.Register(typeof(Window), Commands.OpenNoteList, OpenNoteListExecuted);
+      Commands.Register(typeof(Window), Commands.TogglePinned, TogglePinnedExecuted);
     }
 
     protected override void OnStartup(StartupEventArgs e) {
@@ -176,5 +177,11 @@ namespace Sticky {
         ViewModel.DeleteNoteCommand.Execute(e.Parameter);
       }
     }
+
+    private void TogglePinnedExecuted(object sender, ExecutedRoutedEventArgs e) {
+      ViewModel.TogglePinnedCommand.Execute(e.Parameter);
+    }
   }
+
+
 }

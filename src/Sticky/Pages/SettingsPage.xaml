@@ -43,6 +43,14 @@
         OnContent="On"
       />
 
+      <ui:ToggleSwitch
+        Header="Pin new note"
+        IsEnabled="True"
+        IsOn="{Binding Path=PinNewNote, Mode=TwoWay}"
+        OffContent="Off"
+        OnContent="On"
+      />
+
       <!-- Color Settings -->
       <Separator/>
       <TextBlock

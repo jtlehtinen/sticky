@@ -10,7 +10,7 @@
   Width="340"
   Height="240"
   AllowsTransparency="True"
-  Topmost="False"
+  Topmost="{Binding Path=Pinned, Mode=OneWay}"
   WindowStyle="None"
   ResizeMode="CanResizeWithGrip"
   ShowInTaskbar="True"
@@ -20,7 +20,6 @@
   <Window.CommandBindings>
     <CommandBinding Command="{x:Static local:Commands.ChangeNoteTheme}" Executed="ChangeNoteThemeExecuted"/>
     <CommandBinding Command="{x:Static local:Commands.ShowMenu}" Executed="ShowMenuExecuted"/>
-    <CommandBinding Command="{x:Static local:Commands.ToggleTopmost}" Executed="ToggleTopmostExecuted"/>
   </Window.CommandBindings>
 
   <Grid x:Name="LayoutRoot">

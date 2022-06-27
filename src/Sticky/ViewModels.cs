@@ -140,10 +140,16 @@ namespace Sticky {
 
   public class SettingsViewModel : ViewModelBase {
     private bool _confirmBeforeDelete = true;
+    private bool _pinNewNote = true;
 
     public bool ConfirmBeforeDelete {
       get { return _confirmBeforeDelete; }
       set { _confirmBeforeDelete = value; OnPropertyChanged(); }
+    }
+
+    public bool PinNewNote {
+      get { return _pinNewNote; }
+      set { _pinNewNote = value; OnPropertyChanged(); }
     }
   }
 
@@ -152,6 +158,7 @@ namespace Sticky {
     public RelayCommand DeleteNoteCommand { get; private set; }
     public RelayCommand OpenNoteCommand { get; private set; }
     public RelayCommand CloseNoteCommand { get; private set; }
+    public RelayCommand TogglePinnedCommand { get; private set; }
 
     public NotesViewModel Notes { get; } = new NotesViewModel();
     public SettingsViewModel Settings { get; } = new SettingsViewModel();
@@ -163,6 +170,7 @@ namespace Sticky {
       DeleteNoteCommand = new RelayCommand(DeleteNote);
       OpenNoteCommand = new RelayCommand(OpenNote);
       CloseNoteCommand = new RelayCommand(CloseNote);
+      TogglePinnedCommand = new RelayCommand(TogglePinned);
 
       this.model = model;
 
@@ -173,7 +181,12 @@ namespace Sticky {
 
     private void CreateNote(object parameter) {
       var note = model.CreateNote();
-      Notes.Add(new NoteViewModel(note) { Open = true });
+      Notes.Add(
+        new NoteViewModel(note) {
+          Open = true,
+          Pinned = Settings.PinNewNote,
+        }
+      );
     }
 
     private void DeleteNote(object parameter) {
@@ -208,6 +221,14 @@ namespace Sticky {
       // @NOTE: Force CollectionChanged event.
       var idx = Notes.IndexOf(note);
       Notes[idx] = note;
+    }
+
+    private void TogglePinned(object parameter) {
+      var id = (int)parameter;
+      var note = Notes.GetById(id);
+      if (note == null) return;
+
+      note.Pinned = !note.Pinned;
     }
 
     // @TODO: Better way to move changes between view-model and the model.

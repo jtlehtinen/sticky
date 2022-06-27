@@ -15,7 +15,7 @@ namespace Sticky {
 
     public static RoutedCommand ChangeNoteTheme { get; } = new RoutedCommand("ChangeNoteTheme", typeof(Commands));
     public static RoutedCommand ShowMenu { get; } = new RoutedCommand("ShowMenu", typeof(Commands));
-    public static RoutedCommand ToggleTopmost { get; } = new RoutedCommand("ToggleTopmost", typeof(Commands));
+    public static RoutedCommand TogglePinned { get; } = new RoutedCommand("TogglePinned", typeof(Commands));
 
     public static RoutedCommand OpenContextMenu { get; } = new RoutedCommand("OpenContextMenu", typeof(Commands));
 
