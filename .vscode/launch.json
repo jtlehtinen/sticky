@@ -6,7 +6,6 @@
       // Use hover for the description of the existing attributes
       // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
       "name": ".NET Core Launch (console)",
-      "justMyCode": false,
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
@@ -16,6 +15,8 @@
       "cwd": "${workspaceFolder}/src/Sticky",
       // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
       "console": "internalConsole",
+      "enableStepFiltering": false,
+      "justMyCode": false,
       "stopAtEntry": false,
       "logging": {
         "moduleLoad": false
