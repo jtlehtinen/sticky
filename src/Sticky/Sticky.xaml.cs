@@ -162,11 +162,17 @@ namespace Sticky {
     }
 
     async private void DeleteNoteExecuted(object sender, ExecutedRoutedEventArgs e) {
-      ConfirmDeleteDialog dialog = new ConfirmDeleteDialog();
-      var result = await dialog.ShowAsync();
+      var confirmDelete = async () => {
+        if (!ViewModel.Settings.ConfirmBeforeDelete) return true;
 
-      var doDelete = (result == ContentDialogResult.Primary);
-      if (doDelete) {
+        var dialog = new ConfirmDeleteDialog();
+        var result = await dialog.ShowAsync();
+
+        var doDelete = (result == ContentDialogResult.Primary);
+        return doDelete;
+      };
+
+      if (await confirmDelete()) {
         ViewModel.DeleteNoteCommand.Execute(e.Parameter);
       }
     }

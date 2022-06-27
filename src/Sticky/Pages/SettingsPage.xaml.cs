@@ -6,6 +6,7 @@ namespace Sticky {
 
   public partial class SettingsPage : UserControl {
     public SettingsPage() {
+      DataContext = App.Current.ViewModel.Settings;
       InitializeComponent();
     }
 

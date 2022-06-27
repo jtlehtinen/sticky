@@ -38,7 +38,7 @@
       <ui:ToggleSwitch
         Header="Confirm before deleting"
         IsEnabled="True"
-        IsOn="True"
+        IsOn="{Binding Path=ConfirmBeforeDelete, Mode=TwoWay}"
         OffContent="Off"
         OnContent="On"
       />

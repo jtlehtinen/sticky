@@ -138,6 +138,15 @@ namespace Sticky {
     }
   }
 
+  public class SettingsViewModel : ViewModelBase {
+    private bool _confirmBeforeDelete = true;
+
+    public bool ConfirmBeforeDelete {
+      get { return _confirmBeforeDelete; }
+      set { _confirmBeforeDelete = value; OnPropertyChanged(); }
+    }
+  }
+
   public class ViewModel : ViewModelBase {
     public RelayCommand CreateNoteCommand { get; private set; }
     public RelayCommand DeleteNoteCommand { get; private set; }
@@ -145,6 +154,7 @@ namespace Sticky {
     public RelayCommand CloseNoteCommand { get; private set; }
 
     public NotesViewModel Notes { get; } = new NotesViewModel();
+    public SettingsViewModel Settings { get; } = new SettingsViewModel();
 
     private Model model;
 
