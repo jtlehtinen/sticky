@@ -50,6 +50,7 @@ namespace Sticky {
     private Note _note;
     private bool _open = false;
     private bool _pinned = false;
+    private bool _show = true;
     private string _content = "";
     private string _theme = "";
     private DateTime _createdAt;
@@ -59,6 +60,16 @@ namespace Sticky {
     public DateTime CreatedAt {
       get { return _createdAt; }
       set { _createdAt = value; OnPropertyChanged(); }
+    }
+
+    /// <summary>
+    /// Whether this note should be shown in the note list.
+    /// User can specify a search filter in which case a note
+    /// may be filtered out from the note list.
+    /// </summary>
+    public bool Show {
+      get { return _show; }
+      set { _show = value; OnPropertyChanged(); }
     }
 
     public string Content {

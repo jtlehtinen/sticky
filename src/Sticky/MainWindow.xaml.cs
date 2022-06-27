@@ -1,8 +1,5 @@
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Collections.Generic;
-using ModernWpf.Controls;
 
 namespace Sticky {
 

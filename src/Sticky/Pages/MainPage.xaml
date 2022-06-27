@@ -30,37 +30,18 @@
 
       <!-- Search Box -->
       <Grid>
-        <Grid.RowDefinitions>
-          <RowDefinition Height="Auto" />
-          <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
         <ui:AutoSuggestBox
-          Grid.Row="0"
           QueryIcon="Find"
           PlaceholderText="Search..."
-          SuggestionChosen="OnSearchSuggestionChosen"
-          TextChanged="OnSearchTextChanged"
+          TextChanged="OnSearchQueryChanged"
           QuerySubmitted="OnSearchQuerySubmitted"
         />
-        <StackPanel
-          x:Name="AutoSuggestBoxItemDropDown"
-          Grid.Row="1"
-          HorizontalAlignment="Left"
-          Visibility="Collapsed"
-          Margin="0,8,0,0"
-        >
-          <TextBlock
-            x:Name="AutoSuggestBoxItemTitle"
-            Style="{StaticResource BaseTextBlockStyle}"
-          />
-          <ui:HyperlinkButton x:Name="AutoSuggestBoxItemLink" Click="OnAutoSuggestBoxItemLinkClicked"/>
-        </StackPanel>
       </Grid>
     </ui:SimpleStackPanel>
 
     <ui:ScrollViewerEx Grid.Row="2" VerticalScrollBarVisibility="Auto" CanContentScroll="False" Margin="0,0,0,15">
       <!-- Note List -->
-      <ItemsControl ItemsSource="{Binding Path=Notes}">
+      <ItemsControl x:Name="NoteList" ItemsSource="{Binding Path=Notes}">
         <!-- Container Template -->
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
@@ -71,7 +52,7 @@
         <!-- Item Template -->
         <ItemsControl.ItemTemplate>
           <DataTemplate>
-            <local:NoteControl/>
+            <local:NoteControl Visibility="{Binding Path=Show, Converter={StaticResource BooleanToVisibilityConverter}}"/>
           </DataTemplate>
         </ItemsControl.ItemTemplate>
       </ItemsControl>
