@@ -56,10 +56,12 @@ namespace Sticky {
     protected override void OnStartup(StartupEventArgs e) {
       base.OnStartup(e);
 
+#if !DEBUG
       AppDomain.CurrentDomain.UnhandledException += (sender, e) => {
         MessageBox.Show("An unexpected error has occurred. Sticky Notes is going to terminate.", "Sticky Notes", MessageBoxButton.OK, MessageBoxImage.Error);
         Environment.Exit(0);
       };
+#endif
 
       ThemeManager.Current.ApplicationTheme = ToApplicationTheme(ViewModel.Settings.BaseTheme);
     }

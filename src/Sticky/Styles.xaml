@@ -7,6 +7,9 @@
   <local:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibilityConverter"/>
   <local:DateTimeConverter x:Key="DateTimeConverter"/>
   <local:BaseThemeToIndexConverter x:Key="BaseThemeToIndexConverter"/>
+  <local:BackgroundToHoverConverter x:Key="BackgroundToHoverConverter"/>
+  <local:BackgroundToPressedConverter x:Key="BackgroundToPressedConverter"/>
+  <local:ReverseBooleanToGeometryCombineModeConverter x:Key="ReverseBooleanToGeometryCombineModeConverter"/>
 
   <!-- Global ToolTip Styles -->
   <Style TargetType="{x:Type ToolTip}">
