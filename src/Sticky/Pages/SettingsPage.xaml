@@ -14,75 +14,76 @@
     <!-- Title Bar -->
     <local:SettingsPageTitleBar Grid.Row="0" Margin="0"/>
 
-    <ui:SimpleStackPanel
-      Grid.Row="1"
-      Orientation="Vertical"
-      Margin="10,0,10,10"
-      Spacing="10"
-    >
-      <!-- Heading -->
-      <TextBlock
-        Style="{StaticResource SubtitleTextBlockStyle}"
-        Text="Settings"
-        FontWeight="Bold"
-      />
+    <ui:ScrollViewerEx Grid.Row="1" VerticalScrollBarVisibility="Auto" CanContentScroll="False" Margin="0,0,0,15">
+      <ui:SimpleStackPanel
+        Orientation="Vertical"
+        Margin="10,0,10,10"
+        Spacing="10"
+      >
+        <!-- Heading -->
+        <TextBlock
+          Style="{StaticResource SubtitleTextBlockStyle}"
+          Text="Settings"
+          FontWeight="Bold"
+        />
 
-      <!-- General Settings -->
-      <Separator/>
-      <TextBlock
-        Style="{StaticResource SubtitleTextBlockStyle}"
-        Text="General"
-        FontWeight="Bold"
-      />
+        <!-- General Settings -->
+        <Separator/>
+        <TextBlock
+          Style="{StaticResource SubtitleTextBlockStyle}"
+          Text="General"
+          FontWeight="Bold"
+        />
 
-      <ui:ToggleSwitch
-        Header="Confirm before deleting"
-        IsEnabled="True"
-        IsOn="{Binding Path=ConfirmBeforeDelete, Mode=TwoWay}"
-        OffContent="Off"
-        OnContent="On"
-      />
+        <ui:ToggleSwitch
+          Header="Confirm before deleting"
+          IsEnabled="True"
+          IsOn="{Binding Path=ConfirmBeforeDelete, Mode=TwoWay}"
+          OffContent="Off"
+          OnContent="On"
+        />
 
-      <ui:ToggleSwitch
-        Header="Pin new note"
-        IsEnabled="True"
-        IsOn="{Binding Path=PinNewNote, Mode=TwoWay}"
-        OffContent="Off"
-        OnContent="On"
-      />
+        <ui:ToggleSwitch
+          Header="Pin new note"
+          IsEnabled="True"
+          IsOn="{Binding Path=PinNewNote, Mode=TwoWay}"
+          OffContent="Off"
+          OnContent="On"
+        />
 
-      <!-- Color Settings -->
-      <Separator/>
-      <TextBlock
-        Style="{StaticResource SubtitleTextBlockStyle}"
-        Text="Color"
-        FontWeight="Bold"
-      />
+        <!-- Color Settings -->
+        <Separator/>
+        <TextBlock
+          Style="{StaticResource SubtitleTextBlockStyle}"
+          Text="Color"
+          FontWeight="Bold"
+        />
 
-      <ui:RadioButtons x:Name="ThemeOptions" SelectedIndex="{Binding Path=BaseTheme, Mode=OneWay, Converter={StaticResource BaseThemeToIndexConverter}}">
-        <RadioButton x:Name="RadioButtonThemeLight" Content="Light" Command="{x:Static local:Commands.ChangeAppTheme}" CommandParameter="{x:Static local:BaseTheme.Light}"/>
-        <RadioButton x:Name="RadioButtonThemeDark" Content="Dark" Command="{x:Static local:Commands.ChangeAppTheme}" CommandParameter="{x:Static local:BaseTheme.Dark}"/>
-        <RadioButton x:Name="RadioButtonThemeSystem" Content="Use system setting" Command="{x:Static local:Commands.ChangeAppTheme}" CommandParameter="{x:Static local:BaseTheme.System}"/>
-      </ui:RadioButtons>
+        <ui:RadioButtons x:Name="ThemeOptions" SelectedIndex="{Binding Path=BaseTheme, Mode=OneWay, Converter={StaticResource BaseThemeToIndexConverter}}">
+          <RadioButton x:Name="RadioButtonThemeLight" Content="Light" Command="{x:Static local:Commands.ChangeAppTheme}" CommandParameter="{x:Static local:BaseTheme.Light}"/>
+          <RadioButton x:Name="RadioButtonThemeDark" Content="Dark" Command="{x:Static local:Commands.ChangeAppTheme}" CommandParameter="{x:Static local:BaseTheme.Dark}"/>
+          <RadioButton x:Name="RadioButtonThemeSystem" Content="Use system setting" Command="{x:Static local:Commands.ChangeAppTheme}" CommandParameter="{x:Static local:BaseTheme.System}"/>
+        </ui:RadioButtons>
 
-      <!-- About -->
-      <Separator/>
-      <TextBlock
-        Style="{StaticResource SubtitleTextBlockStyle}"
-        Text="About"
-        FontWeight="Bold"
-      />
+        <!-- About -->
+        <Separator/>
+        <TextBlock
+          Style="{StaticResource SubtitleTextBlockStyle}"
+          Text="About"
+          FontWeight="Bold"
+        />
 
-      <TextBlock
-        Style="{StaticResource CaptionTextBlockStyle}"
-        Text="Sticky 0.0.1"
-        FontWeight="Bold"
-      />
-      <Button
-        Content="Export Notes"
-        Click="OnExportNotes"
-      />
+        <TextBlock
+          Style="{StaticResource CaptionTextBlockStyle}"
+          Text="Sticky 0.0.1"
+          FontWeight="Bold"
+        />
+        <Button
+          Content="Export Notes"
+          Click="OnExportNotes"
+        />
 
-    </ui:SimpleStackPanel>
+      </ui:SimpleStackPanel>
+    </ui:ScrollViewerEx>
   </Grid>
 </UserControl>
