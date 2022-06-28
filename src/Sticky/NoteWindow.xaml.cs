@@ -67,6 +67,13 @@ namespace Sticky {
       Overlay.Visibility = Visibility.Collapsed;
     }
 
+    private void RefreshToolbarVisibility(Size noteWindowSize) {
+      var show = noteWindowSize.Width >= 340 && noteWindowSize.Height >= 150;
+      var visibility = show ? Visibility.Visible : Visibility.Collapsed;
+
+      if (Toolbar.Visibility != visibility) Toolbar.Visibility = visibility;
+    }
+
     private void RefreshToolbarButtons() {
       ToolbarButtonBold.IsChecked = NoteRichTextBox.IsBold();
       ToolbarButtonItalic.IsChecked = NoteRichTextBox.IsItalic();
@@ -115,6 +122,8 @@ namespace Sticky {
       // up being greater than the monitor size.
       var thickness = (this.WindowState == WindowState.Maximized ? 8 : 0);
       this.BorderThickness = new System.Windows.Thickness(thickness);
+
+      RefreshToolbarVisibility(e.NewSize);
     }
   }
 }
