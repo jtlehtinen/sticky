@@ -20,6 +20,9 @@ namespace Sticky {
 
     [JsonPropertyName("theme")]
     public String Theme { get; set; } = "Theme.Yellow";
+
+    [JsonPropertyName("pinned")]
+    public bool Pinned { get; set; } = false;
   }
 
   public class Settings {

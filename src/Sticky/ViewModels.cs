@@ -103,6 +103,7 @@ namespace Sticky {
       Content = note.Content;
       Theme = note.Theme;
       CreatedAt = note.CreatedAt;
+      Pinned = note.Pinned;
     }
 
     public Note ToNote() {
@@ -111,6 +112,7 @@ namespace Sticky {
         Content = Content,
         Theme = Theme,
         CreatedAt = CreatedAt,
+        Pinned = Pinned,
       };
     }
   }
