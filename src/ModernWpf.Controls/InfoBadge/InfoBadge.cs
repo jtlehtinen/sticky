@@ -8,6 +8,10 @@ using System.Windows.Controls;
 using ModernWpf.Controls.Primitives;
 
 namespace ModernWpf.Controls {
+
+  /// <summary>
+  /// Represents a control for indicating notifications, alerts, new content, or to attract focus to an area within an app.
+  /// </summary>
   public class InfoBadge : Control {
     static InfoBadge() {
       DefaultStyleKeyProperty.OverrideMetadata(typeof(InfoBadge), new FrameworkPropertyMetadata(typeof(InfoBadge)));

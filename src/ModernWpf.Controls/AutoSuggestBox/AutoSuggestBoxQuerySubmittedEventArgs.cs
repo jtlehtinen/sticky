@@ -1,7 +1,8 @@
+using System;
 using System.Windows;
 
 namespace ModernWpf.Controls {
-  public sealed class AutoSuggestBoxQuerySubmittedEventArgs : DependencyObject {
+  public sealed class AutoSuggestBoxQuerySubmittedEventArgs : EventArgs {
     public AutoSuggestBoxQuerySubmittedEventArgs() {
     }
 

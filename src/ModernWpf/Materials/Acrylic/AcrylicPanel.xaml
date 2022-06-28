@@ -14,10 +14,10 @@
           <Border x:Name="ContextMenuBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
             <Grid>
               <!--  Color tint overlay  -->
-              <Rectangle x:Name="tintColorLayer" Fill="{TemplateBinding local:AcrylicElement.TintColor,
+              <Rectangle x:Name="TintColorLayer" Fill="{TemplateBinding local:AcrylicElement.TintColor,
                                                        Converter={StaticResource ColorToSolidColorBrushConverter}}" Opacity="{TemplateBinding local:AcrylicElement.TintOpacity}" />
               <!--  Tiled noise texture  -->
-              <Rectangle x:Name="noiseLayer" Opacity="{TemplateBinding local:AcrylicElement.NoiseOpacity}">
+              <Rectangle x:Name="NoiseLayer" Opacity="{TemplateBinding local:AcrylicElement.NoiseOpacity}">
                 <Rectangle.Fill>
                   <ImageBrush ImageSource="noise.png" Stretch="None" TileMode="Tile" Viewport="0,0,128,128" ViewportUnits="Absolute" />
                 </Rectangle.Fill>

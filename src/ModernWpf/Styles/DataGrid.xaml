@@ -120,7 +120,7 @@
                 <ColumnDefinition x:Name="SortIconColumn" Width="Auto" MinWidth="32" />
               </Grid.ColumnDefinitions>
 
-              <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Content="{TemplateBinding Content}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+              <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                 <ContentPresenter.Resources>
                   <Style TargetType="TextBlock">
                     <Setter Property="TextTrimming" Value="CharacterEllipsis" />

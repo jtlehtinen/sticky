@@ -35,7 +35,6 @@
   <ItemGroup>
     <None Remove="Fonts\FluentSystemIcons-Filled.ttf" />
     <None Remove="Fonts\FluentSystemIcons-Regular.ttf" />
-    <None Remove="Fonts\FluentSystemIcons-Resizable.ttf" />
     <None Remove="Materials\Acrylic\noise.png" />
   </ItemGroup>
 
@@ -50,7 +49,6 @@
   <ItemGroup>
     <Resource Include="Fonts\FluentSystemIcons-Filled.ttf" />
     <Resource Include="Fonts\FluentSystemIcons-Regular.ttf" />
-    <Resource Include="Fonts\FluentSystemIcons-Resizable.ttf" />
     <Resource Include="Materials\Acrylic\noise.png" />
   </ItemGroup>
 
