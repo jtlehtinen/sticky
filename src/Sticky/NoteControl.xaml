@@ -18,7 +18,7 @@
     <CommandBinding Command="{x:Static local:Commands.OpenContextMenu}" Executed="OnOpenContextMenu"/>
   </UserControl.CommandBindings>
 
-  <Border x:Name="OuterBorder" BorderThickness="1" BorderBrush="Gray" CornerRadius="5">
+  <Border x:Name="OuterBorder" BorderThickness="0" BorderBrush="Transparent" CornerRadius="5">
     <Border.Style>
       <Style TargetType="{x:Type Border}">
         <Setter Property="Background" Value="{DynamicResource Background}"/>
@@ -43,7 +43,7 @@
           Width="32"
           Height="23"
           FontSize="16"
-          BackgroundColor="Transparent"
+          BackgroundColor="{DynamicResource BackgroundHover}"
           Foreground="{DynamicResource ForegroundSecondary}"
           Visibility="{Binding ElementName=OuterBorder, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter}}"
           Command="local:Commands.OpenContextMenu"
@@ -67,7 +67,7 @@
           x:Name="NoteRichTextBox"
           Margin="0"
           Cursor="Arrow"
-          Focusable="False"
+          Focusable="True"
           Background="Transparent"
           BorderBrush="Transparent"
           BorderThickness="0"
