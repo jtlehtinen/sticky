@@ -5,10 +5,9 @@
 >
   <system:String x:Key="ThemeName">Theme.Charcoal</system:String>
   <SolidColorBrush x:Key="ThemeColor" Color="#FF767676"/>
-
   <SolidColorBrush x:Key="Background" Color="#FF696969"/>
   <SolidColorBrush x:Key="BackgroundSecondary" Color="#FF494745"/>
-  <SolidColorBrush x:Key="ForegroundColor" Color="#FFFFFFFF"/>
+  <SolidColorBrush x:Key="Foreground" Color="#FFFFFFFF"/>
   <SolidColorBrush x:Key="ForegroundSecondary" Color="#FFCCCCCC"/>
-  <SolidColorBrush x:Key="SelectionBackgroundColor" Color="#FF767676"/>
+  <SolidColorBrush x:Key="SelectionBackground" Color="#FF767676"/>
 </ResourceDictionary>
