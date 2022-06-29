@@ -10,4 +10,5 @@
   <SolidColorBrush x:Key="Foreground" Color="#FFFFFFFF"/>
   <SolidColorBrush x:Key="ForegroundSecondary" Color="#FFCCCCCC"/>
   <SolidColorBrush x:Key="SelectionBackground" Color="#FF767676"/>
+  <SolidColorBrush x:Key="TextCursorForeground" Color="#FFFFFFFF"/>
 </ResourceDictionary>

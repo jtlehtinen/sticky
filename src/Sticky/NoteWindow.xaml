@@ -325,6 +325,7 @@
           Background="Transparent"
           BorderBrush="Transparent"
           BorderThickness="0"
+          CaretBrush="{DynamicResource TextCursorForeground}"
           FontSize="14"
           Foreground="{DynamicResource Foreground}"
           SelectionBrush="{DynamicResource SelectionBackground}"
