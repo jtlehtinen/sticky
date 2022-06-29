@@ -3,10 +3,6 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:local="clr-namespace:Sticky"
 >
-  <ResourceDictionary.MergedDictionaries>
-    <ResourceDictionary Source="/Components/Colors.xaml" />
-  </ResourceDictionary.MergedDictionaries>
-
   <Style TargetType="{x:Type local:ToggleButtonEx}">
     <Setter Property="BackgroundColor" Value="Transparent"/>
     <Setter Property="BorderBrush" Value="Transparent"/>
@@ -52,12 +48,6 @@
             </Trigger>
             <Trigger Property="IsPressed" Value="true">
               <Setter Property="Background" TargetName="border" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ToggleButton}, Path=PressedBackgroundColor}"/>
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-              <!--
-              <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
-              <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
-              -->
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>

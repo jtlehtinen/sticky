@@ -8,8 +8,7 @@
 
   <SolidColorBrush x:Key="Background" Color="#FFFFF7D1"/>
   <SolidColorBrush x:Key="BackgroundSecondary" Color="#FFFFF2AB"/>
-  <SolidColorBrush x:Key="BackgroundHover" Color="#FFEEE7C3"/>
-  <SolidColorBrush x:Key="Foreground" Color="#FF000000"/>
+  <SolidColorBrush x:Key="ForegroundColor" Color="#FF000000"/>
   <SolidColorBrush x:Key="ForegroundSecondary" Color="#FF616161"/>
   <SolidColorBrush x:Key="SelectionBackgroundColor" Color="#FF8F7300"/>
 </ResourceDictionary>

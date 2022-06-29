@@ -3,10 +3,6 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:local="clr-namespace:Sticky"
 >
-  <ResourceDictionary.MergedDictionaries>
-    <ResourceDictionary Source="/Components/Colors.xaml" />
-  </ResourceDictionary.MergedDictionaries>
-
   <Style TargetType="{x:Type local:RadioButtonEx}">
     <Setter Property="Background" Value="Transparent"/>
     <Setter Property="BackgroundColor" Value="Transparent"/>

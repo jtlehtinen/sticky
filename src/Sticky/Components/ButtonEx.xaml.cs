@@ -19,7 +19,7 @@ namespace Sticky {
       var button = obj as ButtonEx;
       if (button == null) return;
 
-      var brush = (SolidColorBrush)e.NewValue;
+      var brush = (SolidColorBrush)e.NewValue ?? Brushes.Red;
       button.Background = brush;
       button.HoverBackgroundColor = new SolidColorBrush(brush.Color.ToHoverColor());
       button.PressedBackgroundColor = new SolidColorBrush(brush.Color.ToPressedColor());

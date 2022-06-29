@@ -35,8 +35,8 @@
             <PathGeometry.Figures>
               <PathFigure StartPoint="0,0">
                 <PathFigure.Segments>
-                  <LineSegment Point="15,0"/>
-                  <LineSegment Point="0,15"/>
+                  <LineSegment Point="20,0"/>
+                  <LineSegment Point="0,20"/>
                 </PathFigure.Segments>
               </PathFigure>
             </PathGeometry.Figures>
@@ -50,7 +50,7 @@
         <Setter Property="Background" Value="{DynamicResource Background}"/>
         <Style.Triggers>
           <DataTrigger Binding="{Binding ElementName=OuterBorder, Path=IsMouseOver}" Value="True">
-            <Setter Property="Background" Value="{DynamicResource BackgroundHover}"/>
+            <Setter Property="Background" Value="{Binding Path=Data, Source={StaticResource BackgroundProxy}, Converter={StaticResource BackgroundToHoverConverter}}"/>
           </DataTrigger>
         </Style.Triggers>
       </Style>
@@ -66,14 +66,14 @@
       <Canvas
         Grid.Row="0"
         ZIndex="1"
-        Width="15"
-        Height="15"
+        Width="20"
+        Height="20"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Visibility="{Binding Path=Open, Converter={StaticResource BooleanToVisibilityConverter}}"
       >
         <Polygon
-          Points="0,15 15,15, 15,0"
+          Points="0,20 20,20, 20,0"
           Stroke="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToPressedConverter}}"
           Fill="{Binding Source={StaticResource BackgroundProxy}, Path=Data, Converter={StaticResource BackgroundToPressedConverter}}"
         />
@@ -90,7 +90,7 @@
           Width="32"
           Height="23"
           FontSize="16"
-          BackgroundColor="{DynamicResource BackgroundHover}"
+          BackgroundColor="{Binding Path=Data, Source={StaticResource BackgroundProxy}, Converter={StaticResource BackgroundToHoverConverter}}"
           Foreground="{DynamicResource ForegroundSecondary}"
           Visibility="{Binding ElementName=OuterBorder, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter}}"
           Command="local:Commands.OpenContextMenu"
@@ -122,7 +122,7 @@
           IsReadOnly="True"
           VerticalScrollBarVisibility="Auto"
           HorizontalScrollBarVisibility="Auto"
-          Foreground="{DynamicResource Foreground}"
+          Foreground="{DynamicResource ForegroundColor}"
           FontSize="14"
           local:RichTextBoxHelper.DocumentXaml="{Binding Path=Content}"
         >

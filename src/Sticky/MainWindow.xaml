@@ -12,7 +12,7 @@
   Icon="/icon.ico"
   ResizeMode="CanResizeWithGrip"
   SizeChanged="OnSizeChanged"
-  AllowsTransparency="True"
-  ui:WindowHelper.UseModernWindowStyle="True"
+  AllowsTransparency="False"
   WindowStyle="None"
+  ui:WindowHelper.UseModernWindowStyle="True"
 />

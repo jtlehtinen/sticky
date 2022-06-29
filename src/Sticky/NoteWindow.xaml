@@ -326,7 +326,7 @@
           BorderBrush="Transparent"
           BorderThickness="0"
           FontSize="14"
-          Foreground="{DynamicResource Foreground}"
+          Foreground="{DynamicResource ForegroundColor}"
           SelectionBrush="{DynamicResource SelectionBackgroundColor}"
           HorizontalScrollBarVisibility="Auto"
           VerticalScrollBarVisibility="Auto"

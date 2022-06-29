@@ -7,10 +7,10 @@
   <SolidColorBrush x:Key="ThemeColor" Color="#FF9EDFFF"/>
 
   <!-- NoteWindow Styles -->
-  <SolidColorBrush x:Key="Background" Color="#FFE2F1FF"/>
-  <SolidColorBrush x:Key="BackgroundSecondary" Color="#FFCDE9FF"/>
-  <SolidColorBrush x:Key="BackgroundHover" Color="#FFD3E1EE"/>
-  <SolidColorBrush x:Key="Foreground" Color="#FF000000"/>
-  <SolidColorBrush x:Key="ForegroundSecondary" Color="#FF616161"/>
-  <SolidColorBrush x:Key="SelectionBackgroundColor" Color="#FF307B98"/>
+  <SolidColorBrush x:Key="Background" Color="#FFE2F1FF"/> <!-- Note window background color -->
+  <SolidColorBrush x:Key="BackgroundSecondary" Color="#FFCDE9FF"/> <!-- Note window title bar background color -->
+  <SolidColorBrush x:Key="ForegroundColor" Color="#FF000000"/> <!-- Note control and note window foreground color -->
+  <SolidColorBrush x:Key="ForegroundSecondary" Color="#FF616161"/> <!-- Toolbar buttons foreground -->
+  <SolidColorBrush x:Key="SelectionBackgroundColor" Color="#FF307B98"/> <!-- Note window selection background color -->
+
 </ResourceDictionary>

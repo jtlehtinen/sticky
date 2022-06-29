@@ -5,7 +5,6 @@
 >
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="/Components/ButtonEx.xaml" />
-    <ResourceDictionary Source="/Components/Colors.xaml" />
     <ResourceDictionary Source="/Components/RadioButtonEx.xaml" />
     <ResourceDictionary Source="/Components/ToggleButtonEx.xaml" />
   </ResourceDictionary.MergedDictionaries>
