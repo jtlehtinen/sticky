@@ -45,7 +45,7 @@
         <!-- Container Template -->
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
-            <ui:SimpleStackPanel Orientation="Vertical" Spacing="10" Margin="15,0"/>
+            <ui:SimpleStackPanel Orientation="Vertical" Spacing="10" Margin="10,0"/>
           </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
 
