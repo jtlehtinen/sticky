@@ -21,6 +21,8 @@ namespace Sticky {
         if (e.PropertyName == "Theme") SetTheme(note.Theme);
       };
 
+      // @TODO: Move to XAML?
+      NoteRichTextBox.IsKeyboardFocusedChanged += (sender, e) => RefreshToolbarVisibility(this.RenderSize);
       NoteRichTextBox.SelectionChanged += OnSelectionChanged;
       NoteRichTextBox.KeyUp += OnKeyUp;
 
@@ -68,7 +70,9 @@ namespace Sticky {
     }
 
     private void RefreshToolbarVisibility(Size noteWindowSize) {
-      var show = noteWindowSize.Width >= 340 && noteWindowSize.Height >= 150;
+      var hasKeyboardFocus = NoteRichTextBox.IsKeyboardFocusWithin;
+
+      var show = hasKeyboardFocus && noteWindowSize.Width >= 340 && noteWindowSize.Height >= 150;
       var visibility = show ? Visibility.Visible : Visibility.Collapsed;
 
       if (Toolbar.Visibility != visibility) Toolbar.Visibility = visibility;
