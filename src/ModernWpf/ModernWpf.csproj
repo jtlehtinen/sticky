@@ -9,6 +9,25 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <CsWinRTEmbedded>true</CsWinRTEmbedded>
+    <CsWinRTWindowsMetadata>10.0.18362.0</CsWinRTWindowsMetadata>
+    <CsWinRTIncludes>
+      Windows.Foundation;
+      Windows.UI.Color;
+      Windows.UI.IColors;
+      Windows.UI.ViewManagement.HandPreference;
+      Windows.UI.ViewManagement.IUISettings;
+      Windows.UI.ViewManagement.UIColorType;
+      Windows.UI.ViewManagement.UIElementType;
+      Windows.UI.ViewManagement.UISettings;
+    </CsWinRTIncludes>
+    <CsWinRTExcludes>
+      Windows.Foundation.Diagnostics;
+      Windows.Foundation.PropertyType;
+    </CsWinRTExcludes>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <Platform>x64</Platform>
     <Platforms>x64</Platforms>
     <PlatformName>x64</PlatformName>
@@ -66,5 +85,9 @@
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ModernWpf</CustomToolNamespace>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.6.4" />
   </ItemGroup>
 </Project>
