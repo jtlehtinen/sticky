@@ -12,15 +12,20 @@ namespace Sticky {
       return Color.FromArgb(255, (byte)R, (byte)G, (byte)B);
     }
 
-    public static Color ToHoverColor(this Color background) {
-      var c = Color.FromArgb(237, background.R, background.G, background.B);
-      var dest = IsDarkColor(background) ? Colors.White : Colors.Black;
+    public static Color ToInactiveColor(this Color color) {
+      // @TODO: Make better?
+      return Color.FromArgb(0x66, color.R, color.G, color.B);
+    }
+
+    public static Color ToHoverColor(this Color color) {
+      var c = Color.FromArgb(237, color.R, color.G, color.B);
+      var dest = IsDarkColor(color) ? Colors.White : Colors.Black;
       return Blend(c, dest);
     }
 
-    public static Color ToPressedColor(this Color background) {
-      var c = Color.FromArgb(220, background.R, background.G, background.B);
-      var dest = IsDarkColor(background) ? Colors.White : Colors.Black;
+    public static Color ToPressedColor(this Color color) {
+      var c = Color.FromArgb(220, color.R, color.G, color.B);
+      var dest = IsDarkColor(color) ? Colors.White : Colors.Black;
       return Blend(c, dest);
     }
 

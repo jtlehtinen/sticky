@@ -7,7 +7,7 @@
     <Setter Property="Background" Value="Transparent"/>
     <Setter Property="BackgroundColor" Value="Transparent"/>
     <Setter Property="Focusable" Value="False"/>
-    <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+    <Setter Property="FontFamily" Value="{DynamicResource SymbolThemeFontFamily}"/>
     <Setter Property="FontWeight" Value="Thin"/>
     <Setter Property="Margin" Value="0,0,0,0"/>
     <Setter Property="Padding" Value="0,0,0,0"/>
@@ -52,10 +52,6 @@
             <Trigger Property="IsPressed" Value="True">
               <Setter Property="Background" TargetName="border" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}, Path=PressedBackgroundColor}"/>
             </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-              <!-- <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/> -->
-              <!-- <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/> -->
-            </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
       </Setter.Value>
@@ -65,7 +61,8 @@
   <Style x:Key="ButtonExToolbar" TargetType="{x:Type local:ButtonEx}" BasedOn="{StaticResource {x:Type local:ButtonEx}}">
     <Setter Property="Height" Value="32"/>
     <Setter Property="Width" Value="32"/>
-    <Setter Property="Margin" Value="5,5,5,5"/>
+    <Setter Property="Margin" Value="5"/>
+    <Setter Property="FontSize" Value="16"/>
     <Setter Property="BackgroundColor" Value="{DynamicResource Background}"/>
     <Setter Property="Foreground" Value="{DynamicResource ForegroundSecondary}"/>
   </Style>

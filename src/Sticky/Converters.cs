@@ -110,7 +110,20 @@ namespace Sticky {
     }
   }
 
-    public class BackgroundToHoverConverter : IValueConverter {
+  public class ColorToInactiveConverter : IValueConverter {
+    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+      if (value == null) return null;
+
+      var brush = (SolidColorBrush)value;
+      return new SolidColorBrush(brush.Color.ToInactiveColor());
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+      throw new NotImplementedException();
+    }
+  }
+
+  public class ColorToHoverConverter : IValueConverter {
     public object? Convert(object value, Type targetType, object parameter, CultureInfo culture) {
       if (value == null) return null;
 
@@ -123,7 +136,7 @@ namespace Sticky {
     }
   }
 
-  public class BackgroundToPressedConverter : IValueConverter {
+  public class ColorToPressedConverter : IValueConverter {
     public object? Convert(object value, Type targetType, object parameter, CultureInfo culture) {
       if (value == null) return null;
 

@@ -50,7 +50,7 @@
         <Setter Property="Background" Value="{DynamicResource Background}"/>
         <Style.Triggers>
           <DataTrigger Binding="{Binding ElementName=OuterBorder, Path=IsMouseOver}" Value="True">
-            <Setter Property="Background" Value="{Binding Path=Value, Source={StaticResource BackgroundProxy}, Converter={StaticResource BackgroundToHoverConverter}}"/>
+            <Setter Property="Background" Value="{Binding Path=Value, Source={StaticResource BackgroundProxy}, Converter={StaticResource ColorToHoverConverter}}"/>
           </DataTrigger>
         </Style.Triggers>
       </Style>
@@ -74,8 +74,8 @@
       >
         <Polygon
           Points="0,20 20,20, 20,0"
-          Stroke="{Binding Source={StaticResource BackgroundProxy}, Path=Value, Converter={StaticResource BackgroundToPressedConverter}}"
-          Fill="{Binding Source={StaticResource BackgroundProxy}, Path=Value, Converter={StaticResource BackgroundToPressedConverter}}"
+          Stroke="{Binding Source={StaticResource BackgroundProxy}, Path=Value, Converter={StaticResource ColorToPressedConverter}}"
+          Fill="{Binding Source={StaticResource BackgroundProxy}, Path=Value, Converter={StaticResource ColorToPressedConverter}}"
         />
       </Canvas>
 
@@ -90,7 +90,7 @@
           Width="32"
           Height="23"
           FontSize="16"
-          BackgroundColor="{Binding Path=Value, Source={StaticResource BackgroundProxy}, Converter={StaticResource BackgroundToHoverConverter}}"
+          BackgroundColor="{Binding Path=Value, Source={StaticResource BackgroundProxy}, Converter={StaticResource ColorToHoverConverter}}"
           Foreground="{DynamicResource ForegroundSecondary}"
           Visibility="{Binding ElementName=OuterBorder, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter}}"
           Command="local:Commands.OpenContextMenu"
@@ -123,7 +123,6 @@
           VerticalScrollBarVisibility="Auto"
           HorizontalScrollBarVisibility="Auto"
           Foreground="{DynamicResource Foreground}"
-          FontSize="14"
           local:RichTextBoxHelper.DocumentXaml="{Binding Path=Content}"
         >
           <local:BindableRichTextBox.InputBindings>

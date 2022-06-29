@@ -99,7 +99,7 @@
         >
           <Button.Content>
             <StackPanel Orientation="Horizontal">
-              <TextBlock Text="&#xEA37;" FontSize="16"/>
+              <TextBlock Text="&#xEA37;" FontSize="16" FontFamily="{DynamicResource SymbolThemeFontFamily}"/>
               <TextBlock
                 Text="Notes list"
                 FontFamily="Arial"
@@ -121,7 +121,7 @@
         >
           <Button.Content>
             <StackPanel Orientation="Horizontal">
-              <TextBlock Text="&#xE74D;" FontSize="16"/>
+              <TextBlock Text="&#xE74D;" FontSize="16" FontFamily="{DynamicResource SymbolThemeFontFamily}"/>
               <TextBlock
                 Text="Delete note"
                 FontFamily="Arial"
@@ -137,7 +137,7 @@
     <!-- Main Content -->
     <DockPanel Background="{DynamicResource Background}">
       <!-- TitleBar -->
-      <local:NoteWindowTitleBar x:Name="TitleBar" Margin="0,0,0,10" VerticalAlignment="Top" DockPanel.Dock="Top">
+      <local:NoteWindowTitleBar x:Name="TitleBar" Margin="0,0,0,0" VerticalAlignment="Top" DockPanel.Dock="Top">
         <!-- Slide In/Out Animation -->
         <local:NoteWindowTitleBar.Style>
           <Style>
@@ -220,13 +220,12 @@
           </Style>
         </Border.Style>
 
-        <StackPanel  Orientation="Horizontal" Margin="0,0,0,0">
+        <StackPanel  Orientation="Horizontal" Margin="0">
           <!-- Bold Button -->
           <local:ToggleButtonEx
             x:Name="ToolbarButtonBold"
             Style="{StaticResource ToggleButtonExToolbar}"
             Content="&#xE8DD;"
-            FontSize="16"
             ToolTip="Bold"
             Command="EditingCommands.ToggleBold"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
@@ -237,7 +236,6 @@
             x:Name="ToolbarButtonItalic"
             Style="{StaticResource ToggleButtonExToolbar}"
             Content="&#xE8DB;"
-            FontSize="16"
             ToolTip="Italic"
             Command="EditingCommands.ToggleItalic"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
@@ -248,7 +246,6 @@
             x:Name="ToolbarButtonUnderline"
             Style="{StaticResource ToggleButtonExToolbar}"
             Content="&#xE8DC;"
-            FontSize="16"
             ToolTip="Underline"
             Command="EditingCommands.ToggleUnderline"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
@@ -259,7 +256,6 @@
             x:Name="ToolbarButtonStrikethrough"
             Style="{StaticResource ToggleButtonExToolbar}"
             Content="&#xEDE0;"
-            FontSize="18"
             ToolTip="Strikethrough"
             Command="{x:Static local:BindableRichTextBox.ToggleStrikethrough}"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
@@ -270,7 +266,6 @@
             x:Name="ToolbarButtonBullets"
             Style="{StaticResource ToggleButtonExToolbar}"
             Content="&#xE8FD;"
-            FontSize="18"
             ToolTip="Toggle bullets"
             Command="EditingCommands.ToggleBullets"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
@@ -280,7 +275,6 @@
           <local:ButtonEx
             Style="{StaticResource ButtonExToolbar}"
             Content="&#xEB9F;"
-            FontSize="18"
             ToolTip="Add image"
           />
 
@@ -288,7 +282,6 @@
           <local:ButtonEx
             Style="{StaticResource ButtonExToolbar}"
             Content="&#xE8E7;"
-            FontSize="18"
             ToolTip="Decrease font size"
             Command="EditingCommands.DecreaseFontSize"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
@@ -298,7 +291,6 @@
           <local:ButtonEx
             Style="{StaticResource ButtonExToolbar}"
             Content="&#xE8E8;"
-            FontSize="18"
             ToolTip="Increase font size"
             Command="EditingCommands.IncreaseFontSize"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
@@ -326,7 +318,6 @@
           BorderBrush="Transparent"
           BorderThickness="0"
           CaretBrush="{DynamicResource TextCursorForeground}"
-          FontSize="14"
           Foreground="{DynamicResource Foreground}"
           SelectionBrush="{DynamicResource SelectionBackground}"
           HorizontalScrollBarVisibility="Auto"

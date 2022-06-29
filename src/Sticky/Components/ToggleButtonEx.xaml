@@ -9,7 +9,7 @@
     <Setter Property="BorderThickness" Value="0"/>
     <Setter Property="Focusable" Value="False"/>
     <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-    <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+    <Setter Property="FontFamily" Value="{DynamicResource SymbolThemeFontFamily}"/>
     <Setter Property="FontWeight" Value="Thin"/>
     <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
     <Setter Property="Margin" Value="0"/>
@@ -58,7 +58,8 @@
   <Style x:Key="ToggleButtonExToolbar" TargetType="{x:Type local:ToggleButtonEx}" BasedOn="{StaticResource {x:Type local:ToggleButtonEx}}">
     <Setter Property="Height" Value="32"/>
     <Setter Property="Width" Value="32"/>
-    <Setter Property="Margin" Value="5,5,5,5"/>
+    <Setter Property="Margin" Value="5"/>
+    <Setter Property="FontSize" Value="16"/>
     <Setter Property="BackgroundColor" Value="{DynamicResource Background}"/>
     <Setter Property="Foreground" Value="{DynamicResource ForegroundSecondary}"/>
   </Style>
