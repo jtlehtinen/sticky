@@ -2,6 +2,7 @@ using System;
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using ModernWpf;
 using ModernWpf.Controls;
 
@@ -135,10 +136,10 @@ namespace Sticky {
       }
     }
 
-    private ApplicationTheme ToApplicationTheme(BaseTheme theme) {
+    private ApplicationTheme? ToApplicationTheme(BaseTheme theme) {
       if (theme == BaseTheme.Dark) return ApplicationTheme.Dark;
       if (theme == BaseTheme.Light) return ApplicationTheme.Light;
-      if (theme == BaseTheme.System) return ApplicationTheme.Light;
+      if (theme == BaseTheme.System) return null;
       throw new ArgumentException("theme");
     }
 
@@ -188,6 +189,4 @@ namespace Sticky {
       ViewModel.TogglePinnedCommand.Execute(e.Parameter);
     }
   }
-
-
 }
