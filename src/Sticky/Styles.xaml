@@ -3,6 +3,19 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:local="clr-namespace:Sticky"
 >
+  <!-- @TODO: Rename this file to something more appropriate -->
+
+  <!-- Change focus visual style -->
+  <Style x:Key="FocusVisualStyle">
+    <Setter Property="Control.Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <Rectangle Margin="-2" StrokeThickness="2" Stroke="Black"/>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
   <!-- Converters -->
   <local:ColorToHoverConverter x:Key="ColorToHoverConverter"/>
   <local:ColorToPressedConverter x:Key="ColorToPressedConverter"/>

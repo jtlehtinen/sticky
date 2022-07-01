@@ -13,15 +13,16 @@
     MouseMove="OnMouseMove"
   >
     <!-- Back Button -->
-    <ui:TitleBarButton
-      Content="&#xE72B;"
-      ToolTip="Back"
-      Click="OnBack"
-      DockPanel.Dock="Left"
-      Width="40"
-      Height="Auto"
-      FontSize="16"
-    />
+    <ui:SimpleStackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+      <ui:TitleBarButton
+        Content="&#xE72B;"
+        ToolTip="Back"
+        Click="OnBack"
+        Width="40"
+        Height="Auto"
+        FontSize="16"
+      />
+    </ui:SimpleStackPanel>
 
     <!-- Close Button -->
     <ui:TitleBarButton

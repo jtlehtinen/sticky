@@ -52,8 +52,7 @@
         Style="{StaticResource TitleBarButtonStyle}"
         Content="&#xE77A;"
         ToolTip="Unpin note"
-        Command="local:Commands.TogglePinned"
-        CommandParameter="{Binding Path=Id}"
+        Command="{Binding TogglePinnedCommand}"
         Visibility="{Binding Path=Topmost, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Converter={StaticResource BooleanToVisibilityConverter}}"
       />
 
@@ -62,8 +61,7 @@
         Style="{StaticResource TitleBarButtonStyle}"
         Content="&#xE840;"
         ToolTip="Pin note"
-        Command="local:Commands.TogglePinned"
-        CommandParameter="{Binding Path=Id}"
+        Command="{Binding TogglePinnedCommand}"
         Visibility="{Binding Path=Topmost, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
       />
     </StackPanel>

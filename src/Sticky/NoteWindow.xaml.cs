@@ -92,10 +92,6 @@ namespace Sticky {
       HideOverlay();
     }
 
-    private void TogglePinnedExecuted(object sender, ExecutedRoutedEventArgs e) {
-      Topmost = !Topmost;
-    }
-
     private void OnHideOverlay(object sender, RoutedEventArgs e) {
       HideOverlay();
     }

@@ -6,35 +6,9 @@ using System.Windows.Input;
 
 namespace Sticky {
 
-  // https://docs.microsoft.com/en-us/windows/communitytoolkit/mvvm/relaycommand
-  public class RelayCommand : ICommand {
-    private readonly Action<object> _execute;
-    private readonly Predicate<object>? _canExecute;
-
-    public event EventHandler? CanExecuteChanged {
-      add { CommandManager.RequerySuggested += value; }
-      remove { CommandManager.RequerySuggested -= value; }
-    }
-
-    public RelayCommand(Action<object> execute) : this(execute, null) { }
-
-    public RelayCommand(Action<object> execute, Predicate<object>? canExecute) {
-      if (execute == null)
-        throw new ArgumentNullException("execute");
-
-      _execute = execute;
-      _canExecute = canExecute;
-    }
-
-    public bool CanExecute(object? parameter) {
-      return _canExecute == null ? true : _canExecute(parameter);
-    }
-
-    public void Execute(object? parameter) {
-      _execute(parameter);
-    }
-  }
-
+  /// <summary>
+  /// Base class for view models providing property changed notifications.
+  /// </summary>
   public class ViewModelBase : INotifyPropertyChanged {
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -46,6 +20,8 @@ namespace Sticky {
   public class NoteViewModel : ViewModelBase {
     // @TODO: ...
     const string EMPTY_NOTE = "\u003CSection xmlns=\u0022http://schemas.microsoft.com/winfx/2006/xaml/presentation\u0022 xml:space=\u0022preserve\u0022 TextAlignment=\u0022Left\u0022 LineHeight=\u0022Auto\u0022 IsHyphenationEnabled=\u0022False\u0022 xml:lang=\u0022en-us\u0022 FlowDirection=\u0022LeftToRight\u0022 NumberSubstitution.CultureSource=\u0022Text\u0022 NumberSubstitution.Substitution=\u0022AsCulture\u0022 FontFamily=\u0022Segoe UI\u0022 FontStyle=\u0022Normal\u0022 FontWeight=\u0022Normal\u0022 FontStretch=\u0022Normal\u0022 FontSize=\u002214\u0022 Foreground=\u0022#FF000000\u0022 Typography.StandardLigatures=\u0022True\u0022 Typography.ContextualLigatures=\u0022True\u0022 Typography.DiscretionaryLigatures=\u0022False\u0022 Typography.HistoricalLigatures=\u0022False\u0022 Typography.AnnotationAlternates=\u00220\u0022 Typography.ContextualAlternates=\u0022True\u0022 Typography.HistoricalForms=\u0022False\u0022 Typography.Kerning=\u0022True\u0022 Typography.CapitalSpacing=\u0022False\u0022 Typography.CaseSensitiveForms=\u0022False\u0022 Typography.StylisticSet1=\u0022False\u0022 Typography.StylisticSet2=\u0022False\u0022 Typography.StylisticSet3=\u0022False\u0022 Typography.StylisticSet4=\u0022False\u0022 Typography.StylisticSet5=\u0022False\u0022 Typography.StylisticSet6=\u0022False\u0022 Typography.StylisticSet7=\u0022False\u0022 Typography.StylisticSet8=\u0022False\u0022 Typography.StylisticSet9=\u0022False\u0022 Typography.StylisticSet10=\u0022False\u0022 Typography.StylisticSet11=\u0022False\u0022 Typography.StylisticSet12=\u0022False\u0022 Typography.StylisticSet13=\u0022False\u0022 Typography.StylisticSet14=\u0022False\u0022 Typography.StylisticSet15=\u0022False\u0022 Typography.StylisticSet16=\u0022False\u0022 Typography.StylisticSet17=\u0022False\u0022 Typography.StylisticSet18=\u0022False\u0022 Typography.StylisticSet19=\u0022False\u0022 Typography.StylisticSet20=\u0022False\u0022 Typography.Fraction=\u0022Normal\u0022 Typography.SlashedZero=\u0022False\u0022 Typography.MathematicalGreek=\u0022False\u0022 Typography.EastAsianExpertForms=\u0022False\u0022 Typography.Variants=\u0022Normal\u0022 Typography.Capitals=\u0022Normal\u0022 Typography.NumeralStyle=\u0022Normal\u0022 Typography.NumeralAlignment=\u0022Normal\u0022 Typography.EastAsianWidths=\u0022Normal\u0022 Typography.EastAsianLanguage=\u0022Normal\u0022 Typography.StandardSwashes=\u00220\u0022 Typography.ContextualSwashes=\u00220\u0022 Typography.StylisticAlternates=\u00220\u0022\u003E\u003CParagraph\u003E\u003CRun\u003E\u003C/Run\u003E\u003C/Paragraph\u003E\u003C/Section\u003E";
+
+    public ICommand TogglePinnedCommand { get; }
 
     private Note _note;
     private bool _open = false;
@@ -99,6 +75,8 @@ namespace Sticky {
     }
 
     public NoteViewModel(Note note) {
+      TogglePinnedCommand = new RelayCommand(() => Pinned = !Pinned);
+
       _note = note;
       Content = note.Content;
       Theme = note.Theme;
@@ -164,11 +142,10 @@ namespace Sticky {
   }
 
   public class ViewModel : ViewModelBase {
-    public RelayCommand CreateNoteCommand { get; private set; }
-    public RelayCommand DeleteNoteCommand { get; private set; }
-    public RelayCommand OpenNoteCommand { get; private set; }
-    public RelayCommand CloseNoteCommand { get; private set; }
-    public RelayCommand TogglePinnedCommand { get; private set; }
+    public ICommand CreateNoteCommand { get; }
+    public ICommand DeleteNoteCommand { get; }
+    public ICommand OpenNoteCommand { get; }
+    public ICommand CloseNoteCommand { get; }
 
     public NotesViewModel Notes { get; }
     public SettingsViewModel Settings { get; }
@@ -176,16 +153,14 @@ namespace Sticky {
     private Model model;
 
     public ViewModel(Model model) {
-      Notes = new NotesViewModel();
-      Settings = new SettingsViewModel(model.Settings);
-
       CreateNoteCommand = new RelayCommand(CreateNote);
       DeleteNoteCommand = new RelayCommand(DeleteNote);
       OpenNoteCommand = new RelayCommand(OpenNote);
       CloseNoteCommand = new RelayCommand(CloseNote);
-      TogglePinnedCommand = new RelayCommand(TogglePinned);
 
       this.model = model;
+      Notes = new NotesViewModel();
+      Settings = new SettingsViewModel(model.Settings);
 
       foreach (var note in model.Notes) {
         Notes.Add(new NoteViewModel(note));
@@ -234,14 +209,6 @@ namespace Sticky {
       // @NOTE: Force CollectionChanged event.
       var idx = Notes.IndexOf(note);
       Notes[idx] = note;
-    }
-
-    private void TogglePinned(object parameter) {
-      var id = (int)parameter;
-      var note = Notes.GetById(id);
-      if (note == null) return;
-
-      note.Pinned = !note.Pinned;
     }
 
     // @TODO: Better way to move changes between view-model and the model.
