@@ -13,20 +13,16 @@
   <UserControl.InputBindings>
     <MouseBinding
       MouseAction="LeftDoubleClick"
-      Command="{x:Static local:Commands.OpenNote}"
+      Command="{Binding OpenCommand}"
       CommandParameter="{Binding Id}"
     />
   </UserControl.InputBindings>
-
-  <UserControl.CommandBindings>
-    <CommandBinding Command="{x:Static local:Commands.OpenContextMenu}" Executed="OnOpenContextMenu"/>
-  </UserControl.CommandBindings>
 
   <Border x:Name="OuterBorder" BorderThickness="0" BorderBrush="Transparent" CornerRadius="5">
     <!-- Folded Corner Clip -->
     <Border.Clip>
       <!-- @TODO: Oh, god... this is horrible... -->
-      <CombinedGeometry GeometryCombineMode="{Binding Path=Open, Converter={StaticResource ReverseBooleanToGeometryCombineModeConverter}}">
+      <CombinedGeometry GeometryCombineMode="{Binding Path=IsOpen, Converter={StaticResource ReverseBooleanToGeometryCombineModeConverter}}">
         <CombinedGeometry.Geometry1>
           <RectangleGeometry Rect="0 0 4096 4096"/>
         </CombinedGeometry.Geometry1>
@@ -70,7 +66,7 @@
         Height="20"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
-        Visibility="{Binding Path=Open, Converter={StaticResource BooleanToVisibilityConverter}}"
+        Visibility="{Binding Path=IsOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
       >
         <Polygon
           Points="0,20 20,20, 20,0"
@@ -93,7 +89,7 @@
           BackgroundColor="{Binding Path=Value, Source={StaticResource BackgroundProxy}, Converter={StaticResource ColorToHoverConverter}}"
           Foreground="{DynamicResource ForegroundSecondary}"
           Visibility="{Binding ElementName=OuterBorder, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter}}"
-          Command="local:Commands.OpenContextMenu"
+          Command="{Binding OpenContextMenuCommand}"
         />
 
         <TextBlock
@@ -115,7 +111,7 @@
           Margin="0"
           Cursor="Arrow"
           Focusable="False"
-          IsHitTestVisible="False"
+          IsHitTestVisible="True"
           Background="Transparent"
           BorderBrush="Transparent"
           BorderThickness="0"
@@ -128,7 +124,7 @@
           <local:BindableRichTextBox.InputBindings>
             <MouseBinding
               MouseAction="LeftDoubleClick"
-              Command="{x:Static local:Commands.OpenNote}"
+              Command="{Binding OpenCommand}"
               CommandParameter="{Binding Id}"
             />
           </local:BindableRichTextBox.InputBindings>
@@ -146,9 +142,9 @@
               <!-- Open Note -->
               <MenuItem
                 Header="Open note"
-                Command="local:Commands.OpenNote"
+                Command="{Binding OpenCommand}"
                 CommandParameter="{Binding Path=Id}"
-                Visibility="{Binding Path=Open, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
+                Visibility="{Binding Path=IsOpen, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
               >
                 <MenuItem.Icon>
                   <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8A7;"/>
@@ -158,9 +154,9 @@
               <!-- Close Note -->
               <MenuItem
                 Header="Close note"
-                Command="local:Commands.CloseNote"
+                Command="{Binding CloseCommand}"
                 CommandParameter="{Binding Path=Id}"
-                Visibility="{Binding Path=Open, Converter={StaticResource BooleanToVisibilityConverter}}"
+                Visibility="{Binding Path=IsOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
               >
                 <MenuItem.Icon>
                   <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE73F;"/>
@@ -170,8 +166,7 @@
               <!-- Delete -->
               <MenuItem
                 Header="Delete note"
-                Command="local:Commands.DeleteNote"
-                CommandParameter="{Binding Path=Id}"
+                Command="{Binding DeleteCommand}"
               >
                 <MenuItem.Icon>
                   <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE74D;"/>

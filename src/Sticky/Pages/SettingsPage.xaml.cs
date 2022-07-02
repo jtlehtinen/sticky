@@ -1,13 +1,18 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Microsoft.Win32;
+using Sticky.ViewModels;
 
 namespace Sticky {
 
   public partial class SettingsPage : UserControl {
-    public SettingsPage() {
-      DataContext = App.Current.ViewModel.Settings;
+    private DragBehavior _drag;
+
+    public SettingsPage(SettingsPageViewModel vm) {
+      DataContext = vm;
       InitializeComponent();
+      _drag = new DragBehavior(this);
     }
 
     private void OnExportNotes(object sender, RoutedEventArgs e) {

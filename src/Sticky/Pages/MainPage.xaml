@@ -13,7 +13,50 @@
     </Grid.RowDefinitions>
 
     <!-- Title Bar -->
-    <local:MainPageTitleBar Grid.Row="0" Margin="0"/>
+    <DockPanel
+      x:Name="TitleBar"
+      Grid.Row="0"
+      Margin="0"
+      Background="Transparent"
+      Height="40"
+      LastChildFill="False"
+    >
+      <!-- New Note Button -->
+      <ui:TitleBarButton
+        Content="&#xE948;"
+        ToolTip="New note"
+        Command="{Binding NewNoteCommand}"
+        DockPanel.Dock="Left"
+        Width="40"
+        Height="Auto"
+        FontSize="16"
+      />
+
+      <!-- Right Side Buttons -->
+      <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+        <!-- Settings Button -->
+        <ui:TitleBarButton
+          Content="&#xE713;"
+          ToolTip="Settings"
+          Command="{Binding OpenSettingsPageCommand}"
+          CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+          Width="40"
+          Height="Auto"
+          FontSize="16"
+        />
+
+        <!-- Close Button -->
+        <ui:TitleBarButton
+          Content="&#xE947;"
+          ToolTip="Close window"
+          Command="{Binding CloseCommand}"
+          CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+          Width="40"
+          Height="Auto"
+          FontSize="16"
+        />
+      </StackPanel>
+    </DockPanel>
 
     <ui:SimpleStackPanel
       Grid.Row="1"
@@ -41,7 +84,7 @@
 
     <ui:ScrollViewerEx Grid.Row="2" VerticalScrollBarVisibility="Auto" CanContentScroll="False" Margin="0,0,0,15">
       <!-- Note List -->
-      <ItemsControl x:Name="NoteList" ItemsSource="{Binding Path=Notes}">
+      <ItemsControl x:Name="NoteList" ItemsSource="{Binding Path=AllNotes}">
         <!-- Container Template -->
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>

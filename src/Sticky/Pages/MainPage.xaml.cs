@@ -1,11 +1,18 @@
 using System.Windows.Controls;
+using System.Windows.Input;
 using ModernWpf.Controls;
+using Sticky.ViewModels;
 
 namespace Sticky {
 
   public partial class MainPage : UserControl {
-    public MainPage() {
+    private DragBehavior _drag;
+
+    public MainPage(MainPageViewModel vm) {
+      DataContext = vm;
+
       InitializeComponent();
+      _drag = new DragBehavior(this.TitleBar);
     }
 
     private void OnSearchQueryChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs e) {
@@ -32,11 +39,11 @@ namespace Sticky {
 
         Search.ClearSearch(rtb);
 
-        if (!string.IsNullOrEmpty(search)) {
-          noteViewModel.Show = Search.ApplySearch(rtb, search);
-        } else {
-          noteViewModel.Show = true;
-        }
+        //if (!string.IsNullOrEmpty(search)) {
+        //  noteViewModel.Show = Search.ApplySearch(rtb, search);
+        //} else {
+        //  noteViewModel.Show = true;
+        //}
       }
     }
   }

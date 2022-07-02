@@ -1,49 +1,55 @@
 using System;
-using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Input;
 using ModernWpf;
-using ModernWpf.Controls;
+using Sticky.DataAccess;
+using Sticky.ViewModels;
 
 namespace Sticky {
 
-  /// <summary>
-  /// Interaction logic for App.xaml
-  /// </summary>
   public partial class App : Application {
-    public Model Model;
-    public ViewModel ViewModel;
+    private Database _db;
+    private Settings _settings;
     public ThemeService Themes = new ThemeService();
 
-    public App() {
+    public App(DataAccess.Database db) {
+      this._db = db;
+      this._settings = _db.GetSettings();
+      SetBaseTheme(_settings.BaseTheme);
+
       AppContext.SetSwitch("Switch.System.Windows.Controls.Text.UseAdornerForTextboxSelectionRendering", false);
 
-      Model = Import.FromJson("sticky.json") ?? new Model();
-      ViewModel = new ViewModel(Model);
+      _db.NoteAdded += (sender, e) => {
+        var note = e.AddedNote;
+        if (note.IsOpen) OpenNoteWindow(new NoteWindowViewModel(note, _db));
+      };
 
-      ViewModel.Notes.CollectionChanged += (sender, e) => {
-        switch (e.Action) {
-          case NotifyCollectionChangedAction.Add: OnNoteCreated(e.NewItems[0] as NoteViewModel); break;
-          case NotifyCollectionChangedAction.Remove: OnNoteDeleted(e.OldItems[0] as NoteViewModel); break;
-          case NotifyCollectionChangedAction.Replace: OnNoteReplaced(e.NewItems[0] as NoteViewModel); break;
+      _db.NoteDeleted += (sender, e) => CloseNoteWindow(e.DeletedNote.Id);
+
+      _db.NoteModified += (sender, e) => {
+        var note = e.ModifiedNote;
+
+         // @TODO
+        if (note.IsOpen) {
+          var window = FindNoteWindow(note.Id);
+          if (window != null) window.Activate();
+          else OpenNoteWindow(new NoteWindowViewModel(note, _db));
+        } else {
+          CloseNoteWindow(note.Id);
         }
       };
 
-      Exit += (sender, e) => {
-        ViewModel.Flush();
-        Export.ToJson("sticky.json", Model);
+      _db.SettingsModified += (sender, e) => {
+        _settings = e.NewSettings;
+        SetBaseTheme(_settings.BaseTheme);
       };
-
-      Commands.Register(typeof(Window), Commands.ChangeAppTheme, ChangeAppThemeExecuted);
-      Commands.Register(typeof(Window), Commands.DeleteNote, DeleteNoteExecuted);
-      Commands.Register(typeof(Window), Commands.NewNote, NewNoteExecuted);
-      Commands.Register(typeof(Window), Commands.CloseNote, CloseNoteExecuted);
-      Commands.Register(typeof(Window), Commands.OpenNote, OpenNoteExecuted);
-      Commands.Register(typeof(Window), Commands.OpenNoteList, OpenNoteListExecuted);
     }
 
     protected override void OnStartup(StartupEventArgs e) {
       base.OnStartup(e);
+
+      var mainWindow = new MainWindow(_db);
+      mainWindow.Show();
 
 #if !DEBUG
       AppDomain.CurrentDomain.UnhandledException += (sender, e) => {
@@ -52,7 +58,7 @@ namespace Sticky {
       };
 #endif
 
-      ThemeManager.Current.ApplicationTheme = ViewModel.Settings.BaseTheme.ToApplicationTheme();
+      ThemeManager.Current.ApplicationTheme = _settings.BaseTheme.ToApplicationTheme();
     }
 
     public new static App Current => (App)Application.Current;
@@ -62,34 +68,8 @@ namespace Sticky {
       set { base.MainWindow = value; }
     }
 
-    private void OnNoteCreated(NoteViewModel note) {
-      if (note == null) return;
-
-      if (note.Open) OpenNoteWindow(note);
-    }
-
-    private void OnNoteDeleted(NoteViewModel note) {
-      if (note == null) return;
-
-      CloseNoteWindow(note);
-    }
-
-    private void OnNoteReplaced(NoteViewModel note) {
-      if (note == null) return;
-
-      if (note.Open) {
-
-        var window = FindNoteWindow(note);
-        if (window != null) window.Activate();
-        else OpenNoteWindow(note);
-
-      } else {
-        CloseNoteWindow(note);
-      }
-    }
-
-    private void OpenNoteWindow(NoteViewModel note) {
-      var window = new NoteWindow(note);
+    private void OpenNoteWindow(NoteWindowViewModel vm) {
+      var window = new NoteWindow(vm);
 
       var mainWindow = MainWindow;
       if (mainWindow != null) {
@@ -100,17 +80,17 @@ namespace Sticky {
       window.Show();
     }
 
-    private Window? FindNoteWindow(NoteViewModel note) {
+    private Window? FindNoteWindow(int noteId) {
       foreach (var window in Windows) {
-        if (window is NoteWindow noteWindow && noteWindow.DataContext == note) {
+        if (window is NoteWindow noteWindow && noteWindow.DataContext is NoteWindowViewModel noteWindowViewModel && noteWindowViewModel.Id == noteId) {
           return noteWindow;
         }
       }
       return null;
     }
 
-    private void CloseNoteWindow(NoteViewModel note) {
-      var window = FindNoteWindow(note);
+    private void CloseNoteWindow(int noteId) {
+      var window = FindNoteWindow(noteId);
       if (window != null) window.Close();
     }
 
@@ -119,37 +99,23 @@ namespace Sticky {
       if (mainWindow != null) {
         mainWindow.Activate();
       } else {
-        MainWindow = new MainWindow();
+        MainWindow = new MainWindow(_db);
         MainWindow.Show();
       }
     }
 
-    private void ChangeAppThemeExecuted(object sender, ExecutedRoutedEventArgs e) {
-      // @TODO: Save the setting.
+    private void SetBaseTheme(BaseTheme theme) {
       if (MainWindow == null) return;
 
       MainWindow.ClearValue(ThemeManager.RequestedThemeProperty);
-      // @TODO: Figure out system theme...
-      ViewModel.Settings.BaseTheme = (BaseTheme)e.Parameter;
+      var applicationTheme = theme.ToApplicationTheme();
 
-      var newTheme = ViewModel.Settings.BaseTheme.ToApplicationTheme();
-      if (newTheme != ThemeManager.Current.ActualApplicationTheme) {
-        ThemeManager.Current.ApplicationTheme = newTheme;
+      if (applicationTheme != ThemeManager.Current.ActualApplicationTheme) {
+        ThemeManager.Current.ApplicationTheme = applicationTheme;
       }
     }
 
-    private void CloseNoteExecuted(object sender, ExecutedRoutedEventArgs e) {
-      ViewModel.CloseNoteCommand.Execute(e.Parameter);
-    }
-
-    private void OpenNoteExecuted(object sender, ExecutedRoutedEventArgs e) {
-      ViewModel.OpenNoteCommand.Execute(e.Parameter);
-    }
-
-    private void NewNoteExecuted(object sender, ExecutedRoutedEventArgs e) {
-      ViewModel.CreateNoteCommand.Execute(null);
-    }
-
+    #if false
     async private void DeleteNoteExecuted(object sender, ExecutedRoutedEventArgs e) {
       var confirmDelete = async () => {
         if (!ViewModel.Settings.ConfirmBeforeDelete) return true;
@@ -165,5 +131,6 @@ namespace Sticky {
         ViewModel.DeleteNoteCommand.Execute(e.Parameter);
       }
     }
+    #endif
   }
 }

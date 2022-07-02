@@ -4,21 +4,26 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using Sticky.ViewModels;
 
 namespace Sticky {
   /// <summary>
   /// Interaction logic for NoteWindow.xaml
   /// </summary>
   public partial class NoteWindow : Window {
-    public NoteWindow(NoteViewModel note) {
-      DataContext = note;
+    private DragBehavior _drag;
+
+    public NoteWindow(NoteWindowViewModel vm) {
+      DataContext = vm;
 
       InitializeComponent();
       Native.ApplyRoundedWindowCorners(this);
 
+      _drag = new DragBehavior(TitleBar);
+
       // @TODO: Remove event handler.
-      note.PropertyChanged += (s, e) => {
-        if (e.PropertyName == "Theme") SetTheme(note.Theme);
+      vm.PropertyChanged += (s, e) => {
+        if (e.PropertyName == "Theme") SetTheme(vm.Theme);
       };
 
       // @TODO: Move to XAML?
@@ -29,7 +34,7 @@ namespace Sticky {
       LostKeyboardFocus += (sender, e) => HideOverlay();
       LostFocus += (sender, e) => HideOverlay();
 
-      SetTheme(note.Theme);
+      SetTheme(vm.Theme);
     }
 
     private void SetTheme(string themeName) {
@@ -50,6 +55,7 @@ namespace Sticky {
       Resources.MergedDictionaries.Add(theme);
       if (currentTheme != null) Resources.MergedDictionaries.Remove(currentTheme);
 
+      /*
       switch (themeName) {
         case "Theme.Yellow": RadioButtonThemeYellow.IsChecked = true; break;
         case "Theme.Green": RadioButtonThemeGreen.IsChecked = true; break;
@@ -59,6 +65,7 @@ namespace Sticky {
         case "Theme.Gray": RadioButtonThemeGray.IsChecked = true; break;
         case "Theme.Charcoal": RadioButtonThemeCharcoal.IsChecked = true; break;
       }
+      */
     }
 
     private void ShowOverlay() {

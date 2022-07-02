@@ -12,7 +12,36 @@
     </Grid.RowDefinitions>
 
     <!-- Title Bar -->
-    <local:SettingsPageTitleBar Grid.Row="0" Margin="0"/>
+    <DockPanel
+      x:Name="TitleBar"
+      Background="Transparent"
+      Height="40"
+      LastChildFill="False"
+      Grid.Row="0"
+      Margin="0"
+    >
+      <!-- Back Button -->
+      <ui:TitleBarButton
+        DockPanel.Dock="Left"
+        Content="&#xE72B;"
+        ToolTip="Back"
+        Command="{Binding BackCommand}"
+        Width="40"
+        Height="Auto"
+        FontSize="16"
+      />
+
+      <!-- Close Button -->
+      <ui:TitleBarButton
+        Content="&#xE947;"
+        ToolTip="Close window"
+        Command="{Binding CloseCommand}"
+        DockPanel.Dock="Right"
+        Width="40"
+        Height="Auto"
+        FontSize="16"
+      />
+    </DockPanel>
 
     <ui:ScrollViewerEx Grid.Row="1" VerticalScrollBarVisibility="Auto" CanContentScroll="False" Margin="0,0,0,15">
       <ui:SimpleStackPanel
@@ -60,9 +89,9 @@
         />
 
         <ui:RadioButtons x:Name="ThemeOptions" SelectedIndex="{Binding Path=BaseTheme, Mode=OneWay, Converter={StaticResource BaseThemeToIndexConverter}}">
-          <RadioButton x:Name="RadioButtonThemeLight" Content="Light" Command="{x:Static local:Commands.ChangeAppTheme}" CommandParameter="{x:Static local:BaseTheme.Light}"/>
-          <RadioButton x:Name="RadioButtonThemeDark" Content="Dark" Command="{x:Static local:Commands.ChangeAppTheme}" CommandParameter="{x:Static local:BaseTheme.Dark}"/>
-          <RadioButton x:Name="RadioButtonThemeSystem" Content="Use system setting" Command="{x:Static local:Commands.ChangeAppTheme}" CommandParameter="{x:Static local:BaseTheme.System}"/>
+          <RadioButton x:Name="RadioButtonThemeLight" Content="Light" Command="{Binding ChangeBaseThemeCommand}" CommandParameter="{x:Static local:BaseTheme.Light}"/>
+          <RadioButton x:Name="RadioButtonThemeDark" Content="Dark" Command="{Binding ChangeBaseThemeCommand}" CommandParameter="{x:Static local:BaseTheme.Dark}"/>
+          <RadioButton x:Name="RadioButtonThemeSystem" Content="Use system setting" Command="{Binding ChangeBaseThemeCommand}" CommandParameter="{x:Static local:BaseTheme.System}"/>
         </ui:RadioButtons>
 
         <!-- About -->

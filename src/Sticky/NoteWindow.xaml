@@ -11,17 +11,19 @@
   Width="340"
   Height="240"
   AllowsTransparency="True"
-  Topmost="{Binding Path=Pinned, Mode=OneWay}"
+  Topmost="{Binding Path=IsAlwaysOnTop, Mode=OneWay}"
   WindowStyle="None"
   ResizeMode="CanResizeWithGrip"
   ShowInTaskbar="True"
   SizeChanged="OnSizeChanged"
   Icon="/icon.ico"
 >
+  <!--
   <Window.CommandBindings>
     <CommandBinding Command="{x:Static local:Commands.ChangeNoteTheme}" Executed="ChangeNoteThemeExecuted"/>
     <CommandBinding Command="{x:Static local:Commands.ShowMenu}" Executed="ShowMenuExecuted"/>
   </Window.CommandBindings>
+  -->
 
   <Grid x:Name="LayoutRoot">
 
@@ -80,6 +82,7 @@
             <ColumnDefinition Width="*"/>
           </Grid.ColumnDefinitions>
 
+          <!--
           <local:RadioButtonEx x:Name="RadioButtonThemeYellow"   GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="0" BackgroundColor="#FFFFE66E" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Yellow"/>
           <local:RadioButtonEx x:Name="RadioButtonThemeGreen"    GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="1" BackgroundColor="#FFA1EF9B" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Green"/>
           <local:RadioButtonEx x:Name="RadioButtonThemePink"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="2" BackgroundColor="#FFFFAFDF" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Pink"/>
@@ -87,6 +90,7 @@
           <local:RadioButtonEx x:Name="RadioButtonThemeBlue"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="4" BackgroundColor="#FF9EDFFF" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Blue"/>
           <local:RadioButtonEx x:Name="RadioButtonThemeGray"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="5" BackgroundColor="#FFE0E0E0" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Gray"/>
           <local:RadioButtonEx x:Name="RadioButtonThemeCharcoal" GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="6" BackgroundColor="#FF767676" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Charcoal"/>
+            -->
         </Grid>
 
         <!-- Notes List Button -->
@@ -95,8 +99,10 @@
           Foreground="Black"
           HorizontalContentAlignment="Left"
           Padding="17"
-          Command="{x:Static local:Commands.OpenNoteList}"
         >
+          <!--
+            @TODO: Command="{x:Static local:Commands.OpenNoteList}"
+          -->
           <Button.Content>
             <StackPanel Orientation="Horizontal">
               <TextBlock Text="&#xEA37;" FontSize="16" FontFamily="{DynamicResource SymbolThemeFontFamily}"/>
@@ -116,7 +122,7 @@
           Foreground="Red"
           HorizontalContentAlignment="Left"
           Padding="17"
-          Command="{x:Static local:Commands.DeleteNote}"
+          Command="{Binding DeleteCommand}"
           CommandParameter="{Binding Path=Id}"
         >
           <Button.Content>
@@ -137,11 +143,21 @@
     <!-- Main Content -->
     <DockPanel Background="{DynamicResource Background}">
       <!-- TitleBar -->
-      <local:NoteWindowTitleBar x:Name="TitleBar" Margin="0,0,0,0" VerticalAlignment="Top" DockPanel.Dock="Top">
-        <!-- Slide In/Out Animation -->
-        <local:NoteWindowTitleBar.Style>
-          <Style>
-            <Setter Property="local:NoteWindowTitleBar.RenderTransform">
+      <DockPanel
+        x:Name="TitleBar"
+        DockPanel.Dock="Top"
+        Background="{DynamicResource BackgroundSecondary}"
+        Height="32"
+        LastChildFill="False"
+        Margin="0"
+        VerticalAlignment="Top"
+      >
+        <DockPanel.Resources>
+          <ui:BindingProxy x:Key="BackgroundSecondaryProxy" Value="{DynamicResource BackgroundSecondary}"/>
+
+          <!-- Slide In/Out Animation -->
+          <Style TargetType="{x:Type DockPanel}">
+            <Setter Property="RenderTransform">
               <Setter.Value>
                 <TranslateTransform X="0" Y="-42"/>
               </Setter.Value>
@@ -173,8 +189,76 @@
               </DataTrigger>
             </Style.Triggers>
           </Style>
-        </local:NoteWindowTitleBar.Style>
-      </local:NoteWindowTitleBar>
+
+          <Style
+            x:Key="TitleBarButtonStyle"
+            TargetType="{x:Type ui:TitleBarButton}"
+            BasedOn="{StaticResource {x:Type ui:TitleBarButton}}"
+            >
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Width" Value="32"/>
+            <Setter Property="Height" Value="32"/>
+
+            <Setter Property="InactiveBackground" Value="{Binding Path=Value, Source={StaticResource BackgroundSecondaryProxy}}"/>
+            <Setter Property="Background" Value="{Binding Path=Value, Source={StaticResource BackgroundSecondaryProxy}}"/>
+            <Setter Property="HoverBackground" Value="{Binding Path=Value, Source={StaticResource BackgroundSecondaryProxy}, Converter={StaticResource ColorToHoverConverter}}"/>
+            <Setter Property="PressedBackground" Value="{Binding Path=Value, Source={StaticResource BackgroundSecondaryProxy}, Converter={StaticResource ColorToPressedConverter}}"/>
+
+            <Setter Property="InactiveForeground" Value="{DynamicResource ForegroundSecondary}"/>
+            <Setter Property="Foreground" Value="{DynamicResource ForegroundSecondary}"/>
+            <Setter Property="HoverForeground" Value="{DynamicResource ForegroundSecondary}"/>
+            <Setter Property="PressedForeground" Value="{DynamicResource ForegroundSecondary}"/>
+          </Style>
+        </DockPanel.Resources>
+
+        <!-- Left Side Controls -->
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+          <!-- New Note -->
+          <ui:TitleBarButton
+            Style="{StaticResource TitleBarButtonStyle}"
+            Content="&#xE948;"
+            ToolTip="New note"
+            Command="{Binding NewNoteCommand}"
+            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+          />
+
+          <!-- Unpin Note -->
+          <ui:TitleBarButton
+            Style="{StaticResource TitleBarButtonStyle}"
+            Content="&#xE77A;"
+            ToolTip="Unpin note"
+            Command="{Binding UnpinCommand}"
+            Visibility="{Binding Path=Topmost, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Converter={StaticResource BooleanToVisibilityConverter}}"
+          />
+
+          <!-- Pin Note -->
+          <ui:TitleBarButton
+            Style="{StaticResource TitleBarButtonStyle}"
+            Content="&#xE840;"
+            ToolTip="Pin note"
+            Command="{Binding PinCommand}"
+            Visibility="{Binding Path=Topmost, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
+          />
+        </StackPanel>
+
+        <!-- Right Side Controls -->
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+          <!-- Open Menu -->
+          <ui:TitleBarButton
+            Style="{StaticResource TitleBarButtonStyle}"
+            Content="&#xE712;"
+            ToolTip="Menu"
+          />
+
+          <!-- Close Note -->
+          <ui:TitleBarButton
+            Style="{StaticResource TitleBarButtonStyle}"
+            Content="&#xE947;"
+            ToolTip="Close note"
+            Command="{Binding CloseCommand}"
+          />
+        </StackPanel>
+      </DockPanel>
 
       <!-- Toolbar -->
       <Border

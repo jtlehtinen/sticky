@@ -31,8 +31,7 @@ namespace Sticky {
       }
 
       // @TODO: Exit the thread in a clean way.
-      var thread = new Thread(() =>
-        {
+      var thread = new Thread(() => {
           while (eventHandle.WaitOne()) {
             App.Current.Dispatcher.BeginInvoke(() => ToForeground(App.Current.MainWindow));
           }
@@ -41,7 +40,9 @@ namespace Sticky {
       thread.IsBackground = true;
       thread.Start();
 
-      var app = new App();
+      var db = new DataAccess.Database();
+
+      var app = new App(db);
       app.InitializeComponent();
       app.Run();
     }

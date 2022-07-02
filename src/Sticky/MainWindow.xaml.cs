@@ -1,5 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
+using Sticky.ViewModels;
+using Sticky.DataAccess;
 
 namespace Sticky {
 
@@ -9,34 +11,22 @@ namespace Sticky {
   }
 
   public partial class MainWindow : Window {
-    private UserControl mainPage;
-    private UserControl settingsPage;
+    private UserControl _mainPage;
+    private UserControl _settingsPage;
 
-    public MainWindow() {
-      DataContext = App.Current.ViewModel;
-
+    public MainWindow(Database db) {
       InitializeComponent();
       Native.ApplyRoundedWindowCorners(this);
 
-      mainPage = new MainPage();
-      settingsPage = new SettingsPage();
+      _mainPage = new MainPage(new MainPageViewModel(db));
+      _settingsPage = new SettingsPage(new SettingsPageViewModel(db.GetSettings(), db));
 
       Navigate(PageType.Main);
     }
 
     public void Navigate(PageType type) {
-      if (type == PageType.Main) {
-        Content = mainPage;
-      } else if (type == PageType.Settings) {
-        Content = settingsPage;
-      }
-    }
-
-    private void OnSizeChanged(object sender, SizeChangedEventArgs e) {
-      // @HACK: When the window is maximized the window size ends
-      // up being greater than the monitor size.
-      var thickness = (this.WindowState == WindowState.Maximized ? 8 : 0);
-      this.BorderThickness = new System.Windows.Thickness(thickness);
+      var page = (type == PageType.Main ? _mainPage : _settingsPage);
+      Content = page;
     }
   }
 

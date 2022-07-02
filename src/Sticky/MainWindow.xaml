@@ -10,9 +10,9 @@
   Height="500"
   Title="sticky"
   Icon="/icon.ico"
-  ResizeMode="CanResizeWithGrip"
-  SizeChanged="OnSizeChanged"
-  AllowsTransparency="False"
+  AllowsTransparency="True"
   WindowStyle="None"
+  ResizeMode="CanResizeWithGrip"
+  WindowStartupLocation="CenterScreen"
   ui:WindowHelper.UseModernWindowStyle="True"
 />

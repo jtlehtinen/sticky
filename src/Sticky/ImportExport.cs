@@ -3,6 +3,7 @@ using System.Text.Json;
 
 namespace Sticky {
 
+  #if false
   public static class Import {
     public static Model? FromJson(string filename) {
       if (!File.Exists(filename)) return new Model();
@@ -20,5 +21,6 @@ namespace Sticky {
       File.WriteAllText(filename, json);
     }
   }
+  #endif
 
 }
