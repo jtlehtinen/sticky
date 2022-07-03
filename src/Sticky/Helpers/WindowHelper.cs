@@ -44,10 +44,10 @@ namespace Sticky.Helpers {
       if (window != null) window.Close();
     }
 
-    // @TODO: Find appropriate position for a note window.
     public static void OpenNoteWindow(NoteWindowViewModel vm, Window mainWindow) {
       var window = new NoteWindow(vm);
 
+      // @TODO: Find appropriate position for a note window.
       #if false
       if (mainWindow != null) {
         window.Left = mainWindow.Left + mainWindow.Width + 12;
@@ -56,6 +56,8 @@ namespace Sticky.Helpers {
       #endif
 
       window.Show();
+      window.Activate();
+      window.TakeKeyboardFocus();
     }
 
   }

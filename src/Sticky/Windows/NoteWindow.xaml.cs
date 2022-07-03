@@ -56,6 +56,11 @@ namespace Sticky {
       return vm.Id == noteId;
     }
 
+    public void TakeKeyboardFocus() {
+      NoteRichTextBox.CaretPosition = NoteRichTextBox.Document.ContentEnd;
+      NoteRichTextBox.Focus();
+    }
+
     private void SetTheme(string themeName) {
       var app = App.Current;
       if (app == null) return;
