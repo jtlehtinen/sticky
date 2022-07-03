@@ -59,7 +59,7 @@ namespace Sticky.ViewModels {
       ChangeNoteThemeCommand = new RelayCommand((param) => Theme = (string)param);
       OpenNoteListCommand = new RelayCommand(() => OpenNoteListRequested?.Invoke());
 
-      PropertyChanged += (sender, e) => _db.UpdateNote(_note);
+      PropertyChanged += (sender, e) => _db.UpdateNote(_note, e.PropertyName != "WindowPosition"); // @TODO: ...
     }
 
     public int Id { get { return _note.Id; } }
@@ -86,6 +86,11 @@ namespace Sticky.ViewModels {
     public bool IsAlwaysOnTop {
       get { return _note.IsAlwaysOnTop; }
       set { _note.IsAlwaysOnTop = value; OnPropertyChanged(); }
+    }
+
+    public string WindowPosition {
+      get { return _note.WindowPosition; }
+      set { _note.WindowPosition = value; OnPropertyChanged(); }
     }
 
     public bool IsEmpty {

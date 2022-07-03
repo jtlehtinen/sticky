@@ -5,28 +5,63 @@ using System.Windows.Interop;
 
 namespace Sticky {
 
-  // RECT structure required by WINDOWPLACEMENT structure
-  [Serializable]
-  [StructLayout(LayoutKind.Sequential)]
-  public readonly record struct Rect(int Left, int Top, int Right, int Bottom) { }
+  // WINDOWPLACEMENT code taken from MIT-licensed PowerToys.
+  // https://github.com/microsoft/PowerToys
 
   [Serializable]
   [StructLayout(LayoutKind.Sequential)]
-  public readonly record struct Point(int X, int Y) { }
+  [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1815:Override equals and operator equals on value types", Justification = "Interop")]
+  public struct POINT {
+    public int X { get; set; }
+    public int Y { get; set; }
+
+    public POINT(int x, int y) {
+      X = x;
+      Y = y;
+    }
+  }
 
   [Serializable]
   [StructLayout(LayoutKind.Sequential)]
-  public struct WindowPlacement {
-    public int Length;
-    public int Flags;
-    public int ShowCmd;
-    public Point MinPosition;
-    public Point MaxPosition;
-    public Rect NormalPosition;
+  [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1815:Override equals and operator equals on value types", Justification = "Interop")]
+  public struct RECT {
+    public int Left { get; set; }
+    public int Top { get; set; }
+    public int Right { get; set; }
+    public int Bottom { get; set; }
+
+    public RECT(int left, int top, int right, int bottom) {
+      Left = left;
+      Top = top;
+      Right = right;
+      Bottom = bottom;
+    }
+  }
+
+  [Serializable]
+  [StructLayout(LayoutKind.Sequential)]
+  [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1815:Override equals and operator equals on value types", Justification = "Interop")]
+  public struct WINDOWPLACEMENT {
+    public int Length { get; set; }
+    public int Flags { get; set; }
+    public int ShowCmd { get; set; }
+    public POINT MinPosition { get; set; }
+    public POINT MaxPosition { get; set; }
+    public RECT NormalPosition { get; set; }
   }
 
   // https://docs.microsoft.com/en-us/windows/apps/desktop/modernize/apply-rounded-corners
   public static class Native {
+    internal const int SW_SHOWNORMAL = 1;
+    internal const int SW_SHOWMAXIMIZED = 3;
+    internal const int SW_HIDE = 0;
+
+    [DllImport("user32.dll")]
+    internal static extern bool SetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
+
+    [DllImport("user32.dll")]
+    internal static extern bool GetWindowPlacement(IntPtr hWnd, out WINDOWPLACEMENT lpwndpl);
+
     public enum DWMWINDOWATTRIBUTE {
       DWMWA_WINDOW_CORNER_PREFERENCE = 33
     }
@@ -48,15 +83,6 @@ namespace Sticky {
       var preference = DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND;
       DwmSetWindowAttribute(handle, attribute, ref preference, sizeof(uint));
     }
-
-    [DllImport("user32.dll")]
-    private static extern bool SetWindowPlacement(IntPtr hWnd, [In] ref WindowPlacement placement);
-
-    [DllImport("user32.dll")]
-    private static extern bool GetWindowPlacement(IntPtr hWnd, out WindowPlacement placement);
-
-    public const int SwShownormal = 1;
-    public const int SwShowminimized = 2;
   }
 
 }

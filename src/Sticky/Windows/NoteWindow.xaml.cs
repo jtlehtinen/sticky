@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
+using Sticky.Helpers;
 using Sticky.ViewModels;
 
 namespace Sticky {
@@ -14,9 +16,12 @@ namespace Sticky {
 
     public NoteWindow(NoteWindowViewModel vm) {
       DataContext = vm;
+      Closing += (sender, e) => SaveWindowPlacement();
 
       InitializeComponent();
       Native.ApplyRoundedWindowCorners(this);
+
+      LoadWindowPlacement();
 
       _drag = new DragBehavior(TitleBar);
       _sizeFix = new FixMaximizedWindowSizeBehavior(this);
@@ -122,6 +127,26 @@ namespace Sticky {
       // @NOTE: Delta should be always 120 or -120.
       var command = e.Delta > 0 ? EditingCommands.IncreaseFontSize : EditingCommands.DecreaseFontSize;
       command.Execute(null, (RichTextBox)sender);
+    }
+
+    private void LoadWindowPlacement() {
+      var vm = GetViewModel();
+      if (vm == null) return;
+
+      if (string.IsNullOrWhiteSpace(vm.WindowPosition)) return;
+
+      var handle = new WindowInteropHelper(this).Handle;
+      var placement = WindowHelper.DeserializePlacementOrDefault(handle, vm.WindowPosition);
+
+      Native.SetWindowPlacement(handle, ref placement);
+    }
+
+    private void SaveWindowPlacement() {
+      var vm = GetViewModel();
+      if (vm == null) return;
+
+      var handle = new WindowInteropHelper(this).Handle;
+      vm.WindowPosition = WindowHelper.SerializePlacement(handle);
     }
   }
 

@@ -13,6 +13,5 @@
   AllowsTransparency="True"
   WindowStyle="None"
   ResizeMode="CanResizeWithGrip"
-  WindowStartupLocation="CenterScreen"
   ui:WindowHelper.UseModernWindowStyle="True"
 />

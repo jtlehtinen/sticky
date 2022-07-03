@@ -55,6 +55,9 @@ namespace Sticky.DataAccess {
 
     [Column("BaseTheme")]
     public BaseTheme BaseTheme { get; set; } = BaseTheme.Light;
+
+    [Column("WindowPosition")]
+    public string MainWindowPosition { get; set; }
   }
 
   public class NoteAddedEventArgs : EventArgs {
@@ -119,9 +122,9 @@ namespace Sticky.DataAccess {
       NoteDeleted?.Invoke(this, new NoteDeletedEventArgs(note));
     }
 
-    public void UpdateNote(Note note) {
+    public void UpdateNote(Note note, bool notify = true) {
       _db.Update(note);
-      NoteModified?.Invoke(this, new NoteModifiedEventArgs(note));
+      if (notify) NoteModified?.Invoke(this, new NoteModifiedEventArgs(note));
     }
 
     public Settings GetSettings() {
