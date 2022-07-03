@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +11,6 @@ using System.Windows.Controls;
 using ModernWpf.Controls.Primitives;
 
 namespace ModernWpf.Controls {
-
   /// <summary>
   /// Represents a control for indicating notifications, alerts, new content, or to attract focus to an area within an app.
   /// </summary>

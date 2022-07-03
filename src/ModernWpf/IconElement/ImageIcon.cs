@@ -32,7 +32,7 @@ namespace ModernWpf.Controls {
     /// <summary>
     /// Gets or sets the URI of the image file to use as the icon.
     /// </summary>
-    /// <returns>The URI of the image file to use as the icon. The default is **null**.</returns>
+    /// <value>The URI of the image file to use as the icon. The default is <see langword="null"/>.</value>
     public ImageSource Source {
       get => (ImageSource)GetValue(SourceProperty);
       set => SetValue(SourceProperty, value);

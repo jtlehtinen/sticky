@@ -125,7 +125,7 @@
                 <!--  Tiled noise texture  -->
                 <Rectangle x:Name="NoiseLayer" Opacity="0.02">
                   <Rectangle.Fill>
-                    <ImageBrush ImageSource="/ModernWpf;component/Materials/Acrylic/noise.png" Stretch="None" TileMode="Tile" Viewport="0,0,128,128" ViewportUnits="Absolute" />
+                    <ImageBrush ImageSource="/ModernWpf;component/Materials/Acrylic/NoiseAsset_256X256_PNG.png" Stretch="None" TileMode="Tile" Viewport="0,0,128,128" ViewportUnits="Absolute" />
                   </Rectangle.Fill>
                 </Rectangle>
               </Grid>

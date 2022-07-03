@@ -1,3 +1,5 @@
+// Ported from https://github.com/sourcechord/FluentWPF/blob/master/FluentWPF/AcrylicPanel.cs
+
 using ModernWpf.Controls.Primitives;
 using System;
 using System.Collections.Generic;

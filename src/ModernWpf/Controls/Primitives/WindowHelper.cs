@@ -212,7 +212,7 @@ namespace ModernWpf.Controls.Primitives {
       bool isSetAcrylic = false;
       bool isSetAero = false;
 
-      var handler = new RoutedEventHandler((sender, e) => {
+      void ApplyDarkMode() {
         var theme = ThemeManager.GetActualTheme(window);
 
         bool IsDark(ElementTheme theme) {
@@ -226,9 +226,13 @@ namespace ModernWpf.Controls.Primitives {
         } else {
           window.RemoveDarkMode();
         }
-      });
+      }
+
+      var handler = new RoutedEventHandler((sender, e) => ApplyDarkMode());
 
       if (isModern) {
+        ApplyDarkMode();
+
         if (window.IsLoaded) {
           window.RemoveTitleBar();
         } else {

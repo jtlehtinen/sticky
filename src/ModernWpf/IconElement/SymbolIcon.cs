@@ -39,10 +39,7 @@ namespace ModernWpf.Controls {
     /// <summary>
     /// Gets or sets the Segoe MDL2 Assets glyph used as the icon content.
     /// </summary>
-    /// <returns>
-    /// A named constant of the numeration that specifies the Segoe MDL2 Assets glyph
-    /// to use.
-    /// </returns>
+    /// <value>A named constant of the numeration that specifies the Segoe MDL2 Assets glyph to use.</value>
     public Symbol Symbol {
       get => (Symbol)GetValue(SymbolProperty);
       set => SetValue(SymbolProperty, value);
@@ -62,14 +59,14 @@ namespace ModernWpf.Controls {
 
     #region FontSize
 
-    internal static readonly DependencyProperty FontSizeProperty =
+    public static readonly DependencyProperty FontSizeProperty =
         DependencyProperty.Register(
             nameof(FontSize),
             typeof(double),
             typeof(SymbolIcon),
             new PropertyMetadata(20.0, OnFontSizeChanged));
 
-    internal double FontSize {
+    public double FontSize {
       get => (double)GetValue(FontSizeProperty);
       set => SetValue(FontSizeProperty, value);
     }

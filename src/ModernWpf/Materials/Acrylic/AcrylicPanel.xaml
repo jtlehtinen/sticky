@@ -1,4 +1,6 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:ModernWpf.Media">
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="clr-namespace:ModernWpf.Media">
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary>
       <local:BrushTranslationConverter x:Key="BrushTranslationConverter" />
@@ -14,12 +16,11 @@
           <Border x:Name="ContextMenuBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
             <Grid>
               <!--  Color tint overlay  -->
-              <Rectangle x:Name="TintColorLayer" Fill="{TemplateBinding local:AcrylicElement.TintColor,
-                                                       Converter={StaticResource ColorToSolidColorBrushConverter}}" Opacity="{TemplateBinding local:AcrylicElement.TintOpacity}" />
+              <Rectangle x:Name="TintColorLayer" Fill="{TemplateBinding local:AcrylicElement.TintColor, Converter={StaticResource ColorToSolidColorBrushConverter}}" Opacity="{TemplateBinding local:AcrylicElement.TintOpacity}" />
               <!--  Tiled noise texture  -->
               <Rectangle x:Name="NoiseLayer" Opacity="{TemplateBinding local:AcrylicElement.NoiseOpacity}">
                 <Rectangle.Fill>
-                  <ImageBrush ImageSource="noise.png" Stretch="None" TileMode="Tile" Viewport="0,0,128,128" ViewportUnits="Absolute" />
+                  <ImageBrush ImageSource="NoiseAsset_256X256_PNG.png" Stretch="None" TileMode="Tile" Viewport="0,0,128,128" ViewportUnits="Absolute" />
                 </Rectangle.Fill>
               </Rectangle>
               <ContentPresenter />
@@ -29,7 +30,6 @@
       </Setter.Value>
     </Setter>
   </Style>
-
 
   <Style x:Key="DefaultAcrylicPanelStyle" TargetType="local:AcrylicPanel">
     <Setter Property="TintColor" Value="{DynamicResource SolidBackgroundFillColorQuarternary}" />

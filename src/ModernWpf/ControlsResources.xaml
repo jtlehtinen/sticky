@@ -1,5 +1,9 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:helpers="clr-namespace:ModernWpf.Helpers" xmlns:m="clr-namespace:ModernWpf.Markup" xmlns:primitives="clr-namespace:ModernWpf.Controls.Primitives" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:helpers="clr-namespace:ModernWpf.Helpers"
+  xmlns:m="clr-namespace:ModernWpf.Markup"
+  xmlns:primitives="clr-namespace:ModernWpf.Controls.Primitives"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib">
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="Fonts/Fonts.xaml" />
     <ResourceDictionary Source="Styles/AutoSuggestBox.xaml" />
@@ -24,6 +28,7 @@
     <ResourceDictionary Source="Styles/NavigationBackButton.xaml" />
     <ResourceDictionary Source="Styles/NavigationView.xaml" />
     <ResourceDictionary Source="Styles/PasswordBox.xaml" />
+    <ResourceDictionary Source="Styles/PipsPager.xaml" />
     <ResourceDictionary Source="Styles/Pivot.xaml" />
     <ResourceDictionary Source="Styles/ProgressBar.xaml" />
     <ResourceDictionary Source="Styles/RadioButton.xaml" />
@@ -36,6 +41,7 @@
     <ResourceDictionary Source="Styles/Slider.xaml" />
     <ResourceDictionary Source="Styles/StatusBar.xaml" />
     <ResourceDictionary Source="Styles/TabControl.xaml" />
+    <ResourceDictionary Source="Styles/TeachingTip.xaml" />
     <ResourceDictionary Source="Styles/TimePicker.xaml" />
     <ResourceDictionary Source="Styles/ToggleButton.xaml" />
     <ResourceDictionary Source="Styles/ToolBar.xaml" />
