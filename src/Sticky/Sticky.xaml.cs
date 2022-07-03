@@ -12,7 +12,7 @@ namespace Sticky {
     private Settings _settings;
     public ThemeService Themes = new ThemeService();
 
-    public App(DataAccess.Database db) {
+    public App(Database db) {
       this._db = db;
       this._settings = _db.GetSettings();
       SetBaseTheme(_settings.BaseTheme);
@@ -21,7 +21,11 @@ namespace Sticky {
 
       _db.NoteAdded += (sender, e) => {
         var note = e.AddedNote;
-        if (note.IsOpen) OpenNoteWindow(new NoteWindowViewModel(note, _db));
+        if (note.IsOpen) {
+          var vm = new NoteWindowViewModel(note, _db);
+          vm.OpenNoteListRequested += () => OpenNoteList();
+          OpenNoteWindow(vm);
+        }
       };
 
       _db.NoteDeleted += (sender, e) => CloseNoteWindow(e.DeletedNote.Id);
@@ -33,7 +37,11 @@ namespace Sticky {
         if (note.IsOpen) {
           var window = FindNoteWindow(note.Id);
           if (window != null) window.Activate();
-          else OpenNoteWindow(new NoteWindowViewModel(note, _db));
+          else {
+            var vm = new NoteWindowViewModel(note, _db);
+            vm.OpenNoteListRequested += () => OpenNoteList();
+            OpenNoteWindow(vm);
+          }
         } else {
           CloseNoteWindow(note.Id);
         }
@@ -43,6 +51,16 @@ namespace Sticky {
         _settings = e.NewSettings;
         SetBaseTheme(_settings.BaseTheme);
       };
+    }
+
+    private void OpenNoteList() {
+      var mainWindow = MainWindow;
+      if (mainWindow != null) {
+        mainWindow.Activate();
+      } else {
+        MainWindow = new MainWindow(_db);
+        MainWindow.Show();
+      }
     }
 
     protected override void OnStartup(StartupEventArgs e) {
@@ -94,16 +112,6 @@ namespace Sticky {
       if (window != null) window.Close();
     }
 
-    private void OpenNoteListExecuted(object sender, ExecutedRoutedEventArgs e) {
-      var mainWindow = MainWindow;
-      if (mainWindow != null) {
-        mainWindow.Activate();
-      } else {
-        MainWindow = new MainWindow(_db);
-        MainWindow.Show();
-      }
-    }
-
     private void SetBaseTheme(BaseTheme theme) {
       if (MainWindow == null) return;
 
@@ -114,23 +122,5 @@ namespace Sticky {
         ThemeManager.Current.ApplicationTheme = applicationTheme;
       }
     }
-
-    #if false
-    async private void DeleteNoteExecuted(object sender, ExecutedRoutedEventArgs e) {
-      var confirmDelete = async () => {
-        if (!ViewModel.Settings.ConfirmBeforeDelete) return true;
-
-        var dialog = new ConfirmDeleteDialog();
-        var result = await dialog.ShowAsync();
-
-        var doDelete = (result == ContentDialogResult.Primary);
-        return doDelete;
-      };
-
-      if (await confirmDelete()) {
-        ViewModel.DeleteNoteCommand.Execute(e.Parameter);
-      }
-    }
-    #endif
   }
 }

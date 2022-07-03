@@ -18,13 +18,6 @@
   SizeChanged="OnSizeChanged"
   Icon="/icon.ico"
 >
-  <!--
-  <Window.CommandBindings>
-    <CommandBinding Command="{x:Static local:Commands.ChangeNoteTheme}" Executed="ChangeNoteThemeExecuted"/>
-    <CommandBinding Command="{x:Static local:Commands.ShowMenu}" Executed="ShowMenuExecuted"/>
-  </Window.CommandBindings>
-  -->
-
   <Grid x:Name="LayoutRoot">
 
     <!-- Overlay -->
@@ -82,27 +75,23 @@
             <ColumnDefinition Width="*"/>
           </Grid.ColumnDefinitions>
 
-          <!--
-          <local:RadioButtonEx x:Name="RadioButtonThemeYellow"   GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="0" BackgroundColor="#FFFFE66E" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Yellow"/>
-          <local:RadioButtonEx x:Name="RadioButtonThemeGreen"    GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="1" BackgroundColor="#FFA1EF9B" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Green"/>
-          <local:RadioButtonEx x:Name="RadioButtonThemePink"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="2" BackgroundColor="#FFFFAFDF" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Pink"/>
-          <local:RadioButtonEx x:Name="RadioButtonThemePurple"   GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="3" BackgroundColor="#FFD7AFFF" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Purple"/>
-          <local:RadioButtonEx x:Name="RadioButtonThemeBlue"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="4" BackgroundColor="#FF9EDFFF" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Blue"/>
-          <local:RadioButtonEx x:Name="RadioButtonThemeGray"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="5" BackgroundColor="#FFE0E0E0" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Gray"/>
-          <local:RadioButtonEx x:Name="RadioButtonThemeCharcoal" GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="6" BackgroundColor="#FF767676" Command="local:Commands.ChangeNoteTheme" CommandParameter="Theme.Charcoal"/>
-            -->
+          <local:RadioButtonEx x:Name="RadioButtonThemeYellow"   GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="0" BackgroundColor="#FFFFE66E" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Yellow"/>
+          <local:RadioButtonEx x:Name="RadioButtonThemeGreen"    GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="1" BackgroundColor="#FFA1EF9B" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Green"/>
+          <local:RadioButtonEx x:Name="RadioButtonThemePink"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="2" BackgroundColor="#FFFFAFDF" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Pink"/>
+          <local:RadioButtonEx x:Name="RadioButtonThemePurple"   GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="3" BackgroundColor="#FFD7AFFF" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Purple"/>
+          <local:RadioButtonEx x:Name="RadioButtonThemeBlue"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="4" BackgroundColor="#FF9EDFFF" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Blue"/>
+          <local:RadioButtonEx x:Name="RadioButtonThemeGray"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="5" BackgroundColor="#FFE0E0E0" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Gray"/>
+          <local:RadioButtonEx x:Name="RadioButtonThemeCharcoal" GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="6" BackgroundColor="#FF767676" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Charcoal"/>
         </Grid>
 
         <!-- Notes List Button -->
         <local:ButtonEx
+          Command="{Binding OpenNoteListCommand}"
           BackgroundColor="White"
           Foreground="Black"
           HorizontalContentAlignment="Left"
           Padding="17"
         >
-          <!--
-            @TODO: Command="{x:Static local:Commands.OpenNoteList}"
-          -->
           <Button.Content>
             <StackPanel Orientation="Horizontal">
               <TextBlock Text="&#xEA37;" FontSize="16" FontFamily="{DynamicResource SymbolThemeFontFamily}"/>
@@ -118,12 +107,12 @@
 
         <!-- Delete Note Button -->
         <local:ButtonEx
+          Command="{Binding DeleteCommand}"
+          CommandParameter="{Binding Path=Id}"
           BackgroundColor="White"
           Foreground="Red"
           HorizontalContentAlignment="Left"
           Padding="17"
-          Command="{Binding DeleteCommand}"
-          CommandParameter="{Binding Path=Id}"
         >
           <Button.Content>
             <StackPanel Orientation="Horizontal">
@@ -248,6 +237,7 @@
             Style="{StaticResource TitleBarButtonStyle}"
             Content="&#xE712;"
             ToolTip="Menu"
+            Command="{Binding ShowOverlayCommand}"
           />
 
           <!-- Close Note -->

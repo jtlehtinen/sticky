@@ -21,12 +21,13 @@ namespace Sticky {
 
       _drag = new DragBehavior(TitleBar);
 
-      // @TODO: Remove event handler.
+      vm.ShowOverlayRequested += () => ShowOverlay();
+      vm.HideOverlayRequested += () => HideOverlay();
+
       vm.PropertyChanged += (s, e) => {
         if (e.PropertyName == "Theme") SetTheme(vm.Theme);
       };
 
-      // @TODO: Move to XAML?
       NoteRichTextBox.IsKeyboardFocusedChanged += (sender, e) => RefreshToolbarVisibility(this.RenderSize);
       NoteRichTextBox.SelectionChanged += OnSelectionChanged;
       NoteRichTextBox.KeyUp += OnKeyUp;
@@ -55,7 +56,6 @@ namespace Sticky {
       Resources.MergedDictionaries.Add(theme);
       if (currentTheme != null) Resources.MergedDictionaries.Remove(currentTheme);
 
-      /*
       switch (themeName) {
         case "Theme.Yellow": RadioButtonThemeYellow.IsChecked = true; break;
         case "Theme.Green": RadioButtonThemeGreen.IsChecked = true; break;
@@ -65,7 +65,6 @@ namespace Sticky {
         case "Theme.Gray": RadioButtonThemeGray.IsChecked = true; break;
         case "Theme.Charcoal": RadioButtonThemeCharcoal.IsChecked = true; break;
       }
-      */
     }
 
     private void ShowOverlay() {
@@ -101,10 +100,6 @@ namespace Sticky {
 
     private void OnHideOverlay(object sender, RoutedEventArgs e) {
       HideOverlay();
-    }
-
-    private void ShowMenuExecuted(object sender, ExecutedRoutedEventArgs e) {
-      ShowOverlay();
     }
 
     private void OnSelectionChanged(object sender, RoutedEventArgs e) {

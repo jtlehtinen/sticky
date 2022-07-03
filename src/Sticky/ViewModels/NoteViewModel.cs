@@ -21,7 +21,11 @@ namespace Sticky.ViewModels {
 
       CloseCommand = new RelayCommand(() => IsOpen = false);
       OpenCommand = new RelayCommand(() => IsOpen = true);
-      DeleteCommand = new RelayCommand(() => db.DeleteNote(_note));
+      DeleteCommand = new RelayCommand(async () => {
+        if (await Dialogs.ConfirmDelete()) {
+          db.DeleteNote(_note);
+        }
+      });
       OpenContextMenuCommand = new RelayCommand(() => OpenContextMenuRequested?.Invoke());
 
       PropertyChanged += (sender, e) => _db.UpdateNote(_note);

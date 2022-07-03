@@ -16,6 +16,14 @@ namespace Sticky.ViewModels {
     public ICommand CloseCommand { get; }
     public ICommand DeleteCommand { get; }
     public ICommand NewNoteCommand { get; }
+    public ICommand ShowOverlayCommand { get; }
+    public ICommand HideOverlayCommand { get; }
+    public ICommand ChangeNoteThemeCommand { get; }
+    public ICommand OpenNoteListCommand { get; }
+
+    public event Action ShowOverlayRequested;
+    public event Action HideOverlayRequested;
+    public event Action OpenNoteListRequested;
 
     private Note _note;
     private Database _db;
@@ -27,8 +35,16 @@ namespace Sticky.ViewModels {
       PinCommand = new RelayCommand(() => IsAlwaysOnTop = true);
       UnpinCommand = new RelayCommand(() => IsAlwaysOnTop = false);
       CloseCommand = new RelayCommand(() => IsOpen = false);
-      DeleteCommand = new RelayCommand(() => _db.DeleteNote(_note));
+      DeleteCommand = new RelayCommand(async () => {
+        if (await Dialogs.ConfirmDelete()) {
+          _db.DeleteNote(_note);
+        }
+      });
       NewNoteCommand = new RelayCommand(() => _db.AddNote(new Note()));
+      ShowOverlayCommand = new RelayCommand(() => ShowOverlayRequested?.Invoke());
+      HideOverlayCommand = new RelayCommand(() => HideOverlayRequested?.Invoke());
+      ChangeNoteThemeCommand = new RelayCommand((param) => Theme = (string)param);
+      OpenNoteListCommand = new RelayCommand(() => OpenNoteListRequested?.Invoke());
 
       PropertyChanged += (sender, e) => _db.UpdateNote(_note);
     }
