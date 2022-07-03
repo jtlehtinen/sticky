@@ -60,6 +60,36 @@ namespace Sticky.Helpers {
       window.TakeKeyboardFocus();
     }
 
+    private static int IndexOf(WindowCollection collection, Window what) {
+      for (var i = 0; i < collection.Count; ++i) {
+        if (collection[i] == what) return i;
+      }
+      return -1;
+    }
+
+    private static void ActivateAndTakeKeyboardFocus(Window window) {
+      window.Activate();
+      if (window is NoteWindow nw) {
+        nw.TakeKeyboardFocus();
+      }
+    }
+
+    public static void ActivateNextWindow(WindowCollection allWindows, Window from) {
+      var index = IndexOf(allWindows, from);
+      if (index == -1) return;
+
+      index = (index + 1) % allWindows.Count;
+      ActivateAndTakeKeyboardFocus(allWindows[index]);
+    }
+
+    public static void ActivatePreviousWindow(WindowCollection allWindows, Window from) {
+      var index = IndexOf(allWindows, from);
+      if (index == -1) return;
+
+      index = (index - 1 + allWindows.Count) % allWindows.Count;
+      ActivateAndTakeKeyboardFocus(allWindows[index]);
+    }
+
   }
 
 }

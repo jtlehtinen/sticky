@@ -20,10 +20,14 @@ namespace Sticky.ViewModels {
     public ICommand HideOverlayCommand { get; }
     public ICommand ChangeNoteThemeCommand { get; }
     public ICommand OpenNoteListCommand { get; }
+    public ICommand ActivatePreviousWindowCommand { get; }
+    public ICommand ActivateNextWindowCommand { get; }
 
     public event Action ShowOverlayRequested;
     public event Action HideOverlayRequested;
     public event Action OpenNoteListRequested;
+    public event Action<Window> ActivatePreviousWindowRequested;
+    public event Action<Window> ActivateNextWindowRequested;
 
     private Note _note;
     private Database _db;
@@ -31,6 +35,9 @@ namespace Sticky.ViewModels {
     public NoteWindowViewModel(Note note, Database db) {
       this._note = note;
       this._db = db;
+
+      ActivatePreviousWindowCommand = new RelayCommand((param) => ActivatePreviousWindowRequested?.Invoke((Window)param));
+      ActivateNextWindowCommand = new RelayCommand((param) => ActivateNextWindowRequested?.Invoke((Window)param));
 
       PinCommand = new RelayCommand(() => IsAlwaysOnTop = true);
       UnpinCommand = new RelayCommand(() => IsAlwaysOnTop = false);

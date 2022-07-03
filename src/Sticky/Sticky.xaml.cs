@@ -17,6 +17,8 @@ namespace Sticky {
         var note = e.AddedNote;
         if (note.IsOpen) {
           var vm = new NoteWindowViewModel(note, _db);
+          vm.ActivatePreviousWindowRequested += (window) => WindowHelper.ActivatePreviousWindow(Windows, window);
+          vm.ActivateNextWindowRequested += (window) => WindowHelper.ActivateNextWindow(Windows, window);
           vm.OpenNoteListRequested += () => ActivateMainWindow();
           WindowHelper.OpenNoteWindow(vm, MainWindow);
         }
@@ -33,6 +35,8 @@ namespace Sticky {
           if (window != null) window.Activate();
           else {
             var vm = new NoteWindowViewModel(note, _db);
+            vm.ActivatePreviousWindowRequested += (window) => WindowHelper.ActivatePreviousWindow(Windows, window);
+            vm.ActivateNextWindowRequested += (window) => WindowHelper.ActivateNextWindow(Windows, window);
             vm.OpenNoteListRequested += () => ActivateMainWindow();
             WindowHelper.OpenNoteWindow(vm, MainWindow);
           }

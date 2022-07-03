@@ -17,6 +17,15 @@
   ShowInTaskbar="True"
   Icon="/Resources/icon.ico"
 >
+  <Window.InputBindings>
+    <KeyBinding Gesture="CTRL+N" Command="{Binding NewNoteCommand}"/>
+    <KeyBinding Gesture="CTRL+W" Command="{Binding CloseCommand}"/>
+    <KeyBinding Gesture="CTRL+D" Command="{Binding DeleteCommand}"/>
+    <KeyBinding Gesture="CTRL+H" Command="{Binding OpenNoteListCommand}"/>
+    <KeyBinding Gesture="CTRL+TAB" Command="{Binding ActivateNextWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+    <KeyBinding Gesture="CTRL+SHIFT+TAB" Command="{Binding ActivatePreviousWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+  </Window.InputBindings>
+
   <Grid x:Name="LayoutRoot">
 
     <!-- Overlay -->

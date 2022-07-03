@@ -77,7 +77,7 @@ namespace Sticky {
       // Register strikethrough keyboard shortcut.
       CommandManager.RegisterClassInputBinding(
         typeof(BindableRichTextBox),
-        new InputBinding(ToggleStrikethrough, new KeyGesture(Key.D, ModifierKeys.Control))
+        new InputBinding(ToggleStrikethrough, new KeyGesture(Key.T, ModifierKeys.Control))
       );
     }
 
