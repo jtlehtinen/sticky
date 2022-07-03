@@ -29,7 +29,7 @@ namespace Sticky.ViewModels {
       CloseCommand = new RelayCommand(param => ((Window)param).Close());
       OpenSettingsPageCommand = new RelayCommand((param) => ((MainWindow)param).Navigate(PageType.Settings));
 
-      NewNoteCommand = new RelayCommand(() => _db.AddNote(new Note()));
+      NewNoteCommand = new RelayCommand(() => _db.AddNote(new Note())); // @TODO: Apply settings...
 
       LoadAllNotes();
     }

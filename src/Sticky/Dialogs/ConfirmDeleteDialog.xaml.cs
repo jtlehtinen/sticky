@@ -6,6 +6,10 @@ namespace Sticky {
     public ConfirmDeleteDialog() {
       InitializeComponent();
     }
+
+    public bool ShouldNotAskAgain() {
+      return DontAskAgain.IsChecked == true;
+    }
   }
 
 }

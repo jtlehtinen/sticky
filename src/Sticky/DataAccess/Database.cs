@@ -5,6 +5,8 @@ using SQLite;
 
 namespace Sticky.DataAccess {
 
+  // @TODO: Caching maybe...
+
   [Table("Notes")]
   public class Note {
     [PrimaryKey, AutoIncrement]
@@ -123,7 +125,9 @@ namespace Sticky.DataAccess {
     }
 
     public Settings GetSettings() {
-      return _db.Query<Settings>("SELECT * FROM Settings")[0]; // @TODO: Should never fail...
+      // @NOTE: Always call EnsureSettingsExists() before calling
+      // this method.
+      return _db.Query<Settings>("SELECT * FROM Settings")[0];
     }
 
     public void UpdateSettings(Settings settings) {

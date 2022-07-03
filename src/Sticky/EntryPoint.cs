@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Windows;
 
@@ -5,17 +6,13 @@ namespace Sticky {
 
   public class EntryPoint {
 
-    // https://stackoverflow.com/questions/14506406/wpf-single-instance-best-practices
-    private static void ToForeground(Window window) {
-      if (window.WindowState == WindowState.Minimized || window.Visibility == Visibility.Hidden) {
-        window.Show();
-        window.WindowState = WindowState.Normal;
-      }
-
-      window.Activate();
-      window.Topmost = true;
-      window.Topmost = false;
-      window.Focus();
+    private static void SetExceptionHandler() {
+#if !DEBUG
+      AppDomain.CurrentDomain.UnhandledException += (sender, e) => {
+        MessageBox.Show("An unexpected error has occurred. Sticky Notes is going to terminate.", "Sticky Notes", MessageBoxButton.OK, MessageBoxImage.Error);
+        Environment.Exit(0);
+      };
+#endif
     }
 
     [System.STAThreadAttribute()]
@@ -27,22 +24,24 @@ namespace Sticky {
         // @NOTE: Other instance is already running. Set
         // event to bring it to the foreground.
         eventHandle.Set();
-        return;
+        Environment.Exit(0);
       }
 
       // @TODO: Exit the thread in a clean way.
       var thread = new Thread(() => {
           while (eventHandle.WaitOne()) {
-            App.Current.Dispatcher.BeginInvoke(() => ToForeground(App.Current.MainWindow));
+            App.Current.Dispatcher.BeginInvoke(() => App.Current.ActivateMainWindow());
           }
         }
       );
       thread.IsBackground = true;
       thread.Start();
 
-      var db = new DataAccess.Database();
+      SetExceptionHandler();
 
+      var db = new DataAccess.Database();
       var app = new App(db);
+
       app.InitializeComponent();
       app.Run();
     }

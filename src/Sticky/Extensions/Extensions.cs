@@ -9,7 +9,7 @@ namespace Sticky {
     public static int RemoveAll<T>(this ObservableCollection<T> collection, Func<T, bool> predicate) {
       var remove = collection.Where(predicate).ToList();
 
-      foreach (var item in collection.Where(predicate).ToList()) {
+      foreach (var item in remove) {
         collection.Remove(item);
       }
 

@@ -3,6 +3,7 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:ui="http://schemas.modernwpf.com/2019"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
   xmlns:local="clr-namespace:Sticky"
 >
   <UserControl.Resources>
@@ -31,8 +32,8 @@
             <PathGeometry.Figures>
               <PathFigure StartPoint="0,0">
                 <PathFigure.Segments>
-                  <LineSegment Point="20,0"/>
-                  <LineSegment Point="0,20"/>
+                  <LineSegment Point="15,0"/>
+                  <LineSegment Point="0,15"/>
                 </PathFigure.Segments>
               </PathFigure>
             </PathGeometry.Figures>
@@ -62,14 +63,14 @@
       <Canvas
         Grid.Row="0"
         ZIndex="1"
-        Width="20"
-        Height="20"
+        Width="15"
+        Height="15"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Visibility="{Binding Path=IsOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
       >
         <Polygon
-          Points="0,20 20,20, 20,0"
+          Points="0,15 15,15, 15,0"
           Stroke="{Binding Source={StaticResource BackgroundProxy}, Path=Value, Converter={StaticResource ColorToPressedConverter}}"
           Fill="{Binding Source={StaticResource BackgroundProxy}, Path=Value, Converter={StaticResource ColorToPressedConverter}}"
         />
@@ -103,7 +104,7 @@
         />
       </StackPanel>
 
-      <StackPanel Grid.Row="1" Margin="10,0,10,15">
+      <StackPanel Grid.Row="1" Margin="0,0,0,15">
         <local:BindableRichTextBox
           Style="{StaticResource DefaultRichTextBoxStyle}"
           ui:ControlHelper.PlaceholderText="Take a note..."
@@ -147,7 +148,7 @@
                 Visibility="{Binding Path=IsOpen, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
               >
                 <MenuItem.Icon>
-                  <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8A7;"/>
+                  <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="&#xE8A7;"/>
                 </MenuItem.Icon>
               </MenuItem>
 
@@ -159,7 +160,7 @@
                 Visibility="{Binding Path=IsOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
               >
                 <MenuItem.Icon>
-                  <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE73F;"/>
+                  <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="&#xE73F;"/>
                 </MenuItem.Icon>
               </MenuItem>
 
@@ -169,7 +170,7 @@
                 Command="{Binding DeleteCommand}"
               >
                 <MenuItem.Icon>
-                  <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE74D;"/>
+                  <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="&#xE74D;"/>
                 </MenuItem.Icon>
               </MenuItem>
             </ContextMenu>

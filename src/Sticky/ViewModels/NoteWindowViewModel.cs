@@ -36,11 +36,24 @@ namespace Sticky.ViewModels {
       UnpinCommand = new RelayCommand(() => IsAlwaysOnTop = false);
       CloseCommand = new RelayCommand(() => IsOpen = false);
       DeleteCommand = new RelayCommand(async () => {
-        if (await Dialogs.ConfirmDelete()) {
-          _db.DeleteNote(_note);
+        var settings = _db.GetSettings();
+        if (!settings.ConfirmBeforeDelete) {
+          db.DeleteNote(_note);
+          return;
+        }
+
+        var result = await Dialogs.ConfirmDelete();
+
+        if (result.DontAskAgain) {
+          settings.ConfirmBeforeDelete = false;
+          _db.UpdateSettings(settings);
+        }
+
+        if (result.DoDelete) {
+          db.DeleteNote(_note);
         }
       });
-      NewNoteCommand = new RelayCommand(() => _db.AddNote(new Note()));
+      NewNoteCommand = new RelayCommand(() => _db.AddNote(new Note())); // @TODO: Apply settings...
       ShowOverlayCommand = new RelayCommand(() => ShowOverlayRequested?.Invoke());
       HideOverlayCommand = new RelayCommand(() => HideOverlayRequested?.Invoke());
       ChangeNoteThemeCommand = new RelayCommand((param) => Theme = (string)param);

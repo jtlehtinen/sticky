@@ -21,6 +21,12 @@ namespace Sticky.ViewModels {
       ChangeBaseThemeCommand = new RelayCommand((param) => BaseTheme = (BaseTheme)param);
 
       PropertyChanged += (sender, e) => _db.UpdateSettings(_settings);
+
+      _db.SettingsModified += (sender, e) => {
+        if (ConfirmBeforeDelete != e.NewSettings.ConfirmBeforeDelete) ConfirmBeforeDelete = e.NewSettings.ConfirmBeforeDelete;
+        if (PinNewNote != e.NewSettings.PinNewNote) PinNewNote = e.NewSettings.PinNewNote;
+        if (BaseTheme != e.NewSettings.BaseTheme) BaseTheme = e.NewSettings.BaseTheme;
+      };
     }
 
     public bool ConfirmBeforeDelete {

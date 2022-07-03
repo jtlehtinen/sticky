@@ -22,7 +22,20 @@ namespace Sticky.ViewModels {
       CloseCommand = new RelayCommand(() => IsOpen = false);
       OpenCommand = new RelayCommand(() => IsOpen = true);
       DeleteCommand = new RelayCommand(async () => {
-        if (await Dialogs.ConfirmDelete()) {
+        var settings = _db.GetSettings();
+        if (!settings.ConfirmBeforeDelete) {
+          db.DeleteNote(_note);
+          return;
+        }
+
+        var result = await Dialogs.ConfirmDelete();
+
+        if (result.DontAskAgain) {
+          settings.ConfirmBeforeDelete = false;
+          _db.UpdateSettings(settings);
+        }
+
+        if (result.DoDelete) {
           db.DeleteNote(_note);
         }
       });

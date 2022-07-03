@@ -9,13 +9,10 @@ namespace Sticky {
 
   public partial class App : Application {
     private Database _db;
-    private Settings _settings;
     public ThemeService Themes = new ThemeService();
 
     public App(Database db) {
       this._db = db;
-      this._settings = _db.GetSettings();
-      SetBaseTheme(_settings.BaseTheme);
 
       AppContext.SetSwitch("Switch.System.Windows.Controls.Text.UseAdornerForTextboxSelectionRendering", false);
 
@@ -47,20 +44,19 @@ namespace Sticky {
         }
       };
 
-      _db.SettingsModified += (sender, e) => {
-        _settings = e.NewSettings;
-        SetBaseTheme(_settings.BaseTheme);
-      };
+      _db.SettingsModified += (sender, e) => SetBaseTheme(e.NewSettings.BaseTheme);
+    }
+
+    public void ActivateMainWindow() {
+      OpenNoteList();
     }
 
     private void OpenNoteList() {
-      var mainWindow = MainWindow;
-      if (mainWindow != null) {
-        mainWindow.Activate();
-      } else {
+      if (MainWindow == null) {
         MainWindow = new MainWindow(_db);
-        MainWindow.Show();
       }
+      MainWindow.Show();
+      MainWindow.Activate();
     }
 
     protected override void OnStartup(StartupEventArgs e) {
@@ -69,14 +65,7 @@ namespace Sticky {
       var mainWindow = new MainWindow(_db);
       mainWindow.Show();
 
-#if !DEBUG
-      AppDomain.CurrentDomain.UnhandledException += (sender, e) => {
-        MessageBox.Show("An unexpected error has occurred. Sticky Notes is going to terminate.", "Sticky Notes", MessageBoxButton.OK, MessageBoxImage.Error);
-        Environment.Exit(0);
-      };
-#endif
-
-      ThemeManager.Current.ApplicationTheme = _settings.BaseTheme.ToApplicationTheme();
+      SetBaseTheme(_db.GetSettings().BaseTheme);
     }
 
     public new static App Current => (App)Application.Current;
@@ -113,13 +102,13 @@ namespace Sticky {
     }
 
     private void SetBaseTheme(BaseTheme theme) {
-      if (MainWindow == null) return;
+      if (MainWindow != null) {
+        MainWindow.ClearValue(ThemeManager.RequestedThemeProperty);
+      }
 
-      MainWindow.ClearValue(ThemeManager.RequestedThemeProperty);
-      var applicationTheme = theme.ToApplicationTheme();
-
-      if (applicationTheme != ThemeManager.Current.ActualApplicationTheme) {
-        ThemeManager.Current.ApplicationTheme = applicationTheme;
+      var appTheme = theme.ToApplicationTheme();
+      if (appTheme != ThemeManager.Current.ActualApplicationTheme) {
+        ThemeManager.Current.ApplicationTheme = appTheme;
       }
     }
   }
