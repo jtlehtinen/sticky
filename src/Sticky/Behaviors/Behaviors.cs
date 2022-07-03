@@ -14,7 +14,7 @@ namespace Sticky {
       element.MouseMove += OnMouseMove;
     }
 
-    public void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
+    private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
       var doubleClick = e.ClickCount >= 2;
       if (doubleClick) {
         MaximizeOrRestore();
@@ -24,7 +24,7 @@ namespace Sticky {
       }
     }
 
-    public void OnMouseMove(object sender, MouseEventArgs e) {
+    private void OnMouseMove(object sender, MouseEventArgs e) {
       if (e.LeftButton != MouseButtonState.Pressed) return;
 
       var window = Window.GetWindow(_element);
@@ -60,6 +60,22 @@ namespace Sticky {
       window.DragMove();
     }
 
+  }
+
+  public class FixMaximizedWindowSizeBehavior {
+    private Window _window;
+
+    public FixMaximizedWindowSizeBehavior(Window window) {
+      this._window = window;
+      _window.SizeChanged += OnSizeChanged;
+    }
+
+    private void OnSizeChanged(object sender, SizeChangedEventArgs e) {
+      // @NOTE: Hack! When the window is maximized the window size ends
+      // up being greater than the monitor size.
+      var thickness = (_window.WindowState == WindowState.Maximized ? 8 : 0);
+      _window.BorderThickness = new System.Windows.Thickness(thickness);
+    }
   }
 
 }

@@ -1,71 +1,47 @@
 using System;
 using System.Windows;
-using System.Windows.Input;
-using ModernWpf;
 using Sticky.DataAccess;
+using Sticky.Helpers;
 using Sticky.ViewModels;
 
 namespace Sticky {
 
   public partial class App : Application {
     private Database _db;
-    public ThemeService Themes = new ThemeService();
+    public Themes Themes = new Themes();
 
     public App(Database db) {
       this._db = db;
-
-      AppContext.SetSwitch("Switch.System.Windows.Controls.Text.UseAdornerForTextboxSelectionRendering", false);
 
       _db.NoteAdded += (sender, e) => {
         var note = e.AddedNote;
         if (note.IsOpen) {
           var vm = new NoteWindowViewModel(note, _db);
-          vm.OpenNoteListRequested += () => OpenNoteList();
-          OpenNoteWindow(vm);
+          vm.OpenNoteListRequested += () => ActivateMainWindow();
+          WindowHelper.OpenNoteWindow(vm, MainWindow);
         }
       };
 
-      _db.NoteDeleted += (sender, e) => CloseNoteWindow(e.DeletedNote.Id);
+      _db.NoteDeleted += (sender, e) => WindowHelper.CloseNoteWindow(Windows, e.DeletedNote.Id);
 
       _db.NoteModified += (sender, e) => {
         var note = e.ModifiedNote;
 
          // @TODO
         if (note.IsOpen) {
-          var window = FindNoteWindow(note.Id);
+          var window = WindowHelper.FindNoteWindow(Windows, note.Id);
           if (window != null) window.Activate();
           else {
             var vm = new NoteWindowViewModel(note, _db);
-            vm.OpenNoteListRequested += () => OpenNoteList();
-            OpenNoteWindow(vm);
+            vm.OpenNoteListRequested += () => ActivateMainWindow();
+            WindowHelper.OpenNoteWindow(vm, MainWindow);
           }
         } else {
-          CloseNoteWindow(note.Id);
+          WindowHelper.CloseNoteWindow(Windows, note.Id);
         }
       };
 
-      _db.SettingsModified += (sender, e) => SetBaseTheme(e.NewSettings.BaseTheme);
-    }
-
-    public void ActivateMainWindow() {
-      OpenNoteList();
-    }
-
-    private void OpenNoteList() {
-      if (MainWindow == null) {
-        MainWindow = new MainWindow(_db);
-      }
-      MainWindow.Show();
-      MainWindow.Activate();
-    }
-
-    protected override void OnStartup(StartupEventArgs e) {
-      base.OnStartup(e);
-
-      var mainWindow = new MainWindow(_db);
-      mainWindow.Show();
-
-      SetBaseTheme(_db.GetSettings().BaseTheme);
+      _db.SettingsModified += (sender, e) => Themes.SetBaseTheme(e.NewSettings.BaseTheme);
     }
 
     public new static App Current => (App)Application.Current;
@@ -75,41 +51,25 @@ namespace Sticky {
       set { base.MainWindow = value; }
     }
 
-    private void OpenNoteWindow(NoteWindowViewModel vm) {
-      var window = new NoteWindow(vm);
-
-      var mainWindow = MainWindow;
-      if (mainWindow != null) {
-        window.Left = MainWindow.Left + MainWindow.Width + 12;
-        window.Top = MainWindow.Top;
+    public void ActivateMainWindow() {
+      if (MainWindow == null) {
+        MainWindow = new MainWindow(_db);
       }
 
-      window.Show();
+      MainWindow.Show();
+      MainWindow.Activate();
     }
 
-    private Window? FindNoteWindow(int noteId) {
-      foreach (var window in Windows) {
-        if (window is NoteWindow noteWindow && noteWindow.DataContext is NoteWindowViewModel noteWindowViewModel && noteWindowViewModel.Id == noteId) {
-          return noteWindow;
-        }
-      }
-      return null;
-    }
+    protected override void OnStartup(StartupEventArgs e) {
+      AppContext.SetSwitch("Switch.System.Windows.Controls.Text.UseAdornerForTextboxSelectionRendering", false);
 
-    private void CloseNoteWindow(int noteId) {
-      var window = FindNoteWindow(noteId);
-      if (window != null) window.Close();
-    }
+      base.OnStartup(e);
 
-    private void SetBaseTheme(BaseTheme theme) {
-      if (MainWindow != null) {
-        MainWindow.ClearValue(ThemeManager.RequestedThemeProperty);
-      }
+      var mainWindow = new MainWindow(_db);
+      mainWindow.Show();
 
-      var appTheme = theme.ToApplicationTheme();
-      if (appTheme != ThemeManager.Current.ActualApplicationTheme) {
-        ThemeManager.Current.ApplicationTheme = appTheme;
-      }
+      Themes.SetBaseTheme(_db.GetSettings().BaseTheme);
     }
   }
+
 }

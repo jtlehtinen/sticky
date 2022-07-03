@@ -49,7 +49,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Resource Include="icon.ico"/>
+    <Resource Include="Resources/icon.ico"/>
   </ItemGroup>
 
   <ItemGroup>

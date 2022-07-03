@@ -1,6 +1,6 @@
 using System;
 using System.Threading;
-using System.Windows;
+using Sticky.DataAccess;
 
 namespace Sticky {
 
@@ -21,13 +21,11 @@ namespace Sticky {
 
       var mutex = new Mutex(true, "cbe6e195-20b6-4950-97fa-6da85c3715f8", out bool created);
       if (!created) {
-        // @NOTE: Other instance is already running. Set
-        // event to bring it to the foreground.
+        // @NOTE: Activate already running instance.
         eventHandle.Set();
         Environment.Exit(0);
       }
 
-      // @TODO: Exit the thread in a clean way.
       var thread = new Thread(() => {
           while (eventHandle.WaitOne()) {
             App.Current.Dispatcher.BeginInvoke(() => App.Current.ActivateMainWindow());
@@ -39,7 +37,7 @@ namespace Sticky {
 
       SetExceptionHandler();
 
-      var db = new DataAccess.Database();
+      var db = new Database();
       var app = new App(db);
 
       app.InitializeComponent();

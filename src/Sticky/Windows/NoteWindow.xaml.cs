@@ -7,11 +7,10 @@ using System.Windows.Input;
 using Sticky.ViewModels;
 
 namespace Sticky {
-  /// <summary>
-  /// Interaction logic for NoteWindow.xaml
-  /// </summary>
+
   public partial class NoteWindow : Window {
     private DragBehavior _drag;
+    private FixMaximizedWindowSizeBehavior _sizeFix;
 
     public NoteWindow(NoteWindowViewModel vm) {
       DataContext = vm;
@@ -20,6 +19,7 @@ namespace Sticky {
       Native.ApplyRoundedWindowCorners(this);
 
       _drag = new DragBehavior(TitleBar);
+      _sizeFix = new FixMaximizedWindowSizeBehavior(this);
 
       vm.ShowOverlayRequested += () => ShowOverlay();
       vm.HideOverlayRequested += () => HideOverlay();
@@ -29,13 +29,26 @@ namespace Sticky {
       };
 
       NoteRichTextBox.IsKeyboardFocusedChanged += (sender, e) => RefreshToolbarVisibility(this.RenderSize);
-      NoteRichTextBox.SelectionChanged += OnSelectionChanged;
-      NoteRichTextBox.KeyUp += OnKeyUp;
+      NoteRichTextBox.SelectionChanged += (sender, e) => RefreshToolbarButtons();
+      NoteRichTextBox.KeyUp += (sender, e) => RefreshToolbarButtons();
 
       LostKeyboardFocus += (sender, e) => HideOverlay();
       LostFocus += (sender, e) => HideOverlay();
 
+      SizeChanged += (sender, e) => RefreshToolbarVisibility(e.NewSize);
+
       SetTheme(vm.Theme);
+    }
+
+    public NoteWindowViewModel GetViewModel() {
+      return DataContext as NoteWindowViewModel;
+    }
+
+    public bool ContainsNote(int noteId) {
+      var vm = GetViewModel();
+      if (vm == null) return false;
+
+      return vm.Id == noteId;
     }
 
     private void SetTheme(string themeName) {
@@ -93,21 +106,13 @@ namespace Sticky {
     }
 
     private void ChangeNoteThemeExecuted(object sender, ExecutedRoutedEventArgs e) {
-      var note = (NoteViewModel)DataContext;
-      note.Theme = (string)e.Parameter;
+      var vm = GetViewModel();
+      vm.Theme = (string)e.Parameter;
       HideOverlay();
     }
 
     private void OnHideOverlay(object sender, RoutedEventArgs e) {
       HideOverlay();
-    }
-
-    private void OnSelectionChanged(object sender, RoutedEventArgs e) {
-      RefreshToolbarButtons();
-    }
-
-    private void OnKeyUp(object sender, KeyEventArgs e) {
-      RefreshToolbarButtons();
     }
 
     private void OnMouseWheel(object sender, MouseWheelEventArgs e) {
@@ -118,14 +123,6 @@ namespace Sticky {
       var command = e.Delta > 0 ? EditingCommands.IncreaseFontSize : EditingCommands.DecreaseFontSize;
       command.Execute(null, (RichTextBox)sender);
     }
-
-    private void OnSizeChanged(object sender, SizeChangedEventArgs e) {
-      // @NOTE: Hack! When the window is maximized the window size ends
-      // up being greater than the monitor size.
-      var thickness = (this.WindowState == WindowState.Maximized ? 8 : 0);
-      this.BorderThickness = new System.Windows.Thickness(thickness);
-
-      RefreshToolbarVisibility(e.NewSize);
-    }
   }
+
 }

@@ -1,15 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using ModernWpf;
 
 namespace Sticky {
 
-  public class ThemeService {
+  public enum BaseTheme {
+    Dark,
+    Light,
+    System
+  }
+
+  public class Themes {
     private const string THEME_NAME_KEY = "ThemeName";
 
     private Dictionary<string, ResourceDictionary> themes = new();
 
-    public ThemeService() {
+    public Themes() {
       LoadThemes();
     }
 
@@ -49,6 +56,13 @@ namespace Sticky {
       var name = dic[THEME_NAME_KEY] as string;
 
       return name != null && themes.ContainsKey(name);
+    }
+
+    public void SetBaseTheme(BaseTheme theme) {
+      var appTheme = theme.ToApplicationTheme();
+      if (appTheme != ThemeManager.Current.ActualApplicationTheme) {
+        ThemeManager.Current.ApplicationTheme = appTheme;
+      }
     }
   }
 

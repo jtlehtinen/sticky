@@ -9,7 +9,7 @@
   Width="320"
   Height="500"
   Title="sticky"
-  Icon="/icon.ico"
+  Icon="/Resources/icon.ico"
   AllowsTransparency="True"
   WindowStyle="None"
   ResizeMode="CanResizeWithGrip"

@@ -1,17 +1,6 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text.Json.Serialization;
 using ModernWpf;
 
 namespace Sticky {
-
-  [JsonConverter(typeof(JsonStringEnumConverter))]
-  public enum BaseTheme {
-    Dark,
-    Light,
-    System
-  }
 
   public static class BaseThemeExtensions {
     public static ApplicationTheme? ToApplicationTheme(this BaseTheme theme) {
@@ -22,3 +11,4 @@ namespace Sticky {
   }
 
 }
+

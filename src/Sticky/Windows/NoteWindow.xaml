@@ -15,8 +15,7 @@
   WindowStyle="None"
   ResizeMode="CanResizeWithGrip"
   ShowInTaskbar="True"
-  SizeChanged="OnSizeChanged"
-  Icon="/icon.ico"
+  Icon="/Resources/icon.ico"
 >
   <Grid x:Name="LayoutRoot">
 
