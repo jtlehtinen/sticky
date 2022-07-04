@@ -1,4 +1,4 @@
-﻿// Ported from https://github.com/sourcechord/FluentWPF/blob/master/FluentWPF/ParallaxView.cs
+// Ported from https://github.com/sourcechord/FluentWPF/blob/master/FluentWPF/ParallaxView.cs
 
 using System;
 using System.Collections.Generic;

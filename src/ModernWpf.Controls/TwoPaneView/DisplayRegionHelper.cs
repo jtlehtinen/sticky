@@ -1,4 +1,4 @@
-﻿// Ported from https://github.com/dotMorten/UniversalWPF/blob/main/src/UniversalWPF/TwoPaneView/DisplayRegionHelper.cs
+// Ported from https://github.com/dotMorten/UniversalWPF/blob/main/src/UniversalWPF/TwoPaneView/DisplayRegionHelper.cs
 
 using System;
 using System.Collections.Generic;

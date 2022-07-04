@@ -1,4 +1,4 @@
-﻿// Ported from https://github.com/dotMorten/UniversalWPF/blob/main/src/UniversalWPF/TwoPaneView/TwoPaneView.cs
+// Ported from https://github.com/dotMorten/UniversalWPF/blob/main/src/UniversalWPF/TwoPaneView/TwoPaneView.cs
 
 using System;
 using System.Collections.Generic;

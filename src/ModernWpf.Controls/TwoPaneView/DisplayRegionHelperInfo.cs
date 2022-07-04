@@ -1,4 +1,4 @@
-﻿// Ported from https://github.com/dotMorten/UniversalWPF/blob/main/src/UniversalWPF/TwoPaneView/DisplayRegionHelperInfo.cs
+// Ported from https://github.com/dotMorten/UniversalWPF/blob/main/src/UniversalWPF/TwoPaneView/DisplayRegionHelperInfo.cs
 
 using System.Windows;
 
