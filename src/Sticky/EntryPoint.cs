@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using System.Windows;
 using Sticky.DataAccess;
 
 namespace Sticky {
@@ -39,6 +40,7 @@ namespace Sticky {
 
       var db = new Database();
       var app = new App(db);
+      app.ShutdownMode = ShutdownMode.OnLastWindowClose;
 
       app.InitializeComponent();
       app.Run();

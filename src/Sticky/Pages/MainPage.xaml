@@ -74,6 +74,7 @@
       <!-- Search Box -->
       <Grid>
         <ui:AutoSuggestBox
+          x:Name="SearchBox"
           QueryIcon="Find"
           PlaceholderText="Search..."
           TextChanged="OnSearchQueryChanged"

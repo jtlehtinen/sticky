@@ -1,6 +1,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using ModernWpf.Controls;
+using Sticky.Helpers;
 using Sticky.ViewModels;
 
 namespace Sticky {

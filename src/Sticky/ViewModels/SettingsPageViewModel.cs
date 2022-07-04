@@ -12,9 +12,9 @@ namespace Sticky.ViewModels {
     private Settings _settings;
     private Database _db;
 
-    public SettingsPageViewModel(Settings settings, Database db) {
-      this._settings = settings;
+    public SettingsPageViewModel(Database db) {
       this._db = db;
+      this._settings = db.GetSettings();
 
       BackCommand = new RelayCommand(() => App.Current.MainWindow.Navigate(PageType.Main));
       CloseCommand = new RelayCommand(() => App.Current.MainWindow.Close());
