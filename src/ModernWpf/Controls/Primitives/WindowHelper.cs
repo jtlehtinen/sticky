@@ -115,16 +115,16 @@ namespace ModernWpf.Controls.Primitives {
       if (d is Window window) {
         var handler = new RoutedEventHandler(async (sender, e) => {
           await Task.Delay(1);
-          window.Apply();
+          AcrylicHelper.Apply(window);
         });
 
         SetWindowStyle(window);
 
         if ((bool)e.NewValue) {
-          window.Apply();
+          AcrylicHelper.Apply(window);
 
           if (!window.IsLoaded) {
-            window.Loaded += (sender, e) => window.Apply();
+            window.Loaded += (sender, e) => AcrylicHelper.Apply(window);
           }
 
           if (AcrylicHelper.IsAcrylicSupported()) {
@@ -164,7 +164,7 @@ namespace ModernWpf.Controls.Primitives {
 
       if (d is Window window) {
         SetWindowStyle(window);
-        window.Apply((BackdropType)e.NewValue);
+        MicaHelper.Apply(window, (BackdropType)e.NewValue);
       }
     }
 
