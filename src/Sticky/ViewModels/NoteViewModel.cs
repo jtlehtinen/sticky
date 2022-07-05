@@ -50,6 +50,10 @@ namespace Sticky.ViewModels {
       get { return _note.CreatedAt; }
     }
 
+    public DateTime UpdatedAt {
+      get { return _note.UpdatedAt; }
+    }
+
     public bool Show { get; } = true;
 
     public string Content {

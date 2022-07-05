@@ -30,6 +30,10 @@
         Width="40"
         Height="Auto"
         FontSize="16"
+
+        Focusable="True"
+        IsTabStop="True"
+        FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
       />
 
       <!-- Right Side Buttons -->
@@ -43,6 +47,10 @@
           Width="40"
           Height="Auto"
           FontSize="16"
+
+          Focusable="True"
+          IsTabStop="True"
+          FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
         />
 
         <!-- Close Button -->
@@ -54,6 +62,10 @@
           Width="40"
           Height="Auto"
           FontSize="16"
+
+          Focusable="True"
+          IsTabStop="True"
+          FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
         />
       </StackPanel>
     </DockPanel>
@@ -85,7 +97,7 @@
 
     <ui:ScrollViewerEx Grid.Row="2" VerticalScrollBarVisibility="Auto" CanContentScroll="False" Margin="0,0,0,15">
       <!-- Note List -->
-      <ItemsControl x:Name="NoteList" ItemsSource="{Binding Path=AllNotes}">
+      <ItemsControl x:Name="NoteList" ItemsSource="{Binding Path=AllNotes}" IsTabStop="False">
         <!-- Container Template -->
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
@@ -96,7 +108,7 @@
         <!-- Item Template -->
         <ItemsControl.ItemTemplate>
           <DataTemplate>
-            <local:NoteControl Visibility="{Binding Path=Show, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <local:NoteControl Visibility="{Binding Path=Show, Converter={StaticResource BooleanToVisibilityConverter}}" Focusable="True" IsTabStop="True" FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"/>
           </DataTemplate>
         </ItemsControl.ItemTemplate>
       </ItemsControl>

@@ -5,12 +5,11 @@
 >
   <!-- @TODO: Rename this file to something more appropriate -->
 
-  <!-- Change focus visual style -->
-  <Style x:Key="FocusVisualStyle">
+  <Style x:Key="ThickFocusVisualStyle">
     <Setter Property="Control.Template">
       <Setter.Value>
         <ControlTemplate>
-          <Rectangle Margin="-2" StrokeThickness="2" Stroke="Black"/>
+          <Rectangle Margin="0" StrokeThickness="2" Stroke="Black"/>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
@@ -22,6 +21,8 @@
   <local:ColorToInactiveConverter x:Key="ColorToInactiveConverter"/>
   <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
   <local:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibilityConverter"/>
+  <local:BooleanToVisibilityMultiConverter x:Key="BooleanToVisibilityMultiConverter"/>
+  <local:ReverseBooleanToVisibilityMultiConverter x:Key="ReverseBooleanToVisibilityMultiConverter"/>
   <local:DateTimeConverter x:Key="DateTimeConverter"/>
   <local:BaseThemeToIndexConverter x:Key="BaseThemeToIndexConverter"/>
   <local:ReverseBooleanToGeometryCombineModeConverter x:Key="ReverseBooleanToGeometryCombineModeConverter"/>

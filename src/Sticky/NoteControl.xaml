@@ -5,6 +5,7 @@
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
   xmlns:local="clr-namespace:Sticky"
+  x:Name="NameNoteControl"
 >
   <UserControl.Resources>
     <ui:BindingProxy x:Key="BackgroundProxy" Value="{DynamicResource Background}"/>
@@ -12,6 +13,7 @@
 
   <!-- Double Click Opens Note -->
   <UserControl.InputBindings>
+    <KeyBinding Gesture="ENTER" Command="{Binding OpenCommand}"/>
     <MouseBinding
       MouseAction="LeftDoubleClick"
       Command="{Binding OpenCommand}"
@@ -19,7 +21,7 @@
     />
   </UserControl.InputBindings>
 
-  <Border x:Name="OuterBorder" BorderThickness="0" BorderBrush="Transparent" CornerRadius="5">
+  <Border BorderThickness="0" BorderBrush="Transparent" CornerRadius="5">
     <!-- Folded Corner Clip -->
     <Border.Clip>
       <!-- @TODO: Oh, god... this is horrible... -->
@@ -46,7 +48,13 @@
       <Style TargetType="{x:Type Border}">
         <Setter Property="Background" Value="{DynamicResource Background}"/>
         <Style.Triggers>
-          <DataTrigger Binding="{Binding ElementName=OuterBorder, Path=IsMouseOver}" Value="True">
+          <DataTrigger Binding="{Binding ElementName=NameNoteControl, Path=IsMouseOver}" Value="True">
+            <Setter Property="Background" Value="{Binding Path=Value, Source={StaticResource BackgroundProxy}, Converter={StaticResource ColorToHoverConverter}}"/>
+          </DataTrigger>
+          <DataTrigger Binding="{Binding ElementName=NameNoteControl, Path=IsKeyboardFocused}" Value="True">
+            <Setter Property="Background" Value="{Binding Path=Value, Source={StaticResource BackgroundProxy}, Converter={StaticResource ColorToHoverConverter}}"/>
+          </DataTrigger>
+          <DataTrigger Binding="{Binding ElementName=MenuButton, Path=IsKeyboardFocused}" Value="True">
             <Setter Property="Background" Value="{Binding Path=Value, Source={StaticResource BackgroundProxy}, Converter={StaticResource ColorToHoverConverter}}"/>
           </DataTrigger>
         </Style.Triggers>
@@ -78,7 +86,9 @@
 
       <!-- Top-Right Controls -->
       <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Height="23">
+        <!-- Menu Button -->
         <local:ButtonEx
+          x:Name="MenuButton"
           ToolTip="Menu"
           Content="&#xE712;"
           HorizontalAlignment="Right"
@@ -89,19 +99,38 @@
           FontSize="16"
           BackgroundColor="{Binding Path=Value, Source={StaticResource BackgroundProxy}, Converter={StaticResource ColorToHoverConverter}}"
           Foreground="{DynamicResource ForegroundSecondary}"
-          Visibility="{Binding ElementName=OuterBorder, Path=IsMouseOver, Converter={StaticResource BooleanToVisibilityConverter}}"
           Command="{Binding OpenContextMenuCommand}"
-        />
 
+          Focusable="True"
+          IsTabStop="True"
+          FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
+        >
+          <local:ButtonEx.Visibility>
+            <MultiBinding Converter="{StaticResource BooleanToVisibilityMultiConverter}">
+              <Binding ElementName="MenuButton" Path="IsKeyboardFocused"/>
+              <Binding ElementName="NameNoteControl" Path="IsMouseOver"/>
+              <Binding ElementName="NameNoteControl" Path="IsKeyboardFocused"/>
+            </MultiBinding>
+          </local:ButtonEx.Visibility>
+        </local:ButtonEx>
+
+        <!-- Note Updated Time -->
         <TextBlock
           FontSize="10"
           VerticalAlignment="Bottom"
           HorizontalAlignment="Center"
           Foreground="{DynamicResource ForegroundSecondary}"
           Margin="0,0,10,0"
-          Text="{Binding Path=CreatedAt, Converter={StaticResource DateTimeConverter}}"
-          Visibility="{Binding ElementName=OuterBorder, Path=IsMouseOver, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
-        />
+          Text="{Binding Path=UpdatedAt, Converter={StaticResource DateTimeConverter}}"
+        >
+          <TextBlock.Visibility>
+            <MultiBinding Converter="{StaticResource ReverseBooleanToVisibilityMultiConverter}">
+              <Binding ElementName="MenuButton" Path="IsKeyboardFocused"/>
+              <Binding ElementName="NameNoteControl" Path="IsMouseOver"/>
+              <Binding ElementName="NameNoteControl" Path="IsKeyboardFocused"/>
+            </MultiBinding>
+          </TextBlock.Visibility>
+        </TextBlock>
       </StackPanel>
 
       <StackPanel Grid.Row="1" Margin="0,0,0,15">
