@@ -29,6 +29,10 @@
         Width="40"
         Height="Auto"
         FontSize="16"
+
+        Focusable="True"
+        IsTabStop="True"
+        FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
       />
 
       <!-- Close Button -->
@@ -40,6 +44,10 @@
         Width="40"
         Height="Auto"
         FontSize="16"
+
+        Focusable="True"
+        IsTabStop="True"
+        FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
       />
     </DockPanel>
 
@@ -110,6 +118,10 @@
         <Button
           Content="Export Notes"
           Click="OnExportNotes"
+
+          Focusable="True"
+          IsTabStop="True"
+          FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
         />
 
       </ui:SimpleStackPanel>
