@@ -1,7 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Input;
 using Sticky.ViewModels;
 
 namespace Sticky {
@@ -28,8 +27,6 @@ namespace Sticky {
     }
 
     private void OpenContextMenu() {
-      NoteRichTextBox.Focus();
-
       var cm = ContextMenuService.GetContextMenu(NoteRichTextBox);
       cm.PlacementTarget = NoteRichTextBox;
       cm.Placement = PlacementMode.Center;

@@ -9,11 +9,11 @@ namespace Sticky {
   public partial class MainPage : UserControl {
     private DragBehavior _drag;
 
-    public MainPage(MainPageViewModel vm) {
-      DataContext = vm;
+    public MainPage(MainPageViewModel viewModel) {
+      DataContext = viewModel;
 
       InitializeComponent();
-      _drag = new DragBehavior(this.TitleBar);
+      _drag = new DragBehavior(PartTitleBar);
     }
 
     private void OnSearchQueryChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs e) {
@@ -40,11 +40,13 @@ namespace Sticky {
 
         Search.ClearSearch(rtb);
 
-        //if (!string.IsNullOrEmpty(search)) {
-        //  noteViewModel.Show = Search.ApplySearch(rtb, search);
-        //} else {
-        //  noteViewModel.Show = true;
-        //}
+        #if false
+        if (!string.IsNullOrEmpty(search)) {
+          noteViewModel.Show = Search.ApplySearch(rtb, search);
+        } else {
+          noteViewModel.Show = true;
+        }
+        #endif
       }
     }
   }

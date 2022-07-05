@@ -9,6 +9,7 @@
 >
   <UserControl.Resources>
     <ui:BindingProxy x:Key="BackgroundProxy" Value="{DynamicResource Background}"/>
+    <sys:Double x:Key="FoldedCornerSize">16</sys:Double>
   </UserControl.Resources>
 
   <!-- Double Click Opens Note -->
@@ -21,27 +22,22 @@
     />
   </UserControl.InputBindings>
 
-  <Border BorderThickness="0" BorderBrush="Transparent" CornerRadius="5">
+  <Border
+    x:Name="PartBorder"
+    BorderThickness="0"
+    BorderBrush="Transparent"
+    CornerRadius="5"
+  >
     <!-- Folded Corner Clip -->
     <Border.Clip>
-      <!-- @TODO: Oh, god... this is horrible... -->
-      <CombinedGeometry GeometryCombineMode="{Binding Path=IsOpen, Converter={StaticResource ReverseBooleanToGeometryCombineModeConverter}}">
-        <CombinedGeometry.Geometry1>
-          <RectangleGeometry Rect="0 0 4096 4096"/>
-        </CombinedGeometry.Geometry1>
-        <CombinedGeometry.Geometry2>
-          <PathGeometry>
-            <PathGeometry.Figures>
-              <PathFigure StartPoint="0,0">
-                <PathFigure.Segments>
-                  <LineSegment Point="15,0"/>
-                  <LineSegment Point="0,15"/>
-                </PathFigure.Segments>
-              </PathFigure>
-            </PathGeometry.Figures>
-          </PathGeometry>
-        </CombinedGeometry.Geometry2>
-      </CombinedGeometry>
+      <MultiBinding
+        Converter="{StaticResource FoldedCornerConverter}"
+        ConverterParameter="{StaticResource FoldedCornerSize}"
+      >
+        <Binding Path="ActualWidth"  ElementName="PartBorder"/>
+        <Binding Path="ActualHeight" ElementName="PartBorder"/>
+        <Binding Path="IsOpen"/>
+      </MultiBinding>
     </Border.Clip>
 
     <Border.Style>
@@ -51,10 +47,7 @@
           <DataTrigger Binding="{Binding ElementName=NameNoteControl, Path=IsMouseOver}" Value="True">
             <Setter Property="Background" Value="{Binding Path=Value, Source={StaticResource BackgroundProxy}, Converter={StaticResource ColorToHoverConverter}}"/>
           </DataTrigger>
-          <DataTrigger Binding="{Binding ElementName=NameNoteControl, Path=IsKeyboardFocused}" Value="True">
-            <Setter Property="Background" Value="{Binding Path=Value, Source={StaticResource BackgroundProxy}, Converter={StaticResource ColorToHoverConverter}}"/>
-          </DataTrigger>
-          <DataTrigger Binding="{Binding ElementName=MenuButton, Path=IsKeyboardFocused}" Value="True">
+          <DataTrigger Binding="{Binding ElementName=NameNoteControl, Path=IsKeyboardFocusWithin}" Value="True">
             <Setter Property="Background" Value="{Binding Path=Value, Source={StaticResource BackgroundProxy}, Converter={StaticResource ColorToHoverConverter}}"/>
           </DataTrigger>
         </Style.Triggers>
@@ -71,14 +64,14 @@
       <Canvas
         Grid.Row="0"
         ZIndex="1"
-        Width="15"
-        Height="15"
+        Width="{StaticResource FoldedCornerSize}"
+        Height="{StaticResource FoldedCornerSize}"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
         Visibility="{Binding Path=IsOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
       >
         <Polygon
-          Points="0,15 15,15, 15,0"
+          Points="{Binding Source={StaticResource FoldedCornerSize}, Converter={StaticResource FoldedCornerTriangleConverter}}"
           Stroke="{Binding Source={StaticResource BackgroundProxy}, Path=Value, Converter={StaticResource ColorToPressedConverter}}"
           Fill="{Binding Source={StaticResource BackgroundProxy}, Path=Value, Converter={StaticResource ColorToPressedConverter}}"
         />
@@ -103,7 +96,9 @@
 
           Focusable="True"
           IsTabStop="True"
-          FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
+          FocusVisualStyle="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}"
+          ui:FocusVisualHelper.UseSystemFocusVisuals="{DynamicResource UseSystemFocusVisuals}"
+          ui:FocusVisualHelper.FocusVisualMargin="0"
         >
           <local:ButtonEx.Visibility>
             <MultiBinding Converter="{StaticResource BooleanToVisibilityMultiConverter}">
@@ -134,6 +129,14 @@
       </StackPanel>
 
       <StackPanel Grid.Row="1" Margin="0,0,0,15">
+        <StackPanel.InputBindings>
+          <MouseBinding
+            MouseAction="LeftDoubleClick"
+            Command="{Binding OpenCommand}"
+            CommandParameter="{Binding Id}"
+          />
+        </StackPanel.InputBindings>
+
         <local:BindableRichTextBox
           Style="{StaticResource DefaultRichTextBoxStyle}"
           ui:ControlHelper.PlaceholderText="Take a note..."
@@ -151,14 +154,6 @@
           Foreground="{DynamicResource Foreground}"
           local:RichTextBoxHelper.DocumentXaml="{Binding Path=Content}"
         >
-          <local:BindableRichTextBox.InputBindings>
-            <MouseBinding
-              MouseAction="LeftDoubleClick"
-              Command="{Binding OpenCommand}"
-              CommandParameter="{Binding Id}"
-            />
-          </local:BindableRichTextBox.InputBindings>
-
           <local:BindableRichTextBox.Resources>
             <Thickness x:Key="TextControlBorderThemeThicknessFocused">0</Thickness>
             <Style TargetType="{x:Type Paragraph}">
@@ -193,7 +188,7 @@
                 </MenuItem.Icon>
               </MenuItem>
 
-              <!-- Delete -->
+              <!-- Delete Note -->
               <MenuItem
                 Header="Delete note"
                 Command="{Binding DeleteCommand}"

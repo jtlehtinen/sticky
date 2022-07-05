@@ -28,6 +28,7 @@
 
     <!-- Title Bar -->
     <DockPanel
+      x:Name="PartTitleBar"
       Background="Transparent"
       Height="40"
       LastChildFill="False"

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
@@ -6,6 +7,54 @@ using System.Windows.Markup;
 using System.Windows.Media;
 
 namespace Sticky {
+
+  public class FoldedCornerTriangleConverter : IValueConverter {
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+      var dim = (double)value;
+
+      var collection = new PointCollection();
+      collection.Add(new Point(0, dim));
+      collection.Add(new Point(dim, dim));
+      collection.Add(new Point(dim, 0));
+
+      return collection;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+      throw new NotImplementedException();
+    }
+  }
+
+  public class FoldedCornerConverter : IMultiValueConverter {
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
+      var width = (double)values[0];
+      var height = (double)values[1];
+      var open = (bool)values[2];
+
+      if (!open) {
+        return new RectangleGeometry(new Rect(0, 0, width, height));
+      }
+
+      // Cut a triangle from top-left corner.
+      var dim = (double)parameter;
+      var start = new Point(dim, 0);
+
+      var segments = new List<LineSegment>{
+        new LineSegment(new Point(width,      0), false),
+        new LineSegment(new Point(width, height), false),
+        new LineSegment(new Point(    0, height), false),
+        new LineSegment(new Point(    0,    dim), false),
+      };
+
+      var figure = new PathFigure(start, segments, true);
+
+      return new PathGeometry(new List<PathFigure>{ figure });
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) {
+      throw new NotImplementedException();
+    }
+  }
 
   public class BooleanToGeometryCombineModeConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {

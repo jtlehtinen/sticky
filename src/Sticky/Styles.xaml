@@ -26,6 +26,8 @@
   <local:DateTimeConverter x:Key="DateTimeConverter"/>
   <local:BaseThemeToIndexConverter x:Key="BaseThemeToIndexConverter"/>
   <local:ReverseBooleanToGeometryCombineModeConverter x:Key="ReverseBooleanToGeometryCombineModeConverter"/>
+  <local:FoldedCornerConverter x:Key="FoldedCornerConverter"/>
+  <local:FoldedCornerTriangleConverter x:Key="FoldedCornerTriangleConverter"/>
 
   <!-- Global ToolTip Styles -->
   <Style TargetType="{x:Type ToolTip}">

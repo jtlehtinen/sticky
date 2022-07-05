@@ -5,6 +5,20 @@
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:local="clr-namespace:Sticky"
 >
+  <UserControl.Resources>
+    <Style TargetType="{x:Type ui:TitleBarButton}" BasedOn="{StaticResource {x:Type ui:TitleBarButton}}">
+      <Setter Property="Focusable" Value="True"/>
+      <Setter Property="IsTabStop" Value="True"/>
+      <Setter Property="FocusVisualStyle" Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}" />
+      <Setter Property="ui:FocusVisualHelper.UseSystemFocusVisuals" Value="{DynamicResource UseSystemFocusVisuals}" />
+      <Setter Property="ui:FocusVisualHelper.FocusVisualMargin" Value="1" />
+
+      <Setter Property="Width" Value="40"/>
+      <Setter Property="Height" Value="Auto"/>
+      <Setter Property="FontSize" Value="16"/>
+    </Style>
+  </UserControl.Resources>
+
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
@@ -14,43 +28,30 @@
 
     <!-- Title Bar -->
     <DockPanel
-      x:Name="TitleBar"
+      x:Name="PartTitleBar"
       Grid.Row="0"
-      Margin="0"
       Background="Transparent"
       Height="40"
       LastChildFill="False"
     >
       <!-- New Note Button -->
       <ui:TitleBarButton
+        DockPanel.Dock="Left"
         Content="&#xE948;"
         ToolTip="New note"
         Command="{Binding NewNoteCommand}"
-        DockPanel.Dock="Left"
-        Width="40"
-        Height="Auto"
-        FontSize="16"
-
-        Focusable="True"
-        IsTabStop="True"
-        FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
       />
 
-      <!-- Right Side Buttons -->
-      <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+      <StackPanel
+        DockPanel.Dock="Right"
+        Orientation="Horizontal"
+      >
         <!-- Settings Button -->
         <ui:TitleBarButton
           Content="&#xE713;"
           ToolTip="Settings"
           Command="{Binding OpenSettingsPageCommand}"
           CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-          Width="40"
-          Height="Auto"
-          FontSize="16"
-
-          Focusable="True"
-          IsTabStop="True"
-          FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
         />
 
         <!-- Close Button -->
@@ -59,13 +60,6 @@
           ToolTip="Close window"
           Command="{Binding CloseCommand}"
           CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-          Width="40"
-          Height="Auto"
-          FontSize="16"
-
-          Focusable="True"
-          IsTabStop="True"
-          FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
         />
       </StackPanel>
     </DockPanel>
@@ -95,9 +89,19 @@
       </Grid>
     </ui:SimpleStackPanel>
 
-    <ui:ScrollViewerEx Grid.Row="2" VerticalScrollBarVisibility="Auto" CanContentScroll="False" Margin="0,0,0,15">
-      <!-- Note List -->
-      <ItemsControl x:Name="NoteList" ItemsSource="{Binding Path=AllNotes}" IsTabStop="False">
+    <!-- Note List -->
+    <ui:ScrollViewerEx
+      Grid.Row="2"
+      VerticalScrollBarVisibility="Auto"
+      CanContentScroll="False"
+      Margin="0,0,0,15"
+      KeyboardNavigation.DirectionalNavigation="Once"
+    >
+      <ItemsControl
+        x:Name="NoteList"
+        ItemsSource="{Binding Path=AllNotes}"
+        IsTabStop="False"
+      >
         <!-- Container Template -->
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
@@ -108,7 +112,14 @@
         <!-- Item Template -->
         <ItemsControl.ItemTemplate>
           <DataTemplate>
-            <local:NoteControl Visibility="{Binding Path=Show, Converter={StaticResource BooleanToVisibilityConverter}}" Focusable="True" IsTabStop="True" FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"/>
+            <local:NoteControl
+              Visibility="{Binding Path=Show, Converter={StaticResource BooleanToVisibilityConverter}}"
+              Focusable="True"
+              IsTabStop="True"
+              FocusVisualStyle="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}"
+              ui:FocusVisualHelper.UseSystemFocusVisuals="{DynamicResource UseSystemFocusVisuals}"
+              ui:FocusVisualHelper.FocusVisualMargin="0"
+            />
           </DataTemplate>
         </ItemsControl.ItemTemplate>
       </ItemsControl>
