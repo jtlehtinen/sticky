@@ -34,15 +34,29 @@
       Panel.ZIndex="1000"
       Visibility="Collapsed"
       MouseLeftButtonDown="OnHideOverlay"
+      FocusManager.IsFocusScope="True"
+      KeyboardNavigation.TabNavigation="Cycle"
+      KeyboardNavigation.DirectionalNavigation="Contained"
+      KeyboardNavigation.ControlTabNavigation="Contained"
     >
+      <Grid.InputBindings>
+        <KeyBinding Gesture="ESCAPE" Command="{Binding HideOverlayCommand}"/>
+      </Grid.InputBindings>
+
       <Grid.Background>
         <SolidColorBrush Color="Black" Opacity="0.3"/>
       </Grid.Background>
 
-      <StackPanel Orientation="Vertical">
+      <!--
+        FocusVisualStyle does not honor the elements RenderTransform if it is dynamic.
+        Using an AdornerDecorator is a work around for it.
+
+        See: https://drwpf.com/blog/2010/01/29/render-transforms-and-focus-visuals/
+        -->
+      <AdornerDecorator>
         <!-- Slide Down Animation -->
-        <StackPanel.Style>
-          <Style TargetType="{x:Type StackPanel}">
+        <AdornerDecorator.Style>
+          <Style TargetType="{x:Type AdornerDecorator}">
             <Setter Property="RenderTransform">
               <Setter.Value>
                 <TranslateTransform X="0" Y="-200"/>
@@ -69,72 +83,83 @@
               </DataTrigger>
             </Style.Triggers>
           </Style>
-        </StackPanel.Style>
+        </AdornerDecorator.Style>
 
-        <!-- Color Theme Buttons -->
-        <Grid>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-          </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical">
+          <!-- Color Theme Buttons -->
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-          <local:RadioButtonEx x:Name="RadioButtonThemeYellow"   GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="0" BackgroundColor="#FFFFE66E" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Yellow"/>
-          <local:RadioButtonEx x:Name="RadioButtonThemeGreen"    GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="1" BackgroundColor="#FFA1EF9B" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Green"/>
-          <local:RadioButtonEx x:Name="RadioButtonThemePink"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="2" BackgroundColor="#FFFFAFDF" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Pink"/>
-          <local:RadioButtonEx x:Name="RadioButtonThemePurple"   GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="3" BackgroundColor="#FFD7AFFF" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Purple"/>
-          <local:RadioButtonEx x:Name="RadioButtonThemeBlue"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="4" BackgroundColor="#FF9EDFFF" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Blue"/>
-          <local:RadioButtonEx x:Name="RadioButtonThemeGray"     GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="5" BackgroundColor="#FFE0E0E0" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Gray"/>
-          <local:RadioButtonEx x:Name="RadioButtonThemeCharcoal" GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="6" BackgroundColor="#FF767676" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Charcoal"/>
-        </Grid>
+            <local:RadioButtonEx x:Name="RadioButtonThemeYellow"   Focusable="True" IsTabStop="True" FocusVisualStyle="{StaticResource ThickFocusVisualStyle}" GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="0" BackgroundColor="#FFFFE66E" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Yellow"/>
+            <local:RadioButtonEx x:Name="RadioButtonThemeGreen"    Focusable="True" IsTabStop="True" FocusVisualStyle="{StaticResource ThickFocusVisualStyle}" GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="1" BackgroundColor="#FFA1EF9B" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Green"/>
+            <local:RadioButtonEx x:Name="RadioButtonThemePink"     Focusable="True" IsTabStop="True" FocusVisualStyle="{StaticResource ThickFocusVisualStyle}" GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="2" BackgroundColor="#FFFFAFDF" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Pink"/>
+            <local:RadioButtonEx x:Name="RadioButtonThemePurple"   Focusable="True" IsTabStop="True" FocusVisualStyle="{StaticResource ThickFocusVisualStyle}" GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="3" BackgroundColor="#FFD7AFFF" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Purple"/>
+            <local:RadioButtonEx x:Name="RadioButtonThemeBlue"     Focusable="True" IsTabStop="True" FocusVisualStyle="{StaticResource ThickFocusVisualStyle}" GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="4" BackgroundColor="#FF9EDFFF" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Blue"/>
+            <local:RadioButtonEx x:Name="RadioButtonThemeGray"     Focusable="True" IsTabStop="True" FocusVisualStyle="{StaticResource ThickFocusVisualStyle}" GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="5" BackgroundColor="#FFE0E0E0" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Gray"/>
+            <local:RadioButtonEx x:Name="RadioButtonThemeCharcoal" Focusable="True" IsTabStop="True" FocusVisualStyle="{StaticResource ThickFocusVisualStyle}" GroupName="Theme" Style="{StaticResource RadioButtonExOverlay}" Grid.Column="6" BackgroundColor="#FF767676" Command="{Binding ChangeNoteThemeCommand}" CommandParameter="Theme.Charcoal"/>
+          </Grid>
 
-        <!-- Notes List Button -->
-        <local:ButtonEx
-          Command="{Binding OpenNoteListCommand}"
-          BackgroundColor="White"
-          Foreground="Black"
-          HorizontalContentAlignment="Left"
-          Padding="17"
-        >
-          <Button.Content>
-            <StackPanel Orientation="Horizontal">
-              <TextBlock Text="&#xEA37;" FontSize="16" FontFamily="{DynamicResource SymbolThemeFontFamily}"/>
-              <TextBlock
-                Text="Notes list"
-                FontFamily="Arial"
-                FontSize="15"
-                Margin="15,0,0,0"
-              />
-            </StackPanel>
-          </Button.Content>
-        </local:ButtonEx>
+          <!-- Notes List Button -->
+          <local:ButtonEx
+            x:Name="NoteListButton"
+            Command="{Binding OpenNoteListCommand}"
+            BackgroundColor="White"
+            Foreground="Black"
+            HorizontalContentAlignment="Left"
+            Padding="17"
 
-        <!-- Delete Note Button -->
-        <local:ButtonEx
-          Command="{Binding DeleteCommand}"
-          CommandParameter="{Binding Path=Id}"
-          BackgroundColor="White"
-          Foreground="Red"
-          HorizontalContentAlignment="Left"
-          Padding="17"
-        >
-          <Button.Content>
-            <StackPanel Orientation="Horizontal">
-              <TextBlock Text="&#xE74D;" FontSize="16" FontFamily="{DynamicResource SymbolThemeFontFamily}"/>
-              <TextBlock
-                Text="Delete note"
-                FontFamily="Arial"
-                FontSize="15"
-                Margin="15,0,0,0"
-              />
-            </StackPanel>
-          </Button.Content>
-        </local:ButtonEx>
-      </StackPanel>
+            Focusable="True"
+            IsTabStop="True"
+            FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
+          >
+            <Button.Content>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="&#xEA37;" FontSize="16" FontFamily="{DynamicResource SymbolThemeFontFamily}"/>
+                <TextBlock
+                  Text="Notes list"
+                  FontFamily="Arial"
+                  FontSize="15"
+                  Margin="15,0,0,0"
+                />
+              </StackPanel>
+            </Button.Content>
+          </local:ButtonEx>
+
+          <!-- Delete Note Button -->
+          <local:ButtonEx
+            Command="{Binding DeleteCommand}"
+            CommandParameter="{Binding Path=Id}"
+            BackgroundColor="White"
+            Foreground="Red"
+            HorizontalContentAlignment="Left"
+            Padding="17"
+
+            Focusable="True"
+            IsTabStop="True"
+            FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
+          >
+            <Button.Content>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="&#xE74D;" FontSize="16" FontFamily="{DynamicResource SymbolThemeFontFamily}"/>
+                <TextBlock
+                  Text="Delete note"
+                  FontFamily="Arial"
+                  FontSize="15"
+                  Margin="15,0,0,0"
+                />
+              </StackPanel>
+            </Button.Content>
+          </local:ButtonEx>
+        </StackPanel>
+      </AdornerDecorator>
     </Grid>
 
     <!-- Main Content -->
@@ -160,7 +185,7 @@
               </Setter.Value>
             </Setter>
             <Style.Triggers>
-              <DataTrigger Binding="{Binding ElementName=NoteRichTextBox, Path=IsKeyboardFocusWithin}" Value="True">
+              <DataTrigger Binding="{Binding ElementName=NameNoteWindow, Path=IsKeyboardFocusWithin}" Value="True">
                 <DataTrigger.EnterActions>
                   <BeginStoryboard>
                     <Storyboard>
@@ -217,6 +242,10 @@
             ToolTip="New note"
             Command="{Binding NewNoteCommand}"
             CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+
+            Focusable="True"
+            IsTabStop="True"
+            FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
           />
 
           <!-- Unpin Note -->
@@ -226,6 +255,10 @@
             ToolTip="Unpin note"
             Command="{Binding UnpinCommand}"
             Visibility="{Binding Path=Topmost, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Converter={StaticResource BooleanToVisibilityConverter}}"
+
+            Focusable="True"
+            IsTabStop="True"
+            FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
           />
 
           <!-- Pin Note -->
@@ -235,6 +268,10 @@
             ToolTip="Pin note"
             Command="{Binding PinCommand}"
             Visibility="{Binding Path=Topmost, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
+
+            Focusable="True"
+            IsTabStop="True"
+            FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
           />
         </StackPanel>
 
@@ -246,6 +283,10 @@
             Content="&#xE712;"
             ToolTip="Menu"
             Command="{Binding ShowOverlayCommand}"
+
+            Focusable="True"
+            IsTabStop="True"
+            FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
           />
 
           <!-- Close Note -->
@@ -254,6 +295,10 @@
             Content="&#xE947;"
             ToolTip="Close note"
             Command="{Binding CloseCommand}"
+
+            Focusable="True"
+            IsTabStop="True"
+            FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
           />
         </StackPanel>
       </DockPanel>
@@ -274,7 +319,7 @@
               </Setter.Value>
             </Setter>
             <Style.Triggers>
-              <DataTrigger Binding="{Binding ElementName=NoteRichTextBox, Path=IsKeyboardFocusWithin}" Value="True">
+              <DataTrigger Binding="{Binding ElementName=NameNoteWindow, Path=IsKeyboardFocusWithin}" Value="True">
                 <DataTrigger.EnterActions>
                   <BeginStoryboard>
                     <Storyboard>
@@ -311,6 +356,10 @@
             ToolTip="Bold"
             Command="EditingCommands.ToggleBold"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
+
+            Focusable="True"
+            IsTabStop="True"
+            FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
           />
 
           <!-- Italic Button -->
@@ -321,6 +370,10 @@
             ToolTip="Italic"
             Command="EditingCommands.ToggleItalic"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
+
+            Focusable="True"
+            IsTabStop="True"
+            FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
           />
 
           <!-- Underline Button -->
@@ -331,6 +384,10 @@
             ToolTip="Underline"
             Command="EditingCommands.ToggleUnderline"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
+
+            Focusable="True"
+            IsTabStop="True"
+            FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
           />
 
           <!-- Strikethrough Button -->
@@ -341,6 +398,10 @@
             ToolTip="Strikethrough"
             Command="{x:Static local:BindableRichTextBox.ToggleStrikethrough}"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
+
+            Focusable="True"
+            IsTabStop="True"
+            FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
           />
 
           <!-- Toggle Bullets Button -->
@@ -351,6 +412,10 @@
             ToolTip="Toggle bullets"
             Command="EditingCommands.ToggleBullets"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
+
+            Focusable="True"
+            IsTabStop="True"
+            FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
           />
 
           <!-- @TODO: Add Image Button -->
@@ -358,6 +423,10 @@
             Style="{StaticResource ButtonExToolbar}"
             Content="&#xEB9F;"
             ToolTip="Add image"
+
+            Focusable="True"
+            IsTabStop="True"
+            FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
           />
 
           <!-- Decrease Font Size Button -->
@@ -367,6 +436,10 @@
             ToolTip="Decrease font size"
             Command="EditingCommands.DecreaseFontSize"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
+
+            Focusable="True"
+            IsTabStop="True"
+            FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
           />
 
           <!-- Increase Font Size Button -->
@@ -376,6 +449,10 @@
             ToolTip="Increase font size"
             Command="EditingCommands.IncreaseFontSize"
             CommandTarget="{Binding ElementName=NoteRichTextBox}"
+
+            Focusable="True"
+            IsTabStop="True"
+            FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
           />
 
           <!--
@@ -392,31 +469,29 @@
       </Border>
 
       <!-- Rich Text Box -->
-      <Grid>
-        <local:BindableRichTextBox
-          Style="{StaticResource DefaultRichTextBoxStyle}"
-          x:Name="NoteRichTextBox"
-          Background="Transparent"
-          BorderBrush="Transparent"
-          BorderThickness="0"
-          CaretBrush="{DynamicResource TextCursorForeground}"
-          Foreground="{DynamicResource Foreground}"
-          SelectionBrush="{DynamicResource SelectionBackground}"
-          HorizontalScrollBarVisibility="Auto"
-          VerticalScrollBarVisibility="Auto"
-          ui:ControlHelper.PlaceholderText="Take a note..."
-          local:RichTextBoxHelper.DocumentXaml="{Binding Path=Content}"
-          MouseWheel="OnMouseWheel"
-        >
-          <!-- @TODO: Enter vs Shift+Enter -->
-          <local:BindableRichTextBox.Resources>
-            <Thickness x:Key="TextControlBorderThemeThicknessFocused">0</Thickness>
-            <Style TargetType="{x:Type Paragraph}">
-              <Setter Property="Margin" Value="0"/>
-            </Style>
-          </local:BindableRichTextBox.Resources>
-        </local:BindableRichTextBox>
-      </Grid>
+      <local:BindableRichTextBox
+        Style="{StaticResource DefaultRichTextBoxStyle}"
+        x:Name="NoteRichTextBox"
+        Background="Transparent"
+        BorderBrush="Transparent"
+        BorderThickness="0"
+        CaretBrush="{DynamicResource TextCursorForeground}"
+        Foreground="{DynamicResource Foreground}"
+        SelectionBrush="{DynamicResource SelectionBackground}"
+        HorizontalScrollBarVisibility="Auto"
+        VerticalScrollBarVisibility="Auto"
+        ui:ControlHelper.PlaceholderText="Take a note..."
+        local:RichTextBoxHelper.DocumentXaml="{Binding Path=Content}"
+        MouseWheel="OnMouseWheel"
+      >
+        <!-- @TODO: Enter vs Shift+Enter -->
+        <local:BindableRichTextBox.Resources>
+          <Thickness x:Key="TextControlBorderThemeThicknessFocused">0</Thickness>
+          <Style TargetType="{x:Type Paragraph}">
+            <Setter Property="Margin" Value="0"/>
+          </Style>
+        </local:BindableRichTextBox.Resources>
+      </local:BindableRichTextBox>
     </DockPanel>
   </Grid>
 </Window>

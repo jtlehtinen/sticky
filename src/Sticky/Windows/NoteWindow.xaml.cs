@@ -37,8 +37,18 @@ namespace Sticky {
       NoteRichTextBox.SelectionChanged += (sender, e) => RefreshToolbarButtons();
       NoteRichTextBox.KeyUp += (sender, e) => RefreshToolbarButtons();
 
-      LostKeyboardFocus += (sender, e) => HideOverlay();
-      LostFocus += (sender, e) => HideOverlay();
+      //Overlay.LostFocus += (sender, e) => HideOverlay();
+      //Overlay.LostKeyboardFocus += (sender, e) => HideOverlay();
+
+      Overlay.IsKeyboardFocusWithinChanged += (sender, e) => {
+        var focused = (bool)e.NewValue;
+        if (!focused) {
+          HideOverlay();
+        }
+      };
+
+      //LostKeyboardFocus += (sender, e) => HideOverlay();
+      //LostFocus += (sender, e) => HideOverlay();
 
       SizeChanged += (sender, e) => RefreshToolbarVisibility(e.NewSize);
 
@@ -92,6 +102,16 @@ namespace Sticky {
 
     private void ShowOverlay() {
       Overlay.Visibility = Visibility.Visible;
+
+      #if false
+      Keyboard.Focus(Overlay);
+      var request = new TraversalRequest(FocusNavigationDirection.Next);
+      var elementWithFocus = Keyboard.FocusedElement as UIElement;
+      if (elementWithFocus != null)
+        elementWithFocus.MoveFocus(request);
+      #endif
+
+      Keyboard.Focus(RadioButtonThemeYellow); // @NOTE: The first focusable button in the overlay
     }
 
     private void HideOverlay() {
@@ -99,7 +119,7 @@ namespace Sticky {
     }
 
     private void RefreshToolbarVisibility(Size noteWindowSize) {
-      var hasKeyboardFocus = NoteRichTextBox.IsKeyboardFocusWithin;
+      var hasKeyboardFocus = IsKeyboardFocusWithin;
 
       var show = hasKeyboardFocus && noteWindowSize.Width >= 340 && noteWindowSize.Height >= 150;
       var visibility = show ? Visibility.Visible : Visibility.Collapsed;
