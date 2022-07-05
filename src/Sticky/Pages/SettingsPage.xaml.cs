@@ -1,6 +1,6 @@
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using Microsoft.Win32;
 using Sticky.ViewModels;
 
@@ -12,22 +12,20 @@ namespace Sticky {
     public SettingsPage(SettingsPageViewModel vm) {
       DataContext = vm;
       InitializeComponent();
+
       _drag = new DragBehavior(this);
     }
 
-    private void OnExportNotes(object sender, RoutedEventArgs e) {
-      System.Console.WriteLine("OnExportNotes");
+    private void OnThemeChanged(object sender, SelectionChangedEventArgs e) {
+      if (e.AddedItems.Count == 0 || e.AddedItems[0] == null) return;
 
-      var dialog = new SaveFileDialog();
-      dialog.FileName = "sticky-notes";
-      dialog.DefaultExt = ".json";
-      dialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
-      dialog.ShowDialog();
-      if (dialog.FileName == "") {
-        return;
-      }
+      var element = (FrameworkElement)e.AddedItems[0];
+      var tag = (string)element.Tag;
+      var theme = Enum.Parse<BaseTheme>(tag);
 
-      // @TODO: Export notes...
+      var viewModel = (SettingsPageViewModel)DataContext;
+      if (viewModel.ChangeBaseThemeCommand.CanExecute(theme))
+        viewModel.ChangeBaseThemeCommand.Execute(theme);
     }
   }
 

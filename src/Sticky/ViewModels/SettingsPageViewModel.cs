@@ -1,4 +1,4 @@
-using System.Windows;
+using System;
 using System.Windows.Input;
 using Sticky.DataAccess;
 
@@ -8,6 +8,9 @@ namespace Sticky.ViewModels {
     public ICommand BackCommand { get; }
     public ICommand CloseCommand { get; }
     public ICommand ChangeBaseThemeCommand { get; }
+    public ICommand ExportNotesCommand { get; }
+
+    public event Action ExportNotesRequested;
 
     private Settings _settings;
     private Database _db;
@@ -19,6 +22,7 @@ namespace Sticky.ViewModels {
       BackCommand = new RelayCommand(() => App.Current.MainWindow.Navigate(PageType.Main));
       CloseCommand = new RelayCommand(() => App.Current.MainWindow.Close());
       ChangeBaseThemeCommand = new RelayCommand((param) => BaseTheme = (BaseTheme)param);
+      ExportNotesCommand = new RelayCommand(() => ExportNotesRequested?.Invoke());
 
       PropertyChanged += (sender, e) => _db.UpdateSettings(_settings);
 

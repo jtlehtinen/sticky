@@ -14,7 +14,19 @@
   WindowStyle="None"
   ResizeMode="CanResizeWithGrip"
   ui:WindowHelper.UseModernWindowStyle="True"
+  KeyboardNavigation.DirectionalNavigation="Once"
 >
+  <!--
+    @NOTE:
+    KeyboardNavigation.DirectionalNavigation="Once" is specified only
+    because keyboard navigation in WPF is simply broken. The directional
+    navigation (arrow keys) is somewhat unpredictable and unsymmetrical,
+    so IMO it is better to disable it completely.
+
+    See e.g.
+    https://social.msdn.microsoft.com/Forums/en-US/b25bb4b8-93cf-4c56-88d1-0690965d728f/cannot-get-keyboardnavigationdirectionalnavigationnone-to-work
+  -->
+
   <Window.InputBindings>
     <KeyBinding Gesture="CTRL+F" Command="{Binding SearchInNotesCommand}"/>
     <KeyBinding Gesture="CTRL+N" Command="{Binding NewNoteCommand}"/>

@@ -44,6 +44,11 @@ A _plus (+)_ in a shortcut means to press multiple keys at the same time. A _com
     Increase font size of the selected text.                                  CTRL+]
     Remove all formatting from the selected text.                             CTRL+SPACE
 
+## Keyboard navigation
+
+To trigger a control action use SPACE key. For button controls both SPACE and ENTER keys work.
+
+
 ## 🗎 Notes
 
 If your build randomly fails while VSCode is open add the following to your VSCode settings:
