@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <!--
+      @TODO: Can't use $(MSBuildProjectName) in a WPF project, see:
+      https://github.com/dotnet/msbuild/issues/3483
+      -->
+    <BaseIntermediateOutputPath>$(ProjectDir)..\build-temp\Sticky.Core\</BaseIntermediateOutputPath>
+    <MSBuildProjectExtensionsPath>$(ProjectDir)..\build-temp\Sticky.Core\</MSBuildProjectExtensionsPath>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Sticky (Unpackaged)": {
+      "commandName": "Project"
+    },
+    "Sticky (Package)": {
+      "commandName": "MsixPackage"
+    }
+  }
+}

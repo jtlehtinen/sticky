@@ -1,8 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <BaseIntermediateOutputPath>$(ProjectDir)..\..\build-temp\ModernWpf\</BaseIntermediateOutputPath>
-    <MSBuildProjectExtensionsPath>$(ProjectDir)..\..\build-temp\ModernWpf\</MSBuildProjectExtensionsPath>
-  </PropertyGroup>
-</Project>
