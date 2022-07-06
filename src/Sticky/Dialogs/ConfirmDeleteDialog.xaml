@@ -8,6 +8,7 @@
   PrimaryButtonText="Delete"
   SecondaryButtonText="Keep"
   DefaultButton="Primary"
+  CornerRadius="10"
 >
   <ui:ContentDialog.Resources>
     <sys:Double x:Key="ContentDialogMinHeight">184</sys:Double>
