@@ -10,12 +10,13 @@
   MinHeight="100"
   Width="340"
   Height="240"
-  AllowsTransparency="True"
   Topmost="{Binding Path=IsAlwaysOnTop, Mode=OneWay}"
-  WindowStyle="None"
   ResizeMode="CanResizeWithGrip"
   ShowInTaskbar="True"
   Icon="/Resources/icon.ico"
+  AllowsTransparency="True"
+  WindowStyle="None"
+  KeyboardNavigation.DirectionalNavigation="Once"
 >
   <Window.InputBindings>
     <KeyBinding Gesture="CTRL+N" Command="{Binding NewNoteCommand}"/>
@@ -163,11 +164,17 @@
     </Grid>
 
     <!-- Main Content -->
-    <DockPanel Background="{DynamicResource Background}">
+    <Grid Background="{DynamicResource Background}">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+
       <!-- TitleBar -->
       <DockPanel
         x:Name="TitleBar"
-        DockPanel.Dock="Top"
+        Grid.Row="0"
         Background="{DynamicResource BackgroundSecondary}"
         Height="32"
         LastChildFill="False"
@@ -303,8 +310,35 @@
         </StackPanel>
       </DockPanel>
 
+      <!-- Rich Text Box -->
+      <local:BindableRichTextBox
+        Grid.Row="1"
+        Style="{StaticResource DefaultRichTextBoxStyle}"
+        x:Name="NoteRichTextBox"
+        Background="Transparent"
+        BorderBrush="Transparent"
+        BorderThickness="0"
+        CaretBrush="{DynamicResource TextCursorForeground}"
+        Foreground="{DynamicResource Foreground}"
+        SelectionBrush="{DynamicResource SelectionBackground}"
+        HorizontalScrollBarVisibility="Auto"
+        VerticalScrollBarVisibility="Auto"
+        ui:ControlHelper.PlaceholderText="Take a note..."
+        local:RichTextBoxHelper.DocumentXaml="{Binding Path=Content}"
+        MouseWheel="OnMouseWheel"
+      >
+        <!-- @TODO: Enter vs Shift+Enter -->
+        <local:BindableRichTextBox.Resources>
+          <Thickness x:Key="TextControlBorderThemeThicknessFocused">0</Thickness>
+          <Style TargetType="{x:Type Paragraph}">
+            <Setter Property="Margin" Value="0"/>
+          </Style>
+        </local:BindableRichTextBox.Resources>
+      </local:BindableRichTextBox>
+
       <!-- Toolbar -->
       <Border
+        Grid.Row="2"
         x:Name="Toolbar"
         DockPanel.Dock="Bottom"
         BorderThickness="0,1,0,0"
@@ -467,31 +501,6 @@
             -->
         </StackPanel>
       </Border>
-
-      <!-- Rich Text Box -->
-      <local:BindableRichTextBox
-        Style="{StaticResource DefaultRichTextBoxStyle}"
-        x:Name="NoteRichTextBox"
-        Background="Transparent"
-        BorderBrush="Transparent"
-        BorderThickness="0"
-        CaretBrush="{DynamicResource TextCursorForeground}"
-        Foreground="{DynamicResource Foreground}"
-        SelectionBrush="{DynamicResource SelectionBackground}"
-        HorizontalScrollBarVisibility="Auto"
-        VerticalScrollBarVisibility="Auto"
-        ui:ControlHelper.PlaceholderText="Take a note..."
-        local:RichTextBoxHelper.DocumentXaml="{Binding Path=Content}"
-        MouseWheel="OnMouseWheel"
-      >
-        <!-- @TODO: Enter vs Shift+Enter -->
-        <local:BindableRichTextBox.Resources>
-          <Thickness x:Key="TextControlBorderThemeThicknessFocused">0</Thickness>
-          <Style TargetType="{x:Type Paragraph}">
-            <Setter Property="Margin" Value="0"/>
-          </Style>
-        </local:BindableRichTextBox.Resources>
-      </local:BindableRichTextBox>
-    </DockPanel>
+    </Grid>
   </Grid>
 </Window>

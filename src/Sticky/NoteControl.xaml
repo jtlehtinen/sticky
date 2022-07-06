@@ -144,7 +144,7 @@
           Margin="0"
           Cursor="Arrow"
           Focusable="False"
-          IsHitTestVisible="True"
+          IsHitTestVisible="False"
           Background="Transparent"
           BorderBrush="Transparent"
           BorderThickness="0"

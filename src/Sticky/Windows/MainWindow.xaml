@@ -2,6 +2,7 @@
   x:Class="Sticky.MainWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:local="clr-namespace:Sticky"
   MinWidth="320"
@@ -10,18 +11,16 @@
   Height="500"
   Title="sticky"
   Icon="/Resources/icon.ico"
-  AllowsTransparency="True"
-  WindowStyle="None"
   ResizeMode="CanResizeWithGrip"
+  AllowsTransparency="False"
+  WindowStyle="None"
   ui:WindowHelper.UseModernWindowStyle="True"
   KeyboardNavigation.DirectionalNavigation="Once"
 >
   <!--
     @NOTE:
-    KeyboardNavigation.DirectionalNavigation="Once" is specified only
-    because keyboard navigation in WPF is simply broken. The directional
-    navigation (arrow keys) is somewhat unpredictable and unsymmetrical,
-    so IMO it is better to disable it completely.
+    KeyboardNavigation.DirectionalNavigation="Once" is specified only because keyboard navigation in WPF seems broken. The directional
+    navigation (arrow keys) is somewhat unpredictable and unsymmetrical, so IMO it is better to disable it completely.
 
     See e.g.
     https://social.msdn.microsoft.com/Forums/en-US/b25bb4b8-93cf-4c56-88d1-0690965d728f/cannot-get-keyboardnavigationdirectionalnavigationnone-to-work
