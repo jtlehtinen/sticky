@@ -3,6 +3,7 @@
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary>
       <ui:CornerRadiusFilterConverter x:Key="BottomCornerRadiusDoubleValueConverter" Filter="Bottom" />
+      <ui:CornerRadiusFilterConverter x:Key="TopCornerRadiusDoubleValueConverter" Filter="Top" />
     </ResourceDictionary>
   </ResourceDictionary.MergedDictionaries>
 
@@ -41,7 +42,7 @@
                       <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <ui:ScrollViewerEx x:Name="ContentScrollViewer" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsTabStop="False" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
-                      <Border Padding="{DynamicResource ContentDialogPadding}" Background="{DynamicResource ContentDialogTopOverlay}" BorderBrush="{DynamicResource ContentDialogSeparatorBorderBrush}" BorderThickness="{DynamicResource ContentDialogSeparatorThickness}">
+                      <Border Padding="{DynamicResource ContentDialogPadding}" Background="{DynamicResource ContentDialogTopOverlay}" BorderBrush="{DynamicResource ContentDialogSeparatorBorderBrush}" BorderThickness="{DynamicResource ContentDialogSeparatorThickness}" CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource TopCornerRadiusDoubleValueConverter}}">
                         <Grid>
                           <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />

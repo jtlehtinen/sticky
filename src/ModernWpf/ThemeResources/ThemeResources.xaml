@@ -39,6 +39,7 @@
 
   <!--  Resources for CheckBox  -->
   <sys:Double x:Key="CheckBoxBorderThickness">1</sys:Double>
+  <sys:Double x:Key="CheckBoxBorderThemeThickness">2</sys:Double>
   <sys:Double x:Key="CheckBoxSize">20</sys:Double>
   <sys:Double x:Key="CheckBoxGlyphSize">12</sys:Double>
   <sys:Double x:Key="CheckBoxHeight">32</sys:Double>
