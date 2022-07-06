@@ -34,23 +34,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="AutoSuggestBox\AutoSuggestBoxHelper.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Page Remove="Properties\DesignTimeResources.xaml" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Properties\DesignTimeResources.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ModernWpf\ModernWpf.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="AutoSuggestBox\AutoSuggestBoxHelper.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,8 +48,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="ProgressBar\ProgressBar.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
+    <ProjectReference Include="..\ModernWpf\ModernWpf.csproj" />
   </ItemGroup>
 </Project>
