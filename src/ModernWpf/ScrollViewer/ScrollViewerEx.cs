@@ -75,6 +75,9 @@ namespace ModernWpf.Controls {
     private void OnLoaded(object sender, RoutedEventArgs e) {
       LastVerticalLocation = VerticalOffset;
       LastHorizontalLocation = HorizontalOffset;
+
+      // @TODO: ...
+      #if false
       if (ScrollInfo != null) {
         ScrollInfo = new ScrollInfoAdapter(ScrollInfo);
         ((ScrollInfoAdapter)ScrollInfo).UpdateOffsets();
@@ -83,6 +86,7 @@ namespace ModernWpf.Controls {
           Path = new PropertyPath(nameof(ForceUseSmoothScroll))
         });
       }
+      #endif
       UpdateVisualState(false);
     }
 
