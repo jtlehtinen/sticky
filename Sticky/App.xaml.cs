@@ -52,8 +52,7 @@ public partial class App : Application {
       })
       .Build();
 
-  public static T GetService<T>()
-      where T : class {
+  public static T GetService<T>() where T : class {
     return _host.Services.GetService(typeof(T)) as T;
   }
 
