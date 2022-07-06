@@ -27,11 +27,48 @@
     <KeyBinding Gesture="CTRL+SHIFT+TAB" Command="{Binding ActivatePreviousWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
   </Window.InputBindings>
 
+  <Window.Resources>
+    <ui:BindingProxy x:Key="BackgroundSecondaryProxy" Value="{DynamicResource BackgroundSecondary}"/>
+
+    <Style TargetType="{x:Type ui:TitleBarButton}" BasedOn="{StaticResource {x:Type ui:TitleBarButton}}">
+      <Setter Property="FontSize" Value="16"/>
+      <Setter Property="Width" Value="32"/>
+      <Setter Property="Height" Value="32"/>
+
+      <Setter Property="InactiveBackground" Value="{Binding Path=Value, Source={StaticResource BackgroundSecondaryProxy}}"/>
+      <Setter Property="Background" Value="{Binding Path=Value, Source={StaticResource BackgroundSecondaryProxy}}"/>
+      <Setter Property="HoverBackground" Value="{Binding Path=Value, Source={StaticResource BackgroundSecondaryProxy}, Converter={StaticResource ColorToHoverConverter}}"/>
+      <Setter Property="PressedBackground" Value="{Binding Path=Value, Source={StaticResource BackgroundSecondaryProxy}, Converter={StaticResource ColorToPressedConverter}}"/>
+
+      <Setter Property="InactiveForeground" Value="{DynamicResource ForegroundSecondary}"/>
+      <Setter Property="Foreground" Value="{DynamicResource ForegroundSecondary}"/>
+      <Setter Property="HoverForeground" Value="{DynamicResource ForegroundSecondary}"/>
+      <Setter Property="PressedForeground" Value="{DynamicResource ForegroundSecondary}"/>
+
+      <Setter Property="Focusable" Value="True"/>
+      <Setter Property="IsTabStop" Value="True"/>
+      <Setter Property="FocusVisualStyle" Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}"/>
+      <Setter Property="ui:FocusVisualHelper.UseSystemFocusVisuals" Value="{DynamicResource UseSystemFocusVisuals}"/>
+      <Setter Property="ui:FocusVisualHelper.FocusVisualMargin" Value="1"/>
+    </Style>
+
+    <Style x:Key="ThickFocusVisualStyle">
+      <Setter Property="Control.Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <Rectangle Margin="0" StrokeThickness="2" Stroke="Black"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </Window.Resources>
+
   <Grid x:Name="LayoutRoot">
 
     <!-- Overlay -->
     <Grid
       x:Name="Overlay"
+      Background="#4D000000"
       Panel.ZIndex="1000"
       Visibility="Collapsed"
       MouseLeftButtonDown="OnHideOverlay"
@@ -43,10 +80,6 @@
       <Grid.InputBindings>
         <KeyBinding Gesture="ESCAPE" Command="{Binding HideOverlayCommand}"/>
       </Grid.InputBindings>
-
-      <Grid.Background>
-        <SolidColorBrush Color="Black" Opacity="0.3"/>
-      </Grid.Background>
 
       <!--
         FocusVisualStyle does not honor the elements RenderTransform if it is dynamic.
@@ -182,8 +215,6 @@
         VerticalAlignment="Top"
       >
         <DockPanel.Resources>
-          <ui:BindingProxy x:Key="BackgroundSecondaryProxy" Value="{DynamicResource BackgroundSecondary}"/>
-
           <!-- Slide In/Out Animation -->
           <Style TargetType="{x:Type DockPanel}">
             <Setter Property="RenderTransform">
@@ -218,67 +249,32 @@
               </DataTrigger>
             </Style.Triggers>
           </Style>
-
-          <Style
-            x:Key="TitleBarButtonStyle"
-            TargetType="{x:Type ui:TitleBarButton}"
-            BasedOn="{StaticResource {x:Type ui:TitleBarButton}}"
-            >
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Width" Value="32"/>
-            <Setter Property="Height" Value="32"/>
-
-            <Setter Property="InactiveBackground" Value="{Binding Path=Value, Source={StaticResource BackgroundSecondaryProxy}}"/>
-            <Setter Property="Background" Value="{Binding Path=Value, Source={StaticResource BackgroundSecondaryProxy}}"/>
-            <Setter Property="HoverBackground" Value="{Binding Path=Value, Source={StaticResource BackgroundSecondaryProxy}, Converter={StaticResource ColorToHoverConverter}}"/>
-            <Setter Property="PressedBackground" Value="{Binding Path=Value, Source={StaticResource BackgroundSecondaryProxy}, Converter={StaticResource ColorToPressedConverter}}"/>
-
-            <Setter Property="InactiveForeground" Value="{DynamicResource ForegroundSecondary}"/>
-            <Setter Property="Foreground" Value="{DynamicResource ForegroundSecondary}"/>
-            <Setter Property="HoverForeground" Value="{DynamicResource ForegroundSecondary}"/>
-            <Setter Property="PressedForeground" Value="{DynamicResource ForegroundSecondary}"/>
-          </Style>
         </DockPanel.Resources>
 
         <!-- Left Side Controls -->
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
           <!-- New Note -->
           <ui:TitleBarButton
-            Style="{StaticResource TitleBarButtonStyle}"
             Content="&#xE948;"
             ToolTip="New note"
             Command="{Binding NewNoteCommand}"
             CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
-
-            Focusable="True"
-            IsTabStop="True"
-            FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
           />
 
           <!-- Unpin Note -->
           <ui:TitleBarButton
-            Style="{StaticResource TitleBarButtonStyle}"
             Content="&#xE77A;"
             ToolTip="Unpin note"
             Command="{Binding UnpinCommand}"
             Visibility="{Binding Path=Topmost, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Converter={StaticResource BooleanToVisibilityConverter}}"
-
-            Focusable="True"
-            IsTabStop="True"
-            FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
           />
 
           <!-- Pin Note -->
           <ui:TitleBarButton
-            Style="{StaticResource TitleBarButtonStyle}"
             Content="&#xE840;"
             ToolTip="Pin note"
             Command="{Binding PinCommand}"
             Visibility="{Binding Path=Topmost, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
-
-            Focusable="True"
-            IsTabStop="True"
-            FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
           />
         </StackPanel>
 
@@ -286,26 +282,16 @@
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
           <!-- Open Menu -->
           <ui:TitleBarButton
-            Style="{StaticResource TitleBarButtonStyle}"
             Content="&#xE712;"
             ToolTip="Menu"
             Command="{Binding ShowOverlayCommand}"
-
-            Focusable="True"
-            IsTabStop="True"
-            FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
           />
 
           <!-- Close Note -->
           <ui:TitleBarButton
-            Style="{StaticResource TitleBarButtonStyle}"
             Content="&#xE947;"
             ToolTip="Close note"
             Command="{Binding CloseCommand}"
-
-            Focusable="True"
-            IsTabStop="True"
-            FocusVisualStyle="{StaticResource ThickFocusVisualStyle}"
           />
         </StackPanel>
       </DockPanel>
@@ -340,7 +326,6 @@
       <Border
         Grid.Row="2"
         x:Name="Toolbar"
-        DockPanel.Dock="Bottom"
         BorderThickness="0,1,0,0"
         BorderBrush="#10000000"
       >

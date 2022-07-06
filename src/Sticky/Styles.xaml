@@ -5,16 +5,6 @@
 >
   <!-- @TODO: Rename this file to something more appropriate -->
 
-  <Style x:Key="ThickFocusVisualStyle">
-    <Setter Property="Control.Template">
-      <Setter.Value>
-        <ControlTemplate>
-          <Rectangle Margin="0" StrokeThickness="2" Stroke="Black"/>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
-
   <!-- Converters -->
   <local:ColorToHoverConverter x:Key="ColorToHoverConverter"/>
   <local:ColorToPressedConverter x:Key="ColorToPressedConverter"/>
