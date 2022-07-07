@@ -1,0 +1,63 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <LangVersion>latest</LangVersion>
+    <!-- @TODO:
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    -->
+
+    <!-- https://github.com/dotnet/sdk/pull/2042 -->
+    <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!--
+      @TODO: Can't define OutputPath in Directory.Build.props, because
+      variables (Configuration, Platform) are not available when
+      Directory.Build.props is evaluated.
+    -->
+    <Platform>x64</Platform>
+    <Platforms>x64</Platforms>
+    <PlatformName>x64</PlatformName>
+    <PlatformTarget>x64</PlatformTarget>
+    <WarningLevel>5</WarningLevel>
+    <NoWarn>0067,0168,0169,0414,0649,8600,8601,8602,8603,8604,8605,8612,8616,8618,8622,8625,8765,8767</NoWarn>
+    <OutputPath>../../build/$(Platform)-$(Configuration)</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources/icon.ico"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ModernWpf.Controls\ModernWpf.Controls.csproj" />
+    <ProjectReference Include="..\ModernWpf\ModernWpf.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,5 @@
+{
+  "MsBuild": {
+    "MSBuildSdksPath": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\Msbuild\\Current\\Bin\\amd64\\MSBuild.exe"
+  }
+}

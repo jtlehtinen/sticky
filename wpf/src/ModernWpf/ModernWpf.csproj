@@ -1,0 +1,93 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <LangVersion>latest</LangVersion>
+    <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CsWinRTEmbedded>true</CsWinRTEmbedded>
+    <CsWinRTWindowsMetadata>10.0.22621.0</CsWinRTWindowsMetadata>
+    <CsWinRTIncludes>
+      Windows.Foundation;
+      Windows.UI.Color;
+      Windows.UI.IColors;
+      Windows.UI.ViewManagement.HandPreference;
+      Windows.UI.ViewManagement.IUISettings;
+      Windows.UI.ViewManagement.UIColorType;
+      Windows.UI.ViewManagement.UIElementType;
+      Windows.UI.ViewManagement.UISettings;
+    </CsWinRTIncludes>
+    <CsWinRTExcludes>
+      Windows.Foundation.Diagnostics;
+      Windows.Foundation.PropertyType;
+    </CsWinRTExcludes>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Platform>x64</Platform>
+    <Platforms>x64</Platforms>
+    <PlatformName>x64</PlatformName>
+    <PlatformTarget>x64</PlatformTarget>
+    <WarningLevel>5</WarningLevel>
+    <NoWarn>0067,0168,0169,0414,0649,8600,8601,8602,8603,8604,8605,8612,8616,8618,8622,8625,8765,8767</NoWarn>
+    <OutputPath>../../build/$(Platform)-$(Configuration)</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Fonts\FluentSystemIcons-Filled.ttf" />
+    <None Remove="Fonts\FluentSystemIcons-Regular.ttf" />
+    <None Remove="Materials\Acrylic\NoiseAsset_256X256_PNG.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Properties\DesignTimeResources.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Properties\DesignTimeResources.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\FluentSystemIcons-Filled.ttf" />
+    <Resource Include="Fonts\FluentSystemIcons-Regular.ttf" />
+    <Resource Include="Materials\Acrylic\NoiseAsset_256X256_PNG.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\Strings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ModernWpf</CustomToolNamespace>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.6.4" />
+  </ItemGroup>
+</Project>
