@@ -1,7 +1,0 @@
-namespace Sticky {
-  [default_interface]
-  runtimeclass MainWindow : Microsoft.UI.Xaml.Window {
-    MainWindow();
-    Int32 MyProperty;
-  }
-}
