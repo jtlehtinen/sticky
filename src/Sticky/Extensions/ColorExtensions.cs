@@ -14,17 +14,23 @@ namespace Sticky {
     }
 
     public static Color ToInactiveColor(this Color color) {
+      if (color == Colors.Transparent) return Colors.Transparent;
+
       // @TODO: Make better?
       return Color.FromArgb(0x66, color.R, color.G, color.B);
     }
 
     public static Color ToHoverColor(this Color color) {
+      if (color == Colors.Transparent) return Colors.Transparent;
+
       var c = Color.FromArgb(237, color.R, color.G, color.B);
       var dest = IsDarkColor(color) ? Colors.White : Colors.Black;
       return Blend(c, dest);
     }
 
     public static Color ToPressedColor(this Color color) {
+      if (color == Colors.Transparent) return Colors.Transparent;
+
       var c = Color.FromArgb(220, color.R, color.G, color.B);
       var dest = IsDarkColor(color) ? Colors.White : Colors.Black;
       return Blend(c, dest);

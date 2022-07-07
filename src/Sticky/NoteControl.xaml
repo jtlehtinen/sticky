@@ -25,8 +25,6 @@
   <Border
     x:Name="PartBorder"
     BorderThickness="0"
-    BorderBrush="Transparent"
-    CornerRadius="5"
   >
     <!-- Folded Corner Clip -->
     <Border.Clip>
@@ -56,14 +54,13 @@
 
     <Grid Margin="0">
       <Grid.RowDefinitions>
-        <RowDefinition Height="Auto"/>
         <RowDefinition Height="*"/>
       </Grid.RowDefinitions>
 
       <!-- Folded Corner -->
       <Canvas
         Grid.Row="0"
-        ZIndex="1"
+        ZIndex="2"
         Width="{StaticResource FoldedCornerSize}"
         Height="{StaticResource FoldedCornerSize}"
         HorizontalAlignment="Left"
@@ -78,19 +75,19 @@
       </Canvas>
 
       <!-- Top-Right Controls -->
-      <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Height="23">
+      <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Height="32" ZIndex="1">
         <!-- Menu Button -->
         <local:ButtonEx
           x:Name="MenuButton"
           ToolTip="Menu"
           Content="&#xE712;"
           HorizontalAlignment="Right"
-          VerticalContentAlignment="Bottom"
-          VerticalAlignment="Bottom"
+          VerticalContentAlignment="Center"
+          VerticalAlignment="Center"
           Width="32"
-          Height="23"
+          Height="32"
           FontSize="16"
-          BackgroundColor="{Binding Path=Value, Source={StaticResource BackgroundProxy}, Converter={StaticResource ColorToHoverConverter}}"
+          BackgroundColor="Transparent"
           Foreground="{DynamicResource ForegroundSecondary}"
           Command="{Binding OpenContextMenuCommand}"
 
@@ -112,7 +109,7 @@
         <!-- Note Updated Time -->
         <TextBlock
           FontSize="10"
-          VerticalAlignment="Bottom"
+          VerticalAlignment="Center"
           HorizontalAlignment="Center"
           Foreground="{DynamicResource ForegroundSecondary}"
           Margin="0,0,10,0"
@@ -128,7 +125,7 @@
         </TextBlock>
       </StackPanel>
 
-      <StackPanel Grid.Row="1" Margin="0,0,0,15">
+      <StackPanel Grid.Row="0" Margin="0,18,0,10" ZIndex="0">
         <StackPanel.InputBindings>
           <MouseBinding
             MouseAction="LeftDoubleClick"

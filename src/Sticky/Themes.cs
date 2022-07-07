@@ -59,7 +59,7 @@ namespace Sticky {
     }
 
     public void SetBaseTheme(BaseTheme theme) {
-      var appTheme = theme.ToApplicationTheme();
+      var appTheme = theme.ConvertToApplicationTheme();
       if (appTheme != ThemeManager.Current.ActualApplicationTheme) {
         ThemeManager.Current.ApplicationTheme = appTheme;
       }
