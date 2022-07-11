@@ -9,8 +9,17 @@ namespace Sticky.ViewModels {
   public class ViewModelBase : INotifyPropertyChanged {
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected void OnPropertyChanged([CallerMemberName] string? name = null) {
+    protected virtual void OnPropertyChanged([CallerMemberName] string? name = null) {
       PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    }
+
+    protected virtual bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string? propertyName = null) {
+      if (object.Equals(storage, value)) return false;
+
+      storage = value;
+      OnPropertyChanged(propertyName);
+
+      return true;
     }
   }
 

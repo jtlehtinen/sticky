@@ -18,7 +18,8 @@ namespace Sticky {
     private Dictionary<string, ResourceDictionary> darkThemes = new();
     private Dictionary<string, ResourceDictionary> lightThemes = new();
     private Dictionary<string, ResourceDictionary> themes = new();
-    private BaseTheme baseTheme = BaseTheme.System;
+
+    public event Action BaseThemeChanged;
 
     public Themes() {
       LoadThemes();
@@ -28,12 +29,12 @@ namespace Sticky {
       return themes;
     }
 
-    private bool UseDarkTheme() {
+    public bool UseDarkTheme() {
       var appTheme = ThemeManager.Current.ActualApplicationTheme;
       return appTheme == ApplicationTheme.Dark;
     }
 
-    private bool UseLightTheme() {
+    public bool UseLightTheme() {
       return !UseDarkTheme();
     }
 
@@ -101,12 +102,11 @@ namespace Sticky {
     }
 
     public void SetBaseTheme(BaseTheme theme) {
-      baseTheme = theme;
-
       var appTheme = theme.ConvertToApplicationTheme();
       if (appTheme != ThemeManager.Current.ActualApplicationTheme) {
         ThemeManager.Current.ApplicationTheme = appTheme;
         UpdateThemes();
+        BaseThemeChanged?.Invoke();
       }
     }
   }

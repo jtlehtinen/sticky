@@ -7,7 +7,32 @@ using Sticky.DataAccess;
 
 namespace Sticky.ViewModels {
 
-  public record ColorTheme(string Name, SolidColorBrush AccentColor, bool Active) { }
+  public class ColorTheme : ViewModelBase {
+    private string _name;
+    private SolidColorBrush _accentColor;
+    private bool _active;
+
+    public ColorTheme(string name, SolidColorBrush accentColor, bool active) {
+      _name = name;
+      _accentColor = accentColor;
+      _active = active;
+    }
+
+    public string Name {
+      get => _name;
+      set => SetProperty(ref _name, value);
+    }
+
+    public SolidColorBrush AccentColor {
+      get => _accentColor;
+      set => SetProperty(ref _accentColor, value);
+    }
+
+    public bool Active {
+      get => _active;
+      set => SetProperty(ref _active, value);
+    }
+  }
 
   public class NoteWindowViewModel : ViewModelBase {
     public ICommand PinCommand { get; }
@@ -35,7 +60,7 @@ namespace Sticky.ViewModels {
     public NoteWindowViewModel(Note note, Database db) {
       this._note = note;
       this._db = db;
-      _colorThemes = GetColorThemes(note.Theme);
+      _colorThemes = GetColorThemes(_note.Theme);
 
       App.Current.Themes.BaseThemeChanged -= OnBaseThemeChanged;
       App.Current.Themes.BaseThemeChanged += OnBaseThemeChanged;
@@ -85,7 +110,9 @@ namespace Sticky.ViewModels {
     }
 
     private void OnBaseThemeChanged() {
+      ColorThemes = GetColorThemes(_note.Theme);
       OnPropertyChanged(nameof(ColorThemes));
+      OnPropertyChanged(nameof(IsDarkTheme));
     }
 
     private List<ColorTheme> GetColorThemes(string activeThemeName) {
@@ -101,6 +128,10 @@ namespace Sticky.ViewModels {
       }
 
       return result;
+    }
+
+    public bool IsDarkTheme {
+      get { return App.Current.Themes.UseDarkTheme(); }
     }
 
     public List<ColorTheme> ColorThemes {

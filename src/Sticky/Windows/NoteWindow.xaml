@@ -156,15 +156,14 @@
             ui:FocusVisualHelper.FocusVisualMargin="0"
           >
             <Button.Content>
-              <StackPanel Orientation="Horizontal">
+              <ui:SimpleStackPanel Orientation="Horizontal" Spacing="15">
                 <TextBlock Text="&#xEA37;" FontSize="16" FontFamily="{DynamicResource SymbolThemeFontFamily}"/>
                 <TextBlock
                   Text="Notes list"
                   FontFamily="Arial"
                   FontSize="15"
-                  Margin="15,0,0,0"
                 />
-              </StackPanel>
+              </ui:SimpleStackPanel>
             </Button.Content>
           </local:ButtonEx>
 
@@ -173,7 +172,6 @@
             Command="{Binding DeleteCommand}"
             CommandParameter="{Binding Path=Id}"
             BackgroundColor="{DynamicResource OverlayButtonBackground}"
-            Foreground="{DynamicResource OverlayButtonForeground}"
             HorizontalContentAlignment="Left"
             Padding="17"
 
@@ -183,16 +181,27 @@
             ui:FocusVisualHelper.UseSystemFocusVisuals="{DynamicResource UseSystemFocusVisuals}"
             ui:FocusVisualHelper.FocusVisualMargin="0"
           >
+            <!-- If light theme, then foreground should be red. -->
+            <local:ButtonEx.Resources>
+              <Style TargetType="{x:Type local:ButtonEx}" BasedOn="{StaticResource {x:Type local:ButtonEx}}">
+                <Setter Property="Foreground" Value="{DynamicResource OverlayButtonForeground}"/>
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding Path=IsDarkTheme}" Value="False">
+                    <Setter Property="Foreground" Value="Red"/>
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </local:ButtonEx.Resources>
+
             <Button.Content>
-              <StackPanel Orientation="Horizontal">
+              <ui:SimpleStackPanel Orientation="Horizontal" Spacing="15">
                 <TextBlock Text="&#xE74D;" FontSize="16" FontFamily="{DynamicResource SymbolThemeFontFamily}"/>
                 <TextBlock
                   Text="Delete note"
                   FontFamily="Arial"
                   FontSize="15"
-                  Margin="15,0,0,0"
                 />
-              </StackPanel>
+              </ui:SimpleStackPanel>
             </Button.Content>
           </local:ButtonEx>
         </StackPanel>
