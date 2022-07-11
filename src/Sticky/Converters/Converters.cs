@@ -151,6 +151,18 @@ namespace Sticky {
     }
   }
 
+  public class BooleanToVisibilityHiddenConverter : IValueConverter {
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+      var flag = (bool)value;
+      return flag ? Visibility.Visible : Visibility.Hidden;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+      var visibility = (Visibility)value;
+      return visibility == Visibility.Visible;
+    }
+  }
+
   public class StringToFlowDocumentConverter : IValueConverter {
     public object? Convert(object value, Type targetType, object parameter, CultureInfo culture) {
       var s = value as string;

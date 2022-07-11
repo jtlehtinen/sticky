@@ -66,6 +66,5 @@
   <Style x:Key="RadioButtonExOverlay" TargetType="{x:Type local:RadioButtonEx}" BasedOn="{StaticResource {x:Type local:RadioButtonEx}}">
     <Setter Property="Height" Value="52"/>
     <Setter Property="FontSize" Value="18"/>
-    <Setter Property="Foreground" Value="{DynamicResource ForegroundSecondary}"/>
   </Style>
 </ResourceDictionary>

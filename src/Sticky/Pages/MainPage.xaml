@@ -104,7 +104,14 @@
         <!-- Container Template -->
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
-            <ui:SimpleStackPanel Orientation="Vertical" Spacing="8" Margin="10,0"/>
+            <ui:SimpleStackPanel
+              Orientation="Vertical"
+              Spacing="8"
+              Margin="10,3"
+              FocusManager.IsFocusScope="True"
+              KeyboardNavigation.DirectionalNavigation="Contained"
+              KeyboardNavigation.TabNavigation="Continue"
+            />
           </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
 
@@ -113,11 +120,6 @@
           <DataTemplate>
             <local:NoteControl
               Visibility="{Binding Path=Show, Converter={StaticResource BooleanToVisibilityConverter}}"
-              Focusable="True"
-              IsTabStop="True"
-              FocusVisualStyle="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}"
-              ui:FocusVisualHelper.UseSystemFocusVisuals="{DynamicResource UseSystemFocusVisuals}"
-              ui:FocusVisualHelper.FocusVisualMargin="0"
             />
           </DataTemplate>
         </ItemsControl.ItemTemplate>

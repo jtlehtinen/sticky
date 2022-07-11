@@ -5,8 +5,20 @@
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
   xmlns:local="clr-namespace:Sticky"
-  x:Name="NameNoteControl"
+  x:Name="PartNoteControl"
+
+  IsTabStop="True"
+  Focusable="True"
+  FocusVisualStyle="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}"
+  ui:FocusVisualHelper.UseSystemFocusVisuals="{DynamicResource UseSystemFocusVisuals}"
+  ui:FocusVisualHelper.FocusVisualMargin="-3"
+  KeyboardNavigation.DirectionalNavigation="Once"
 >
+  <!--
+    FocusManager.IsFocusScope="True"
+    KeyboardNavigation.TabNavigation="Continue"
+    -->
+
   <UserControl.Resources>
     <ui:BindingProxy x:Key="BackgroundProxy" Value="{DynamicResource Background}"/>
     <sys:Double x:Key="FoldedCornerSize">16</sys:Double>
@@ -24,8 +36,23 @@
 
   <Border
     x:Name="PartBorder"
-    BorderThickness="0"
+    CornerRadius="2"
   >
+    <!-- Dark -->
+    <Border.BorderThickness>
+      <Thickness Left="0" Top="0" Right="4" Bottom="0"/>
+    </Border.BorderThickness>
+
+    <Border.BorderBrush>
+      <DynamicResource ResourceKey="AccentColor"/>
+    </Border.BorderBrush>
+
+    <!-- Light
+      <Border.BorderThickness>
+        <Thickness Left="0" Top="0" Right="0" Bottom="0"/>
+      </Border.BorderThickness>
+      -->
+
     <!-- Folded Corner Clip -->
     <Border.Clip>
       <MultiBinding
@@ -42,10 +69,10 @@
       <Style TargetType="{x:Type Border}">
         <Setter Property="Background" Value="{DynamicResource Background}"/>
         <Style.Triggers>
-          <DataTrigger Binding="{Binding ElementName=NameNoteControl, Path=IsMouseOver}" Value="True">
+          <DataTrigger Binding="{Binding ElementName=PartNoteControl, Path=IsMouseOver}" Value="True">
             <Setter Property="Background" Value="{Binding Path=Value, Source={StaticResource BackgroundProxy}, Converter={StaticResource ColorToHoverConverter}}"/>
           </DataTrigger>
-          <DataTrigger Binding="{Binding ElementName=NameNoteControl, Path=IsKeyboardFocusWithin}" Value="True">
+          <DataTrigger Binding="{Binding ElementName=PartNoteControl, Path=IsKeyboardFocusWithin}" Value="True">
             <Setter Property="Background" Value="{Binding Path=Value, Source={StaticResource BackgroundProxy}, Converter={StaticResource ColorToHoverConverter}}"/>
           </DataTrigger>
         </Style.Triggers>
@@ -58,21 +85,13 @@
       </Grid.RowDefinitions>
 
       <!-- Folded Corner -->
-      <Canvas
+      <Polygon
         Grid.Row="0"
-        ZIndex="2"
-        Width="{StaticResource FoldedCornerSize}"
-        Height="{StaticResource FoldedCornerSize}"
-        HorizontalAlignment="Left"
-        VerticalAlignment="Top"
+        Fill="{DynamicResource FoldedCornerBrush}"
+        Points="{Binding Source={StaticResource FoldedCornerSize}, Converter={StaticResource FoldedCornerTriangleConverter}}"
+        StrokeThickness="0"
         Visibility="{Binding Path=IsOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
-      >
-        <Polygon
-          Points="{Binding Source={StaticResource FoldedCornerSize}, Converter={StaticResource FoldedCornerTriangleConverter}}"
-          Stroke="{Binding Source={StaticResource BackgroundProxy}, Path=Value, Converter={StaticResource ColorToPressedConverter}}"
-          Fill="{Binding Source={StaticResource BackgroundProxy}, Path=Value, Converter={StaticResource ColorToPressedConverter}}"
-        />
-      </Canvas>
+      />
 
       <!-- Top-Right Controls -->
       <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Height="32" ZIndex="1">
@@ -88,7 +107,6 @@
           Height="32"
           FontSize="16"
           BackgroundColor="Transparent"
-          Foreground="{DynamicResource ForegroundSecondary}"
           Command="{Binding OpenContextMenuCommand}"
 
           Focusable="True"
@@ -97,29 +115,39 @@
           ui:FocusVisualHelper.UseSystemFocusVisuals="{DynamicResource UseSystemFocusVisuals}"
           ui:FocusVisualHelper.FocusVisualMargin="0"
         >
+          <local:ButtonEx.Resources>
+            <Style TargetType="{x:Type local:ButtonEx}" BasedOn="{StaticResource {x:Type local:ButtonEx}}">
+              <Setter Property="Foreground" Value="{DynamicResource MenuForeground}"/>
+              <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                  <Setter Property="Foreground" Value="{DynamicResource Foreground}"/>
+                </Trigger>
+              </Style.Triggers>
+            </Style>
+          </local:ButtonEx.Resources>
+
           <local:ButtonEx.Visibility>
             <MultiBinding Converter="{StaticResource BooleanToVisibilityMultiConverter}">
-              <Binding ElementName="MenuButton" Path="IsKeyboardFocused"/>
-              <Binding ElementName="NameNoteControl" Path="IsMouseOver"/>
-              <Binding ElementName="NameNoteControl" Path="IsKeyboardFocused"/>
+              <Binding ElementName="PartNoteControl" Path="IsMouseOver"/>
+              <Binding ElementName="PartNoteControl" Path="IsKeyboardFocusWithin"/>
             </MultiBinding>
           </local:ButtonEx.Visibility>
         </local:ButtonEx>
 
-        <!-- Note Updated Time -->
+        <!-- Note Updated At -->
         <TextBlock
           FontSize="10"
           VerticalAlignment="Center"
           HorizontalAlignment="Center"
-          Foreground="{DynamicResource ForegroundSecondary}"
+          Foreground="{DynamicResource MenuAccentColor}"
           Margin="0,0,10,0"
           Text="{Binding Path=UpdatedAt, Converter={StaticResource DateTimeConverter}}"
         >
           <TextBlock.Visibility>
             <MultiBinding Converter="{StaticResource ReverseBooleanToVisibilityMultiConverter}">
               <Binding ElementName="MenuButton" Path="IsKeyboardFocused"/>
-              <Binding ElementName="NameNoteControl" Path="IsMouseOver"/>
-              <Binding ElementName="NameNoteControl" Path="IsKeyboardFocused"/>
+              <Binding ElementName="PartNoteControl" Path="IsMouseOver"/>
+              <Binding ElementName="PartNoteControl" Path="IsKeyboardFocused"/>
             </MultiBinding>
           </TextBlock.Visibility>
         </TextBlock>

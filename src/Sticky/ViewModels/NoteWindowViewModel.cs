@@ -6,9 +6,12 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media ;
 using Sticky.DataAccess;
 
 namespace Sticky.ViewModels {
+
+  public record ColorTheme(string Name, SolidColorBrush AccentColor, bool Active) { }
 
   public class NoteWindowViewModel : ViewModelBase {
     public ICommand PinCommand { get; }
@@ -31,17 +34,28 @@ namespace Sticky.ViewModels {
 
     private Note _note;
     private Database _db;
+    private List<ColorTheme> _colorThemes;
 
     public NoteWindowViewModel(Note note, Database db) {
       this._note = note;
       this._db = db;
+      _colorThemes = GetColorThemes(note.Theme);
 
       ActivatePreviousWindowCommand = new RelayCommand((param) => ActivatePreviousWindowRequested?.Invoke((Window)param));
       ActivateNextWindowCommand = new RelayCommand((param) => ActivateNextWindowRequested?.Invoke((Window)param));
 
       PinCommand = new RelayCommand(() => IsAlwaysOnTop = true);
       UnpinCommand = new RelayCommand(() => IsAlwaysOnTop = false);
-      CloseCommand = new RelayCommand(() => IsOpen = false);
+
+      CloseCommand = new RelayCommand(() => {
+        // @NOTE: When an empty note is closed it is removed.
+        if (IsEmpty) {
+          _db.DeleteNote(_note);
+        } else {
+          IsOpen = false;
+        }
+      });
+
       DeleteCommand = new RelayCommand(async () => {
         var settings = _db.GetSettings();
         if (!settings.ConfirmBeforeDelete) {
@@ -66,7 +80,29 @@ namespace Sticky.ViewModels {
       ChangeNoteThemeCommand = new RelayCommand((param) => Theme = (string)param);
       OpenNoteListCommand = new RelayCommand(() => OpenNoteListRequested?.Invoke());
 
-      PropertyChanged += (sender, e) => _db.UpdateNote(_note, e.PropertyName != "WindowPosition"); // @TODO: ...
+      PropertyChanged += (sender, e) => {
+        _db.UpdateNote(_note, e.PropertyName != "WindowPosition"); // @TODO: ...
+      };
+    }
+
+    private List<ColorTheme> GetColorThemes(string activeThemeName) {
+      var result = new List<ColorTheme>();
+
+      var themes = App.Current.Themes.GetThemes();
+      foreach (var key in themes.Keys) {
+        var theme = themes[key];
+        var name = App.Current.Themes.GetThemeName(theme);
+        var active = activeThemeName == name;
+
+        result.Add(new ColorTheme(name, (SolidColorBrush)theme["AccentColor"], active));
+      }
+
+      return result;
+    }
+
+    public List<ColorTheme> ColorThemes {
+      get { return _colorThemes; }
+      set { _colorThemes = value; OnPropertyChanged(); }
     }
 
     public int Id { get { return _note.Id; } }

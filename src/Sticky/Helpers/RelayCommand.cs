@@ -9,15 +9,18 @@ namespace Sticky {
     private readonly Predicate<object> _canExecute;
 
     public RelayCommand(Action execute) {
-      _canExecute = x => true;
       _execute = x => execute.Invoke();
+      _canExecute = x => true;
     }
 
-    public RelayCommand(Action<object> execute) : this(execute, x => true) { }
+    public RelayCommand(Action<object> execute) {
+      _execute = execute;
+      _canExecute = x => true;
+    }
 
     public RelayCommand(Action<object> execute, Predicate<object> canExecute) {
-      _canExecute = canExecute;
       _execute = execute;
+      _canExecute = canExecute;
     }
 
     public event EventHandler CanExecuteChanged {

@@ -10,6 +10,7 @@
   <local:ColorToPressedConverter x:Key="ColorToPressedConverter"/>
   <local:ColorToInactiveConverter x:Key="ColorToInactiveConverter"/>
   <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+  <local:BooleanToVisibilityHiddenConverter x:Key="BooleanToVisibilityHiddenConverter"/>
   <local:ReverseBooleanToVisibilityConverter x:Key="ReverseBooleanToVisibilityConverter"/>
   <local:BooleanToVisibilityMultiConverter x:Key="BooleanToVisibilityMultiConverter"/>
   <local:ReverseBooleanToVisibilityMultiConverter x:Key="ReverseBooleanToVisibilityMultiConverter"/>

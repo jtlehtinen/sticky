@@ -19,7 +19,15 @@ namespace Sticky.ViewModels {
       this._note = note;
       this._db = db;
 
-      CloseCommand = new RelayCommand(() => IsOpen = false);
+      CloseCommand = new RelayCommand(() => {
+        // @NOTE: When an empty note is closed it is removed.
+        if (IsEmpty) {
+          _db.DeleteNote(_note);
+        } else {
+          IsOpen = false;
+        }
+      });
+
       OpenCommand = new RelayCommand(() => IsOpen = true);
       DeleteCommand = new RelayCommand(async () => {
         var settings = _db.GetSettings();

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Media;
 using ModernWpf;
 
 namespace Sticky {
@@ -14,25 +15,66 @@ namespace Sticky {
   public class Themes {
     private const string THEME_NAME_KEY = "ThemeName";
 
+    private Dictionary<string, ResourceDictionary> darkThemes = new();
+    private Dictionary<string, ResourceDictionary> lightThemes = new();
     private Dictionary<string, ResourceDictionary> themes = new();
+    private BaseTheme baseTheme = BaseTheme.System;
 
     public Themes() {
       LoadThemes();
     }
 
+    public Dictionary<string, ResourceDictionary> GetThemes() {
+      return themes;
+    }
+
+    private bool UseDarkTheme() {
+      var appTheme = ThemeManager.Current.ActualApplicationTheme;
+      return appTheme == ApplicationTheme.Dark;
+    }
+
+    private bool UseLightTheme() {
+      return !UseDarkTheme();
+    }
+
+    private void UpdateThemes() {
+      var sourceThemes = UseDarkTheme() ? darkThemes : lightThemes;
+
+      foreach (var themeKey in sourceThemes.Keys) {
+        if (!themes.ContainsKey(themeKey)) themes.Add(themeKey, new ResourceDictionary());
+
+        var source = sourceThemes[themeKey];
+        var dest = themes[themeKey];
+
+        foreach (var key in source.Keys) {
+          dest[key] = source[key];
+        }
+      }
+    }
+
     private void LoadThemes() {
-      string[] filenames = new[]{"Blue.xaml", "Charcoal.xaml", "Gray.xaml", "Green.xaml", "Pink.xaml", "Purple.xaml", "Yellow.xaml"};
+      // @IMPORTANT: The filename order is set on purpose.
+      string[] filenames = new[]{"Yellow.xaml", "Green.xaml", "Pink.xaml", "Purple.xaml", "Blue.xaml", "Gray.xaml", "Charcoal.xaml"};
+
+      var suffixLength = ".xaml".Length;
 
       foreach (var theme in filenames) {
         var path = "Themes/" + theme;
         var dic = (ResourceDictionary)Application.LoadComponent(new Uri(path, UriKind.Relative));
         if (dic == null) continue;
 
-        var name = dic.Contains(THEME_NAME_KEY) ? dic[THEME_NAME_KEY] as string : null;
-        if (name == null) continue;
+        var dark = dic["Dark"] as ResourceDictionary;
+        var light = dic["Light"] as ResourceDictionary;
 
-        themes[name] = dic;
+        var name = theme.Substring(0, theme.Length - suffixLength);
+        dark.Add(THEME_NAME_KEY, name);
+        light.Add(THEME_NAME_KEY, name);
+
+        darkThemes[name] = dark;
+        lightThemes[name] = light;
       }
+
+      UpdateThemes();
     }
 
     public ResourceDictionary? GetTheme(string themeName) {
@@ -55,13 +97,16 @@ namespace Sticky {
 
       var name = dic[THEME_NAME_KEY] as string;
 
-      return name != null && themes.ContainsKey(name);
+      return name != null && lightThemes.ContainsKey(name);
     }
 
     public void SetBaseTheme(BaseTheme theme) {
+      baseTheme = theme;
+
       var appTheme = theme.ConvertToApplicationTheme();
       if (appTheme != ThemeManager.Current.ActualApplicationTheme) {
         ThemeManager.Current.ApplicationTheme = appTheme;
+        UpdateThemes();
       }
     }
   }

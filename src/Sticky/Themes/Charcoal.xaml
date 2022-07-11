@@ -1,14 +1,39 @@
 <ResourceDictionary
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:system="clr-namespace:System;assembly=mscorlib"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
 >
-  <system:String x:Key="ThemeName">Theme.Charcoal</system:String>
-  <SolidColorBrush x:Key="ThemeColor" Color="#FF767676"/>
-  <SolidColorBrush x:Key="Background" Color="#FF696969"/>
-  <SolidColorBrush x:Key="BackgroundSecondary" Color="#FF494745"/>
-  <SolidColorBrush x:Key="Foreground" Color="#FFFFFFFF"/>
-  <SolidColorBrush x:Key="ForegroundSecondary" Color="#FFCCCCCC"/>
-  <SolidColorBrush x:Key="SelectionBackground" Color="#FF767676"/>
-  <SolidColorBrush x:Key="TextCursorForeground" Color="#FFFFFFFF"/>
+    <!-- Light Colors -->
+  <ResourceDictionary x:Key="Light">
+    <SolidColorBrush x:Key="AccentColor" Color="#FF767676"/>
+    <SolidColorBrush x:Key="Background" Color="#FF696969"/>
+    <SolidColorBrush x:Key="Foreground" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="FoldedCornerBrush" Color="#FF878787"/>
+    <SolidColorBrush x:Key="MenuAccentColor" Color="#FFD2D2D2"/>
+    <SolidColorBrush x:Key="MenuForeground" Color="#FFD2D2D2"/>
+    <SolidColorBrush x:Key="OverlayButtonBackground" Color="#FFF3F3F3"/>
+    <SolidColorBrush x:Key="OverlayButtonForeground" Color="#FF000000"/>
+    <SolidColorBrush x:Key="SelectionBackground" Color="#FF767676"/>
+    <SolidColorBrush x:Key="TextCursorForeground" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="TitleBarForeground" Color="#FFD2D2D2"/>
+    <SolidColorBrush x:Key="TitleBarBackground" Color="#FF494745"/>
+    <SolidColorBrush x:Key="ToolbarForeground" Color="#FFD2D2D2"/>
+  </ResourceDictionary>
+
+  <!-- Dark Colors -->
+  <ResourceDictionary x:Key="Dark">
+    <SolidColorBrush x:Key="AccentColor" Color="#FF454545"/>
+    <SolidColorBrush x:Key="Background" Color="#FF333333"/>
+    <SolidColorBrush x:Key="Foreground" Color="#FFEDEDED"/>
+    <SolidColorBrush x:Key="FoldedCornerBrush" Color="#FF5C5C5C"/>
+    <SolidColorBrush x:Key="MenuAccentColor" Color="#FFAAAAAA"/>
+    <SolidColorBrush x:Key="MenuForeground" Color="#FF8C8C8C"/>
+    <SolidColorBrush x:Key="OverlayButtonBackground" Color="#FF3B3B3B"/>
+    <SolidColorBrush x:Key="OverlayButtonForeground" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="SelectionBackground" Color="#FF767676"/>
+    <SolidColorBrush x:Key="TextCursorForeground" Color="#FFEDEDED"/>
+    <SolidColorBrush x:Key="TitleBarForeground" Color="#FFC1C1C1"/>
+    <SolidColorBrush x:Key="TitleBarBackground" Color="#FF454545"/>
+    <SolidColorBrush x:Key="ToolbarForeground" Color="#FFC1C1C1"/>
+  </ResourceDictionary>
 </ResourceDictionary>

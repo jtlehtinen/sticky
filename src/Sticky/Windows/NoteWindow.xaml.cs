@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
 using Sticky.Helpers;
 using Sticky.ViewModels;
 
@@ -88,30 +89,11 @@ namespace Sticky {
       // missing key warnings. There is no atomic replace op...
       Resources.MergedDictionaries.Add(theme);
       if (currentTheme != null) Resources.MergedDictionaries.Remove(currentTheme);
-
-      switch (themeName) {
-        case "Theme.Yellow": RadioButtonThemeYellow.IsChecked = true; break;
-        case "Theme.Green": RadioButtonThemeGreen.IsChecked = true; break;
-        case "Theme.Pink": RadioButtonThemePink.IsChecked = true; break;
-        case "Theme.Purple": RadioButtonThemePurple.IsChecked = true; break;
-        case "Theme.Blue": RadioButtonThemeBlue.IsChecked = true; break;
-        case "Theme.Gray": RadioButtonThemeGray.IsChecked = true; break;
-        case "Theme.Charcoal": RadioButtonThemeCharcoal.IsChecked = true; break;
-      }
     }
 
     private void ShowOverlay() {
       Overlay.Visibility = Visibility.Visible;
-
-      #if false
-      Keyboard.Focus(Overlay);
-      var request = new TraversalRequest(FocusNavigationDirection.Next);
-      var elementWithFocus = Keyboard.FocusedElement as UIElement;
-      if (elementWithFocus != null)
-        elementWithFocus.MoveFocus(request);
-      #endif
-
-      Keyboard.Focus(RadioButtonThemeYellow); // @NOTE: The first focusable button in the overlay
+      Keyboard.Focus(FirstColorTheme);
     }
 
     private void HideOverlay() {

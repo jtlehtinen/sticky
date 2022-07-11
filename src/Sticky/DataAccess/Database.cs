@@ -23,7 +23,7 @@ namespace Sticky.DataAccess {
     public DateTime UpdatedAt { get; set; }
 
     [Column("Theme")]
-    public string Theme { get; set; } = "Theme.Yellow";
+    public string Theme { get; set; } = "Yellow";
 
     [Column("IsAlwaysOnTop")]
     public bool IsAlwaysOnTop { get; set; }
