@@ -97,7 +97,7 @@ namespace Sticky {
 
       var name = dic[THEME_NAME_KEY] as string;
 
-      return name != null && lightThemes.ContainsKey(name);
+      return name != null && themes.ContainsKey(name);
     }
 
     public void SetBaseTheme(BaseTheme theme) {
