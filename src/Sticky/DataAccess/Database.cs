@@ -39,6 +39,14 @@ namespace Sticky.DataAccess {
       CreatedAt = now;
       UpdatedAt = now;
     }
+
+    public bool IsEmpty() {
+      if (string.IsNullOrWhiteSpace(Content) || Content == RichTextBoxHelper.EMPTY_FLOW_DOCUMENT_XAML) return true;
+
+      // @TODO: ugh...
+      var doc = RichTextBoxHelper.DeserializeFromXaml(Content);
+      return RichTextBoxHelper.IsFlowDocumentEmpty(doc);
+    }
   }
 
   [Table("Settings")]

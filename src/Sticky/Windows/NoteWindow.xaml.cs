@@ -1,11 +1,9 @@
-using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 using Sticky.Helpers;
 using Sticky.ViewModels;
 
@@ -38,18 +36,10 @@ namespace Sticky {
       NoteRichTextBox.SelectionChanged += (sender, e) => RefreshToolbarButtons();
       NoteRichTextBox.KeyUp += (sender, e) => RefreshToolbarButtons();
 
-      //Overlay.LostFocus += (sender, e) => HideOverlay();
-      //Overlay.LostKeyboardFocus += (sender, e) => HideOverlay();
-
       Overlay.IsKeyboardFocusWithinChanged += (sender, e) => {
         var focused = (bool)e.NewValue;
-        if (!focused) {
-          HideOverlay();
-        }
+        if (!focused) HideOverlay();
       };
-
-      //LostKeyboardFocus += (sender, e) => HideOverlay();
-      //LostFocus += (sender, e) => HideOverlay();
 
       SizeChanged += (sender, e) => RefreshToolbarVisibility(e.NewSize);
 
@@ -131,7 +121,7 @@ namespace Sticky {
       if (Keyboard.Modifiers != ModifierKeys.Control)
         return;
 
-      // @NOTE: Delta should be always 120 or -120.
+      // @NOTE: Delta should be 120 or -120.
       var command = e.Delta > 0 ? EditingCommands.IncreaseFontSize : EditingCommands.DecreaseFontSize;
       command.Execute(null, (RichTextBox)sender);
     }

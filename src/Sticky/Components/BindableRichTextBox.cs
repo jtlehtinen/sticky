@@ -5,11 +5,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 
 namespace Sticky {
 
   // https://stackoverflow.com/questions/343468/richtextbox-wpf-binding
   public class RichTextBoxHelper : DependencyObject {
+    public const string EMPTY_FLOW_DOCUMENT_XAML = "<FlowDocument PagePadding=\"5,0,5,0\" AllowDrop=\"True\" NumberSubstitution.CultureSource=\"User\" xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"><Paragraph /></FlowDocument>";
+
     public static string GetDocumentXaml(DependencyObject d) {
       return (string)d.GetValue(DocumentXamlProperty);
     }
@@ -23,41 +26,42 @@ namespace Sticky {
       PropertyChangedCallback = OnDocumentXamlChanged,
     });
 
-    private static void OnDocumentXamlChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-      var rtb = (RichTextBox)d;
+    public static bool IsFlowDocumentEmpty(FlowDocument doc) {
+      // https://stackoverflow.com/questions/5825575/detect-if-a-richtextbox-is-empty
+      if (doc.Blocks.Count == 0) return true;
 
-      var currentValue = DocumentToString(rtb.Document);
+      var start = doc.ContentStart.GetNextInsertionPosition(LogicalDirection.Forward);
+      var end = doc.ContentEnd.GetNextInsertionPosition(LogicalDirection.Backward);
+      return start.CompareTo(end) == 0;
+    }
+
+    private static void OnDocumentXamlChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+      var rtb = (BindableRichTextBox)d;
+
+      var currentValue = SerializeToXaml(rtb.Document);
       var newValue = GetDocumentXaml(rtb);
       if (currentValue == newValue) return;
 
-      // @TODO: Use XamlReader.Parse() instead?
+      var xaml = string.IsNullOrEmpty(newValue) ? EMPTY_FLOW_DOCUMENT_XAML : newValue;
+      rtb.Document = DeserializeFromXaml(xaml);
 
-      var doc = new FlowDocument();
-      if (string.IsNullOrEmpty(newValue)) {
-        doc.Blocks.Add(new Paragraph());
-      } else {
-        var range = new TextRange(doc.ContentStart, doc.ContentEnd);
-        range.Load(new MemoryStream(Encoding.UTF8.GetBytes(newValue)), DataFormats.Xaml);
-      }
-
-      rtb.Document = doc;
       rtb.TextChanged -= TextChangedEventHandler;
       rtb.TextChanged += TextChangedEventHandler;
     }
 
     private static void TextChangedEventHandler(object sender, TextChangedEventArgs e) {
-      var rtb = (RichTextBox)sender;
-      var xaml = DocumentToString(rtb.Document);
+      var rtb = (BindableRichTextBox)sender;
+      var xaml = SerializeToXaml(rtb.Document);
       SetDocumentXaml(rtb, xaml);
     }
 
-    private static string DocumentToString(FlowDocument doc) {
-      var range = new TextRange(doc.ContentStart, doc.ContentEnd);
+    public static FlowDocument DeserializeFromXaml(string xaml) {
+      var stream = new MemoryStream(Encoding.UTF8.GetBytes(xaml));
+      return XamlReader.Load(stream) as FlowDocument;
+    }
 
-      var buffer = new MemoryStream();
-      range.Save(buffer, DataFormats.Xaml);
-
-      return Encoding.UTF8.GetString(buffer.ToArray());
+    public static string SerializeToXaml(FlowDocument doc) {
+      return XamlWriter.Save(doc);
     }
   }
 
@@ -82,14 +86,7 @@ namespace Sticky {
     }
 
     public bool IsEmpty {
-      get {
-        // https://stackoverflow.com/questions/5825575/detect-if-a-richtextbox-is-empty
-        if (Document.Blocks.Count == 0) return true;
-
-        var start = Document.ContentStart.GetNextInsertionPosition(LogicalDirection.Forward);
-        var end = Document.ContentEnd.GetNextInsertionPosition(LogicalDirection.Backward);
-        return start.CompareTo(end) == 0;
-      }
+      get { return RichTextBoxHelper.IsFlowDocumentEmpty(Document); }
     }
 
     public bool IsBold() {
