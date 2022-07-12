@@ -131,6 +131,11 @@ namespace Sticky.DataAccess {
     }
 
     public void UpdateNote(Note note, bool notify = true) {
+      var prevNote = GetNote(note.Id);
+      if (prevNote == null || note.Content != prevNote.Content) {
+        note.UpdatedAt = DateTime.Now;
+      }
+
       _db.Update(note);
       if (notify) NoteModified?.Invoke(this, new NoteModifiedEventArgs(note));
     }
