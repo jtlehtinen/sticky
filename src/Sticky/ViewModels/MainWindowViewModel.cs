@@ -23,7 +23,7 @@ namespace Sticky.ViewModels {
       this._db = db;
 
       CloseCommand = new RelayCommand(() => CloseRequested?.Invoke());
-      NewNoteCommand = new RelayCommand(() => _db.AddNote(new Note())); // @TODO: Apply settings...
+      NewNoteCommand = new RelayCommand(() => _db.AddNote(NoteFactory.CreateNote(_db.GetSettings()))); // @TODO: Apply settings...
 
       SearchInNotesCommand = new RelayCommand(() => SearchInNotesRequested?.Invoke());
       ActivatePreviousWindowCommand = new RelayCommand((param) => ActivatePreviousWindowRequested?.Invoke((Window)param));

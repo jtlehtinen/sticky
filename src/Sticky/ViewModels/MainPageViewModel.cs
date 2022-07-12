@@ -26,7 +26,7 @@ namespace Sticky.ViewModels {
 
       CloseCommand = new RelayCommand(param => ((Window)param).Close());
       OpenSettingsPageCommand = new RelayCommand((param) => ((MainWindow)param).Navigate(PageType.Settings));
-      NewNoteCommand = new RelayCommand(() => _db.AddNote(new Note())); // @TODO: Apply settings...
+      NewNoteCommand = new RelayCommand(() => _db.AddNote(NoteFactory.CreateNote(_db.GetSettings()))); // @TODO: Apply settings...
 
       LoadAllNotes();
     }

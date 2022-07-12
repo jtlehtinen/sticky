@@ -98,7 +98,7 @@ namespace Sticky.ViewModels {
           db.DeleteNote(_note);
         }
       });
-      NewNoteCommand = new RelayCommand(() => _db.AddNote(new Note())); // @TODO: Apply settings...
+      NewNoteCommand = new RelayCommand(() => _db.AddNote(NoteFactory.CreateNote(_db.GetSettings()))); // @TODO: Apply settings...
       ShowOverlayCommand = new RelayCommand(() => ShowOverlayRequested?.Invoke());
       HideOverlayCommand = new RelayCommand(() => HideOverlayRequested?.Invoke());
       ChangeNoteThemeCommand = new RelayCommand((param) => Theme = (string)param);
