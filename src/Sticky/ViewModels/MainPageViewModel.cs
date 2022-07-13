@@ -39,11 +39,10 @@ namespace Sticky.ViewModels {
       var all = new List<NoteViewModel>();
 
       foreach (var note in _db.GetNotes()) {
-        all.Add(new NoteViewModel(note, _db));
-      }
+        var noteViewModel = new NoteViewModel(note, _db);
+        noteViewModel.PropertyChanged += OnNoteViewModelPropertyChanged;
 
-      foreach (var note in all) {
-        note.PropertyChanged += OnNoteViewModelPropertyChanged;
+        all.Add(noteViewModel);
       }
 
       AllNotes = new ObservableCollection<NoteViewModel>(all);
@@ -51,9 +50,9 @@ namespace Sticky.ViewModels {
     }
 
     private void OnNoteAddedToDatabase(object sender, NoteAddedEventArgs e) {
-      var vm = new NoteViewModel(e.AddedNote, _db);
-      vm.PropertyChanged += OnNoteViewModelPropertyChanged;
-      AllNotes.Add(vm);
+      var noteViewModel = new NoteViewModel(e.AddedNote, _db);
+      noteViewModel.PropertyChanged += OnNoteViewModelPropertyChanged;
+      AllNotes.Add(noteViewModel);
     }
 
     private void OnNoteRemovedFromDatabase(object sender, NoteDeletedEventArgs e) {
@@ -86,6 +85,10 @@ namespace Sticky.ViewModels {
     }
 
     void OnNoteViewModelPropertyChanged(object sender, PropertyChangedEventArgs e) {
+
+    }
+
+    private void SortNotes() {
 
     }
   }

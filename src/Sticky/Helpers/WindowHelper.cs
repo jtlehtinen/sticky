@@ -44,16 +44,15 @@ namespace Sticky.Helpers {
       if (window != null) window.Close();
     }
 
-    public static void OpenNoteWindow(NoteWindowViewModel vm, Window mainWindow) {
+    public static void OpenNoteWindow(WindowCollection windows, NoteWindowViewModel vm, Window mainWindow) {
       var window = new NoteWindow(vm);
 
-      // @TODO: Find appropriate position for a note window.
-      #if false
+      // @TODO: Load window placement here...
+      // Use the saved position if one exists...
+
       if (mainWindow != null) {
-        window.Left = mainWindow.Left + mainWindow.Width + 12;
-        window.Top = mainWindow.Top;
+        WindowPositioner.Position(windows, mainWindow, window);
       }
-      #endif
 
       window.Show();
       window.Activate();

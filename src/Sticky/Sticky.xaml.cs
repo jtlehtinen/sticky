@@ -20,7 +20,7 @@ namespace Sticky {
           vm.ActivatePreviousWindowRequested += (window) => WindowHelper.ActivatePreviousWindow(Windows, window);
           vm.ActivateNextWindowRequested += (window) => WindowHelper.ActivateNextWindow(Windows, window);
           vm.OpenNoteListRequested += () => ActivateMainWindow();
-          WindowHelper.OpenNoteWindow(vm, MainWindow);
+          WindowHelper.OpenNoteWindow(Windows, vm, MainWindow);
         }
       };
 
@@ -38,7 +38,7 @@ namespace Sticky {
             vm.ActivatePreviousWindowRequested += (window) => WindowHelper.ActivatePreviousWindow(Windows, window);
             vm.ActivateNextWindowRequested += (window) => WindowHelper.ActivateNextWindow(Windows, window);
             vm.OpenNoteListRequested += () => ActivateMainWindow();
-            WindowHelper.OpenNoteWindow(vm, MainWindow);
+            WindowHelper.OpenNoteWindow(Windows, vm, MainWindow);
           }
         } else {
           WindowHelper.CloseNoteWindow(Windows, note.Id);
