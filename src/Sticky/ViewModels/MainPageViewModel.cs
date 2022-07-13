@@ -12,8 +12,11 @@ namespace Sticky.ViewModels {
     public ICommand CloseCommand { get; }
     public ICommand NewNoteCommand { get; }
     public ICommand OpenSettingsPageCommand { get; }
+    public ICommand ApplySearchCommand { get; }
 
     public ObservableCollection<NoteViewModel> AllNotes { get; private set; }
+
+    public ObservableCollection<NoteViewModel> FilteredNotes { get; private set; }
 
     private Database _db;
 
@@ -27,6 +30,7 @@ namespace Sticky.ViewModels {
       CloseCommand = new RelayCommand(param => ((Window)param).Close());
       OpenSettingsPageCommand = new RelayCommand((param) => ((MainWindow)param).Navigate(PageType.Settings));
       NewNoteCommand = new RelayCommand(() => _db.AddNote(NoteFactory.CreateNote(_db.GetSettings()))); // @TODO: Apply settings...
+      ApplySearchCommand = new RelayCommand((search) => System.Console.WriteLine("search: " + (string)search));
 
       LoadAllNotes();
     }

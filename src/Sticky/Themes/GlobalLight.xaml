@@ -1,0 +1,14 @@
+<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+>
+  <!-- AutoSuggestBox -->
+  <Color x:Key="AutoSuggestBoxBackground">#FFEEEEEE</Color>
+  <Color x:Key="AutoSuggestBoxPlaceholderForeground">#FF666666</Color>
+  <Color x:Key="AutoSuggestBoxPlaceholderActiveForeground">#FFA0A0A0</Color>
+  <Color x:Key="AutoSuggestBoxForeground">#FF737373</Color>
+  <Color x:Key="AutoSuggestBoxActiveForeground">#FF494949</Color>
+  <Color x:Key="AutoSuggestBoxButtonHoverBackground">#FFDEDEDE</Color>
+  <Color x:Key="AutoSuggestBoxButtonPressedBackground">#FFCDCDCD</Color>
+</ResourceDictionary>

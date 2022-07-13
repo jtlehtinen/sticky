@@ -1,16 +1,18 @@
 using System.Windows.Controls;
-using System.Windows.Input;
+using System.Windows.Media;
 using ModernWpf.Controls;
-using Sticky.Helpers;
 using Sticky.ViewModels;
 
 namespace Sticky {
 
   public partial class MainPage : UserControl {
+    private SolidColorBrush _highlightBrush = new SolidColorBrush(Colors.Yellow);
     private DragBehavior _drag;
 
     public MainPage(MainPageViewModel viewModel) {
       DataContext = viewModel;
+
+      Resources.MergedDictionaries.Add(App.Current.Themes.GetGlobalTheme());
 
       InitializeComponent();
       _drag = new DragBehavior(PartTitleBar);
@@ -27,6 +29,7 @@ namespace Sticky {
     }
 
     private void DoSearch(string search) {
+      #if false
       var count = NoteList.Items.Count;
       for (var i = 0; i < count; ++i) {
         var container = NoteList.ItemContainerGenerator.ContainerFromIndex(i) as ContentPresenter;
@@ -38,16 +41,13 @@ namespace Sticky {
         var rtb = Search.FindChild<RichTextBox>(container, "NoteRichTextBox");
         if (rtb == null) continue;
 
-        Search.ClearSearch(rtb);
-
-        #if false
-        if (!string.IsNullOrEmpty(search)) {
-          noteViewModel.Show = Search.ApplySearch(rtb, search);
-        } else {
-          noteViewModel.Show = true;
+        Search.ClearHighlight(rtb);
+        var wasHighlighted = Search.Highlight(rtb, search, _highlightBrush);
+        if (!wasHighlighted) {
+          // @TODO: filter out the note...
         }
-        #endif
       }
+      #endif
     }
   }
 

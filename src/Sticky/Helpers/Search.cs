@@ -8,7 +8,7 @@ using System.Windows.Media;
 namespace Sticky {
 
   public static class Search {
-    public static bool ApplySearch(RichTextBox rtb, string search) {
+    public static bool Highlight(RichTextBox rtb, string search, SolidColorBrush highlightBrush) {
       var matchFound = false;
 
       for (var start = rtb.Document.ContentStart; start.CompareTo(rtb.Document.ContentEnd) <= 0; start = start.GetNextContextPosition(LogicalDirection.Forward)) {
@@ -26,7 +26,7 @@ namespace Sticky {
             var end = start.GetPositionAtOffset(search.Length);
             var range = new TextRange(start, end);
 
-            range.ApplyPropertyValue(TextElement.BackgroundProperty, new SolidColorBrush(Colors.Yellow));
+            range.ApplyPropertyValue(TextElement.BackgroundProperty, highlightBrush);
             matchFound = true;
           }
         }
@@ -35,7 +35,7 @@ namespace Sticky {
       return matchFound;
     }
 
-    public static void ClearSearch(RichTextBox rtb) {
+    public static void ClearHighlight(RichTextBox rtb) {
       var range = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
       range.ApplyPropertyValue(TextElement.BackgroundProperty, null);
     }

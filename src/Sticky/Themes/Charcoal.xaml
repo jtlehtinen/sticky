@@ -11,7 +11,7 @@
     <SolidColorBrush x:Key="FoldedCornerBrush" Color="#FF878787"/>
     <SolidColorBrush x:Key="MenuAccentColor" Color="#FFD2D2D2"/>
     <SolidColorBrush x:Key="MenuForeground" Color="#FFD2D2D2"/>
-    <SolidColorBrush x:Key="OverlayButtonBackground" Color="#FFF3F3F3"/>
+    <SolidColorBrush x:Key="OverlayButtonBackground" Color="#FFFFFFFF"/>
     <SolidColorBrush x:Key="OverlayButtonForeground" Color="#FF000000"/>
     <SolidColorBrush x:Key="SelectionBackground" Color="#FF767676"/>
     <SolidColorBrush x:Key="TextCursorForeground" Color="#FFFFFFFF"/>

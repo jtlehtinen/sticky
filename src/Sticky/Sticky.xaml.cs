@@ -71,10 +71,9 @@ namespace Sticky {
 
       base.OnStartup(e);
 
-      var mainWindow = new MainWindow(_db);
-      mainWindow.Show();
-
       Themes.SetBaseTheme(_db.GetSettings().BaseTheme);
+
+      ActivateMainWindow();
     }
   }
 

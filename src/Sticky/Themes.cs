@@ -19,6 +19,10 @@ namespace Sticky {
     private Dictionary<string, ResourceDictionary> lightThemes = new();
     private Dictionary<string, ResourceDictionary> themes = new();
 
+    private ResourceDictionary _globalDarkTheme = new();
+    private ResourceDictionary _globalLightTheme = new();
+    private ResourceDictionary _globalTheme = new();
+
     public event Action BaseThemeChanged;
 
     public Themes() {
@@ -38,6 +42,10 @@ namespace Sticky {
       return !UseDarkTheme();
     }
 
+    public ResourceDictionary GetGlobalTheme() {
+      return _globalTheme;
+    }
+
     private void UpdateThemes() {
       var sourceThemes = UseDarkTheme() ? darkThemes : lightThemes;
 
@@ -51,9 +59,17 @@ namespace Sticky {
           dest[key] = source[key];
         }
       }
+
+      var globalSource = UseDarkTheme() ? _globalDarkTheme : _globalLightTheme;
+      foreach (var key in globalSource.Keys) {
+        _globalTheme[key] = globalSource[key];
+      }
     }
 
     private void LoadThemes() {
+      _globalDarkTheme = (ResourceDictionary)Application.LoadComponent(new Uri("Themes/GlobalDark.xaml", UriKind.Relative));
+      _globalLightTheme = (ResourceDictionary)Application.LoadComponent(new Uri("Themes/GlobalLight.xaml", UriKind.Relative));
+
       // @IMPORTANT: The filename order is set on purpose.
       string[] filenames = new[]{"Yellow.xaml", "Green.xaml", "Pink.xaml", "Purple.xaml", "Blue.xaml", "Gray.xaml", "Charcoal.xaml"};
 
