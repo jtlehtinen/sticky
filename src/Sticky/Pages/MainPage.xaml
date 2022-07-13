@@ -2,6 +2,7 @@
   x:Class="Sticky.MainPage"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
   xmlns:ui="http://schemas.modernwpf.com/2019"
   xmlns:local="clr-namespace:Sticky"
 >
@@ -112,9 +113,18 @@
       VerticalScrollBarVisibility="Auto"
       KeyboardNavigation.DirectionalNavigation="Once"
     >
+      <!-- Sort Notes -->
+      <ui:ScrollViewerEx.Resources>
+        <CollectionViewSource x:Key="SortedNotes" Source="{Binding Path=AllNotes}">
+          <CollectionViewSource.SortDescriptions>
+            <scm:SortDescription PropertyName="UpdatedAt" Direction="Descending"/>
+          </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+      </ui:ScrollViewerEx.Resources>
+
       <ItemsControl
         x:Name="NoteList"
-        ItemsSource="{Binding Path=AllNotes}"
+        ItemsSource="{Binding Source={StaticResource SortedNotes}}"
         IsTabStop="False"
       >
         <!-- Container Template -->
@@ -134,9 +144,7 @@
         <!-- Item Template -->
         <ItemsControl.ItemTemplate>
           <DataTemplate>
-            <local:NoteControl
-              Visibility="{Binding Path=Show, Converter={StaticResource BooleanToVisibilityConverter}}"
-            />
+            <local:NoteControl Visibility="{Binding Path=Show, Converter={StaticResource BooleanToVisibilityConverter}}"/>
           </DataTemplate>
         </ItemsControl.ItemTemplate>
       </ItemsControl>
