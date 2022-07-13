@@ -18,6 +18,11 @@
     <SolidColorBrush x:Key="TitleBarForeground" Color="#FF000000"/>
     <SolidColorBrush x:Key="TitleBarBackground" Color="#FFE7CFFF"/>
     <SolidColorBrush x:Key="ToolbarForeground" Color="#FF5A6066"/>
+
+    <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="#FF5F5F5F"/>
+    <SolidColorBrush x:Key="TextControlPlaceholderForegroundDisabled" Color="#FF5F5F5F"/>
+    <SolidColorBrush x:Key="TextControlPlaceholderForegroundPointerOver" Color="#FF5F5F5F"/>
+    <SolidColorBrush x:Key="TextControlPlaceholderForegroundFocused" Color="#FF5F5F5F"/>
   </ResourceDictionary>
 
   <!-- Dark Colors -->
@@ -35,5 +40,10 @@
     <SolidColorBrush x:Key="TitleBarForeground" Color="#FF000000"/>
     <SolidColorBrush x:Key="TitleBarBackground" Color="#FFB07FE0"/>
     <SolidColorBrush x:Key="ToolbarForeground" Color="#FFC1C1C1"/>
+
+    <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="#FFA5A5A5"/>
+    <SolidColorBrush x:Key="TextControlPlaceholderForegroundDisabled" Color="#FFA5A5A5"/>
+    <SolidColorBrush x:Key="TextControlPlaceholderForegroundPointerOver" Color="#FFA5A5A5"/>
+    <SolidColorBrush x:Key="TextControlPlaceholderForegroundFocused" Color="#FFA5A5A5"/>
   </ResourceDictionary>
 </ResourceDictionary>

@@ -164,7 +164,7 @@
 
         <local:BindableRichTextBox
           Style="{StaticResource DefaultRichTextBoxStyle}"
-          ui:ControlHelper.PlaceholderText="Take a note..."
+          ui:ControlHelper.PlaceholderText=" Take a note..."
           x:Name="NoteRichTextBox"
           Margin="0"
           Cursor="Arrow"

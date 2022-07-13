@@ -322,7 +322,7 @@
         SelectionBrush="{DynamicResource SelectionBackground}"
         HorizontalScrollBarVisibility="Auto"
         VerticalScrollBarVisibility="Auto"
-        ui:ControlHelper.PlaceholderText="Take a note..."
+        ui:ControlHelper.PlaceholderText=" Take a note..."
         local:RichTextBoxHelper.DocumentXaml="{Binding Path=Content}"
         MouseWheel="OnMouseWheel"
       >
