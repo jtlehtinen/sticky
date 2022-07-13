@@ -13,25 +13,16 @@
   ui:FocusVisualHelper.UseSystemFocusVisuals="{DynamicResource UseSystemFocusVisuals}"
   ui:FocusVisualHelper.FocusVisualMargin="-3"
   KeyboardNavigation.DirectionalNavigation="Once"
+  MouseRightButtonUp="OnMouseRightButtonUp"
 >
-  <!--
-    FocusManager.IsFocusScope="True"
-    KeyboardNavigation.TabNavigation="Continue"
-    -->
-
   <UserControl.Resources>
     <ui:BindingProxy x:Key="BackgroundProxy" Value="{DynamicResource Background}"/>
     <sys:Double x:Key="FoldedCornerSize">16</sys:Double>
   </UserControl.Resources>
 
-  <!-- Double Click Opens Note -->
   <UserControl.InputBindings>
     <KeyBinding Gesture="ENTER" Command="{Binding OpenCommand}"/>
-    <MouseBinding
-      MouseAction="LeftDoubleClick"
-      Command="{Binding OpenCommand}"
-      CommandParameter="{Binding Id}"
-    />
+    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding OpenCommand}" CommandParameter="{Binding Id}"/>
   </UserControl.InputBindings>
 
   <Border
@@ -174,8 +165,8 @@
           BorderBrush="Transparent"
           BorderThickness="0"
           IsReadOnly="True"
-          VerticalScrollBarVisibility="Auto"
-          HorizontalScrollBarVisibility="Auto"
+          VerticalScrollBarVisibility="Disabled"
+          HorizontalScrollBarVisibility="Disabled"
           Foreground="{DynamicResource Foreground}"
           local:RichTextBoxHelper.DocumentXaml="{Binding Path=Content}"
         >
