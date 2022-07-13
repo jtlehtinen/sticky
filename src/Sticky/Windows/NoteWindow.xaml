@@ -103,7 +103,7 @@
                     <Storyboard>
                       <DoubleAnimation
                         Storyboard.TargetProperty="RenderTransform.Y"
-                        Duration="0:0:0.2"
+                        Duration="0:0:0.15"
                         From="-200"
                         To="0"
                       >
@@ -240,7 +240,7 @@
                 <DataTrigger.EnterActions>
                   <BeginStoryboard>
                     <Storyboard>
-                      <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Y" Duration="0:0:0.2" To="0">
+                      <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Y" Duration="0:0:0.15" To="0">
                         <DoubleAnimation.EasingFunction>
                           <QuadraticEase EasingMode="EaseOut"/>
                         </DoubleAnimation.EasingFunction>
@@ -251,7 +251,7 @@
                 <DataTrigger.ExitActions>
                   <BeginStoryboard>
                     <Storyboard>
-                      <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Y" Duration="0:0:0.2" To="-23">
+                      <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Y" Duration="0:0:0.15" To="-23">
                         <DoubleAnimation.EasingFunction>
                           <QuadraticEase EasingMode="EaseIn"/>
                         </DoubleAnimation.EasingFunction>
