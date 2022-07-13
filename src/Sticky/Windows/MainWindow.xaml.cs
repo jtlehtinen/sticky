@@ -21,6 +21,7 @@ namespace Sticky {
     public MainWindow(Database db) {
       this._db = db;
       this.Closing += (sender, e) => SaveWindowPlacement();
+      MouseDown += (sender, e) => Keyboard.ClearFocus();
 
       InitializeComponent();
       Native.ApplyRoundedWindowCorners(this);
