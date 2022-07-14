@@ -11,11 +11,13 @@ namespace Sticky {
   public enum PageType {
     Main,
     Settings,
+    ThirdPartyNotices,
   }
 
   public partial class MainWindow : Window {
     private MainPage _mainPage;
     private SettingsPage _settingsPage;
+    private ThirdPartyNoticesPage _thirdPartyNoticesPage;
     private Database _db;
 
     public MainWindow(Database db) {
@@ -42,14 +44,18 @@ namespace Sticky {
 
       _mainPage = new MainPage(new MainPageViewModel(db));
       _settingsPage = new SettingsPage(new SettingsPageViewModel(db));
+      _thirdPartyNoticesPage = new ThirdPartyNoticesPage();
 
       LoadWindowPlacement();
       Navigate(PageType.Main);
     }
 
     public void Navigate(PageType type) {
-      UserControl page = (type == PageType.Main ? _mainPage : _settingsPage);
-      Content = page;
+      switch (type) {
+        case PageType.Main: Content = _mainPage; break;
+        case PageType.Settings: Content = _settingsPage; break;
+        case PageType.ThirdPartyNotices: Content = _thirdPartyNoticesPage; break;
+      }
     }
 
     private void LoadWindowPlacement() {

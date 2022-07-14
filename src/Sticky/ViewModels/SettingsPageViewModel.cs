@@ -9,6 +9,7 @@ namespace Sticky.ViewModels {
     public ICommand CloseCommand { get; }
     public ICommand ChangeBaseThemeCommand { get; }
     public ICommand ExportNotesCommand { get; }
+    public ICommand NavigateToThirdPartyNoticesPageCommand { get; }
 
     public event Action ExportNotesRequested;
 
@@ -23,6 +24,7 @@ namespace Sticky.ViewModels {
       CloseCommand = new RelayCommand(() => App.Current.MainWindow.Close());
       ChangeBaseThemeCommand = new RelayCommand((param) => BaseTheme = (BaseTheme)param);
       ExportNotesCommand = new RelayCommand(() => ExportNotesRequested?.Invoke());
+      NavigateToThirdPartyNoticesPageCommand = new RelayCommand(() => App.Current.MainWindow.Navigate(PageType.ThirdPartyNotices));
 
       PropertyChanged += (sender, e) => _db.UpdateSettings(_settings);
 

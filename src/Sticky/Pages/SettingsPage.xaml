@@ -126,6 +126,12 @@
           Text="Sticky 0.0.1"
           FontWeight="Bold"
         />
+
+        <!-- Third Party Notices Link -->
+        <TextBlock>
+          <Hyperlink Command="{Binding NavigateToThirdPartyNoticesPageCommand}">Third Party Notices</Hyperlink>
+        </TextBlock>
+
         <!-- Export Notes Button -->
         <Button
           Style="{StaticResource AccentButtonStyle}"
