@@ -5,10 +5,19 @@ using System.Windows;
 namespace Sticky.Helpers {
 
   public enum Anchor {
-    TopLeft, TopMiddle, TopRight,
-    BottomLeft, BottomMiddle, BottomRight,
-    LeftBottom, LeftMiddle, LeftTop,
-    RightBottom, RightMiddle, RightTop,
+    // main edge - position within main edge
+    TopLeft,
+    TopMiddle,
+    TopRight,
+    BottomLeft,
+    BottomMiddle,
+    BottomRight,
+    LeftBottom,
+    LeftMiddle,
+    LeftTop,
+    RightBottom,
+    RightMiddle,
+    RightTop,
 
     Center
   }

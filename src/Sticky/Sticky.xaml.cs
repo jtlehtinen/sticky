@@ -20,7 +20,9 @@ namespace Sticky {
           vm.ActivatePreviousWindowRequested += (window) => WindowHelper.ActivatePreviousWindow(Windows, window);
           vm.ActivateNextWindowRequested += (window) => WindowHelper.ActivateNextWindow(Windows, window);
           vm.OpenNoteListRequested += () => ActivateMainWindow();
-          WindowHelper.OpenNoteWindow(Windows, vm, MainWindow);
+
+          var positionRelativeTo = WindowHelper.FindFocusedWindow(Windows);
+          WindowHelper.OpenNoteWindow(Windows, vm, positionRelativeTo);
         }
       };
 

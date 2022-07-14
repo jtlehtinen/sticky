@@ -1,7 +1,9 @@
 using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Windows;
+using Sticky.Extensions;
 using Sticky.ViewModels;
 
 namespace Sticky.Helpers {
@@ -30,13 +32,8 @@ namespace Sticky.Helpers {
       return "";
     }
 
-    public static NoteWindow? FindNoteWindow(WindowCollection allWindows, int noteId) {
-      foreach (var window in allWindows) {
-        if (window is NoteWindow nw && nw.ContainsNote(noteId)) {
-          return nw;
-        }
-      }
-      return null;
+    public static NoteWindow? FindNoteWindow(WindowCollection windows, int noteId) {
+      return (NoteWindow)windows.Find((window) => window is NoteWindow nw && nw.ContainsNote(noteId));
     }
 
     public static void CloseNoteWindow(WindowCollection allWindows, int noteId) {
@@ -44,14 +41,14 @@ namespace Sticky.Helpers {
       if (window != null) window.Close();
     }
 
-    public static void OpenNoteWindow(WindowCollection windows, NoteWindowViewModel vm, Window mainWindow) {
+    public static void OpenNoteWindow(WindowCollection windows, NoteWindowViewModel vm, Window positionRelativeTo) {
       var window = new NoteWindow(vm);
 
       // @TODO: Load window placement here...
       // Use the saved position if one exists...
 
-      if (mainWindow != null) {
-        WindowPositioner.Position(windows, mainWindow, window);
+      if (positionRelativeTo != null) {
+        WindowPositioner.Position(windows, positionRelativeTo, window);
       }
 
       window.Show();
@@ -60,7 +57,8 @@ namespace Sticky.Helpers {
     }
 
     private static int IndexOf(WindowCollection collection, Window what) {
-      for (var i = 0; i < collection.Count; ++i) {
+      var count = collection.Count;
+      for (var i = 0; i < count; ++i) {
         if (collection[i] == what) return i;
       }
       return -1;
@@ -89,6 +87,11 @@ namespace Sticky.Helpers {
       ActivateAndTakeKeyboardFocus(allWindows[index]);
     }
 
+    public static Window? FindFocusedWindow(WindowCollection windows) {
+      return
+        windows.Find((window) => window.IsFocused) ??
+        windows.Find((window) => window.IsKeyboardFocusWithin);
+    }
   }
 
 }
