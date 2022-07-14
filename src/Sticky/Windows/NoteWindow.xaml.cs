@@ -20,8 +20,6 @@ namespace Sticky {
       InitializeComponent();
       Native.ApplyRoundedWindowCorners(this);
 
-      LoadWindowPlacement();
-
       _drag = new DragBehavior(TitleBar);
       _sizeFix = new FixMaximizedWindowSizeBehavior(this);
 
@@ -126,24 +124,11 @@ namespace Sticky {
       command.Execute(null, (RichTextBox)sender);
     }
 
-    private void LoadWindowPlacement() {
-      var vm = GetViewModel();
-      if (vm == null) return;
-
-      if (string.IsNullOrWhiteSpace(vm.WindowPosition)) return;
-
-      var handle = new WindowInteropHelper(this).Handle;
-      var placement = WindowHelper.DeserializePlacementOrDefault(handle, vm.WindowPosition);
-
-      Native.SetWindowPlacement(handle, ref placement);
-    }
-
     private void SaveWindowPlacement() {
       var vm = GetViewModel();
       if (vm == null) return;
 
-      var handle = new WindowInteropHelper(this).Handle;
-      vm.WindowPosition = WindowHelper.SerializePlacement(handle);
+      vm.WindowPosition = WindowHelper.SerializePlacement(this);
     }
   }
 

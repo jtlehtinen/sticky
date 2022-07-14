@@ -62,8 +62,7 @@ namespace Sticky {
     }
 
     private void SaveWindowPlacement() {
-      var handle = new WindowInteropHelper(this).Handle;
-      var json = WindowHelper.SerializePlacement(handle);
+      var json = WindowHelper.SerializePlacement(this);
 
       var settings = _db.GetSettings();
       settings.MainWindowPosition = json;

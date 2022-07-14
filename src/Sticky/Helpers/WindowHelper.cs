@@ -3,6 +3,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Windows;
+using System.Windows.Interop;
 using Sticky.Extensions;
 using Sticky.ViewModels;
 
@@ -10,7 +11,7 @@ namespace Sticky.Helpers {
 
   public static class WindowHelper {
 
-    public static WINDOWPLACEMENT DeserializePlacementOrDefault(IntPtr windowHandle, string json) {
+    public static WINDOWPLACEMENT DeserializePlacementOrDefault(IntPtr handle, string json) {
       try {
         var placement = JsonSerializer.Deserialize<WINDOWPLACEMENT>(json);
 
@@ -20,16 +21,27 @@ namespace Sticky.Helpers {
         return placement;
       } catch (Exception) { }
 
-      _ = Native.GetWindowPlacement(windowHandle, out var defaultPlacement);
+      _ = Native.GetWindowPlacement(handle, out var defaultPlacement);
       return defaultPlacement;
     }
 
-    public static string SerializePlacement(IntPtr windowHandle) {
-      _ = Native.GetWindowPlacement(windowHandle, out var placement);
+    public static string SerializePlacement(Window window) {
+      var handle = new WindowInteropHelper(window).Handle;
+
+      _ = Native.GetWindowPlacement(handle, out var placement);
       try {
         return JsonSerializer.Serialize(placement);
       } catch (Exception) { }
       return "";
+    }
+
+    private static void SetStoredWindowPlacementOrDefault(Window window, NoteWindowViewModel viewModel) {
+      if (string.IsNullOrWhiteSpace(viewModel.WindowPosition)) return;
+
+      var handle = new WindowInteropHelper(window).Handle;
+      var placement = WindowHelper.DeserializePlacementOrDefault(handle, viewModel.WindowPosition);
+
+      Native.SetWindowPlacement(handle, ref placement);
     }
 
     public static NoteWindow? FindNoteWindow(WindowCollection windows, int noteId) {
@@ -44,12 +56,11 @@ namespace Sticky.Helpers {
     public static void OpenNoteWindow(WindowCollection windows, NoteWindowViewModel vm, Window positionRelativeTo) {
       var window = new NoteWindow(vm);
 
-      // @TODO: Load window placement here...
-      // Use the saved position if one exists...
-
       if (positionRelativeTo != null) {
         WindowPositioner.Position(windows, positionRelativeTo, window);
       }
+
+      SetStoredWindowPlacementOrDefault(window, vm);
 
       window.Show();
       window.Activate();
