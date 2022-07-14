@@ -79,10 +79,9 @@
 
         <Separator/>
 
-        <TextBlock
-          Style="{StaticResource SubtitleTextBlockStyle}"
-          Text="ModernWpf"
-        />
+        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">
+          <Hyperlink NavigateUri="https://github.com/wherewhere/ModernWpf" RequestNavigate="OnOpenBrowser">ModernWpf</Hyperlink>
+        </TextBlock>
 
         <TextBlock TextWrapping="Wrap" xml:space="preserve">MIT License
 
@@ -96,10 +95,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
         <Separator/>
 
-        <TextBlock
-          Style="{StaticResource SubtitleTextBlockStyle}"
-          Text="SQLite-net"
-        />
+        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">
+          <Hyperlink NavigateUri="https://github.com/praeclarum/sqlite-net" RequestNavigate="OnOpenBrowser">SQLite-net</Hyperlink>
+        </TextBlock>
 
         <TextBlock TextWrapping="Wrap" xml:space="preserve">Copyright (c) Krueger Systems, Inc.
 
@@ -113,10 +111,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
         <Separator/>
 
-        <TextBlock
-          Style="{StaticResource SubtitleTextBlockStyle}"
-          Text="WpfScreenHelper"
-        />
+        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}">
+          <Hyperlink NavigateUri="https://github.com/micdenny/WpfScreenHelper" RequestNavigate="OnOpenBrowser">WpfScreenHelper</Hyperlink>
+        </TextBlock>
 
         <TextBlock TextWrapping="Wrap" xml:space="preserve">The MIT License (MIT)
 
