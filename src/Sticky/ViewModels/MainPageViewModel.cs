@@ -84,11 +84,7 @@ namespace Sticky.ViewModels {
       }
     }
 
-    void OnNoteViewModelPropertyChanged(object sender, PropertyChangedEventArgs e) {
-
-    }
-
-    private void SortNotes() {
+    private void OnNoteViewModelPropertyChanged(object sender, PropertyChangedEventArgs e) {
 
     }
   }
