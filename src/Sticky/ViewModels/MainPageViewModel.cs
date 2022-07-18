@@ -9,6 +9,9 @@ using Sticky.DataAccess;
 namespace Sticky.ViewModels {
 
   public class MainPageViewModel : ViewModelBase {
+    public ICommand PinCommand { get; }
+    public ICommand UnpinCommand { get; }
+
     public ICommand CloseCommand { get; }
     public ICommand NewNoteCommand { get; }
     public ICommand OpenSettingsPageCommand { get; }
@@ -26,6 +29,9 @@ namespace Sticky.ViewModels {
       db.NoteAdded += OnNoteAddedToDatabase;
       db.NoteDeleted += OnNoteRemovedFromDatabase;
       db.NoteModified += OnNoteModifiedInDatabase;
+
+      PinCommand = new RelayCommand(() => App.Current.MainWindow.Topmost = true);
+      UnpinCommand = new RelayCommand(() => App.Current.MainWindow.Topmost= false);
 
       CloseCommand = new RelayCommand(param => ((Window)param).Close());
       OpenSettingsPageCommand = new RelayCommand((param) => ((MainWindow)param).Navigate(PageType.Settings));

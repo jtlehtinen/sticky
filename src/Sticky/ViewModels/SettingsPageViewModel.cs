@@ -5,6 +5,9 @@ using Sticky.DataAccess;
 namespace Sticky.ViewModels {
 
   public class SettingsPageViewModel : ViewModelBase {
+    public ICommand PinCommand { get; }
+    public ICommand UnpinCommand { get; }
+
     public ICommand BackCommand { get; }
     public ICommand CloseCommand { get; }
     public ICommand ChangeBaseThemeCommand { get; }
@@ -19,6 +22,9 @@ namespace Sticky.ViewModels {
     public SettingsPageViewModel(Database db) {
       this._db = db;
       this._settings = db.GetSettings();
+
+      PinCommand = new RelayCommand(() => App.Current.MainWindow.Topmost = true);
+      UnpinCommand = new RelayCommand(() => App.Current.MainWindow.Topmost= false);
 
       BackCommand = new RelayCommand(() => App.Current.MainWindow.Navigate(PageType.Main));
       CloseCommand = new RelayCommand(() => App.Current.MainWindow.Close());

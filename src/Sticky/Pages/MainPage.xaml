@@ -39,12 +39,32 @@
       LastChildFill="False"
     >
       <!-- New Note Button -->
-      <ui:TitleBarButton
+      <StackPanel
         DockPanel.Dock="Left"
-        Content="&#xE948;"
-        ToolTip="New note"
-        Command="{Binding NewNoteCommand}"
-      />
+        Orientation="Horizontal"
+      >
+        <ui:TitleBarButton
+          Content="&#xE948;"
+          ToolTip="New note"
+          Command="{Binding NewNoteCommand}"
+        />
+
+        <!-- Unpin Main Window -->
+        <ui:TitleBarButton
+          Content="&#xE77A;"
+          ToolTip="Unpin main window"
+          Command="{Binding UnpinCommand}"
+          Visibility="{Binding Path=Topmost, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Converter={StaticResource BooleanToVisibilityConverter}}"
+        />
+
+        <!-- Pin Main Window -->
+        <ui:TitleBarButton
+          Content="&#xE840;"
+          ToolTip="Pin main window"
+          Command="{Binding PinCommand}"
+          Visibility="{Binding Path=Topmost, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Converter={StaticResource ReverseBooleanToVisibilityConverter}}"
+        />
+      </StackPanel>
 
       <StackPanel
         DockPanel.Dock="Right"
